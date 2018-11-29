@@ -1,0 +1,141 @@
+<html>
+    <head>
+            <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+            <meta content="utf-8" http-equiv="encoding">
+            
+            
+        <style>
+            .centered {
+                margin: 0 auto;
+                display: block;
+                text-align: center
+            }
+            
+            .pad {
+                margin: 50 auto;
+            }
+
+        </style>
+    </head>
+    <body onload="update()">
+        <select id="classPeriod" class="centered pad">
+            <option>1st Period</option>
+
+        </select>
+
+
+        <h1 class="centered pad" id="time"></h1>
+        <h1 class="centered pad" id="currentClass"></h1>
+        <h1 class="centered pad" id="timeToEndOfClass"></h1>
+
+        <script>
+
+            var currentHours = 0;
+            var currentMinutes = 0; 
+            var currentSeconds = 0;
+
+            var currentClassPeriodIndex = 0;
+
+
+        var schedule = [
+            {
+                name: "1st Period",
+                startTime: {hours: 13, minutes:30},
+                endTime: {hours: 14, minutes:29}
+            },
+            {
+                name: "2nd Period",
+                startTime: {hours: 14, minutes:30},
+                endTime: {hours: 16, minutes:50}
+            }
+            ]
+
+
+
+
+        function update() {
+            updateTime();
+            document.getElementById('time').innerHTML = getTimeString();
+
+            currentClassPeriodIndex = getCurrentClassPeriodIndex();
+            document.getElementById('currentClass').innerHTML = schedule[currentClassPeriodIndex].name;
+
+            document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString()
+
+            var t = setTimeout(update, 500);
+        }
+
+
+
+
+
+
+
+
+        function updateTime() {
+            var today = new Date();
+
+            currentHours = today.getHours();
+            currentMinutes = today.getMinutes();
+            currentSeconds = today.getSeconds();
+
+        }
+        function getTimeString() { return currentHours + ":" + currentMinutes + ":" + currentSeconds; }
+
+
+//https://www.w3schools.com/js/tryit.asp?filename=tryjs_timing_clock
+        function checkTime(i) {
+            if (i < 10) {i = "0" + i};  // add leading zero in front of numbers less than 10
+            return i;
+        }
+        
+        function getCurrentClassPeriodIndex() {
+            //using for over forEach() because we are breaking out of the loop early
+            for (let i = 0; i < schedule.length; i++) {
+                if (checkStartTime(schedule[i]) && checkEndTime(schedule[i])) {
+                    return i
+                    break;
+                }
+            }
+        }
+
+
+        function checkTime( hours, minutes, checkForBefore ) {
+
+            let timeCheck = (hours <= currentHours && minutes <= currentMinutes)
+
+            if (checkForBefore) {
+                return timeCheck
+            } else {
+                return !timeCheck
+            }
+
+        }
+        
+        function checkStartTime(classPeriod) { return checkTime(classPeriod.startTime.hours, classPeriod.startTime.minutes, true)}
+        function checkEndTime(classPeriod) { return checkTime(classPeriod.endTime.hours, classPeriod.endTime.minutes, false)}
+
+
+        function getTimeToEndOfCurrentClass() {
+            currentClassEndTime = schedule[currentClassPeriodIndex].endTime;
+
+            hoursUntilEnd = currentClassEndTime.hours - currentHours;
+            console.log(currentClassEndTime.minutes);
+            console.log(currentMinutes);
+
+            minutesUntilEnd = currentClassEndTime.minutes - currentMinutes;
+
+            secondsUntilEnd = 60 - currentSeconds; //because there are no seconds in the schedule, we assume it ends at the full minute
+
+            return {hours: hoursUntilEnd, minutes: minutesUntilEnd, seconds: secondsUntilEnd};
+
+        }
+
+        function getTimeToEndOfCurrentClassString() {
+            timeToEnd = getTimeToEndOfCurrentClass();
+            return timeToEnd.hours + ":" + timeToEnd.minutes + ":" + timeToEnd.seconds;
+        }
+        
+        </script>
+    </body>
+</html>
