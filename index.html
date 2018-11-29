@@ -80,7 +80,7 @@
             currentSeconds = today.getSeconds();
 
         }
-        function getTimeString() { return currentHours + ":" + currentMinutes + ":" + currentSeconds; }
+        function getTimeString() { return currentHours.toString().padStart(2, '0') + ":" + currentMinutes.toString().padStart(2, '0') + ":" + currentSeconds.toString().padStart(2, '0'); }
 
 
 //https://www.w3schools.com/js/tryit.asp?filename=tryjs_timing_clock
