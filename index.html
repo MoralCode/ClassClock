@@ -131,11 +131,7 @@
             currentClassEndTime = schedule[currentClassPeriodIndex].endTime;
 
             hoursUntilEnd = currentClassEndTime.hours - currentHours;
-            console.log(currentClassEndTime.minutes);
-            console.log(currentMinutes);
-
             minutesUntilEnd = currentClassEndTime.minutes - currentMinutes;
-
             secondsUntilEnd = 60 - currentSeconds; //because there are no seconds in the schedule, we assume it ends at the full minute
 
             return {hours: hoursUntilEnd, minutes: minutesUntilEnd, seconds: secondsUntilEnd};
