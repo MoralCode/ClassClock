@@ -18,15 +18,13 @@
         </style>
     </head>
     <body onload="update()">
-        <select id="classPeriod" class="centered pad">
-            <option>1st Period</option>
-
-        </select>
 
 
         <h1 class="centered pad" id="time"></h1>
         <h1 class="centered pad" id="currentClass"></h1>
         <h1 class="centered pad" id="timeToEndOfClass"></h1>
+
+        <p class="centered pad" id="sentence"></p>
 
         <script>
 
@@ -61,6 +59,8 @@
             document.getElementById('currentClass').innerHTML = schedule[currentClassPeriodIndex].name;
 
             document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString()
+
+            document.getElementById('sentence').innerHTML = "It is currently <strong>" + getTimeString() + "</strong>. You are currently in <strong>" + schedule[currentClassPeriodIndex].name + "</strong>. You have <strong>" + getTimeToEndOfCurrentClassString() + "</strong> until this class ends."
 
             var t = setTimeout(update, 500);
         }
