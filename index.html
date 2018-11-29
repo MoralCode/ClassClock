@@ -100,20 +100,31 @@
         }
 
 
-        function checkTime( hours, minutes, checkForBefore ) {
+        function checkGivenTimeIsBeforeCurrentTime( givenTime ) {
 
-            let timeCheck = (hours <= currentHours && minutes <= currentMinutes)
 
-            if (checkForBefore) {
-                return timeCheck
+            if (givenTime.hours < currentHours) {
+                //given time is before current time
+                return true
+            } else if (givenTime.hours == currentHours && givenTime.minutes <= currentMinutes) {
+                //hours match and given minutes are before or the same as current minutes
+                return true
             } else {
-                return !timeCheck
+                //given time is after current time
+                return false
             }
 
+
+            // console.log(timeCheck)
+            // if (checkIfGivenTimeIsBeforeCurrentTime) {
+            //     return timeCheck
+            // } else {
+            //     return !timeCheck
+            // }
+
         }
-        
-        function checkStartTime(classPeriod) { return checkTime(classPeriod.startTime.hours, classPeriod.startTime.minutes, true)}
-        function checkEndTime(classPeriod) { return checkTime(classPeriod.endTime.hours, classPeriod.endTime.minutes, false)}
+        function checkStartTime(classPeriod) { return checkGivenTimeIsBeforeCurrentTime(classPeriod.startTime)}
+        function checkEndTime(classPeriod) { return !checkGivenTimeIsBeforeCurrentTime(classPeriod.endTime)}
 
 
         function getTimeToEndOfCurrentClass() {
