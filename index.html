@@ -150,7 +150,7 @@
 
         function getTimeToEndOfCurrentClassString() {
             timeToEnd = getTimeToEndOfCurrentClass();
-            return timeToEnd.hours + ":" + timeToEnd.minutes + ":" + timeToEnd.seconds;
+            return timeToEnd.hours.toString().padStart(2, '0') + ":" + timeToEnd.minutes.toString().padStart(2, '0') + ":" + timeToEnd.seconds.toString().padStart(2, '0');
         }
         
         </script>
