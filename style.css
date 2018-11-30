@@ -22,3 +22,17 @@ body {
 .pad {
     margin: 50 auto;
 }
+
+.navButton {
+    font-size: 32px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 2px;
+    border-bottom-right-radius: 10px;
+    color: black;
+}
+
+.navButton:hover {
+    background-color: grey;
+}
