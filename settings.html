@@ -11,7 +11,7 @@
         </style>
     </head>
     <body>
-            <a href="index.html" class="navbutton" target="_self"><i class="fas fa-home"></i></a>
+            <a class="navbutton" onclick="navigate()"><i class="fas fa-home"></i></a>
         <section id="options" class="centered topSpace">
 
             <!-- <label for="day" >Select a Day: </label>
@@ -36,6 +36,10 @@
 
     <script src="classtime.js"></script>
     <script>
+
+            function navigate() {
+                window.location = "settings.html"
+            }
 
         if ( typeof getCookie("schedule") !== 'undefined') {
             document.getElementById("schedule").selectedIndex=getCookie("schedule")
