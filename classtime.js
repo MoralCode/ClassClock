@@ -264,7 +264,6 @@ function getTimeToTime(time) {
             minutesUntilEnd = 60+minutesUntilEnd
         }
 
-        console.log(time.seconds)
         if (typeof time.seconds == 'undefined' ) {
             secondsUntilEnd = 60-currentSeconds
         }else {
