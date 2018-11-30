@@ -57,20 +57,21 @@
 
         function update() {
             updateTime();
-            document.getElementById('time').innerHTML = getTimeString();
 
             if (typeof school !== 'undefined') {
                 currentClassPeriodIndex = getCurrentClassPeriodIndex();
                 //document.getElementById('currentClass').innerHTML = school.schedule[currentClassPeriodIndex].name;
 
-                document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString()
-
-                document.getElementById('sentence').innerHTML = getSummaryString()
-
+                updateText();
                 var t = setTimeout(update, 500);
             }
         }
 
+        function updateText() {
+            document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString()
+            document.getElementById('sentence').innerHTML = getSummaryString()
+            document.getElementById('time').innerHTML = getTimeString();
+        }
 
         function getSummaryString() {
             if (currentClassPeriodIndex >= 0) {
