@@ -6,19 +6,45 @@
         <link rel="stylesheet" type="text/css" href="style.css">
         <title>ClassTime - Settings</title>
             
-            
         <style>
         </style>
     </head>
     <body>
             <a href="index.html" class="navbutton"><i class="fas fa-home"></i></a>
-        
-        <label for="day">Select a Day: </label>
-        <select id="day">
-            <option default>A</option>
-            <option>B</option>
-        </select>
+        <section id="options" class="centered pad">
 
+            <!-- <label for="day" >Select a Day: </label>
+            <select id="day">
+                <option default>A</option>
+                <option>B</option>
+            </select>
+            <br> -->
+
+            <label for="schedule" >Select a Schedule: </label>
+            <select id="schedule" onchange="updateSchedule()">
+                <option default>Mon/Fri (Regular)</option>
+                <option>Tues/Wed (Support Seminar)</option>
+                <option>Thursday (Early Release)</option>
+            </select>
+
+            <p class="centered pad">Settings are automatically saved</p>
+
+    </section>
         
     </body>
+
+    <script src="classtime.js"></script>
+    <script>
+
+        if ( typeof getCookie("schedule") !== 'undefined') {
+            document.getElementById("schedule").selectedIndex=getCookie("schedule")
+
+        }
+        
+        function updateSchedule() {
+            setCookie("schedule", document.getElementById("schedule").selectedIndex)
+        }
+    
+    </script>
+
 </html>
