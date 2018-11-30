@@ -59,14 +59,16 @@
             updateTime();
             document.getElementById('time').innerHTML = getTimeString();
 
-            currentClassPeriodIndex = getCurrentClassPeriodIndex();
-            //document.getElementById('currentClass').innerHTML = school.schedule[currentClassPeriodIndex].name;
+            if (typeof school !== 'undefined') {
+                currentClassPeriodIndex = getCurrentClassPeriodIndex();
+                //document.getElementById('currentClass').innerHTML = school.schedule[currentClassPeriodIndex].name;
 
-            document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString()
+                document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString()
 
-            document.getElementById('sentence').innerHTML = getSummaryString()
+                document.getElementById('sentence').innerHTML = getSummaryString()
 
-            var t = setTimeout(update, 500);
+                var t = setTimeout(update, 500);
+            }
         }
 
 
