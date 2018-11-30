@@ -22,13 +22,150 @@ var data = {
                 endTime: {hours: 9, minutes:55}
             },
             {
+                name: "TSCT",
+                startTime: {hours: 9, minutes:55},
+                endTime: {hours: 10, minutes:10}
+            },
+            {
+                name: "Passing Period",
+                startTime: {hours: 10, minutes:10},
+                endTime: {hours: 10, minutes:15}
+            },
+            {
                 name: "2nd Period",
-                startTime: {hours: 14, minutes:30},
-                endTime: {hours: 16, minutes:50}
+                startTime: {hours: 10, minutes:15},
+                endTime: {hours: 11, minutes:45}
+            },
+            {
+                name: "Lunch",
+                startTime: {hours: 11, minutes:45},
+                endTime: {hours: 12, minutes:20}
+            },
+            {
+                name: "Passing Period",
+                startTime: {hours: 12, minutes:20},
+                endTime: {hours: 12, minutes:25}
+            },
+            {
+                name: "3rd Period",
+                startTime: {hours: 12, minutes:25},
+                endTime: {hours: 13, minutes:55}
+            },
+            {
+                name: "Passing Period",
+                startTime: {hours: 13, minutes:55},
+                endTime: {hours: 14, minutes:00}
+            },
+            {
+                name: "4th Period",
+                startTime: {hours: 14, minutes:00},
+                endTime: {hours: 15, minutes:30}
             }
         ],
-        [],
-        []
+        [
+            {
+                name: "1st Period",
+                startTime: {hours: 8, minutes:25},
+                endTime: {hours: 9, minutes:47}
+            },
+            {
+                name: "TSCT",
+                startTime: {hours: 9, minutes:47},
+                endTime: {hours: 9, minutes:57}
+            },
+            {
+                name: "Passing Period",
+                startTime: {hours: 9, minutes:57},
+                endTime: {hours: 10, minutes:02}
+            },
+            {
+                name: "Support Seminar",
+                startTime: {hours: 10, minutes:02},
+                endTime: {hours: 10, minutes:34}
+            },
+            {
+                name: "Passing Period",
+                startTime: {hours: 10, minutes:34},
+                endTime: {hours: 10, minutes:39}
+            },
+            {
+                name: "2nd Period",
+                startTime: {hours: 10, minutes:39},
+                endTime: {hours: 12, minutes:01}
+            },
+            {
+                name: "Lunch",
+                startTime: {hours: 12, minutes:01},
+                endTime: {hours: 12, minutes:36}
+            },
+            {
+                name: "Passing Period",
+                startTime: {hours: 12, minutes:36},
+                endTime: {hours: 12, minutes:41}
+            },
+            {
+                name: "3rd Period",
+                startTime: {hours: 12, minutes:41},
+                endTime: {hours: 14, minutes:03}
+            },
+            {
+                name: "Passing Period",
+                startTime: {hours: 14, minutes:03},
+                endTime: {hours: 14, minutes:08}
+            },
+            {
+                name: "4th Period",
+                startTime: {hours: 14, minutes:08},
+                endTime: {hours: 15, minutes:30}
+            }
+        ],
+        [
+            {
+                name: "1st Period",
+                startTime: {hours: 8, minutes:25},
+                endTime: {hours: 9, minutes:50}
+            },
+            {
+                name: "TSCT",
+                startTime: {hours: 9, minutes:50},
+                endTime: {hours: 10, minutes:00}
+            },
+            {
+                name: "Passing Period",
+                startTime: {hours: 10, minutes:00},
+                endTime: {hours: 10, minutes:05}
+            },
+            {
+                name: "2nd Period",
+                startTime: {hours: 10, minutes:05},
+                endTime: {hours: 11, minutes:30}
+            },
+            {
+                name: "Lunch",
+                startTime: {hours: 11, minutes:30},
+                endTime: {hours: 12, minutes:05}
+            },
+            {
+                name: "Passing Period",
+                startTime: {hours: 12, minutes:05},
+                endTime: {hours: 12, minutes:10}
+            },
+            {
+                name: "3rd Period",
+                startTime: {hours: 12, minutes:10},
+                endTime: {hours: 13, minutes:35}
+            },
+            {
+                name: "Passing Period",
+                startTime: {hours: 13, minutes:35},
+                endTime: {hours: 13, minutes:40}
+            },
+            {
+                name: "4th Period",
+                startTime: {hours: 13, minutes:40},
+                endTime: {hours: 15, minutes:05}
+            }
+        ]
     ]
 };
 
