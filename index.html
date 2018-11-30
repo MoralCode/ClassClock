@@ -32,7 +32,7 @@
             var currentMinutes = 0; 
             var currentSeconds = 0;
 
-            var currentClassPeriodIndex = 0;
+            var currentClassPeriodIndex = -1;
 
 
         var school = {
@@ -101,7 +101,8 @@
                     break;
                 }
             }
-            //TODO: add case if no class periods are matched to say that school is out
+            //if execution reaches here, no class periods are in session, so therefore school must be out
+            return -1
         }
 
 
@@ -133,6 +134,7 @@
 
 
         function getTimeToEndOfCurrentClass() {
+            if (currentClassPeriodIndex >= 0) {
                 currentClassEndTime = school.schedule[currentClassPeriodIndex].endTime;
 
             hoursUntilEnd = currentClassEndTime.hours - currentHours;
@@ -140,6 +142,9 @@
             secondsUntilEnd = 60 - currentSeconds; //because there are no seconds in the schedule, we assume it ends at the full minute
 
             return {hours: hoursUntilEnd, minutes: minutesUntilEnd, seconds: secondsUntilEnd};
+            } else {
+                return {hours: 0, minutes: 0, seconds: 0};
+            }
 
         }
 
