@@ -50,7 +50,7 @@
                     endTime: {hours: 16, minutes:50}
                 }
             ]
-            };
+        };
 
 
 
@@ -64,17 +64,22 @@
 
             document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString()
 
-            document.getElementById('sentence').innerHTML = "It is currently <strong>" + getTimeString() + "</strong>. You are currently in <strong>" + schedule[currentClassPeriodIndex].name + "</strong>. You have <strong>" + getTimeToEndOfCurrentClassString() + "</strong> until this class ends."
+            document.getElementById('sentence').innerHTML = getSummaryString()
 
             var t = setTimeout(update, 500);
         }
 
 
+        function getSummaryString() {
+            if (currentClassPeriodIndex >= 0) {
+                return "It is currently <strong>" + getTimeString() + "</strong>. You are currently in <strong>" + schedule[currentClassPeriodIndex].name + "</strong>. You have <strong>" + getTimeToEndOfCurrentClassString() + "</strong> until this class ends."
+            } else {
+                return "School is not currently in session. Please check back later"
+            }
 
-
-
-
-
+            //other options
+            //"it is currently ##:##:##. (period) ends in ##:##"
+        }
 
         function updateTime() {
             var today = new Date();
@@ -82,23 +87,16 @@
             currentHours = today.getHours();
             currentMinutes = today.getMinutes();
             currentSeconds = today.getSeconds();
-
         }
+
         function getTimeString() { return currentHours.toString().padStart(2, '0') + ":" + currentMinutes.toString().padStart(2, '0') + ":" + currentSeconds.toString().padStart(2, '0'); }
-
-
-//https://www.w3schools.com/js/tryit.asp?filename=tryjs_timing_clock
-        function checkTime(i) {
-            if (i < 10) {i = "0" + i};  // add leading zero in front of numbers less than 10
-            return i;
-        }
         
         function getCurrentClassPeriodIndex() {
             //using for over forEach() because we are breaking out of the loop early
             for (let i = 0; i < school.schedule.length; i++) {
                 if (checkStartTime(school.schedule[i]) && checkEndTime(school.schedule[i])) {
                     return i
-                    break;
+                    break;//not sure if this is necessary so I included it anyway
                 }
             }
             //if execution reaches here, no class periods are in session, so therefore school must be out
@@ -107,27 +105,13 @@
 
 
         function checkGivenTimeIsBeforeCurrentTime( givenTime ) {
-
-
             if (givenTime.hours < currentHours) {
                 //given time is before current time
                 return true
             } else if (givenTime.hours == currentHours && givenTime.minutes <= currentMinutes) {
                 //hours match and given minutes are before or the same as current minutes
                 return true
-            } else {
-                //given time is after current time
-                return false
-            }
-
-
-            // console.log(timeCheck)
-            // if (checkIfGivenTimeIsBeforeCurrentTime) {
-            //     return timeCheck
-            // } else {
-            //     return !timeCheck
-            // }
-
+            } else { return false }
         }
         function checkStartTime(classPeriod) { return checkGivenTimeIsBeforeCurrentTime(classPeriod.startTime)}
         function checkEndTime(classPeriod) { return !checkGivenTimeIsBeforeCurrentTime(classPeriod.endTime)}
@@ -137,11 +121,11 @@
             if (currentClassPeriodIndex >= 0) {
                 currentClassEndTime = school.schedule[currentClassPeriodIndex].endTime;
 
-            hoursUntilEnd = currentClassEndTime.hours - currentHours;
-            minutesUntilEnd = currentClassEndTime.minutes - currentMinutes;
-            secondsUntilEnd = 60 - currentSeconds; //because there are no seconds in the schedule, we assume it ends at the full minute
+                hoursUntilEnd = currentClassEndTime.hours - currentHours;
+                minutesUntilEnd = currentClassEndTime.minutes - currentMinutes;
+                secondsUntilEnd = 60 - currentSeconds; //because there are no seconds in the schedule, we assume it ends at the full minute
 
-            return {hours: hoursUntilEnd, minutes: minutesUntilEnd, seconds: secondsUntilEnd};
+                return {hours: hoursUntilEnd, minutes: minutesUntilEnd, seconds: secondsUntilEnd};
             } else {
                 return {hours: 0, minutes: 0, seconds: 0};
             }
