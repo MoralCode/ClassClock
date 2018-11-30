@@ -50,7 +50,7 @@
 
         <!-- <p class="centered bottomSpace" id="sentence"></p> -->
 
-        <a class="navbutton" onclick="navigate()"><i class="fas fa-cog"></i></a>
+        <a class="navbutton" href="settings.html"><i class="fas fa-cog"></i></a>
         
         <section id="cookienotice">This website uses cookies. Dont like it? Dont use it.</section>
     </body>
@@ -68,9 +68,15 @@
         document.getElementById("cookienotice").style.visibility = 'hidden';
     }
 
-    function navigate() {
-        event.preventDefault();
-        window.location = "settings.html"
+    
+    var a=document.getElementsByTagName("a");
+    for(var i=0;i<a.length;i++)
+    {
+        a[i].onclick=function()
+        {
+            window.location=this.getAttribute("href");
+            return false
+        }
     }
         
     
