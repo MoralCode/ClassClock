@@ -3,6 +3,7 @@ var currentMinutes = 0;
 var currentSeconds = 0;
 
 var currentClassPeriodIndex = -1;
+//nextClassPeriodIndex
 
 var selectedSchedule = 0;
 
@@ -111,11 +112,11 @@ var data = {
             {
                 name: "Passing Period",
                 startTime: {hours: 14, minutes:03},
-                endTime: {hours: 14, minutes:08}
+                endTime: {hours: 14, minutes:8}
             },
             {
                 name: "4th Period",
-                startTime: {hours: 14, minutes:08},
+                startTime: {hours: 14, minutes:8},
                 endTime: {hours: 15, minutes:30}
             }
         ],
@@ -188,16 +189,28 @@ function update() {
 
 function updateText() {
     document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString()
+    document.getElementById("nextClass").innerHTML = getClassName(currentClassPeriodIndex+1)
+    document.getElementById("currentClass").innerHTML = getClassName(currentClassPeriodIndex)
     document.getElementById('sentence').innerHTML = getSummaryString()
     document.getElementById('time').innerHTML = getTimeString();
+    document.getElementById("schedule").innerHTML = "You have selected the  <strong>" + getSelectedScheduleName() + "</strong> schedule."
+}
+
+function getSelectedScheduleName() {
+    switch(selectedSchedule) {
+        case 1:
+            return "Tues/Wed (Support Seminar)"
+        case 2:
+            return "Thursday (Early Release)"
+        default:
+            return "Mon/Fri (Regular)"
+    }
 }
 
 function getSummaryString() {
-    if (currentClassPeriodIndex >= 0) {
-        return "It is currently <strong>" + getTimeString() + "</strong>. You are currently in <strong>" + schedule[selectedSchedule][currentClassPeriodIndex].name + "</strong>. You have <strong>" + getTimeToEndOfCurrentClassString() + "</strong> until this class ends."
-    } else {
+    if (currentClassPeriodIndex < 0) {
         return "School is not currently in session. Please check back later"
-    }
+    } else {return "" }
 
     //other options
     //"it is currently ##:##:##. (period) ends in ##:##"
@@ -240,25 +253,46 @@ function checkStartTime(classPeriod) { return checkGivenTimeIsBeforeCurrentTime(
 function checkEndTime(classPeriod) { return !checkGivenTimeIsBeforeCurrentTime(classPeriod.endTime)}
 
 
-function getTimeToEndOfCurrentClass() {
+function getTimeToTime(time) {
     if (currentClassPeriodIndex >= 0) {
-        currentClassEndTime = data.schedule[selectedSchedule][currentClassPeriodIndex].endTime;
 
-        hoursUntilEnd = currentClassEndTime.hours - currentHours;
-        minutesUntilEnd = currentClassEndTime.minutes - currentMinutes;
-        secondsUntilEnd = 60 - currentSeconds; //because there are no seconds in the schedule, we assume it ends at the full minute
+        hoursUntilEnd = time.hours - currentHours;
+        minutesUntilEnd = time.minutes - currentMinutes;
+        secondsUntilEnd = time.seconds - currentSeconds; //because there are no seconds in the schedule, we assume it ends at the full minute
 
         return {hours: hoursUntilEnd, minutes: minutesUntilEnd, seconds: secondsUntilEnd};
-    } else {
-        return {hours: 0, minutes: 0, seconds: 0}; //maybe add time until next class?
     }
 }
 
 function getTimeToEndOfCurrentClassString() {
-    timeToEnd = getTimeToEndOfCurrentClass();
-    return timeToEnd.hours.toString().padStart(2, '0') + ":" + timeToEnd.minutes.toString().padStart(2, '0') + ":" + timeToEnd.seconds.toString().padStart(2, '0');
+    if (currentClassPeriodIndex >= 0) {
+        timeToEnd = getTimeToTime(data.schedule[selectedSchedule][currentClassPeriodIndex].endTime);
+        return timeToEnd.hours.toString().padStart(2, '0') + ":" + timeToEnd.minutes.toString().padStart(2, '0') + ":" + timeToEnd.seconds.toString().padStart(2, '0');
+    } else {
+        return "No Class"
+    }
 }
 
+function getTimeToStartOfNextClassString() {
+
+    nextClassStartTime = data.schedule[selectedSchedule][currentClassPeriodIndex+1].startTime
+
+    if (currentClassPeriodIndex >= 0 && typeof nextClassStartTime !== 'undefined' ) {
+        timeToEnd = getTimeToTime(nextClassStartTime);
+        return timeToEnd.hours.toString().padStart(2, '0') + ":" + timeToEnd.minutes.toString().padStart(2, '0') + ":" + timeToEnd.seconds.toString().padStart(2, '0');
+    } else {
+        return "No More Classes"
+    }
+}
+
+
+function getClassName(index) {
+    if (index >= 0 && index < data.schedule[selectedSchedule].count) {
+        return data.schedule[selectedSchedule][index].name.toString()
+    } else {
+        return "No Class"
+    }
+}
 
 
 
