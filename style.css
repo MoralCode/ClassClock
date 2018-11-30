@@ -1,0 +1,19 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: #FFFFFF;
+}
+
+
+
+.centered {
+    margin: 0 auto;
+    display: block;
+    text-align: center
+}
+
+.pad {
+    margin: 50 auto;
+}
