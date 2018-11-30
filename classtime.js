@@ -261,7 +261,7 @@ function getTimeToTime(time) {
 
         if (minutesUntilEnd < 0) {
             hoursUntilEnd-=1
-            minutesUntilEnd = 60+minutesUntilEnd
+            minutesUntilEnd = 59+minutesUntilEnd
         }
 
         if (typeof time.seconds == 'undefined' ) {
