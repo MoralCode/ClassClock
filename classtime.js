@@ -274,11 +274,8 @@ function getTimeToEndOfCurrentClassString() {
 }
 
 function getTimeToStartOfNextClassString() {
-
-    nextClassStartTime = data.schedule[selectedSchedule][currentClassPeriodIndex+1].startTime
-
-    if (currentClassPeriodIndex >= 0 && typeof nextClassStartTime !== 'undefined' ) {
-        timeToEnd = getTimeToTime(nextClassStartTime);
+    if (currentClassPeriodIndex >= 0 && currentClassPeriodIndex+1 < data.schedule[selectedSchedule].length ) {
+        timeToEnd = getTimeToTime(data.schedule[selectedSchedule][currentClassPeriodIndex+1].startTime);
         return timeToEnd.hours.toString().padStart(2, '0') + ":" + timeToEnd.minutes.toString().padStart(2, '0') + ":" + timeToEnd.seconds.toString().padStart(2, '0');
     } else {
         return "No More Classes"
@@ -287,7 +284,7 @@ function getTimeToStartOfNextClassString() {
 
 
 function getClassName(index) {
-    if (index >= 0 && index < data.schedule[selectedSchedule].count) {
+    if (index >= 0 && index < data.schedule[selectedSchedule].length) {
         return data.schedule[selectedSchedule][index].name.toString()
     } else {
         return "No Class"
