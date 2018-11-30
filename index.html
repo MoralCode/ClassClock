@@ -35,18 +35,22 @@
             var currentClassPeriodIndex = 0;
 
 
-        var schedule = [
-            {
-                name: "1st Period",
-                startTime: {hours: 13, minutes:30},
-                endTime: {hours: 14, minutes:29}
-            },
-            {
-                name: "2nd Period",
-                startTime: {hours: 14, minutes:30},
-                endTime: {hours: 16, minutes:50}
-            }
+        var school = {
+            fullName: "",
+            shortName: "",
+            schedule: [
+                {
+                    name: "1st Period",
+                    startTime: {hours: 13, minutes:30},
+                    endTime: {hours: 14, minutes:29}
+                },
+                {
+                    name: "2nd Period",
+                    startTime: {hours: 14, minutes:30},
+                    endTime: {hours: 16, minutes:50}
+                }
             ]
+            };
 
 
 
@@ -56,7 +60,7 @@
             document.getElementById('time').innerHTML = getTimeString();
 
             currentClassPeriodIndex = getCurrentClassPeriodIndex();
-            document.getElementById('currentClass').innerHTML = schedule[currentClassPeriodIndex].name;
+            //document.getElementById('currentClass').innerHTML = school.schedule[currentClassPeriodIndex].name;
 
             document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString()
 
@@ -91,8 +95,8 @@
         
         function getCurrentClassPeriodIndex() {
             //using for over forEach() because we are breaking out of the loop early
-            for (let i = 0; i < schedule.length; i++) {
-                if (checkStartTime(schedule[i]) && checkEndTime(schedule[i])) {
+            for (let i = 0; i < school.schedule.length; i++) {
+                if (checkStartTime(school.schedule[i]) && checkEndTime(school.schedule[i])) {
                     return i
                     break;
                 }
@@ -129,7 +133,7 @@
 
 
         function getTimeToEndOfCurrentClass() {
-            currentClassEndTime = schedule[currentClassPeriodIndex].endTime;
+                currentClassEndTime = school.schedule[currentClassPeriodIndex].endTime;
 
             hoursUntilEnd = currentClassEndTime.hours - currentHours;
             minutesUntilEnd = currentClassEndTime.minutes - currentMinutes;
