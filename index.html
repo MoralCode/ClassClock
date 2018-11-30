@@ -22,6 +22,24 @@
             #settings:hover {
                 background-color: grey;
             }
+
+            @keyframes hide {
+                /* from {visibility: visible;}
+                to {visibility: hidden;} */
+                0% { opacity: 1; visibility: visible; }
+                100% { opacity: 0; visibility: hidden; }
+            }
+
+            section#cookienotice {
+                text-align: center;
+                padding: 5px 0;
+                width: 100%;
+                position: absolute;
+                bottom: 0;
+                border-top-right-radius: 10px;
+                border-top-left-radius: 10px;
+                background-color: gray;
+            }
         </style>
     </head>
     <body onload="update()">
@@ -35,6 +53,24 @@
 
         <a href="#" id="settings"><i class="fas fa-cog"></i></a>
 
-        <script src="classtime.js"></script>
+        
+        <section id="cookienotice">This website uses cookies for the purposes of saving your settings. You have been warned.</section>
     </body>
+    <script>
+    
+    setTimeout( fade, 5000);
+
+    function fade() {
+        document.getElementById("cookienotice").style.animationName = 'hide';
+        document.getElementById("cookienotice").style.animationDuration = '5s';
+        setTimeout( hide, 5000);
+
+    }
+    function hide() {
+        document.getElementById("cookienotice").style.visibility = 'hidden';
+    }
+        
+    
+    </script>
+    <script src="classtime.js"></script>
 </html>
