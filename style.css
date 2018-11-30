@@ -3,7 +3,12 @@ html, body {
     padding: 0;
 }
 body {
-    background-color: #FFFFFF;
+    background-color: #b7d3e1;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.time {
+    font-family: 'Courier New', Courier, monospace;
 }
 
 
