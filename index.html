@@ -35,7 +35,7 @@
             var currentClassPeriodIndex = -1;
 
 
-        var school = {
+        var data = {
             fullName: "",
             shortName: "",
             schedule: [
@@ -58,9 +58,9 @@
         function update() {
             updateTime();
 
-            if (typeof school !== 'undefined') {
+            if (typeof data !== 'undefined') {
                 currentClassPeriodIndex = getCurrentClassPeriodIndex();
-                //document.getElementById('currentClass').innerHTML = school.schedule[currentClassPeriodIndex].name;
+                //document.getElementById('currentClass').innerHTML = data.schedule[currentClassPeriodIndex].name;
 
                 updateText();
                 var t = setTimeout(update, 500);
@@ -96,8 +96,8 @@
         
         function getCurrentClassPeriodIndex() {
             //using for over forEach() because we are breaking out of the loop early
-            for (let i = 0; i < school.schedule.length; i++) {
-                if (checkStartTime(school.schedule[i]) && checkEndTime(school.schedule[i])) {
+            for (let i = 0; i < data.schedule.length; i++) {
+                if (checkStartTime(data.schedule[i]) && checkEndTime(data.schedule[i])) {
                     return i
                     break;//not sure if this is necessary so I included it anyway
                 }
@@ -122,7 +122,7 @@
 
         function getTimeToEndOfCurrentClass() {
             if (currentClassPeriodIndex >= 0) {
-                currentClassEndTime = school.schedule[currentClassPeriodIndex].endTime;
+                currentClassEndTime = data.schedule[currentClassPeriodIndex].endTime;
 
                 hoursUntilEnd = currentClassEndTime.hours - currentHours;
                 minutesUntilEnd = currentClassEndTime.minutes - currentMinutes;
