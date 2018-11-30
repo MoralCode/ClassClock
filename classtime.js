@@ -258,7 +258,12 @@ function getTimeToTime(time) {
 
         hoursUntilEnd = time.hours - currentHours;
         minutesUntilEnd = time.minutes - currentMinutes;
-        secondsUntilEnd = time.seconds - currentSeconds; //because there are no seconds in the schedule, we assume it ends at the full minute
+        console.log(time.seconds)
+        if (typeof time.seconds == 'undefined' ) {
+            secondsUntilEnd = 60-currentSeconds
+        }else {
+            secondsUntilEnd = time.seconds - currentSeconds; //because there are no seconds in the schedule, we assume it ends at the full minute
+        }
 
         return {hours: hoursUntilEnd, minutes: minutesUntilEnd, seconds: secondsUntilEnd};
     }
