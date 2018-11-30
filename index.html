@@ -1,7 +1,8 @@
 <html>
     <head>
-            <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-            <meta content="utf-8" http-equiv="encoding">
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
             
             
         <style>
@@ -15,6 +16,19 @@
                 margin: 50 auto;
             }
 
+            #settings {
+                font-size: 32px;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                padding: 2px;
+                border-top-right-radius: 10px;
+                color: black;
+            }
+
+            #settings:hover {
+                background-color: grey;
+            }
         </style>
     </head>
     <body onload="update()">
@@ -25,6 +39,8 @@
         <h1 class="centered pad" id="timeToEndOfClass"></h1>
 
         <p class="centered pad" id="sentence"></p>
+
+        <a href="#" id="settings"><i class="fas fa-cog"></i></a>
 
         <script>
 
