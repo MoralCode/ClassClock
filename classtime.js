@@ -222,14 +222,13 @@ function getSummaryString() {
 }
 
 function updateTime() {
-    var today = new Date();
+    currentDate = new Date();
     
-    currentDay = today.getDay(); // Sunday - Saturday : 0 - 6
+    currentDay = currentDate.getDay(); // Sunday - Saturday : 0 - 6
 
-    currentHours = today.getHours();
-    currentMinutes = today.getMinutes();
-    currentSeconds = today.getSeconds();
-    currentDate = today
+    currentHours = currentDate.getHours();
+    currentMinutes = currentDate.getMinutes();
+    currentSeconds = currentDate.getSeconds();
 }
 
 function getTimeString() { return currentDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true }) }
