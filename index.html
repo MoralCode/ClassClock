@@ -13,26 +13,6 @@
         <link rel="apple-touch-icon" sizes="192x192" href="icons/classtime-192.png">
         <link rel="manifest" href="/manifest.json">
         <title>ClassTime</title>
-            
-        <style>
-/*https://stackoverflow.com/a/30065292 */
-            @keyframes hide {
-                0% { opacity: 1; visibility: visible; }
-                100% { opacity: 0; visibility: hidden; }
-            }
-
-            section#cookienotice {
-                font-size: 16px;
-                text-align: center;
-                padding: 5px 0;
-                width: 100%;
-                position: absolute;
-                bottom: 0;
-                border-top-right-radius: 10px;
-                border-top-left-radius: 10px;
-                background-color: gray;
-            }
-        </style>
     </head>
     <body onload="update()">
         <br>
@@ -51,37 +31,6 @@
         <h1 class="centered bottomSpace" id="nextClass"></h1>
 
         <!-- <p class="centered bottomSpace" id="sentence"></p> -->
-
-        <a class="navbutton" href="settings.html"><i class="fas fa-cog"></i></a>
-        
-        <section id="cookienotice">This website uses cookies. Dont like it? Dont use it.</section>
     </body>
-    <script>
-    
-    setTimeout( fade, 5000);
-
-    function fade() {
-        document.getElementById("cookienotice").style.animationName = 'hide';
-        document.getElementById("cookienotice").style.animationDuration = '5s';
-        setTimeout( hide, 5000);
-
-    }
-    function hide() {
-        document.getElementById("cookienotice").style.visibility = 'hidden';
-    }
-
-
-    var a=document.getElementsByTagName("a");
-    for(var i=0;i<a.length;i++)
-    {
-        a[i].onclick=function()
-        {
-            window.location=this.getAttribute("href");
-            return false
-        }
-    }
-        
-    
-    </script>
     <script src="classtime.js"></script>
 </html>
