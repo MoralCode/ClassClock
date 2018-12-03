@@ -213,7 +213,7 @@ function getCurrentScheduleName() {
 }
 
 function classIsInSession() {
-    return (currentClassPeriodIndex >= 0 && currentScheduleIndex > 0)
+    return (currentClassPeriodIndex >= 0 && currentScheduleIndex >= 0)
 }
 
 function getSummaryString() {
