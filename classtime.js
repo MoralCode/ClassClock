@@ -1,6 +1,7 @@
 var currentHours = 0;
 var currentMinutes = 0; 
 var currentSeconds = 0;
+var currentDate;
 
 var currentClassPeriodIndex = -1;
 //nextClassPeriodIndex
@@ -222,9 +223,10 @@ function updateTime() {
     currentHours = today.getHours();
     currentMinutes = today.getMinutes();
     currentSeconds = today.getSeconds();
+    currentDate = today
 }
 
-function getTimeString() { return currentHours.toString().padStart(2, '0') + ":" + currentMinutes.toString().padStart(2, '0') + ":" + currentSeconds.toString().padStart(2, '0'); }
+function getTimeString() { return currentDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true }) }
 
 function getCurrentClassPeriodIndex() {
     //using for over forEach() because we are breaking out of the loop early

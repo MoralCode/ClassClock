@@ -1,18 +1,37 @@
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationName { 
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
 html, body {
     margin: 0;
     padding: 0;
+    background: linear-gradient(270deg, #5e8596, #829ea9, #b06673, #ce6e70, #7f5468);
+    background-size: 1000% 1000%;
+    -webkit-animation: AnimationName 30s ease infinite;
+    -moz-animation: AnimationName 30s ease infinite;
+    animation: AnimationName 30s ease infinite;
 }
 body {
-    background-color: #b7d3e1;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
+    color: white;
     font-size: 20px;
 }
 
 .time {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Play', Courier, monospace;
 }
-
-
 
 .centered {
     margin: 0 auto;
@@ -34,9 +53,10 @@ body {
     left: 0;
     padding: 2px;
     border-bottom-right-radius: 10px;
-    color: black;
+    color: white;
 }
 
 .navButton:hover {
     background-color: grey;
 }
+
