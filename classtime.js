@@ -1,3 +1,4 @@
+var currentDay = 0;
 var currentHours = 0;
 var currentMinutes = 0; 
 var currentSeconds = 0;
@@ -6,168 +7,177 @@ var currentDate;
 var currentClassPeriodIndex = -1;
 //nextClassPeriodIndex
 
-var selectedSchedule = 0;
+var currentScheduleIndex = -1;
 
-if (typeof getCookie("schedule") !== 'undefined') {
-    selectedSchedule = Number(getCookie("schedule"))
-}
 
 var data = {
     fullName: "",
     shortName: "",
     //order is as is on the school website
-    schedule: [
-        [
-            {
-                name: "1st Period",
-                startTime: {hours: 8, minutes:25},
-                endTime: {hours: 9, minutes:55}
-            },
-            {
-                name: "TSCT",
-                startTime: {hours: 9, minutes:55},
-                endTime: {hours: 10, minutes:10}
-            },
-            {
-                name: "Passing Period",
-                startTime: {hours: 10, minutes:10},
-                endTime: {hours: 10, minutes:15}
-            },
-            {
-                name: "2nd Period",
-                startTime: {hours: 10, minutes:15},
-                endTime: {hours: 11, minutes:45}
-            },
-            {
-                name: "Lunch",
-                startTime: {hours: 11, minutes:45},
-                endTime: {hours: 12, minutes:20}
-            },
-            {
-                name: "Passing Period",
-                startTime: {hours: 12, minutes:20},
-                endTime: {hours: 12, minutes:25}
-            },
-            {
-                name: "3rd Period",
-                startTime: {hours: 12, minutes:25},
-                endTime: {hours: 13, minutes:55}
-            },
-            {
-                name: "Passing Period",
-                startTime: {hours: 13, minutes:55},
-                endTime: {hours: 14, minutes:00}
-            },
-            {
-                name: "4th Period",
-                startTime: {hours: 14, minutes:00},
-                endTime: {hours: 15, minutes:30}
-            }
-        ],
-        [
-            {
-                name: "1st Period",
-                startTime: {hours: 8, minutes:25},
-                endTime: {hours: 9, minutes:47}
-            },
-            {
-                name: "TSCT",
-                startTime: {hours: 9, minutes:47},
-                endTime: {hours: 9, minutes:57}
-            },
-            {
-                name: "Passing Period",
-                startTime: {hours: 9, minutes:57},
-                endTime: {hours: 10, minutes:02}
-            },
-            {
-                name: "Support Seminar",
-                startTime: {hours: 10, minutes:02},
-                endTime: {hours: 10, minutes:34}
-            },
-            {
-                name: "Passing Period",
-                startTime: {hours: 10, minutes:34},
-                endTime: {hours: 10, minutes:39}
-            },
-            {
-                name: "2nd Period",
-                startTime: {hours: 10, minutes:39},
-                endTime: {hours: 12, minutes:01}
-            },
-            {
-                name: "Lunch",
-                startTime: {hours: 12, minutes:01},
-                endTime: {hours: 12, minutes:36}
-            },
-            {
-                name: "Passing Period",
-                startTime: {hours: 12, minutes:36},
-                endTime: {hours: 12, minutes:41}
-            },
-            {
-                name: "3rd Period",
-                startTime: {hours: 12, minutes:41},
-                endTime: {hours: 14, minutes:03}
-            },
-            {
-                name: "Passing Period",
-                startTime: {hours: 14, minutes:03},
-                endTime: {hours: 14, minutes:8}
-            },
-            {
-                name: "4th Period",
-                startTime: {hours: 14, minutes:8},
-                endTime: {hours: 15, minutes:30}
-            }
-        ],
-        [
-            {
-                name: "1st Period",
-                startTime: {hours: 8, minutes:25},
-                endTime: {hours: 9, minutes:50}
-            },
-            {
-                name: "TSCT",
-                startTime: {hours: 9, minutes:50},
-                endTime: {hours: 10, minutes:00}
-            },
-            {
-                name: "Passing Period",
-                startTime: {hours: 10, minutes:00},
-                endTime: {hours: 10, minutes:05}
-            },
-            {
-                name: "2nd Period",
-                startTime: {hours: 10, minutes:05},
-                endTime: {hours: 11, minutes:30}
-            },
-            {
-                name: "Lunch",
-                startTime: {hours: 11, minutes:30},
-                endTime: {hours: 12, minutes:05}
-            },
-            {
-                name: "Passing Period",
-                startTime: {hours: 12, minutes:05},
-                endTime: {hours: 12, minutes:10}
-            },
-            {
-                name: "3rd Period",
-                startTime: {hours: 12, minutes:10},
-                endTime: {hours: 13, minutes:35}
-            },
-            {
-                name: "Passing Period",
-                startTime: {hours: 13, minutes:35},
-                endTime: {hours: 13, minutes:40}
-            },
-            {
-                name: "4th Period",
-                startTime: {hours: 13, minutes:40},
-                endTime: {hours: 15, minutes:05}
-            }
-        ]
+    schedules: [
+        {
+            name: "Mon/Fri (Regular)",
+            days: [1, 5],
+            classes: [
+                {
+                    name: "1st Period",
+                    startTime: {hours: 8, minutes:25},
+                    endTime: {hours: 9, minutes:55}
+                },
+                {
+                    name: "TSCT",
+                    startTime: {hours: 9, minutes:55},
+                    endTime: {hours: 10, minutes:10}
+                },
+                {
+                    name: "Passing Period",
+                    startTime: {hours: 10, minutes:10},
+                    endTime: {hours: 10, minutes:15}
+                },
+                {
+                    name: "2nd Period",
+                    startTime: {hours: 10, minutes:15},
+                    endTime: {hours: 11, minutes:45}
+                },
+                {
+                    name: "Lunch",
+                    startTime: {hours: 11, minutes:45},
+                    endTime: {hours: 12, minutes:20}
+                },
+                {
+                    name: "Passing Period",
+                    startTime: {hours: 12, minutes:20},
+                    endTime: {hours: 12, minutes:25}
+                },
+                {
+                    name: "3rd Period",
+                    startTime: {hours: 12, minutes:25},
+                    endTime: {hours: 13, minutes:55}
+                },
+                {
+                    name: "Passing Period",
+                    startTime: {hours: 13, minutes:55},
+                    endTime: {hours: 14, minutes:00}
+                },
+                {
+                    name: "4th Period",
+                    startTime: {hours: 14, minutes:00},
+                    endTime: {hours: 15, minutes:30}
+                }
+            ]
+        },
+        {
+            name: "Tues/Wed (Support Seminar)",
+            days: [2, 3],
+            classes: [
+                {
+                    name: "1st Period",
+                    startTime: {hours: 8, minutes:25},
+                    endTime: {hours: 9, minutes:47}
+                },
+                {
+                    name: "TSCT",
+                    startTime: {hours: 9, minutes:47},
+                    endTime: {hours: 9, minutes:57}
+                },
+                {
+                    name: "Passing Period",
+                    startTime: {hours: 9, minutes:57},
+                    endTime: {hours: 10, minutes:02}
+                },
+                {
+                    name: "Support Seminar",
+                    startTime: {hours: 10, minutes:02},
+                    endTime: {hours: 10, minutes:34}
+                },
+                {
+                    name: "Passing Period",
+                    startTime: {hours: 10, minutes:34},
+                    endTime: {hours: 10, minutes:39}
+                },
+                {
+                    name: "2nd Period",
+                    startTime: {hours: 10, minutes:39},
+                    endTime: {hours: 12, minutes:01}
+                },
+                {
+                    name: "Lunch",
+                    startTime: {hours: 12, minutes:01},
+                    endTime: {hours: 12, minutes:36}
+                },
+                {
+                    name: "Passing Period",
+                    startTime: {hours: 12, minutes:36},
+                    endTime: {hours: 12, minutes:41}
+                },
+                {
+                    name: "3rd Period",
+                    startTime: {hours: 12, minutes:41},
+                    endTime: {hours: 14, minutes:03}
+                },
+                {
+                    name: "Passing Period",
+                    startTime: {hours: 14, minutes:03},
+                    endTime: {hours: 14, minutes:8}
+                },
+                {
+                    name: "4th Period",
+                    startTime: {hours: 14, minutes:8},
+                    endTime: {hours: 15, minutes:30}
+                }
+            ],
+        },
+        {
+            name: "Thursday (Early Release)",
+            days: [4],
+            classes: [
+                {
+                    name: "1st Period",
+                    startTime: {hours: 8, minutes:25},
+                    endTime: {hours: 9, minutes:50}
+                },
+                {
+                    name: "TSCT",
+                    startTime: {hours: 9, minutes:50},
+                    endTime: {hours: 10, minutes:00}
+                },
+                {
+                    name: "Passing Period",
+                    startTime: {hours: 10, minutes:00},
+                    endTime: {hours: 10, minutes:05}
+                },
+                {
+                    name: "2nd Period",
+                    startTime: {hours: 10, minutes:05},
+                    endTime: {hours: 11, minutes:30}
+                },
+                {
+                    name: "Lunch",
+                    startTime: {hours: 11, minutes:30},
+                    endTime: {hours: 12, minutes:05}
+                },
+                {
+                    name: "Passing Period",
+                    startTime: {hours: 12, minutes:05},
+                    endTime: {hours: 12, minutes:10}
+                },
+                {
+                    name: "3rd Period",
+                    startTime: {hours: 12, minutes:10},
+                    endTime: {hours: 13, minutes:35}
+                },
+                {
+                    name: "Passing Period",
+                    startTime: {hours: 13, minutes:35},
+                    endTime: {hours: 13, minutes:40}
+                },
+                {
+                    name: "4th Period",
+                    startTime: {hours: 13, minutes:40},
+                    endTime: {hours: 15, minutes:05}
+                }
+            ]
+        }
     ]
 };
 
@@ -180,6 +190,7 @@ function update() {
     updateTime();
 
     if (typeof data !== 'undefined') {
+        currentScheduleIndex = getCurrentScheduleIndex();
         currentClassPeriodIndex = getCurrentClassPeriodIndex();
         //document.getElementById('currentClass').innerHTML = data.schedule[selectedSchedule][currentClassPeriodIndex].name;
 
@@ -194,18 +205,11 @@ function updateText() {
     document.getElementById("currentClass").innerHTML = getClassName(currentClassPeriodIndex)
     //document.getElementById('sentence').innerHTML = getSummaryString()
     document.getElementById('time').innerHTML = getTimeString();
-    document.getElementById("schedule").innerHTML = "You have selected the  <strong>" + getSelectedScheduleName() + "</strong> schedule."
+    document.getElementById("schedule").innerHTML = "You have selected the  <strong>" + getCurrentScheduleName() + "</strong> schedule."
 }
 
-function getSelectedScheduleName() {
-    switch(selectedSchedule) {
-        case 1:
-            return "Tues/Wed (Support Seminar)"
-        case 2:
-            return "Thursday (Early Release)"
-        default:
-            return "Mon/Fri (Regular)"
-    }
+function getCurrentScheduleName() {
+    return data.schedules[currentScheduleIndex].name
 }
 
 function getSummaryString() {
@@ -219,6 +223,8 @@ function getSummaryString() {
 
 function updateTime() {
     var today = new Date();
+    
+    currentDay = today.getDay(); // Sunday - Saturday : 0 - 6
 
     currentHours = today.getHours();
     currentMinutes = today.getMinutes();
@@ -230,8 +236,8 @@ function getTimeString() { return currentDate.toLocaleString('en-US', { hour: 'n
 
 function getCurrentClassPeriodIndex() {
     //using for over forEach() because we are breaking out of the loop early
-    for (let i = 0; i < data.schedule[selectedSchedule].length; i++) {
-        if (checkStartTime(data.schedule[selectedSchedule][i]) && checkEndTime(data.schedule[selectedSchedule][i])) {
+    for (let i = 0; i < data.schedules[currentScheduleIndex].classes.length; i++) {
+        if (checkStartTime(data.schedules[currentScheduleIndex].classes[i]) && checkEndTime(data.schedules[currentScheduleIndex].classes[i])) {
             return i
             break;//not sure if this is necessary so I included it anyway
         }
@@ -240,6 +246,17 @@ function getCurrentClassPeriodIndex() {
     return -1
 }
 
+function getCurrentScheduleIndex() {
+    //using for over forEach() because we are breaking out of the loop early
+    for (let i = 0; i < data.schedules.length; i++) {
+        if (currentDay in data.schedules[i].days) {
+            return i
+            break;//not sure if this is necessary so I included it anyway
+        }
+    }
+    //if execution reaches here, no schedules were found for today, so it must be a no school day
+    return -1
+}
 
 function checkGivenTimeIsBeforeCurrentTime( givenTime ) {
     if (givenTime.hours < currentHours) {
@@ -278,7 +295,7 @@ function getTimeToTime(time) {
 
 function getTimeToEndOfCurrentClassString() {
     if (currentClassPeriodIndex >= 0) {
-        timeToEnd = getTimeToTime(data.schedule[selectedSchedule][currentClassPeriodIndex].endTime);
+        timeToEnd = getTimeToTime(data.schedules[currentScheduleIndex].classes[currentClassPeriodIndex].endTime);
         return timeToEnd.hours.toString().padStart(2, '0') + ":" + timeToEnd.minutes.toString().padStart(2, '0') + ":" + timeToEnd.seconds.toString().padStart(2, '0');
     } else {
         return "No Class"
@@ -287,7 +304,7 @@ function getTimeToEndOfCurrentClassString() {
 
 function getTimeToStartOfNextClassString() {
     if (currentClassPeriodIndex >= 0 && currentClassPeriodIndex+1 < data.schedule[selectedSchedule].length ) {
-        timeToEnd = getTimeToTime(data.schedule[selectedSchedule][currentClassPeriodIndex+1].startTime);
+        timeToEnd = getTimeToTime(data.schedules[currentScheduleIndex].classes[currentClassPeriodIndex+1].startTime);
         return timeToEnd.hours.toString().padStart(2, '0') + ":" + timeToEnd.minutes.toString().padStart(2, '0') + ":" + timeToEnd.seconds.toString().padStart(2, '0');
     } else {
         return "No More Classes"
@@ -296,36 +313,9 @@ function getTimeToStartOfNextClassString() {
 
 
 function getClassName(index) {
-    if (index >= 0 && index < data.schedule[selectedSchedule].length) {
-        return data.schedule[selectedSchedule][index].name.toString()
+    if (index >= 0 && index < data.schedules[currentScheduleIndex].classes.length) {
+        return data.schedules[currentScheduleIndex].classes[index].name.toString()
     } else {
         return "No Class"
     }
 }
-
-
-
-//https://www.w3schools.com/js/js_cookies.asp
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
-
-function setCookie(cname, cvalue, exdays=7) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
-
