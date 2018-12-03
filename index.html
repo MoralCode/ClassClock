@@ -32,6 +32,22 @@
         <h1 class="centered bottomSpace" id="nextClass"></h1>
 
         <!-- <p class="centered bottomSpace" id="sentence"></p> -->
+
+        <a href="schedule.html" class="centered topSpace">View Schedule</a>
+
     </body>
     <script src="classtime.js"></script>
+    <script>
+        
+        var a=document.getElementsByTagName("a");
+        for(var i=0;i<a.length;i++)
+        {
+            a[i].onclick=function()
+            {
+                window.location=this.getAttribute("href");
+                return false
+            }
+        }
+    
+    </script>
 </html>

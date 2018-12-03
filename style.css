@@ -60,3 +60,10 @@ body {
     background-color: grey;
 }
 
+a {
+    color: whitesmoke; 
+}
+a:hover, a:active {
+    font-weight: bold
+}
+
