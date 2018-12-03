@@ -205,7 +205,7 @@ function updateText() {
     document.getElementById("currentClass").innerHTML = getClassName(currentClassPeriodIndex)
     //document.getElementById('sentence').innerHTML = getSummaryString()
     document.getElementById('time').innerHTML = getTimeString();
-    document.getElementById("schedule").innerHTML = "You have selected the  <strong>" + getCurrentScheduleName() + "</strong> schedule."
+    document.getElementById("schedule").innerHTML = "Today is a <strong>" + getCurrentScheduleName() + "</strong> schedule."
 }
 
 function getCurrentScheduleName() {
