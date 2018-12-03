@@ -15,12 +15,16 @@
     <body>
         <a class="navbutton" href="index.html"><i class="fas fa-home"></i></a>
     
+
         
     </body>
 
     <script src="classtime.js"></script>
     <script>
-        
+
+        currentScheduleIndex = getCurrentScheduleIndex();
+        currentClassPeriodIndex = getCurrentClassPeriodIndex();        showSchedule();
+
         var a=document.getElementsByTagName("a");
         for(var i=0;i<a.length;i++)
         {
@@ -32,5 +36,4 @@
         }
     
     </script>
-
 </html>

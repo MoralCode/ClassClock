@@ -322,3 +322,56 @@ function getClassName(index) {
         return "No Class"
     }
 }
+
+// function showSchedule() {
+//     for (let i = 0; i < data.schedules[currentScheduleIndex].classes.length; i++) {
+
+//         classPeriod = data.schedules[currentScheduleIndex].classes[i];
+
+
+        
+//     }
+
+// }
+
+
+
+function showSchedule() {
+    var body = document.getElementsByTagName('body')[0];
+    var tbl = document.createElement('table');
+    // tbl.style.width = '100%';
+    tbl.setAttribute('border', '1');
+    var tbdy = document.createElement('tbody');
+
+    for (var i = 0; i < data.schedules[currentScheduleIndex].classes.length; i++) {
+        var tr = document.createElement('tr');
+        
+        //for (var j = 0; j < 3; j++) {
+
+            var td = document.createElement('td');
+            td.innerHTML = data.schedules[currentScheduleIndex].classes[i].name
+            //td.appendChild(document.createTextNode(data.schedules[currentScheduleIndex].classes[i].name))
+            tr.appendChild(td)
+
+            var td = document.createElement('td');
+            td.innerHTML = getTimeString(data.schedules[currentScheduleIndex].classes[i].startTime)
+            //td.appendChild(document.createTextNode(data.schedules[currentScheduleIndex].classes[i].name))
+            tr.appendChild(td)
+
+            
+            var td = document.createElement('td');
+            td.innerHTML = getTimeString(data.schedules[currentScheduleIndex].classes[i].endTime)
+            //td.appendChild(document.createTextNode(data.schedules[currentScheduleIndex].classes[i].name))
+            tr.appendChild(td)
+
+        // }
+        tbdy.appendChild(tr);
+    }
+    tbl.appendChild(tbdy);
+    body.appendChild(tbl)
+  }
+
+
+  function getTimeString(timeObject) {
+    return timeObject.hours + ":" + timeObject.minutes
+  }
