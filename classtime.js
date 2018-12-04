@@ -197,7 +197,6 @@ var data = {
 
 function update() {
     updateTime();
-
     if (typeof data !== 'undefined') {
         updateVariables()
         updateText();
@@ -264,7 +263,7 @@ function getCurrentClassPeriodIndex() {
 function getCurrentScheduleIndex() {
     //using for over forEach() because we are breaking out of the loop early
     for (let i = 0; i < data.schedules.length; i++) {
-        if (currentDay in data.schedules[i].days) {
+        if (data.schedules[i].days.includes(currentDay)) {
             return i
             break;//not sure if this is necessary so I included it anyway
         }
