@@ -38,6 +38,10 @@ body {
     display: block;
     text-align: center
 }
+.centeredInline {
+    margin: 0 auto;
+    text-align: center
+}
 
 .bottomSpace {
     margin-bottom: 14;
@@ -67,3 +71,7 @@ a:hover, a:active {
     font-weight: bold
 }
 
+table#scheduleTable tr td {
+    font-size: 150%;
+   padding: 5px 10px;
+}
