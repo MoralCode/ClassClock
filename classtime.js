@@ -212,8 +212,12 @@ function getCurrentScheduleName() {
     return data.schedules[currentScheduleIndex].name
 }
 
+function classIsInSession() {
+    return (currentClassPeriodIndex > 0 && currentScheduleIndex > 0)
+}
+
 function getSummaryString() {
-    if (currentClassPeriodIndex < 0) {
+    if (classIsInSession()) {
         return "School is not currently in session. Please check back later"
     } else {return "" }
 
@@ -272,7 +276,7 @@ function checkEndTime(classPeriod) { return !checkGivenTimeIsBeforeCurrentTime(c
 
 
 function getTimeToTime(time) {
-    if (currentClassPeriodIndex >= 0) {
+    if (classIsInSession()) {
 
         hoursUntilEnd = time.hours - currentHours;
         minutesUntilEnd = time.minutes - currentMinutes;
@@ -293,7 +297,7 @@ function getTimeToTime(time) {
 }
 
 function getTimeToEndOfCurrentClassString() {
-    if (currentClassPeriodIndex >= 0) {
+    if (classIsInSession()) {
         timeToEnd = getTimeToTime(data.schedules[currentScheduleIndex].classes[currentClassPeriodIndex].endTime);
         return timeToEnd.hours.toString().padStart(2, '0') + ":" + timeToEnd.minutes.toString().padStart(2, '0') + ":" + timeToEnd.seconds.toString().padStart(2, '0');
     } else {
@@ -302,7 +306,7 @@ function getTimeToEndOfCurrentClassString() {
 }
 
 function getTimeToStartOfNextClassString() {
-    if (currentClassPeriodIndex >= 0 && currentClassPeriodIndex+1 < data.schedule[selectedSchedule].classes.length ) {
+    if (classIsInSession() && currentClassPeriodIndex+1 < data.schedule[selectedSchedule].classes.length ) {
         timeToEnd = getTimeToTime(data.schedules[currentScheduleIndex].classes[currentClassPeriodIndex+1].startTime);
         return timeToEnd.hours.toString().padStart(2, '0') + ":" + timeToEnd.minutes.toString().padStart(2, '0') + ":" + timeToEnd.seconds.toString().padStart(2, '0');
     } else {
