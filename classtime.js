@@ -96,6 +96,7 @@ var data = {
                 },
                 {
                     name: "Passing Period",
+                    showInFullSchedule: false,
                     startTime: {hours: 10, minutes:34},
                     endTime: {hours: 10, minutes:39}
                 },
