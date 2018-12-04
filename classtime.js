@@ -190,13 +190,16 @@ function update() {
     updateTime();
 
     if (typeof data !== 'undefined') {
-        currentScheduleIndex = getCurrentScheduleIndex();
-        currentClassPeriodIndex = getCurrentClassPeriodIndex();
-        //document.getElementById('currentClass').innerHTML = data.schedule[selectedSchedule][currentClassPeriodIndex].name;
-
+        updateVariables()
         updateText();
         var t = setTimeout(update, 500);
     }
+}
+
+function updateVariables() {
+    currentScheduleIndex = getCurrentScheduleIndex();
+    currentClassPeriodIndex = getCurrentClassPeriodIndex();
+    //document.getElementById('currentClass').innerHTML = data.schedule[selectedSchedule][currentClassPeriodIndex].name;
 }
 
 function updateText() {
