@@ -301,7 +301,7 @@ function getTimeToTime(time) {
         }
 
         if (typeof time.seconds == 'undefined' ) {
-            secondsUntilEnd = 60-currentSeconds
+            secondsUntilEnd = 59-currentSeconds
         }else {
             secondsUntilEnd = time.seconds - currentSeconds; //because there are no seconds in the schedule, we assume it ends at the full minute
         }
