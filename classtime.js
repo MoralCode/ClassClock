@@ -10,6 +10,8 @@ var currentClassPeriodIndex = -1;
 var currentScheduleIndex = -1;
 
 
+var use24HourTime = getLocalStorageBoolean("use24HourTime", false);
+
 var data = {
     fullName: "",
     shortName: "",
@@ -247,7 +249,7 @@ function updateTime() {
     currentSeconds = currentDate.getSeconds();
 }
 
-function getCurrentTimeString() { return currentDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true }) }
+function getCurrentTimeString() { return currentDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: !use24HourTime }) }
 
 function getCurrentClassPeriodIndex() {
     //using for over forEach() because we are breaking out of the loop early
@@ -368,5 +370,27 @@ function populateScheduleTable() {
 
 
   function getTimeStringFromObject(timeObject) {
-    return timeObject.hours.toString().padStart(2, '0') + ":" + timeObject.minutes.toString().padStart(2, '0')
+      var pmString = " AM";
+      var hours = timeObject.hours;
+
+      if (!use24HourTime) {
+          //im making this variable because i dont know if javascript will mutate the original variable or not.
+        if(hours > 12) {
+            hours -= 12;
+            pmString = " PM";
+        }
+      } else {
+          pmString = "";
+      }
+      return hours.toString().padStart(2, '0') + ":" + timeObject.minutes.toString().padStart(2, '0') + pmString;
   }
+
+function getLocalStorageBoolean(key, unsetDefault=false) {
+    if (localStorage.getItem(key) === null) {
+        //key is not set
+        return unsetDefault
+    } else {
+        //this is a better way to to convert the string from localStorage into a boolean for checkbox.checked. https://stackoverflow.com/a/264037
+        return (localStorage.getItem(key) == "true")
+    }
+}
