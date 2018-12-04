@@ -31,6 +31,7 @@ var data = {
                 },
                 {
                     name: "Passing Period",
+                    showInFullSchedule: false,
                     startTime: {hours: 10, minutes:10},
                     endTime: {hours: 10, minutes:15}
                 },
@@ -46,6 +47,7 @@ var data = {
                 },
                 {
                     name: "Passing Period",
+                    showInFullSchedule: false,
                     startTime: {hours: 12, minutes:20},
                     endTime: {hours: 12, minutes:25}
                 },
@@ -56,6 +58,7 @@ var data = {
                 },
                 {
                     name: "Passing Period",
+                    showInFullSchedule: false,
                     startTime: {hours: 13, minutes:55},
                     endTime: {hours: 14, minutes:00}
                 },
@@ -82,6 +85,7 @@ var data = {
                 },
                 {
                     name: "Passing Period",
+                    showInFullSchedule: false,
                     startTime: {hours: 9, minutes:57},
                     endTime: {hours: 10, minutes:02}
                 },
@@ -107,6 +111,7 @@ var data = {
                 },
                 {
                     name: "Passing Period",
+                    showInFullSchedule: false,
                     startTime: {hours: 12, minutes:36},
                     endTime: {hours: 12, minutes:41}
                 },
@@ -117,6 +122,7 @@ var data = {
                 },
                 {
                     name: "Passing Period",
+                    showInFullSchedule: false,
                     startTime: {hours: 14, minutes:03},
                     endTime: {hours: 14, minutes:8}
                 },
@@ -143,6 +149,7 @@ var data = {
                 },
                 {
                     name: "Passing Period",
+                    showInFullSchedule: false,
                     startTime: {hours: 10, minutes:00},
                     endTime: {hours: 10, minutes:05}
                 },
@@ -158,6 +165,7 @@ var data = {
                 },
                 {
                     name: "Passing Period",
+                    showInFullSchedule: false,
                     startTime: {hours: 12, minutes:05},
                     endTime: {hours: 12, minutes:10}
                 },
@@ -168,6 +176,7 @@ var data = {
                 },
                 {
                     name: "Passing Period",
+                    showInFullSchedule: false,
                     startTime: {hours: 13, minutes:35},
                     endTime: {hours: 13, minutes:40}
                 },
@@ -347,6 +356,7 @@ function showSchedule() {
     var tbdy = document.createElement('tbody');
 
     for (var i = 0; i < data.schedules[currentScheduleIndex].classes.length; i++) {
+            if (data.schedules[currentScheduleIndex].classes[i].showInFullSchedule != false) {
         var tr = document.createElement('tr');
         
         //for (var j = 0; j < 3; j++) {
@@ -369,6 +379,7 @@ function showSchedule() {
 
         // }
         tbdy.appendChild(tr);
+    }
     }
     tbl.appendChild(tbdy);
     body.appendChild(tbl)
