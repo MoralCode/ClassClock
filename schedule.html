@@ -25,10 +25,10 @@
 
     <script src="classtime.js"></script>
     <script>
-
-       updateVariables()    
-       document.getElementById("schoolName").innerHTML = data.fullName; 
-       document.getElementById("scheduleDisplay").innerHTML = "<strong>" + getCurrentScheduleName() + "</strong> schedule";
+        updateTime();
+        updateVariables();  
+        document.getElementById("schoolName").innerHTML = data.fullName; 
+        document.getElementById("scheduleDisplay").innerHTML = "<strong>" + getCurrentScheduleName() + "</strong> schedule";
 
         var a=document.getElementsByTagName("a");
         for(var i=0;i<a.length;i++)
