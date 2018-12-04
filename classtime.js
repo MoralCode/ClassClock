@@ -302,7 +302,7 @@ function getTimeToEndOfCurrentClassString() {
 }
 
 function getTimeToStartOfNextClassString() {
-    if (currentClassPeriodIndex >= 0 && currentClassPeriodIndex+1 < data.schedule[selectedSchedule].length ) {
+    if (currentClassPeriodIndex >= 0 && currentClassPeriodIndex+1 < data.schedule[selectedSchedule].classes.length ) {
         timeToEnd = getTimeToTime(data.schedules[currentScheduleIndex].classes[currentClassPeriodIndex+1].startTime);
         return timeToEnd.hours.toString().padStart(2, '0') + ":" + timeToEnd.minutes.toString().padStart(2, '0') + ":" + timeToEnd.seconds.toString().padStart(2, '0');
     } else {
