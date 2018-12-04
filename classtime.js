@@ -207,7 +207,7 @@ function updateText() {
     document.getElementById("nextClass").innerHTML = getClassName(currentClassPeriodIndex+1)
     document.getElementById("currentClass").innerHTML = getClassName(currentClassPeriodIndex)
     //document.getElementById('sentence').innerHTML = getSummaryString()
-    document.getElementById('time').innerHTML = getTimeString();
+    document.getElementById('time').innerHTML = getCurrentTimeString();
     document.getElementById("schedule").innerHTML = "Today is a <strong>" + getCurrentScheduleName() + "</strong> schedule."
 }
 
@@ -238,7 +238,7 @@ function updateTime() {
     currentSeconds = currentDate.getSeconds();
 }
 
-function getTimeString() { return currentDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true }) }
+function getCurrentTimeString() { return currentDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true }) }
 
 function getCurrentClassPeriodIndex() {
     //using for over forEach() because we are breaking out of the loop early
@@ -357,13 +357,13 @@ function showSchedule() {
             tr.appendChild(td)
 
             var td = document.createElement('td');
-            td.innerHTML = getTimeString(data.schedules[currentScheduleIndex].classes[i].startTime)
+            td.innerHTML = getTimeStringFromObject(data.schedules[currentScheduleIndex].classes[i].startTime)
             //td.appendChild(document.createTextNode(data.schedules[currentScheduleIndex].classes[i].name))
             tr.appendChild(td)
 
             
             var td = document.createElement('td');
-            td.innerHTML = getTimeString(data.schedules[currentScheduleIndex].classes[i].endTime)
+            td.innerHTML = getTimeStringFromObject(data.schedules[currentScheduleIndex].classes[i].endTime)
             //td.appendChild(document.createTextNode(data.schedules[currentScheduleIndex].classes[i].name))
             tr.appendChild(td)
 
@@ -375,6 +375,6 @@ function showSchedule() {
   }
 
 
-  function getTimeString(timeObject) {
-    return timeObject.hours + ":" + timeObject.minutes
+  function getTimeStringFromObject(timeObject) {
+    return timeObject.hours.toString().padStart(2, '0') + ":" + timeObject.minutes.toString().padStart(2, '0')
   }
