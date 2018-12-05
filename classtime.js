@@ -404,3 +404,15 @@ function getLocalStorageBoolean(key, unsetDefault=false) {
         return (localStorage.getItem(key) == "true")
     }
 }
+
+var a=document.getElementsByTagName("a");
+    for(var i=0;i<a.length;i++)
+    {
+        if (a[i].classList.contains("navbutton")) {
+            a[i].onclick=function()
+            {
+                window.location=this.getAttribute("href");
+                return false
+            }
+        }
+    }

@@ -19,16 +19,5 @@ title: ClassTime - Schedule
     document.getElementById("schoolName").innerHTML = data.fullName; 
     document.getElementById("scheduleDisplay").innerHTML = "<strong>" + getCurrentScheduleName() + "</strong> schedule";
 
-    var a=document.getElementsByTagName("a");
-    for(var i=0;i<a.length;i++)
-    {
-        a[i].onclick=function()
-        {
-            window.location=this.getAttribute("href");
-            return false
-        }
-    }
-
-
     populateScheduleTable();
 </script>
