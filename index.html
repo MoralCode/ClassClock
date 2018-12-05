@@ -1,54 +1,40 @@
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-        <meta content="utf-8" http-equiv="encoding">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="style.css">
+---
+layout: default
+title: ClassTime
+onload: update()
+---
+<br>
+<p class="centered label">The current time is: </p>
+<h1 class="centered bottomSpace time" id="time"></h1>
 
-        <meta name="apple-mobile-web-app-title" content="ClassTime">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="translucent">
-        <link rel="apple-touch-icon" sizes="512x512" href="icons/classtime-512.png">
-        <link rel="apple-touch-icon" sizes="192x192" href="icons/classtime-192.png">
-        <link rel="manifest" href="/manifest.json">
-        <link href="https://fonts.googleapis.com/css?family=Play|Source+Sans+Pro" rel="stylesheet">
-        <title>ClassTime</title>
-    </head>
-    <body onload="update()">
-        <br>
-        <p class="centered label">The current time is: </p>
-        <h1 class="centered bottomSpace time" id="time"></h1>
+<p class="centered bottomSpace" id="schedule"></p>
 
-        <p class="centered bottomSpace" id="schedule"></p>
+<p class="centered label">You are currently in: </p>
+<h1 class="centered bottomSpace" id="currentClass"></h1>
 
-        <p class="centered label">You are currently in: </p>
-        <h1 class="centered bottomSpace" id="currentClass"></h1>
+<p class="centered label">...which ends in: </p>
+<h1 class="centered bottomSpace time bigger" id="timeToEndOfClass"></h1>
 
-        <p class="centered label">...which ends in: </p>
-        <h1 class="centered bottomSpace time bigger" id="timeToEndOfClass"></h1>
+<p class="centered label">Your next class period is: </p>
+<h1 class="centered bottomSpace" id="nextClass"></h1>
 
-        <p class="centered label">Your next class period is: </p>
-        <h1 class="centered bottomSpace" id="nextClass"></h1>
+<!-- <p class="centered bottomSpace" id="sentence"></p> -->
 
-        <!-- <p class="centered bottomSpace" id="sentence"></p> -->
+<a href="schedule.html" class="centered topSpace">View Schedule</a>
 
-        <a href="schedule.html" class="centered topSpace">View Schedule</a>
-
-        <a class="navbutton" href="settings.html"><i class="fas fa-cog"></i></a>
-    </body>
-    <script src="classtime.js"></script>
-    <script>
-        
-        var a=document.getElementsByTagName("a");
-        for(var i=0;i<a.length;i++)
-        {
-            a[i].onclick=function()
-            {
-                window.location=this.getAttribute("href");
-                return false
-            }
-        }
+<a class="navbutton" href="settings.html"><i class="fas fa-cog"></i></a>
+<script src="classtime.js"></script>
+<script>
     
-    </script>
+    var a=document.getElementsByTagName("a");
+    for(var i=0;i<a.length;i++)
+    {
+        a[i].onclick=function()
+        {
+            window.location=this.getAttribute("href");
+            return false
+        }
+    }
+
+</script>
 </html>

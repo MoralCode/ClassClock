@@ -1,54 +1,34 @@
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-        <meta content="utf-8" http-equiv="encoding">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <title>ClassTime - Settings</title>
-        <meta name="apple-mobile-web-app-title" content="ClassTime">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="translucent">
-        <style>
-        </style>
-    </head>
-    <body>
-        <a class="navbutton" href="index.html"><i class="fas fa-home"></i></a>
-        
-        <br>
+---
+layout: default
+title: ClassTime - Schedule
+---
+<a class="navbutton" href="index.html"><i class="fas fa-home"></i></a>
 
-        <h1 class="centered topSpace bottomSpace" id="schoolName"></h1>
+<br>
 
-        <p class="centered bottomSpace" id="scheduleDisplay"></p>
+<h1 class="centered topSpace bottomSpace" id="schoolName"></h1>
 
-        <table id="scheduleTable" class="centeredInline topSpace"></table>
-        
-    </body>
+<p class="centered bottomSpace" id="scheduleDisplay"></p>
 
-    <script src="classtime.js"></script>
-    <script>
-        updateTime();
-        updateVariables();  
-        document.getElementById("schoolName").innerHTML = data.fullName; 
-        document.getElementById("scheduleDisplay").innerHTML = "<strong>" + getCurrentScheduleName() + "</strong> schedule";
+<table id="scheduleTable" class="centeredInline topSpace"></table>
 
-        var a=document.getElementsByTagName("a");
-        for(var i=0;i<a.length;i++)
+<script src="classtime.js"></script>
+<script>
+    updateTime();
+    updateVariables();  
+    document.getElementById("schoolName").innerHTML = data.fullName; 
+    document.getElementById("scheduleDisplay").innerHTML = "<strong>" + getCurrentScheduleName() + "</strong> schedule";
+
+    var a=document.getElementsByTagName("a");
+    for(var i=0;i<a.length;i++)
+    {
+        a[i].onclick=function()
         {
-            a[i].onclick=function()
-            {
-                window.location=this.getAttribute("href");
-                return false
-            }
+            window.location=this.getAttribute("href");
+            return false
         }
-    
-
-        populateScheduleTable();
+    }
 
 
-        
-
-
-
-    </script>
-</html>
+    populateScheduleTable();
+</script>
