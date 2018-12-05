@@ -290,23 +290,32 @@ function checkEndTime(classPeriod) { return !checkGivenTimeIsBeforeCurrentTime(c
 
 
 function getTimeToTime(time) {
+    //this function gets the absolute value of the difference between now and the current time
     if (classIsInSession()) {
 
-        hoursUntilEnd = time.hours - currentHours;
-        minutesUntilEnd = time.minutes - currentMinutes;
+        difference = {hours: 0, minutes:0, seconds:0};
+        
+        var currentTime = new Date(2000, 0, 1,  currentHours, currentMinutes, currentSeconds);
+        var givenTime = new Date(2000, 0, 1, time.hours, time.minutes, 0);
+        
+        var msec = givenTime - currentTime; //order doesnt matter
+        msec = Math.abs(msec);
 
-        if (minutesUntilEnd < 0) {
-            hoursUntilEnd-=1
-            minutesUntilEnd = 59+minutesUntilEnd
-        }
+        //convert from milliseconds to H:M:S
+        difference.hours = Math.floor(msec / 1000 / 60 / 60);
+        msec -= difference.hours * 1000 * 60 * 60;
+        difference.minutes = Math.floor(msec / 1000 / 60);
+        msec -= difference.minutes * 1000 * 60;
+        difference.seconds = Math.floor(msec / 1000);
+        msec -= difference.seconds * 1000;
 
-        if (typeof time.seconds == 'undefined' ) {
-            secondsUntilEnd = 59-currentSeconds
-        }else {
-            secondsUntilEnd = time.seconds - currentSeconds; //because there are no seconds in the schedule, we assume it ends at the full minute
-        }
+        // if (typeof time.seconds == 'undefined' ) {
+        //     secondsUntilEnd = 59-currentSeconds
+        // }else {
+        //     secondsUntilEnd = time.seconds - currentSeconds; //because there are no seconds in the schedule, we assume it ends at the full minute
+        // }
 
-        return {hours: hoursUntilEnd, minutes: minutesUntilEnd, seconds: secondsUntilEnd};
+        return difference;
     }
 }
 
@@ -336,6 +345,7 @@ function getClassName(index) {
         return "No Class"
     }
 }
+
 
 
 function populateScheduleTable() {
