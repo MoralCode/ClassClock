@@ -75,3 +75,8 @@ table#scheduleTable tr td {
     font-size: 150%;
    padding: 5px 10px;
 }
+
+h1.bigger {
+    /* regular h1's are 2em */
+    font-size: 3em;
+}
