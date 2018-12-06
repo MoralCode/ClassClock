@@ -1,11 +1,13 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
+about: Submit ideas for new features
+title: "[Feature Request]"
+labels: enhancement
 assignees: ''
 
 ---
+
+[ ] yes i have checked to make sure that there are no other feature requests for this idea that have already been submitted.
 
 **Is your feature request related to a problem? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
