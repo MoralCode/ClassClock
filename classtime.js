@@ -219,6 +219,7 @@ function updateText() {
     document.getElementById("currentClass").innerHTML = getClassName(currentClassPeriodIndex)
     //document.getElementById('sentence').innerHTML = getSummaryString()
     document.getElementById('time').innerHTML = getCurrentTimeString();
+    document.getElementById('date').innerHTML = getCurrentDateString();
     document.getElementById("schedule").innerHTML = "Today is a <strong>" + getCurrentScheduleName() + "</strong> schedule."
 }
 
@@ -251,6 +252,9 @@ function updateTime() {
 
 function getCurrentTimeString() { return currentDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: !use24HourTime }) }
 
+function getCurrentDateString() { 
+return "on <strong>" + currentDate.toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }) + "</strong>"
+}
 function getCurrentClassPeriodIndex() {
     //using for over forEach() because we are breaking out of the loop early
     for (let i = 0; i < data.schedules[currentScheduleIndex].classes.length; i++) {
