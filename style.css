@@ -80,3 +80,7 @@ h1.bigger {
     /* regular h1's are 2em */
     font-size: 3em;
 }
+
+section#credits > a {
+    margin: 5px;
+}
