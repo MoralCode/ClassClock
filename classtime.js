@@ -220,7 +220,7 @@ function updateText() {
     //document.getElementById('sentence').innerHTML = getSummaryString()
     document.getElementById('time').innerHTML = getCurrentTimeString();
     document.getElementById('date').innerHTML = getCurrentDateString();
-    document.getElementById("schedule").innerHTML = "Today is a <strong>" + getCurrentScheduleName() + "</strong> schedule."
+    document.getElementById("schedule").innerHTML = "You are viewing the <strong>" + getCurrentScheduleName() + "</strong> schedule."
 }
 
 function getCurrentScheduleName() {
