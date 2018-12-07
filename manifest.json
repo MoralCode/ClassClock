@@ -1,14 +1,14 @@
 {
-  "short_name": "ClassTime",
-  "name": "ClassTime",
+  "short_name": "ClassClock",
+  "name": "ClassClock",
   "icons": [
     {
-      "src": "/icons/classtime-192.png",
+      "src": "/icons/classclockicon-192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/icons/classtime-512.png",
+      "src": "/icons/classclockicon-512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
