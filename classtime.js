@@ -220,11 +220,13 @@ function updateText() {
     //document.getElementById('sentence').innerHTML = getSummaryString()
     document.getElementById('time').innerHTML = getCurrentTimeString();
     document.getElementById('date').innerHTML = getCurrentDateString();
-    document.getElementById("schedule").innerHTML = "You are viewing the <strong>" + getCurrentScheduleName() + "</strong> schedule."
+    document.getElementById("schedule").innerHTML = getSummaryString();
 }
 
 function getCurrentScheduleName() {
-    return data.schedules[currentScheduleIndex].name
+    if (classIsInSession()) {
+        return data.schedules[currentScheduleIndex].name
+    } else { return "No Class"}
 }
 
 function classIsInSession() {
@@ -233,8 +235,10 @@ function classIsInSession() {
 
 function getSummaryString() {
     if (classIsInSession()) {
-        return "School is not currently in session. Please check back later"
-    } else {return "" }
+        return "You are viewing the <strong>" + getCurrentScheduleName() + "</strong> schedule."
+    } else {
+        return "and there's <strong>no class</strong> today!"
+    }
 
     //other options
     //"it is currently ##:##:##. (period) ends in ##:##"
@@ -256,27 +260,33 @@ function getCurrentDateString() {
 return "on <strong>" + currentDate.toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }) + "</strong>"
 }
 function getCurrentClassPeriodIndex() {
-    //using for over forEach() because we are breaking out of the loop early
-    for (let i = 0; i < data.schedules[currentScheduleIndex].classes.length; i++) {
-        if (checkStartTime(data.schedules[currentScheduleIndex].classes[i]) && checkEndTime(data.schedules[currentScheduleIndex].classes[i])) {
-            return i
-            break;//not sure if this is necessary so I included it anyway
+    if (classIsInSession()) {
+        //using for over forEach() because we are breaking out of the loop early
+        for (let i = 0; i < data.schedules[currentScheduleIndex].classes.length; i++) {
+            if (checkStartTime(data.schedules[currentScheduleIndex].classes[i]) && checkEndTime(data.schedules[currentScheduleIndex].classes[i])) {
+                return i
+                break;//not sure if this is necessary so I included it anyway
+            }
         }
+    } else {
+        //if execution reaches here, no class periods are in session, so therefore school must be out
+        return -1
     }
-    //if execution reaches here, no class periods are in session, so therefore school must be out
-    return -1
 }
 
 function getCurrentScheduleIndex() {
-    //using for over forEach() because we are breaking out of the loop early
-    for (let i = 0; i < data.schedules.length; i++) {
-        if (data.schedules[i].days.includes(currentDay)) {
-            return i
-            break;//not sure if this is necessary so I included it anyway
+    if (classIsInSession()) {
+        //using for over forEach() because we are breaking out of the loop early
+        for (let i = 0; i < data.schedules.length; i++) {
+            if (data.schedules[i].days.includes(currentDay)) {
+                return i
+                break;//not sure if this is necessary so I included it anyway
+            }
         }
+    } else {
+        //if execution reaches here, no schedules were found for today, so it must be a no school day
+        return -1
     }
-    //if execution reaches here, no schedules were found for today, so it must be a no school day
-    return -1
 }
 
 function checkGivenTimeIsBeforeCurrentTime( givenTime ) {
@@ -343,8 +353,8 @@ function getTimeToStartOfNextClassString() {
 
 
 function getClassName(index) {
-    if (index >= 0 && index < data.schedules[currentScheduleIndex].classes.length) {
-        return data.schedules[currentScheduleIndex].classes[index].name.toString()
+    if (classIsInSession() && index < data.schedules[currentScheduleIndex].classes.length) {
+            return data.schedules[currentScheduleIndex].classes[index].name.toString()
     } else {
         return "No Class"
     }
