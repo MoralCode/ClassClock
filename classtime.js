@@ -1,3 +1,306 @@
+// TODO: Move schedule to a database.
+var schedule = {
+    "schedules": [
+        {
+            "name": "Mon/Fri (Regular)",
+            "days": [
+                1,
+                5
+            ],
+            "classes": [
+                {
+                    "name": "1st Period",
+                    "startTime": {
+                        "hours": 8, "minutes": 25
+                    },
+                    "endTime": {
+                        "hours": 9, "minutes": 55
+                    }
+                },
+                {
+                    "name": "TSCT",
+                    "startTime": {
+                        "hours": 9, "minutes": 55
+                    },
+                    "endTime": {
+                        "hours": 10, "minutes": 10
+                    }
+                },
+                {
+                    "name": "Passing Period",
+                    "showInFullSchedule": false,
+                    "startTime": {
+                        "hours": 10, "minutes": 10
+                    },
+                    "endTime": {
+                        "hours": 10, "minutes": 15
+                    }
+                },
+                {
+                    "name": "2nd Period",
+                    "startTime": {
+                        "hours": 10, "minutes": 15
+                    },
+                    "endTime": {
+                        "hours": 11, "minutes": 45
+                    }
+                },
+                {
+                    "name": "Lunch",
+                    "startTime": {
+                        "hours": 11, "minutes": 45
+                    },
+                    "endTime": {
+                        "hours": 12, "minutes": 20
+                    }
+                },
+                {
+                    "name": "Passing Period",
+                    "showInFullSchedule": false,
+                    "startTime": {
+                        "hours": 12, "minutes": 20
+                    },
+                    "endTime": {
+                        "hours": 12, "minutes": 25
+                    }
+                },
+                {
+                    "name": "3rd Period",
+                    "startTime": {
+                        "hours": 12, "minutes": 25
+                    },
+                    "endTime": {
+                        "hours": 13, "minutes": 55
+                    }
+                },
+                {
+                    "name": "Passing Period",
+                    "showInFullSchedule": false,
+                    "startTime": {
+                        "hours": 13, "minutes": 55
+                    },
+                    "endTime": {
+                        "hours": 14, "minutes": 00
+                    }
+                },
+                {
+                    "name": "4th Period",
+                    "startTime": {
+                        "hours": 14, "minutes": 00
+                    },
+                    "endTime": {
+                        "hours": 15, "minutes": 30
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Tues/Wed (Support Seminar)",
+            "days": [
+                2,
+                3
+            ],
+            "classes": [
+                {
+                    "name": "1st Period",
+                    "startTime": {
+                        "hours": 8, "minutes": 25
+                    },
+                    "endTime": {
+                        "hours": 9, "minutes": 47
+                    }
+                },
+                {
+                    "name": "TSCT",
+                    "startTime": {
+                        "hours": 9, "minutes": 47
+                    },
+                    "endTime": {
+                        "hours": 9, "minutes": 57
+                    }
+                },
+                {
+                    "name": "Passing Period",
+                    "showInFullSchedule": false,
+                    "startTime": {
+                        "hours": 9, "minutes": 57
+                    },
+                    "endTime": {
+                        "hours": 10, "minutes": 02
+                    }
+                },
+                {
+                    "name": "Support Seminar",
+                    "startTime": {
+                        "hours": 10, "minutes": 02
+                    },
+                    "endTime": {
+                        "hours": 10, "minutes": 34
+                    }
+                },
+                {
+                    "name": "Passing Period",
+                    "showInFullSchedule": false,
+                    "startTime": {
+                        "hours": 10, "minutes": 34
+                    },
+                    "endTime": {
+                        "hours": 10, "minutes": 39
+                    }
+                },
+                {
+                    "name": "2nd Period",
+                    "startTime": {
+                        "hours": 10, "minutes": 39
+                    },
+                    "endTime": {
+                        "hours": 12, "minutes": 01
+                    }
+                },
+                {
+                    "name": "Lunch",
+                    "startTime": {
+                        "hours": 12, "minutes": 01
+                    },
+                    "endTime": {
+                        "hours": 12, "minutes": 36
+                    }
+                },
+                {
+                    "name": "Passing Period",
+                    "showInFullSchedule": false,
+                    "startTime": {
+                        "hours": 12, "minutes": 36
+                    },
+                    "endTime": {
+                        "hours": 12, "minutes": 41
+                    }
+                },
+                {
+                    "name": "3rd Period",
+                    "startTime": {
+                        "hours": 12, "minutes": 41
+                    },
+                    "endTime": {
+                        "hours": 14, "minutes": 03
+                    }
+                },
+                {
+                    "name": "Passing Period",
+                    "showInFullSchedule": false,
+                    "startTime": {
+                        "hours": 14, "minutes": 03
+                    },
+                    "endTime": {
+                        "hours": 14, "minutes": 8
+                    }
+                },
+                {
+                    "name": "4th Period",
+                    "startTime": {
+                        "hours": 14, "minutes": 8
+                    },
+                    "endTime": {
+                        "hours": 15, "minutes": 30
+                    }
+                }
+            ],
+        },
+        {
+            "name": "Thursday (Early Release)",
+            "days": [
+                4
+            ],
+            "classes": [
+                {
+                    "name": "1st Period",
+                    "startTime": {
+                        "hours": 8, "minutes": 25
+                    },
+                    "endTime": {
+                        "hours": 9, "minutes": 50
+                    }
+                },
+                {
+                    "name": "TSCT",
+                    "startTime": {
+                        "hours": 9, "minutes": 50
+                    },
+                    "endTime": {
+                        "hours": 10, "minutes": 00
+                    }
+                },
+                {
+                    "name": "Passing Period",
+                    "showInFullSchedule": false,
+                    "startTime": {
+                        "hours": 10, "minutes": 00
+                    },
+                    "endTime": {
+                        "hours": 10, "minutes": 05
+                    }
+                },
+                {
+                    "name": "2nd Period",
+                    "startTime": {
+                        "hours": 10, "minutes": 05
+                    },
+                    "endTime": {
+                        "hours": 11, "minutes": 30
+                    }
+                },
+                {
+                    "name": "Lunch",
+                    "startTime": {
+                        "hours": 11, "minutes": 30
+                    },
+                    "endTime": {
+                        "hours": 12, "minutes": 05
+                    }
+                },
+                {
+                    "name": "Passing Period",
+                    "showInFullSchedule": false,
+                    "startTime": {
+                        "hours": 12, "minutes": 05
+                    },
+                    "endTime": {
+                        "hours": 12, "minutes": 10
+                    }
+                },
+                {
+                    "name": "3rd Period",
+                    "startTime": {
+                        "hours": 12, "minutes": 10
+                    },
+                    "endTime": {
+                        "hours": 13, "minutes": 35
+                    }
+                },
+                {
+                    "name": "Passing Period",
+                    "showInFullSchedule": false,
+                    "startTime": {
+                        "hours": 13, "minutes": 35
+                    },
+                    "endTime": {
+                        "hours": 13, "minutes": 40
+                    }
+                },
+                {
+                    "name": "4th Period",
+                    "startTime": {
+                        "hours": 13, "minutes": 40
+                    },
+                    "endTime": {
+                        "hours": 15, "minutes": 05
+                    }
+                }
+            ]
+        }
+    ]
+}
+
 var currentDay = 0;
 var currentHours = 0;
 var currentMinutes = 0; 
@@ -5,206 +308,14 @@ var currentSeconds = 0;
 var currentDate;
 
 var currentClassPeriodIndex = -1;
-//nextClassPeriodIndex
-
 var currentScheduleIndex = -1;
-
-
 var use24HourTime = getLocalStorageBoolean("use24HourTime", false);
-
-var data = {
-    fullName: "",
-    shortName: "",
-    //order is as is on the school website
-    schedules: [
-        {
-            name: "Mon/Fri (Regular)",
-            days: [1, 5],
-            classes: [
-                {
-                    name: "1st Period",
-                    startTime: {hours: 8, minutes:25},
-                    endTime: {hours: 9, minutes:55}
-                },
-                {
-                    name: "TSCT",
-                    startTime: {hours: 9, minutes:55},
-                    endTime: {hours: 10, minutes:10}
-                },
-                {
-                    name: "Passing Period",
-                    showInFullSchedule: false,
-                    startTime: {hours: 10, minutes:10},
-                    endTime: {hours: 10, minutes:15}
-                },
-                {
-                    name: "2nd Period",
-                    startTime: {hours: 10, minutes:15},
-                    endTime: {hours: 11, minutes:45}
-                },
-                {
-                    name: "Lunch",
-                    startTime: {hours: 11, minutes:45},
-                    endTime: {hours: 12, minutes:20}
-                },
-                {
-                    name: "Passing Period",
-                    showInFullSchedule: false,
-                    startTime: {hours: 12, minutes:20},
-                    endTime: {hours: 12, minutes:25}
-                },
-                {
-                    name: "3rd Period",
-                    startTime: {hours: 12, minutes:25},
-                    endTime: {hours: 13, minutes:55}
-                },
-                {
-                    name: "Passing Period",
-                    showInFullSchedule: false,
-                    startTime: {hours: 13, minutes:55},
-                    endTime: {hours: 14, minutes:00}
-                },
-                {
-                    name: "4th Period",
-                    startTime: {hours: 14, minutes:00},
-                    endTime: {hours: 15, minutes:30}
-                }
-            ]
-        },
-        {
-            name: "Tues/Wed (Support Seminar)",
-            days: [2, 3],
-            classes: [
-                {
-                    name: "1st Period",
-                    startTime: {hours: 8, minutes:25},
-                    endTime: {hours: 9, minutes:47}
-                },
-                {
-                    name: "TSCT",
-                    startTime: {hours: 9, minutes:47},
-                    endTime: {hours: 9, minutes:57}
-                },
-                {
-                    name: "Passing Period",
-                    showInFullSchedule: false,
-                    startTime: {hours: 9, minutes:57},
-                    endTime: {hours: 10, minutes:02}
-                },
-                {
-                    name: "Support Seminar",
-                    startTime: {hours: 10, minutes:02},
-                    endTime: {hours: 10, minutes:34}
-                },
-                {
-                    name: "Passing Period",
-                    showInFullSchedule: false,
-                    startTime: {hours: 10, minutes:34},
-                    endTime: {hours: 10, minutes:39}
-                },
-                {
-                    name: "2nd Period",
-                    startTime: {hours: 10, minutes:39},
-                    endTime: {hours: 12, minutes:01}
-                },
-                {
-                    name: "Lunch",
-                    startTime: {hours: 12, minutes:01},
-                    endTime: {hours: 12, minutes:36}
-                },
-                {
-                    name: "Passing Period",
-                    showInFullSchedule: false,
-                    startTime: {hours: 12, minutes:36},
-                    endTime: {hours: 12, minutes:41}
-                },
-                {
-                    name: "3rd Period",
-                    startTime: {hours: 12, minutes:41},
-                    endTime: {hours: 14, minutes:03}
-                },
-                {
-                    name: "Passing Period",
-                    showInFullSchedule: false,
-                    startTime: {hours: 14, minutes:03},
-                    endTime: {hours: 14, minutes:8}
-                },
-                {
-                    name: "4th Period",
-                    startTime: {hours: 14, minutes:8},
-                    endTime: {hours: 15, minutes:30}
-                }
-            ],
-        },
-        {
-            name: "Thursday (Early Release)",
-            days: [4],
-            classes: [
-                {
-                    name: "1st Period",
-                    startTime: {hours: 8, minutes:25},
-                    endTime: {hours: 9, minutes:50}
-                },
-                {
-                    name: "TSCT",
-                    startTime: {hours: 9, minutes:50},
-                    endTime: {hours: 10, minutes:00}
-                },
-                {
-                    name: "Passing Period",
-                    showInFullSchedule: false,
-                    startTime: {hours: 10, minutes:00},
-                    endTime: {hours: 10, minutes:05}
-                },
-                {
-                    name: "2nd Period",
-                    startTime: {hours: 10, minutes:05},
-                    endTime: {hours: 11, minutes:30}
-                },
-                {
-                    name: "Lunch",
-                    startTime: {hours: 11, minutes:30},
-                    endTime: {hours: 12, minutes:05}
-                },
-                {
-                    name: "Passing Period",
-                    showInFullSchedule: false,
-                    startTime: {hours: 12, minutes:05},
-                    endTime: {hours: 12, minutes:10}
-                },
-                {
-                    name: "3rd Period",
-                    startTime: {hours: 12, minutes:10},
-                    endTime: {hours: 13, minutes:35}
-                },
-                {
-                    name: "Passing Period",
-                    showInFullSchedule: false,
-                    startTime: {hours: 13, minutes:35},
-                    endTime: {hours: 13, minutes:40}
-                },
-                {
-                    name: "4th Period",
-                    startTime: {hours: 13, minutes:40},
-                    endTime: {hours: 15, minutes:05}
-                }
-            ]
-        }
-    ]
-};
-
-// settings: {
-//         militaryTime: true;
-//     }
-
 
 function update() {
     updateTime();
-    if (typeof data !== 'undefined') {
-        updateVariables()
-        updateText();
-        var t = setTimeout(update, 500);
-    }
+    updateVariables()
+    updateText();
+    setTimeout(update, 500);
 }
 
 function updateVariables() {
@@ -214,17 +325,25 @@ function updateVariables() {
 }
 
 function updateText() {
+    document.getElementById('time').innerHTML = getCurrentTimeString();
+    document.getElementById('date').innerHTML = getCurrentDateString();
+    
+    if (currentClassPeriodIndex == -1) {
+        document.getElementById("schedule").innerHTML = "and there's <strong>no class</strong> today!"
+        $('.schoolDays').css('display', 'none')
+        return
+    }
+
+    $('.schoolDays').css('display', 'inline')
+    document.getElementById("schedule").innerHTML = "You are viewing the <strong>" + getCurrentScheduleName() + "</strong> schedule."
     document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString()
     document.getElementById("nextClass").innerHTML = getClassName(currentClassPeriodIndex+1)
     document.getElementById("currentClass").innerHTML = getClassName(currentClassPeriodIndex)
-    //document.getElementById('sentence').innerHTML = getSummaryString()
-    document.getElementById('time').innerHTML = getCurrentTimeString();
-    document.getElementById('date').innerHTML = getCurrentDateString();
-    document.getElementById("schedule").innerHTML = "You are viewing the <strong>" + getCurrentScheduleName() + "</strong> schedule."
 }
 
 function getCurrentScheduleName() {
-    return data.schedules[currentScheduleIndex].name
+    if (currentScheduleIndex == -1) {return "No Class"}
+    return schedule.schedules[currentScheduleIndex].name
 }
 
 function classIsInSession() {
@@ -257,8 +376,12 @@ return "on <strong>" + currentDate.toLocaleString('en-US', { weekday: 'short', m
 }
 function getCurrentClassPeriodIndex() {
     //using for over forEach() because we are breaking out of the loop early
-    for (let i = 0; i < data.schedules[currentScheduleIndex].classes.length; i++) {
-        if (checkStartTime(data.schedules[currentScheduleIndex].classes[i]) && checkEndTime(data.schedules[currentScheduleIndex].classes[i])) {
+    if (currentScheduleIndex == -1) {
+        return -1
+    }
+
+    for (let i = 0; i < schedule.schedules[currentScheduleIndex].classes.length; i++) {
+        if (checkStartTime(schedule.schedules[currentScheduleIndex].classes[i]) && checkEndTime(schedule.schedules[currentScheduleIndex].classes[i])) {
             return i
             break;//not sure if this is necessary so I included it anyway
         }
@@ -269,8 +392,8 @@ function getCurrentClassPeriodIndex() {
 
 function getCurrentScheduleIndex() {
     //using for over forEach() because we are breaking out of the loop early
-    for (let i = 0; i < data.schedules.length; i++) {
-        if (data.schedules[i].days.includes(currentDay)) {
+    for (let i = 0; i < schedule.length; i++) {
+        if (schedule[i].days.includes(currentDay)) {
             return i
             break;//not sure if this is necessary so I included it anyway
         }
@@ -325,7 +448,7 @@ function getTimeToTime(time) {
 
 function getTimeToEndOfCurrentClassString() {
     if (classIsInSession()) {
-        timeToEnd = getTimeToTime(data.schedules[currentScheduleIndex].classes[currentClassPeriodIndex].endTime);
+        timeToEnd = getTimeToTime(schedule.schedules[currentScheduleIndex].classes[currentClassPeriodIndex].endTime);
         return timeToEnd.hours.toString().padStart(2, '0') + ":" + timeToEnd.minutes.toString().padStart(2, '0') + ":" + timeToEnd.seconds.toString().padStart(2, '0');
     } else {
         return "No Class"
@@ -333,8 +456,8 @@ function getTimeToEndOfCurrentClassString() {
 }
 
 function getTimeToStartOfNextClassString() {
-    if (classIsInSession() && currentClassPeriodIndex+1 < data.schedule[selectedSchedule].classes.length ) {
-        timeToEnd = getTimeToTime(data.schedules[currentScheduleIndex].classes[currentClassPeriodIndex+1].startTime);
+    if (classIsInSession() && currentClassPeriodIndex + 1 < schedule.schedules[selectedSchedule].classes.length ) {
+        timeToEnd = getTimeToTime(schedule.schedules[currentScheduleIndex].classes[currentClassPeriodIndex+1].startTime);
         return timeToEnd.hours.toString().padStart(2, '0') + ":" + timeToEnd.minutes.toString().padStart(2, '0') + ":" + timeToEnd.seconds.toString().padStart(2, '0');
     } else {
         return "No More Classes"
@@ -343,8 +466,8 @@ function getTimeToStartOfNextClassString() {
 
 
 function getClassName(index) {
-    if (index >= 0 && index < data.schedules[currentScheduleIndex].classes.length) {
-        return data.schedules[currentScheduleIndex].classes[index].name.toString()
+    if (currentScheduleIndex != -1 && index >= 0 && index < schedule.schedules[currentScheduleIndex].classes.length) {
+        return schedule.schedules[currentScheduleIndex].classes[index].name.toString()
     } else {
         return "No Class"
     }
@@ -359,19 +482,19 @@ function populateScheduleTable() {
     //tbl.setAttribute('border', '1');
     var tbdy = document.createElement('tbody');
 
-        for (var i = 0; i < data.schedules[currentScheduleIndex].classes.length; i++) {
-            if (data.schedules[currentScheduleIndex].classes[i].showInFullSchedule != false) {
+        for (var i = 0; i < schedule.schedules[currentScheduleIndex].classes.length; i++) {
+            if (schedule.schedules[currentScheduleIndex].classes[i].showInFullSchedule != false) {
             var tr = document.createElement('tr');
             //for (var j = 0; j < 3; j++) {
 
                 var td = document.createElement('td');
-                td.innerHTML = data.schedules[currentScheduleIndex].classes[i].name
-                //td.appendChild(document.createTextNode(data.schedules[currentScheduleIndex].classes[i].name))
+                td.innerHTML = schedule.schedules[currentScheduleIndex].classes[i].name
+                //td.appendChild(document.createTextNode(schedule.schedules[currentScheduleIndex].classes[i].name))
                 tr.appendChild(td)
 
                 var td = document.createElement('td');
-                td.innerHTML = getTimeStringFromObject(data.schedules[currentScheduleIndex].classes[i].startTime) + " - " + getTimeStringFromObject(data.schedules[currentScheduleIndex].classes[i].endTime)
-                //td.appendChild(document.createTextNode(data.schedules[currentScheduleIndex].classes[i].name))
+                td.innerHTML = getTimeStringFromObject(schedule.schedules[currentScheduleIndex].classes[i].startTime) + " - " + getTimeStringFromObject(schedule.schedules[currentScheduleIndex].classes[i].endTime)
+                //td.appendChild(document.createTextNode(schedule.schedules[currentScheduleIndex].classes[i].name))
                 tr.appendChild(td);
 
             // }
@@ -409,14 +532,12 @@ function getLocalStorageBoolean(key, unsetDefault=false) {
     }
 }
 
-var a=document.getElementsByTagName("a");
-    for(var i=0;i<a.length;i++)
-    {
-        if (a[i].classList.contains("navbutton")) {
-            a[i].onclick=function()
-            {
-                window.location=this.getAttribute("href");
-                return false
-            }
+var a = document.getElementsByTagName("a");
+for (var i=0; i < a.length; i++) {
+    if (a[i].classList.contains("navbutton")) {
+        a[i].onclick = function() {
+            window.location = this.getAttribute("href");
+            return false
         }
     }
+}
