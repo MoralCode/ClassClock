@@ -247,7 +247,8 @@ function classIsInSession() {
 }
 
 function isNoSchoolDay() {
-    return currentScheduleIndex == -1;
+    return currentScheduleIndex <= -1;
+    //might later want to add a check to make sure that currentScheduleIndex is not greater than the number of schedules
 }
 
 function getSummaryString() {
