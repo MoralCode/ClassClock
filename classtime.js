@@ -203,7 +203,7 @@ function update() {
     if (scheduleExists()) {
         updateVariables()
         updateText();
-        var t = setTimeout(update, 500);
+        setTimeout(update, 500);
     }
 }
 
