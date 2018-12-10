@@ -495,7 +495,8 @@ function populateScheduleTable() {
             //for (var j = 0; j < 3; j++) {
 
                 var td = document.createElement('td');
-                td.innerHTML = data.schedules[currentScheduleIndex].classes[i].name
+                td.innerHTML = data.schedules[currentScheduleIndex].classes[i].name;
+                td.style.fontWeight = "bold";
                 //td.appendChild(document.createTextNode(data.schedules[currentScheduleIndex].classes[i].name))
                 tr.appendChild(td)
 
