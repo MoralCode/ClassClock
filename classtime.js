@@ -214,13 +214,26 @@ function updateVariables() {
 }
 
 function updateText() {
-    document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString()
-    document.getElementById("nextClass").innerHTML = getClassName(currentClassPeriodIndex+1)
-    document.getElementById("currentClass").innerHTML = getClassName(currentClassPeriodIndex)
-    //document.getElementById('sentence').innerHTML = getSummaryString()
     document.getElementById('time').innerHTML = getCurrentTimeString();
     document.getElementById('date').innerHTML = getCurrentDateString();
+
     document.getElementById("schedule").innerHTML = getSummaryString();
+    
+    if (classIsInSession()) {
+        document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString()
+        document.getElementById("nextClass").innerHTML = getClassName(currentClassPeriodIndex+1)
+        document.getElementById("currentClass").innerHTML = getClassName(currentClassPeriodIndex)
+        //document.getElementById('sentence').innerHTML = getSummaryString()
+    
+    } else {
+        labels = document.getElementsByClassName("label")
+
+        for (var i = 0; i < labels.length; i++) {
+            labels[i].style.display = "none";
+        }
+
+        document.getElementById("viewScheduleLink").style.display = "none";
+    }
 }
 
 function getCurrentScheduleName() {
