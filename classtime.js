@@ -246,6 +246,10 @@ function classIsInSession() {
     return (currentClassPeriodIndex >= 0 && currentScheduleIndex >= 0)
 }
 
+function isWeekend() {
+    return currentScheduleIndex == -1;
+}
+
 function getSummaryString() {
     if (classIsInSession()) {
         return "You are viewing the <strong>" + getCurrentScheduleName() + "</strong> schedule."
