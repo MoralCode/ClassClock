@@ -410,21 +410,20 @@ function populateScheduleTable() {
   }
 
 
-  function getFormattedTimeStringFromObject(timeObject) {
-      var pmString = " AM";
-      var hours = timeObject.hours;
+function getFormattedTimeStringFromObject(timeObject) {
+    var pmString = "";
 
-      if (!use24HourTime) {
-          //im making this variable because i dont know if javascript will mutate the original variable or not.
-        if(hours > 12) {
-            hours -= 12;
-            pmString = " PM";
-        }
-      } else {
-          pmString = "";
-      }
-      return hours.toString().padStart(2, '0') + ":" + timeObject.minutes.toString().padStart(2, '0') + pmString;
-  }
+    //convert to 12 hour if necessary
+    if (!use24HourTime && timeObject.hours > 12) {
+        timeObject.hours -= 12;
+        pmString = " PM";
+
+    } else if (!use24HourTime) {
+        pmString = " AM";
+    }
+
+    return getTimeStringFromObject(timeObject, false) + pmString;
+}
 
 function getLocalStorageBoolean(key, unsetDefault=false) {
     if (localStorage.getItem(key) === null) {
