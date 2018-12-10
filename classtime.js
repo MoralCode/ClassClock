@@ -388,7 +388,7 @@ function populateScheduleTable() {
                 tr.appendChild(td)
 
                 var td = document.createElement('td');
-                td.innerHTML = getTimeStringFromObject(data.schedules[currentScheduleIndex].classes[i].startTime) + " - " + getTimeStringFromObject(data.schedules[currentScheduleIndex].classes[i].endTime)
+                td.innerHTML = getFormattedTimeStringFromObject(data.schedules[currentScheduleIndex].classes[i].startTime) + " - " + getFormattedTimeStringFromObject(data.schedules[currentScheduleIndex].classes[i].endTime)
                 //td.appendChild(document.createTextNode(data.schedules[currentScheduleIndex].classes[i].name))
                 tr.appendChild(td);
 
@@ -401,7 +401,7 @@ function populateScheduleTable() {
   }
 
 
-  function getTimeStringFromObject(timeObject) {
+  function getFormattedTimeStringFromObject(timeObject) {
       var pmString = " AM";
       var hours = timeObject.hours;
 
