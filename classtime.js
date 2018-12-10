@@ -320,7 +320,7 @@ function checkEndTime(classPeriod) { return !checkGivenTimeIsBeforeCurrentTime(c
 
 function getTimeToTime(time) {
     //this function gets the absolute value of the difference between now and the current time
-    if (classIsInSession()) {
+
 
         difference = {hours: 0, minutes:0, seconds:0};
         
@@ -345,7 +345,6 @@ function getTimeToTime(time) {
         // }
 
         return difference;
-    }
 }
 
 function getTimeToEndOfCurrentClassString() {
