@@ -243,15 +243,15 @@ function getCurrentScheduleName() {
 }
 
 function classIsInSession() {
-    return (currentClassPeriodIndex >= 0 && !isWeekend())
+    return (currentClassPeriodIndex >= 0 && !isNoSchoolDay())
 }
 
-function isWeekend() {
+function isNoSchoolDay() {
     return currentScheduleIndex == -1;
 }
 
 function getSummaryString() {
-    if (isWeekend()) {
+    if (isNoSchoolDay()) {
         return "There's <strong>no class</strong> today!"
     } else {
         return "You are viewing the <strong>" + getCurrentScheduleName() + "</strong> schedule."
