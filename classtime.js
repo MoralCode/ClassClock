@@ -15,7 +15,7 @@ var use24HourTime = getLocalStorageBoolean("use24HourTime", false);
 var data = {
     fullName: "",
     shortName: "",
-    //order is as is on the school website
+    //order is as is on the school website, although it doesnt matter.
     schedules: [
         {
             name: "Mon/Fri (Regular)",
@@ -193,11 +193,10 @@ var data = {
     ]
 };
 
-// settings: {
-//         militaryTime: true;
-//     }
-
-
+/**
+ * The standard run loop for updating the time and other time-related information on the site.
+ *
+ */
 function update() {
     updateTime();
     if (scheduleExists()) {
@@ -207,12 +206,18 @@ function update() {
     }
 }
 
+/**
+ * mostly useless method to update the currentScheduleIndex and currentClassPeriodIndex
+ */
 function updateVariables() {
     currentScheduleIndex = getCurrentScheduleIndex();
     currentClassPeriodIndex = getCurrentClassPeriodIndex();
     //document.getElementById('currentClass').innerHTML = data.schedule[selectedSchedule][currentClassPeriodIndex].name;
 }
 
+/**
+ * Updates labels on the homepage
+ */
 function updateText() {
     document.getElementById('time').innerHTML = getCurrentTimeString();
     document.getElementById('date').innerHTML = getCurrentDateString();
@@ -236,21 +241,40 @@ function updateText() {
     }
 }
 
+/**
+ * @returns the current schedule name or "No School" if there is no school scheduled today
+ */
 function getCurrentScheduleName() {
     if (!isNoSchoolDay()) {
         return data.schedules[currentScheduleIndex].name
     } else { return "No School"}
 }
 
+/**
+ * this function checks to see if the currentClassPeriodIndex is valid (greater than -1), indicating that there is currently a scheduled class period happening
+ *
+ * @returns a boolean representing if class is in session
+ */
 function classIsInSession() {
     return (currentClassPeriodIndex >= 0 && !isNoSchoolDay())
+    //might later want to add a check to make sure that currentClassPeriodIndex is not greater than the number of classes in the schedule for today
 }
 
+/**
+ *  this function checks to see if the currentScheduleIndex is valid (greater than -1), indicating that there is a schedule for the day
+ *
+ * @returns true if there is no schedule that applies to today, false if there is
+ */
 function isNoSchoolDay() {
     return currentScheduleIndex <= -1;
     //might later want to add a check to make sure that currentScheduleIndex is not greater than the number of schedules
 }
 
+
+/**
+ *  Checks if the schedule exists
+ * @returns boolean describing if the schedule exists
+ */
 function scheduleExists() {
     return typeof data !== 'undefined'
 }
@@ -265,6 +289,11 @@ function getSummaryString() {
     //"it is currently ##:##:##. (period) ends in ##:##"
 }
 
+
+
+/**
+ * This function updates the variables that keep track of the current time and date
+ */
 function updateTime() {
     currentDate = new Date();
     
@@ -275,12 +304,27 @@ function updateTime() {
     currentSeconds = currentDate.getSeconds();
 }
 
+
+
+/**
+ *
+ * @returns the current time as a formatted string
+ */
 function getCurrentTimeString() { return currentDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: !use24HourTime }) }
 
+/**
+ *
+ * @returns the current date as a formatted string
+ */
 function getCurrentDateString() { 
 return "on <strong>" + currentDate.toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }) + "</strong>"
 }
 
+/**
+ * this function determines the index of the class period that is currently going on (if any)
+ *
+ * @returns an index for looking up the current class period, or -1 if there is no school today
+ */
 function getCurrentClassPeriodIndex() {
     if (!isNoSchoolDay()) {
         //using for over forEach() because we are breaking out of the loop early
@@ -296,6 +340,11 @@ function getCurrentClassPeriodIndex() {
     }
 }
 
+/**
+ * this function determines the index of the schedule that applies to today (if any)
+ *
+ * @returns an index for looking up the current schedule, or -1 if there is no school today
+ */
 function getCurrentScheduleIndex() {
     //using for over forEach() because we are breaking out of the loop early
     for (let i = 0; i < data.schedules.length; i++) {
@@ -307,6 +356,12 @@ function getCurrentScheduleIndex() {
     return -1
 }
 
+/**
+ * this function checks to see if the given time occurred before the current time, used for checking whether the current time falls within a scheduled class period
+ *
+ * @param {*} givenTime
+ * @returns true if the given time occurred before the current time, false otherwise
+ */
 function checkGivenTimeIsBeforeCurrentTime( givenTime ) {
     if (givenTime.hours < currentHours || (givenTime.hours == currentHours && givenTime.minutes <= currentMinutes)) {
         //hours match and given minutes are before or the same as current minutes
@@ -314,11 +369,29 @@ function checkGivenTimeIsBeforeCurrentTime( givenTime ) {
     } else { return false }
 }
 
+/**
+ * checks that the time a class was scheduled to start has already passed (i.e. the class has started)
+ *
+ * @param {*} classPeriod the object representing the class period to be checked
+ * @returns true if the start time of the class has already passed, false otherwise
+ */
 function checkStartTime(classPeriod) { return checkGivenTimeIsBeforeCurrentTime(classPeriod.startTime)}
+
+/**
+ * checks that the time a class was scheduled to end has not already passed (i.e. the class has not yet ended)
+ *
+ * @param {*} classPeriod the object representing the class period to be checked
+ * @returns true if the end time of the class has not already passed, false otherwise
+ */
 function checkEndTime(classPeriod) { return !checkGivenTimeIsBeforeCurrentTime(classPeriod.endTime)}
 
 
 /**
+ * this function gets the absolute value of the difference between the given time and the current time
+ *
+ * @param {*} time the time that you want to calculate the delta to from the current time
+ * @returns the absolute value of the difference between the given time and the current time as an object 
+ */
 function getTimeDelta(time) {
     var currentTime = new Date(2000, 0, 1,  currentHours, currentMinutes, currentSeconds);
     var givenTime = new Date(2000, 0, 1, time.hours, time.minutes, 0);
@@ -327,6 +400,12 @@ function getTimeDelta(time) {
     return convertMillisecondsToTime(Math.abs(givenTime - currentTime));
 }
 
+/**
+ * converts a given number of milliseconds into a time object. Used for calculating the time between now and the end of the current class
+ *
+ * @param {*} milliseconds the number of milliseconds to convert
+ * @returns a time object
+ */
 function convertMillisecondsToTime(milliseconds) {
     //theres probably a better way to do this using Date()
     time = {hours: 0, minutes:0, seconds:0, milliseconds: 0};
@@ -342,6 +421,10 @@ function convertMillisecondsToTime(milliseconds) {
     return time
 }
 
+/**
+ *
+ * @returns the time to the end of the current class as a string
+ */
 function getTimeToEndOfCurrentClassString() {
     if (classIsInSession()) {
         return getTimeStringFromObject(getTimeDelta(data.schedules[currentScheduleIndex].classes[currentClassPeriodIndex].endTime));
@@ -350,6 +433,11 @@ function getTimeToEndOfCurrentClassString() {
     }
 }
 
+/**
+ *  this is a an unused method that was written for a feature that never got implemented and, as of this point in time, identical to @function getTimeToEndOfCurrentClassString()
+ *
+ * @returns the time to the start of the next class as a string
+ */
 function getTimeToStartOfNextClassString() {
     if (classIsInSession() && currentClassPeriodIndex+1 < data.schedule[selectedSchedule].classes.length ) {
         return getTimeStringFromObject(getTimeDelta(data.schedules[currentScheduleIndex].classes[currentClassPeriodIndex+1].startTime));
@@ -359,6 +447,13 @@ function getTimeToStartOfNextClassString() {
 }
 
 
+/**
+ *  converts a time object into a string
+ *
+ * @param {*} timeObject the time object to convert
+ * @param {boolean} [includeSeconds=true] a boolean representing whether seconds should be included in this string (i.e. for a countdown) or not (i.e. for displaying a fixed time)
+ * @returns a String in either HH:MM format or HH:MM:SS format
+ */
 function getTimeStringFromObject(timeObject, includeSeconds=true) {
     if (includeSeconds) {
         //you can really tell how much i dont like to duplicate code here haha
@@ -368,6 +463,11 @@ function getTimeStringFromObject(timeObject, includeSeconds=true) {
     }
 }
 
+/**
+ *
+ * @param {*} index the index of the class to return the name for
+ * @returns returns the class name for the given index or "No Class" if there is no class in session
+ */
 function getClassName(index) {
     if (classIsInSession() && index < data.schedules[currentScheduleIndex].classes.length) {
             return data.schedules[currentScheduleIndex].classes[index].name.toString()
@@ -378,6 +478,10 @@ function getClassName(index) {
 
 
 
+/**
+ * this function for populating the table on the schedule page
+ *
+ */
 function populateScheduleTable() {
     // var body = document.getElementsByTagName('body')[0];
     var tbl = document.getElementById("scheduleTable")//createElement('table');
@@ -409,6 +513,12 @@ function populateScheduleTable() {
   }
 
 
+/**
+ *  converts a time object into a formatted time string based on the user's time format (12/24 hour) preferences
+ *
+ * @param {*} timeObject the time object to convert to a string
+ * @returns the string in either 12 or 24 hour format
+ */
 function getFormattedTimeStringFromObject(timeObject) {
     var pmString = "";
 
@@ -424,6 +534,13 @@ function getFormattedTimeStringFromObject(timeObject) {
     return getTimeStringFromObject(timeObject, false) + pmString;
 }
 
+/**
+ *  Gets a value from HTML5 localStorage
+ *
+ * @param {*} key the key which the value is stored under
+ * @param {boolean} [unsetDefault=false] the value to return if there was no item at that key. Default: false
+ * @returns the value stored at the key or the value of unsetDefault if there was no value previously stored
+ */
 function getLocalStorageBoolean(key, unsetDefault=false) {
     if (localStorage.getItem(key) === null) {
         //key is not set
