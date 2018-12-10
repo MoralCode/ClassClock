@@ -219,7 +219,7 @@ function updateText() {
 
     document.getElementById("schedule").innerHTML = getSummaryString();
     
-    if (classIsInSession()) {
+    if (!isNoSchoolDay()) {
         document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString()
         document.getElementById("nextClass").innerHTML = getClassName(currentClassPeriodIndex+1)
         document.getElementById("currentClass").innerHTML = getClassName(currentClassPeriodIndex)
