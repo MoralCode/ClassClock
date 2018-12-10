@@ -344,7 +344,7 @@ function convertMillisecondsToTime(milliseconds) {
 function getTimeToEndOfCurrentClassString() {
     if (classIsInSession()) {
         timeToEnd = getTimeToTime(data.schedules[currentScheduleIndex].classes[currentClassPeriodIndex].endTime);
-        return timeToEnd.hours.toString().padStart(2, '0') + ":" + timeToEnd.minutes.toString().padStart(2, '0') + ":" + timeToEnd.seconds.toString().padStart(2, '0');
+        return getTimeStringFromObject(timeToEnd);
     } else {
         return "No Class"
     }
@@ -353,12 +353,21 @@ function getTimeToEndOfCurrentClassString() {
 function getTimeToStartOfNextClassString() {
     if (classIsInSession() && currentClassPeriodIndex+1 < data.schedule[selectedSchedule].classes.length ) {
         timeToEnd = getTimeToTime(data.schedules[currentScheduleIndex].classes[currentClassPeriodIndex+1].startTime);
-        return timeToEnd.hours.toString().padStart(2, '0') + ":" + timeToEnd.minutes.toString().padStart(2, '0') + ":" + timeToEnd.seconds.toString().padStart(2, '0');
+        return getTimeStringFromObject(timeToEnd);
     } else {
         return "No More Classes"
     }
 }
 
+
+function getTimeStringFromObject(timeObject, includeSeconds=true) {
+    if (includeSeconds) {
+        //you can really tell how much i dont like to duplicate code here haha
+        return getTimeStringFromObject(timeObject, false) + ":" + timeObject.seconds.toString().padStart(2, '0');
+    } else {
+        return timeObject.hours.toString().padStart(2, '0') + ":" + timeObject.minutes.toString().padStart(2, '0')
+    }
+}
 
 function getClassName(index) {
     if (classIsInSession() && index < data.schedules[currentScheduleIndex].classes.length) {
