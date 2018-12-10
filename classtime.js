@@ -308,10 +308,7 @@ function getCurrentScheduleIndex() {
 }
 
 function checkGivenTimeIsBeforeCurrentTime( givenTime ) {
-    if (givenTime.hours < currentHours) {
-        //given time is before current time
-        return true
-    } else if (givenTime.hours == currentHours && givenTime.minutes <= currentMinutes) {
+    if (givenTime.hours < currentHours || (givenTime.hours == currentHours && givenTime.minutes <= currentMinutes)) {
         //hours match and given minutes are before or the same as current minutes
         return true
     } else { return false }
