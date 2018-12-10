@@ -243,7 +243,7 @@ function getCurrentScheduleName() {
 }
 
 function classIsInSession() {
-    return (currentClassPeriodIndex >= 0 && currentScheduleIndex >= 0)
+    return (currentClassPeriodIndex >= 0 && !isWeekend())
 }
 
 function isWeekend() {
@@ -251,12 +251,11 @@ function isWeekend() {
 }
 
 function getSummaryString() {
-    if (classIsInSession()) {
-        return "You are viewing the <strong>" + getCurrentScheduleName() + "</strong> schedule."
+    if (isWeekend()) {
+        return "There's <strong>no class</strong> today!"
     } else {
-        return "and there's <strong>no class</strong> today!"
+        return "You are viewing the <strong>" + getCurrentScheduleName() + "</strong> schedule."
     }
-
     //other options
     //"it is currently ##:##:##. (period) ends in ##:##"
 }
