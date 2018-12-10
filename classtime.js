@@ -319,32 +319,26 @@ function checkEndTime(classPeriod) { return !checkGivenTimeIsBeforeCurrentTime(c
 
 
 function getTimeToTime(time) {
-    //this function gets the absolute value of the difference between now and the current time
+    var currentTime = new Date(2000, 0, 1,  currentHours, currentMinutes, currentSeconds);
+    var givenTime = new Date(2000, 0, 1, time.hours, time.minutes, 0);
+    
+                                                //order doesnt matter
+    return convertMillisecondsToTime(Math.abs(givenTime - currentTime));
+}
 
-
-        difference = {hours: 0, minutes:0, seconds:0};
-        
-        var currentTime = new Date(2000, 0, 1,  currentHours, currentMinutes, currentSeconds);
-        var givenTime = new Date(2000, 0, 1, time.hours, time.minutes, 0);
-        
-        var msec = givenTime - currentTime; //order doesnt matter
-        msec = Math.abs(msec);
-
-        //convert from milliseconds to H:M:S
-        difference.hours = Math.floor(msec / 1000 / 60 / 60);
-        msec -= difference.hours * 1000 * 60 * 60;
-        difference.minutes = Math.floor(msec / 1000 / 60);
-        msec -= difference.minutes * 1000 * 60;
-        difference.seconds = Math.floor(msec / 1000);
-        msec -= difference.seconds * 1000;
-
-        // if (typeof time.seconds == 'undefined' ) {
-        //     secondsUntilEnd = 59-currentSeconds
-        // }else {
-        //     secondsUntilEnd = time.seconds - currentSeconds; //because there are no seconds in the schedule, we assume it ends at the full minute
-        // }
-
-        return difference;
+function convertMillisecondsToTime(milliseconds) {
+    //theres probably a better way to do this using Date()
+    time = {hours: 0, minutes:0, seconds:0, milliseconds: 0};
+    //convert from milliseconds to H:M:S
+    time.hours = Math.floor(milliseconds / 1000 / 60 / 60);
+    milliseconds -= time.hours * 1000 * 60 * 60;
+    time.minutes = Math.floor(milliseconds / 1000 / 60);
+    milliseconds -= time.minutes * 1000 * 60;
+    time.seconds = Math.floor(milliseconds / 1000);
+    milliseconds -= time.seconds * 1000;
+    //we dont need milliseconds so ignore this
+    //time.milliseconds = milliseconds
+    return time
 }
 
 function getTimeToEndOfCurrentClassString() {
