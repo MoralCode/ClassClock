@@ -237,9 +237,9 @@ function updateText() {
 }
 
 function getCurrentScheduleName() {
-    if (classIsInSession()) {
+    if (!isNoSchoolDay()) {
         return data.schedules[currentScheduleIndex].name
-    } else { return "No Class"}
+    } else { return "No School"}
 }
 
 function classIsInSession() {
