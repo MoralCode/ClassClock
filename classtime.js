@@ -322,7 +322,8 @@ function checkStartTime(classPeriod) { return checkGivenTimeIsBeforeCurrentTime(
 function checkEndTime(classPeriod) { return !checkGivenTimeIsBeforeCurrentTime(classPeriod.endTime)}
 
 
-function getTimeToTime(time) {
+/**
+function getTimeDelta(time) {
     var currentTime = new Date(2000, 0, 1,  currentHours, currentMinutes, currentSeconds);
     var givenTime = new Date(2000, 0, 1, time.hours, time.minutes, 0);
     
@@ -347,7 +348,7 @@ function convertMillisecondsToTime(milliseconds) {
 
 function getTimeToEndOfCurrentClassString() {
     if (classIsInSession()) {
-        timeToEnd = getTimeToTime(data.schedules[currentScheduleIndex].classes[currentClassPeriodIndex].endTime);
+        timeToEnd = getTimeDelta(data.schedules[currentScheduleIndex].classes[currentClassPeriodIndex].endTime);
         return getTimeStringFromObject(timeToEnd);
     } else {
         return "No Class"
@@ -356,7 +357,7 @@ function getTimeToEndOfCurrentClassString() {
 
 function getTimeToStartOfNextClassString() {
     if (classIsInSession() && currentClassPeriodIndex+1 < data.schedule[selectedSchedule].classes.length ) {
-        timeToEnd = getTimeToTime(data.schedules[currentScheduleIndex].classes[currentClassPeriodIndex+1].startTime);
+        timeToEnd = getTimeDelta(data.schedules[currentScheduleIndex].classes[currentClassPeriodIndex+1].startTime);
         return getTimeStringFromObject(timeToEnd);
     } else {
         return "No More Classes"
