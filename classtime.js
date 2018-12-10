@@ -200,7 +200,7 @@ var data = {
 
 function update() {
     updateTime();
-    if (typeof data !== 'undefined') {
+    if (scheduleExists()) {
         updateVariables()
         updateText();
         var t = setTimeout(update, 500);
@@ -249,6 +249,10 @@ function classIsInSession() {
 function isNoSchoolDay() {
     return currentScheduleIndex <= -1;
     //might later want to add a check to make sure that currentScheduleIndex is not greater than the number of schedules
+}
+
+function scheduleExists() {
+    return typeof data !== 'undefined'
 }
 
 function getSummaryString() {
