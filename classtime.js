@@ -301,7 +301,6 @@ function getCurrentScheduleIndex() {
     for (let i = 0; i < data.schedules.length; i++) {
         if (data.schedules[i].days.includes(currentDay)) {
             return i
-            break;//not sure if this is necessary so I included it anyway
         }
     }
     //if execution reaches here, no schedules were found for today, so it must be a no school day
