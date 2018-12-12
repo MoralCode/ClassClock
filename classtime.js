@@ -326,18 +326,19 @@ return "on <strong>" + currentDate.toLocaleString('en-US', { weekday: 'short', m
  * @returns an index for looking up the current class period, or -1 if there is no school today
  */
 function getCurrentClassPeriodIndex() {
-    if (!isNoSchoolDay()) {
-        //using for over forEach() because we are breaking out of the loop early
-        for (let i = 0; i < data.schedules[currentScheduleIndex].classes.length; i++) {
-            if (checkStartTime(data.schedules[currentScheduleIndex].classes[i]) && checkEndTime(data.schedules[currentScheduleIndex].classes[i])) {
-                return i
-                break;//not sure if this is necessary so I included it anyway
-            }
-        }
-    } else {
-        //if execution reaches here, no class periods are in session, so therefore school must be out
+    if (isNoSchoolDay()) {
+        //return immediately if there is no school today
         return -1
     }
+
+    //using for over forEach() because we are breaking out of the loop early
+    for (let i = 0; i < data.schedules[currentScheduleIndex].classes.length; i++) {
+        if (checkStartTime(data.schedules[currentScheduleIndex].classes[i]) && checkEndTime(data.schedules[currentScheduleIndex].classes[i])) {
+            return i
+            break;//not sure if this is necessary so I included it anyway
+        }
+    }
+    return -1
 }
 
 /**
