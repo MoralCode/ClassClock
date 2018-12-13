@@ -225,7 +225,16 @@ function updateText() {
     document.getElementById("schedule").innerHTML = getSummaryString();
     
     if (!isNoSchoolDay()) {
-        document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString()
+        if(!classIsInSession() && !isNoSchoolDay() && !checkGivenTimeIsBeforeCurrentTime(data.schedules[currentScheduleIndex].classes[0].startTime)) {
+                
+            document.getElementById("countdownLabel").innerHTML = "School starts in: "
+            document.getElementById('timeToEndOfClass').innerHTML =  getTimeToStartOfSchoolString();
+            
+        } else {
+            document.getElementById("countdownLabel").innerHTML = "...which ends in: ";
+            document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString();
+        }
+        
         document.getElementById("nextClass").innerHTML = getClassName(currentClassPeriodIndex+1)
         document.getElementById("currentClass").innerHTML = getClassName(currentClassPeriodIndex)
         //document.getElementById('sentence').innerHTML = getSummaryString()
@@ -429,6 +438,18 @@ function convertMillisecondsToTime(milliseconds) {
 function getTimeToEndOfCurrentClassString() {
     if (classIsInSession()) {
         return getTimeStringFromObject(getTimeDelta(data.schedules[currentScheduleIndex].classes[currentClassPeriodIndex].endTime));
+    } else {
+        return "No Class"
+    }
+}
+
+/**
+ * This fucntion is used for calculating how long until school starts
+ * @returns the time to the start of school as a string
+ */
+function getTimeToStartOfSchoolString() {
+    if (!classIsInSession() && !isNoSchoolDay() && !checkGivenTimeIsBeforeCurrentTime(data.schedules[currentScheduleIndex].classes[0].startTime)) {
+        return getTimeStringFromObject(getTimeDelta(data.schedules[currentScheduleIndex].classes[0].startTime));
     } else {
         return "No Class"
     }
