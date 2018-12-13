@@ -238,6 +238,14 @@ function updateText() {
         document.getElementById("nextClass").innerHTML = getClassName(currentClassPeriodIndex+1)
         document.getElementById("currentClass").innerHTML = getClassName(currentClassPeriodIndex)
         //document.getElementById('sentence').innerHTML = getSummaryString()
+
+        labels = document.getElementsByClassName("label")
+
+        for (var i = 0; i < labels.length; i++) {
+            labels[i].style.display = "block";
+        }
+
+        document.getElementById("viewScheduleLink").style.display = "block";
     
     } else {
         labels = document.getElementsByClassName("label")
