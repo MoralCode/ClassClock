@@ -1,3 +1,13 @@
+let DAY_OFF_FLAG = "day off"
+let OUTSIDE_SCHOOL_HOURS_FLAG = "outside school hours"
+let SCHOOL_IN_CLASS_OUT_FLAG = "school is in session, but class is not"
+let CLASS_IN_SESSION_FLAG = "class is in session"
+
+
+
+
+
+
 var currentDay = 0;
 var currentHours = 0;
 var currentMinutes = 0; 
