@@ -172,40 +172,72 @@ function updateText() {
     document.getElementById('time').innerHTML = getCurrentTimeString();
     document.getElementById('date').innerHTML = getCurrentDateString();
 
-    document.getElementById("schedule").innerHTML = getSummaryString();
-    
-    if (!isNoSchoolDay()) {
-        if(!classIsInSession() && !isNoSchoolDay() && !checkGivenTimeIsBeforeCurrentTime(data.schedules[currentScheduleIndex].classes[0].startTime)) {
-                
-            document.getElementById("countdownLabel").innerHTML = "School starts in: "
-            document.getElementById('timeToEndOfClass').innerHTML =  getTimeToStartOfSchoolString();
+
+
+
+    document.getElementById("schedule").innerHTML = "You are viewing the <strong>" + getCurrentScheduleName() + "</strong> schedule."
+
+    document.getElementById("viewScheduleLink").style.display = "block";
+
+
+
+    switch (getCurrentTimeState()) {
+        case DAY_OFF_FLAG:
+            document.getElementById("schedule").innerHTML = "There's <strong>no class</strong> today!"
+            document.getElementById("viewScheduleLink").style.display = "none";
             
-        } else {
+            break;
+
+        case OUTSIDE_SCHOOL_HOURS_FLAG:
+
+            if(!checkGivenTimeIsBeforeCurrentTime(data.schedules[currentScheduleIndex].classes[0].startTime)) {
+                document.getElementById("countdownLabel").innerHTML = "School starts in: "
+                document.getElementById('timeToEndOfClass').innerHTML =  getTimeToStartOfSchoolString();
+            }
+
+            document.getElementById("nextClass").innerHTML = getClassName(currentClassPeriodIndex+1)
+            document.getElementById("currentClass").innerHTML = getClassName(currentClassPeriodIndex)
+            
+            break;
+
+        case SCHOOL_IN_CLASS_OUT_FLAG:
+            
+
+            document.getElementById("nextClass").innerHTML = getClassName(currentClassPeriodIndex+1)
+            document.getElementById("currentClass").innerHTML = getClassName(currentClassPeriodIndex)
+            break;
+
+        case CLASS_IN_SESSION_FLAG:
             document.getElementById("countdownLabel").innerHTML = "...which ends in: ";
             document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString();
-        }
-        
-        document.getElementById("nextClass").innerHTML = getClassName(currentClassPeriodIndex+1)
-        document.getElementById("currentClass").innerHTML = getClassName(currentClassPeriodIndex)
-        //document.getElementById('sentence').innerHTML = getSummaryString()
 
-        labels = document.getElementsByClassName("label")
+            document.getElementById("nextClass").innerHTML = getClassName(currentClassPeriodIndex+1)
+            document.getElementById("currentClass").innerHTML = getClassName(currentClassPeriodIndex)
+            break;
 
-        for (var i = 0; i < labels.length; i++) {
-            labels[i].style.display = "block";
-        }
+        default:
 
-        document.getElementById("viewScheduleLink").style.display = "block";
-    
-    } else {
-        labels = document.getElementsByClassName("label")
 
-        for (var i = 0; i < labels.length; i++) {
-            labels[i].style.display = "none";
-        }
-
-        document.getElementById("viewScheduleLink").style.display = "none";
     }
+
+}
+
+
+function getCurrentTimeState() {
+
+    //there is no schedule that applies today
+    if (getCurrentScheduleIndex() <= -1) { return DAY_OFF_FLAG }
+
+    //it is a school day but it is not school hours
+    else if (!schoolIsInSession()) { return OUTSIDE_SCHOOL_HOURS_FLAG }
+    
+    //the current time lies between the start of the first schedules class and the end of the last
+    else if (schoolIsInSession() && !classIsInSession()) { return SCHOOL_IN_CLASS_OUT_FLAG }
+
+    //the current time lies within a scheduled class period
+    else if (classIsInSession()) { return CLASS_IN_SESSION_FLAG }
+
+
 }
 
 /**
@@ -256,15 +288,6 @@ function scheduleExists() {
     return typeof data !== 'undefined'
 }
 
-function getSummaryString() {
-    if (isNoSchoolDay()) {
-        return "There's <strong>no class</strong> today!"
-    } else {
-        return "You are viewing the <strong>" + getCurrentScheduleName() + "</strong> schedule."
-    }
-    //other options
-    //"it is currently ##:##:##. (period) ends in ##:##"
-}
 
 
 
