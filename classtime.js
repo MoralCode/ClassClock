@@ -278,6 +278,16 @@ function classIsInSession() {
 }
 
 /**
+ * this function checks to see if the current time is between the start of the first scheduled class and the end of the last scheduled class. This indicates that school is currently in session
+ *
+ * @returns a boolean representing if school is in session
+ */
+function schoolIsInSession() {
+
+    return (checkStartTime(data.schedules[currentScheduleIndex].classes[0]) && checkEndTime(data.schedules[currentScheduleIndex].classes[data.schedules[currentScheduleIndex].classes.length-1]))
+}
+
+/**
  *  this function checks to see if the currentScheduleIndex is valid (greater than -1), indicating that there is a schedule for the day
  *
  * @returns true if there is no schedule that applies to today, false if there is
