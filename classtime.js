@@ -152,8 +152,10 @@ function update() {
     if (scheduleExists()) {
         updateVariables()
         updateText();
-        setTimeout(update, 500);
+        
     }
+    
+    setTimeout(update, 500);
 }
 
 /**
