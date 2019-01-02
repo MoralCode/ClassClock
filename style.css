@@ -106,7 +106,7 @@ section#options > * {
 }
 
 #flash {
-    flex: 1;
+    /* flex: 1; */
     display:none;
     margin: 0 auto;
     display: block;
