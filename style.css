@@ -84,3 +84,35 @@ h1.bigger {
 section#credits > a {
     margin: 5px;
 }
+
+#flash {
+    visibility: hidden;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+    width: 90vw;
+    border-bottom-right-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+#flash.success {
+    background-color: #d4edda; /* copied from bootstrap */
+    color: #155724;
+}
+
+#flash.info {
+    color: #0c5460; /* copied from bootstrap */
+    background-color: #a7d6f5; 
+}
+
+#flash.warning {
+    background-color: #faf0ce;
+    color: #856404;
+}
+
+#flash.danger {
+    background-color: #f38c95; 
+    color: #721c24; /* copied from bootstrap */
+    
+}

@@ -3,10 +3,10 @@ let OUTSIDE_SCHOOL_HOURS_FLAG = "outside school hours"
 let SCHOOL_IN_CLASS_OUT_FLAG = "school is in session, but class is not"
 let CLASS_IN_SESSION_FLAG = "class is in session"
 
-
-
-
-
+let FLASH_SUCCESS = "SUCCESS"
+let FLASH_INFO = "INFO"
+let FLASH_WARN = "WARNING"
+let FLASH_DANGER = "DANGER"
 
 var currentDay = 0;
 var currentHours = 0;
@@ -565,6 +565,39 @@ function getLocalStorageBoolean(key, unsetDefault=false) {
         //this is a better way to to convert the string from localStorage into a boolean for checkbox.checked. https://stackoverflow.com/a/264037
         return (localStorage.getItem(key) == "true")
     }
+}
+
+function flashMessage(message, type = FLASH_INFO, timeout = 5000) {
+    flash = document.getElementById("flash")
+
+    flash.innerHTML = message;
+    flash.style.visibility = "visible";
+
+
+    switch (type) {
+        case FLASH_SUCCESS:
+            flash.className = "success"; 
+            break;
+
+        case FLASH_WARN:
+            flash.className = "warning";
+            break;
+            
+        case FLASH_DANGER:
+            flash.className = "danger";
+            break;
+
+        default: //FLASH_INFO
+            flash.className = "info";
+    }
+    // maybe animate down or fade in
+
+    if (timeout > 0) {
+        setTimeout( function remove() {
+            flash.style.visibility = "hidden";
+        }, timeout)
+    }
+
 }
 
 var a=document.getElementsByTagName("a");
