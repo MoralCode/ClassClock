@@ -288,17 +288,6 @@ function isNoSchoolDay() {
 
 
 /**
- *  Checks if the schedule exists
- * @returns boolean describing if the schedule exists
- */
-function scheduleExists() {
-    return typeof data !== 'undefined'
-}
-
-
-
-
-/**
  * This function updates the variables that keep track of the current time and date
  */
 function updateTime() {
@@ -557,7 +546,7 @@ function getFormattedTimeStringFromObject(timeObject) {
 }
 
 /**
- *  Gets a value from HTML5 localStorage
+ *  Gets a boolean value from HTML5 localStorage
  *
  * @param {*} key the key which the value is stored under
  * @param {boolean} [unsetDefault=false] the value to return if there was no item at that key. Default: false
@@ -573,6 +562,12 @@ function getLocalStorageBoolean(key, unsetDefault=false) {
     }
 }
 
+/**
+ *  Gets a Number from HTML5 LocalStorage
+ *
+ * @param {*} key the key which the Number is stored under
+ * @returns the Number stored at the key if it exists, otherwise undefined.
+ */
 function getLocalStorageIndex(key) {
     if (localStorage.getItem(key) !== null) {
         return (Number(localStorage.getItem(key)))
@@ -581,6 +576,14 @@ function getLocalStorageIndex(key) {
     }
 }
 
+/**
+ * Causes a message to be displayed to the user.
+ * This is useful for displaying error or succcess messages or otherwise warning users about something that may impact their use of classclock
+ *
+ * @param {*} message the text of the message to display to the user
+ * @param {*} [type=FLASH_INFO] the flag of the style to use when displaying the message. Default: INFO
+ * @param {number} [timeout=5000] the mumber of milliseconds to wait before the message disappears again. Anything less than 1 will disable the timeout
+ */
 function flashMessage(message, type = FLASH_INFO, timeout = 5000) {
     flash = document.getElementById("flash")
 
