@@ -27,8 +27,8 @@ var use24HourTime = getLocalStorageBoolean("use24HourTime", false);
 
 var schools = [
         {
-        fullName: "",
-        shortName: "",
+        fullName: "Lake Oswego High School",
+        shortName: "LOHS",
         //order is as is on the school website, although it doesnt matter.
         schedules: [
             {
