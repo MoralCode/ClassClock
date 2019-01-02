@@ -588,8 +588,8 @@ function flashMessage(message, type = FLASH_INFO, timeout = 5000) {
     flash = document.getElementById("flash")
 
     flash.innerHTML = message;
-    flash.style.visibility = "visible";
-
+    // flash.style.visibility = "visible";
+    flash.style.display = "normal";
 
     switch (type) {
         case FLASH_SUCCESS:
@@ -611,7 +611,8 @@ function flashMessage(message, type = FLASH_INFO, timeout = 5000) {
 
     if (timeout > 0) {
         setTimeout( function remove() {
-            flash.style.visibility = "hidden";
+            // flash.style.visibility = "hidden";
+            flash.style.display = "none";
         }, timeout)
     }
 

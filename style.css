@@ -107,7 +107,7 @@ section#options > * {
 
 #flash {
     flex: 1;
-    visibility: hidden;
+    display:none;
     margin: 0 auto;
     display: block;
     text-align: center;
