@@ -161,7 +161,9 @@ function update() {
     if (typeof selectedSchoolIndex !== 'undefined') {
         updateVariables()
         updateText();
-        
+        document.getElementById("scheduleInfo").style.visibility = "visible";
+    } else {
+        document.getElementById("scheduleInfo").style.visibility = "hidden";
     }
     
     setTimeout(update, 500);
