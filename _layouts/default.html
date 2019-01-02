@@ -18,7 +18,9 @@
     </head>
     <body onload="{{ page.onload |default: "" }}">
         <p id="flash"></p>
-        {{ content }}
+        <div id="page">
+            {{ content }}
+        </div>
     </body>
      <!-- Matomo -->
      <script type="text/javascript" async>
