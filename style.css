@@ -81,8 +81,17 @@ h1.bigger {
     font-size: 3em;
 }
 
+section#credits {
+    margin-top: 20vh
+}
+
 section#credits > a {
     margin: 5px;
+}
+
+section#options > * {
+    display: block;
+    margin-top: 2vw;
 }
 
 #flash {
