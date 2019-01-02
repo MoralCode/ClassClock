@@ -154,6 +154,10 @@ var schools = [
  */
 function update() {
     updateTime();
+    document.getElementById('time').innerHTML = getCurrentTimeString();
+    document.getElementById('date').innerHTML = getCurrentDateString();
+
+
     if (typeof selectedSchoolIndex !== 'undefined') {
         updateVariables()
         updateText();
@@ -176,12 +180,6 @@ function updateVariables() {
  * Updates labels on the homepage
  */
 function updateText() {
-    document.getElementById('time').innerHTML = getCurrentTimeString();
-    document.getElementById('date').innerHTML = getCurrentDateString();
-
-
-
-
     document.getElementById("schedule").innerHTML = "You are viewing the <strong>" + getCurrentScheduleName() + "</strong> schedule."
 
     document.getElementById("viewScheduleLink").style.display = "block";
@@ -309,6 +307,7 @@ function updateTime() {
     currentHours = currentDate.getHours();
     currentMinutes = currentDate.getMinutes();
     currentSeconds = currentDate.getSeconds();
+
 }
 
 
