@@ -182,7 +182,8 @@ function updateVariables() {
  * Updates labels on the homepage
  */
 function updateText() {
-    document.getElementById("schedule").innerHTML = "You are viewing the " + schools[selectedSchoolIndex].fullName + " <strong>" + getCurrentScheduleName() + "</strong> schedule."
+    document.getElementById("schedule").innerHTML = "You are viewing the <strong>" + getCurrentScheduleName() + "</strong> schedule"
+    document.getElementById("selectedSchoolDisplay").innerHTML = "from <strong>" + schools[selectedSchoolIndex].fullName + "</strong>.";
 
     document.getElementById("viewScheduleLink").style.display = "block";
 
