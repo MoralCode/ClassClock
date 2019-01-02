@@ -31,6 +31,8 @@
             _paq.push(['setCustomDimension', customDimensionId = 1, customDimensionValue = schools[getLocalStorageIndex("selectedSchoolIndex")].fullName]);
         }
         
+        _paq.push(['setCustomDimension', customDimensionId = 2, customDimensionValue = (getLocalStorageBoolean("use24HourTime", false) ? "24-Hour Time" : "12-Hour Time")]);
+
         _paq.push(['trackPageView']);
         _paq.push(['enableLinkTracking']);
         (function() {
