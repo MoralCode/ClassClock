@@ -480,8 +480,10 @@ function getTimeStringFromObject(timeObject, includeSeconds=true) {
  * @returns returns the class name for the given index or "No Class" if there is no class in session
  */
 function getClassName(index) {
-    if (!isNoSchoolDay() && index >= 0 && index < schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes.length) {
-            return schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[index].name.toString()
+    var classes = schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes;
+    
+    if (index >= 0 && index < classes.length) {
+            return classes[index].name.toString()
     } else {
         return "No Class"
     }
