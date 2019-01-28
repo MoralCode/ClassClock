@@ -235,7 +235,15 @@ function updateText() {
             document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString();
         }
         
-        document.getElementById("nextClass").innerHTML = (currentClassPeriodIndex === -1) ? getClassName(currentClassPeriodIndex) : getClassName(currentClassPeriodIndex + 1)
+        //if the current time is after the end of the last scheduled class
+        if (checkGivenTimeIsBeforeCurrentTime(data.schedules[currentScheduleIndex].classes[data.schedules[currentScheduleIndex].classes.length-1].endTime)) {
+            //it is after school
+            document.getElementById("nextClass").innerHTML = getClassName(0, getScheduleIndexForDay(currentDay + 1))
+        } else {
+            //it is before or during school, so display your next class period
+            document.getElementById("nextClass").innerHTML = getClassName(currentClassPeriodIndex + 1)
+        }
+
         document.getElementById("currentClass").innerHTML = getClassName(currentClassPeriodIndex)
         //document.getElementById('sentence').innerHTML = getSummaryString()
 
@@ -364,9 +372,14 @@ function getCurrentClassPeriodIndex() {
  * @returns an index for looking up the current schedule, or -1 if there is no school today
  */
 function getCurrentScheduleIndex() {
+    return getScheduleIndexForDay()
+}
+
+
+function getScheduleIndexForDay(dayIndex = currentDay) {
     //using for over forEach() because we are breaking out of the loop early
     for (let i = 0; i < data.schedules.length; i++) {
-        if (data.schedules[i].days.includes(currentDay)) {
+        if (data.schedules[i].days.includes(dayIndex)) {
             return i
         }
     }
@@ -498,9 +511,9 @@ function getTimeStringFromObject(timeObject, includeSeconds=true) {
  * @param {*} index the index of the class to return the name for
  * @returns returns the class name for the given index or "No Class" if there is no class in session
  */
-function getClassName(index) {
-    if (!isNoSchoolDay() && index >= 0 && index < data.schedules[currentScheduleIndex].classes.length) {
-            return data.schedules[currentScheduleIndex].classes[index].name.toString()
+function getClassName(index, scheduleIndex = currentScheduleIndex) {
+    if (!isNoSchoolDay() && index >= 0 && index < data.schedules[scheduleIndex].classes.length) {
+            return data.schedules[scheduleIndex].classes[index].name.toString()
     } else {
         return "No Class"
     }
