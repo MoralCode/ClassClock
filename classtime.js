@@ -235,7 +235,7 @@ function updateText() {
             document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString();
         }
         
-        document.getElementById("nextClass").innerHTML = getClassName(currentClassPeriodIndex+1)
+        document.getElementById("nextClass").innerHTML = (currentClassPeriodIndex === -1) ? getClassName(currentClassPeriodIndex) : getClassName(currentClassPeriodIndex + 1)
         document.getElementById("currentClass").innerHTML = getClassName(currentClassPeriodIndex)
         //document.getElementById('sentence').innerHTML = getSummaryString()
 
