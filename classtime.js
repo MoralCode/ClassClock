@@ -18,130 +18,135 @@ var currentClassPeriodIndex = -1;
 //nextClassPeriodIndex
 
 var currentScheduleIndex = -1;
+var selectedSchoolIndex = 0;
 
 
 var use24HourTime = getLocalStorageBoolean("use24HourTime", false);
 
-var data = {
-    fullName: "",
-    shortName: "",
-    //order is as is on the school website, although it doesnt matter.
-    schedules: [
+
+
+var schools = [
         {
-            name: "Mon/Fri (Regular)",
-            days: [1, 5],
-            classes: [
-                {
-                    name: "1st Period",
-                    startTime: {hours: 8, minutes:25},
-                    endTime: {hours: 9, minutes:55}
-                },
-                {
-                    name: "TSCT",
-                    startTime: {hours: 9, minutes:55},
-                    endTime: {hours: 10, minutes:10}
-                },
-                {
-                    name: "2nd Period",
-                    startTime: {hours: 10, minutes:15},
-                    endTime: {hours: 11, minutes:45}
-                },
-                {
-                    name: "Lunch",
-                    startTime: {hours: 11, minutes:45},
-                    endTime: {hours: 12, minutes:20}
-                },
-                {
-                    name: "3rd Period",
-                    startTime: {hours: 12, minutes:25},
-                    endTime: {hours: 13, minutes:55}
-                },
-                {
-                    name: "4th Period",
-                    startTime: {hours: 14, minutes:00},
-                    endTime: {hours: 15, minutes:30}
-                }
-            ]
-        },
-        {
-            name: "Tues/Wed (Support Seminar)",
-            days: [2, 3],
-            classes: [
-                {
-                    name: "1st Period",
-                    startTime: {hours: 8, minutes:25},
-                    endTime: {hours: 9, minutes:47}
-                },
-                {
-                    name: "TSCT",
-                    startTime: {hours: 9, minutes:47},
-                    endTime: {hours: 9, minutes:57}
-                },
-                {
-                    name: "Support Seminar",
-                    startTime: {hours: 10, minutes:02},
-                    endTime: {hours: 10, minutes:34}
-                },
-                {
-                    name: "2nd Period",
-                    startTime: {hours: 10, minutes:39},
-                    endTime: {hours: 12, minutes:01}
-                },
-                {
-                    name: "Lunch",
-                    startTime: {hours: 12, minutes:01},
-                    endTime: {hours: 12, minutes:36}
-                },
-                {
-                    name: "3rd Period",
-                    startTime: {hours: 12, minutes:41},
-                    endTime: {hours: 14, minutes:03}
-                },
-                {
-                    name: "4th Period",
-                    startTime: {hours: 14, minutes:8},
-                    endTime: {hours: 15, minutes:30}
-                }
-            ],
-        },
-        {
-            name: "Thursday (Early Release)",
-            days: [4],
-            classes: [
-                {
-                    name: "1st Period",
-                    startTime: {hours: 8, minutes:25},
-                    endTime: {hours: 9, minutes:50}
-                },
-                {
-                    name: "TSCT",
-                    startTime: {hours: 9, minutes:50},
-                    endTime: {hours: 10, minutes:00}
-                },
-                {
-                    name: "2nd Period",
-                    startTime: {hours: 10, minutes:05},
-                    endTime: {hours: 11, minutes:30}
-                },
-                {
-                    name: "Lunch",
-                    startTime: {hours: 11, minutes:30},
-                    endTime: {hours: 12, minutes:05}
-                },
-                {
-                    name: "3rd Period",
-                    startTime: {hours: 12, minutes:10},
-                    endTime: {hours: 13, minutes:35}
-                },
-                {
-                    name: "4th Period",
-                    startTime: {hours: 13, minutes:40},
-                    endTime: {hours: 15, minutes:05}
-                }
-            ]
-        }
-    ]
-};
+        fullName: "",
+        shortName: "",
+        //order is as is on the school website, although it doesnt matter.
+        schedules: [
+            {
+                name: "Mon/Fri (Regular)",
+                days: [1, 5],
+                classes: [
+                    {
+                        name: "1st Period",
+                        startTime: {hours: 8, minutes:25},
+                        endTime: {hours: 9, minutes:55}
+                    },
+                    {
+                        name: "TSCT",
+                        startTime: {hours: 9, minutes:55},
+                        endTime: {hours: 10, minutes:10}
+                    },
+                    {
+                        name: "2nd Period",
+                        startTime: {hours: 10, minutes:15},
+                        endTime: {hours: 11, minutes:45}
+                    },
+                    {
+                        name: "Lunch",
+                        startTime: {hours: 11, minutes:45},
+                        endTime: {hours: 12, minutes:20}
+                    },
+                    {
+                        name: "3rd Period",
+                        startTime: {hours: 12, minutes:25},
+                        endTime: {hours: 13, minutes:55}
+                    },
+                    {
+                        name: "4th Period",
+                        startTime: {hours: 14, minutes:00},
+                        endTime: {hours: 15, minutes:30}
+                    }
+                ]
+            },
+            {
+                name: "Tues/Wed (Support Seminar)",
+                days: [2, 3],
+                classes: [
+                    {
+                        name: "1st Period",
+                        startTime: {hours: 8, minutes:25},
+                        endTime: {hours: 9, minutes:47}
+                    },
+                    {
+                        name: "TSCT",
+                        startTime: {hours: 9, minutes:47},
+                        endTime: {hours: 9, minutes:57}
+                    },
+                    {
+                        name: "Support Seminar",
+                        startTime: {hours: 10, minutes:02},
+                        endTime: {hours: 10, minutes:34}
+                    },
+                    {
+                        name: "2nd Period",
+                        startTime: {hours: 10, minutes:39},
+                        endTime: {hours: 12, minutes:01}
+                    },
+                    {
+                        name: "Lunch",
+                        startTime: {hours: 12, minutes:01},
+                        endTime: {hours: 12, minutes:36}
+                    },
+                    {
+                        name: "3rd Period",
+                        startTime: {hours: 12, minutes:41},
+                        endTime: {hours: 14, minutes:03}
+                    },
+                    {
+                        name: "4th Period",
+                        startTime: {hours: 14, minutes:8},
+                        endTime: {hours: 15, minutes:30}
+                    }
+                ],
+            },
+            {
+                name: "Thursday (Early Release)",
+                days: [4],
+                classes: [
+                    {
+                        name: "1st Period",
+                        startTime: {hours: 8, minutes:25},
+                        endTime: {hours: 9, minutes:50}
+                    },
+                    {
+                        name: "TSCT",
+                        startTime: {hours: 9, minutes:50},
+                        endTime: {hours: 10, minutes:00}
+                    },
+                    {
+                        name: "2nd Period",
+                        startTime: {hours: 10, minutes:05},
+                        endTime: {hours: 11, minutes:30}
+                    },
+                    {
+                        name: "Lunch",
+                        startTime: {hours: 11, minutes:30},
+                        endTime: {hours: 12, minutes:05}
+                    },
+                    {
+                        name: "3rd Period",
+                        startTime: {hours: 12, minutes:10},
+                        endTime: {hours: 13, minutes:35}
+                    },
+                    {
+                        name: "4th Period",
+                        startTime: {hours: 13, minutes:40},
+                        endTime: {hours: 15, minutes:05}
+                    }
+                ]
+            }
+        ]
+    }
+];
 
 /**
  * The standard run loop for updating the time and other time-related information on the site.
@@ -149,7 +154,7 @@ var data = {
  */
 function update() {
     updateTime();
-    if (scheduleExists()) {
+    if (typeof selectedSchoolIndex !== 'undefined') {
         updateVariables()
         updateText();
         
@@ -192,7 +197,7 @@ function updateText() {
 
         case OUTSIDE_SCHOOL_HOURS_FLAG:
 
-            if(!checkGivenTimeIsBeforeCurrentTime(data.schedules[currentScheduleIndex].classes[0].startTime)) {
+            if(!checkGivenTimeIsBeforeCurrentTime(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[0].startTime)) {
                 document.getElementById("countdownLabel").innerHTML = "School starts in: "
                 document.getElementById('timeToEndOfClass').innerHTML =  getTimeToStartOfSchoolString();
             }
@@ -247,7 +252,7 @@ function getCurrentTimeState() {
  */
 function getCurrentScheduleName() {
     if (!isNoSchoolDay()) {
-        return data.schedules[currentScheduleIndex].name
+        return schools[selectedSchoolIndex].schedules[currentScheduleIndex].name
     } else { return "No School"}
 }
 
@@ -268,7 +273,7 @@ function classIsInSession() {
  */
 function schoolIsInSession() {
 
-    return (checkStartTime(data.schedules[currentScheduleIndex].classes[0]) && checkEndTime(data.schedules[currentScheduleIndex].classes[data.schedules[currentScheduleIndex].classes.length-1]))
+    return (checkStartTime(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[0]) && checkEndTime(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes.length-1]))
 }
 
 /**
@@ -334,8 +339,8 @@ function getCurrentClassPeriodIndex() {
     }
 
     //using for over forEach() because we are breaking out of the loop early
-    for (let i = 0; i < data.schedules[currentScheduleIndex].classes.length; i++) {
-        if (checkStartTime(data.schedules[currentScheduleIndex].classes[i]) && checkEndTime(data.schedules[currentScheduleIndex].classes[i])) {
+    for (let i = 0; i < schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes.length; i++) {
+        if (checkStartTime(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[i]) && checkEndTime(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[i])) {
             return i
             break;//not sure if this is necessary so I included it anyway
         }
@@ -350,8 +355,8 @@ function getCurrentClassPeriodIndex() {
  */
 function getCurrentScheduleIndex() {
     //using for over forEach() because we are breaking out of the loop early
-    for (let i = 0; i < data.schedules.length; i++) {
-        if (data.schedules[i].days.includes(currentDay)) {
+    for (let i = 0; i < schools[selectedSchoolIndex].schedules.length; i++) {
+        if (schools[selectedSchoolIndex].schedules[i].days.includes(currentDay)) {
             return i
         }
     }
@@ -430,7 +435,7 @@ function convertMillisecondsToTime(milliseconds) {
  */
 function getTimeToEndOfCurrentClassString() {
     if (classIsInSession()) {
-        return getTimeStringFromObject(getTimeDelta(data.schedules[currentScheduleIndex].classes[currentClassPeriodIndex].endTime));
+        return getTimeStringFromObject(getTimeDelta(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[currentClassPeriodIndex].endTime));
     } else {
         return "No Class"
     }
@@ -441,8 +446,8 @@ function getTimeToEndOfCurrentClassString() {
  * @returns the time to the start of school as a string
  */
 function getTimeToStartOfSchoolString() {
-    if (!classIsInSession() && !isNoSchoolDay() && !checkGivenTimeIsBeforeCurrentTime(data.schedules[currentScheduleIndex].classes[0].startTime)) {
-        return getTimeStringFromObject(getTimeDelta(data.schedules[currentScheduleIndex].classes[0].startTime));
+    if (!classIsInSession() && !isNoSchoolDay() && !checkGivenTimeIsBeforeCurrentTime(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[0].startTime)) {
+        return getTimeStringFromObject(getTimeDelta(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[0].startTime));
     } else {
         return "No Class"
     }
@@ -454,8 +459,8 @@ function getTimeToStartOfSchoolString() {
  * @returns the time to the start of the next class as a string
  */
 function getTimeToStartOfNextClassString() {
-    if (classIsInSession() && currentClassPeriodIndex+1 < data.schedule[selectedSchedule].classes.length ) {
-        return getTimeStringFromObject(getTimeDelta(data.schedules[currentScheduleIndex].classes[currentClassPeriodIndex+1].startTime));
+    if (classIsInSession() && currentClassPeriodIndex+1 < schools[selectedSchoolIndex].schedule[selectedSchedule].classes.length ) {
+        return getTimeStringFromObject(getTimeDelta(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[currentClassPeriodIndex+1].startTime));
     } else {
         return "No More Classes"
     }
@@ -484,8 +489,8 @@ function getTimeStringFromObject(timeObject, includeSeconds=true) {
  * @returns returns the class name for the given index or "No Class" if there is no class in session
  */
 function getClassName(index) {
-    if (!isNoSchoolDay() && index >= 0 && index < data.schedules[currentScheduleIndex].classes.length) {
-            return data.schedules[currentScheduleIndex].classes[index].name.toString()
+    if (!isNoSchoolDay() && index >= 0 && index < schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes.length) {
+            return schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[index].name.toString()
     } else {
         return "No Class"
     }
@@ -504,19 +509,19 @@ function populateScheduleTable() {
     //tbl.setAttribute('border', '1');
     var tbdy = document.createElement('tbody');
 
-        for (var i = 0; i < data.schedules[currentScheduleIndex].classes.length; i++) {
-            if (data.schedules[currentScheduleIndex].classes[i].showInFullSchedule != false) {
+        for (var i = 0; i < schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes.length; i++) {
+            if (schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[i].showInFullSchedule != false) {
             var tr = document.createElement('tr');
             //for (var j = 0; j < 3; j++) {
 
                 var td = document.createElement('td');
-                td.innerHTML = data.schedules[currentScheduleIndex].classes[i].name;
+                td.innerHTML = schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[i].name;
                 td.style.fontWeight = "bold";
                 //td.appendChild(document.createTextNode(data.schedules[currentScheduleIndex].classes[i].name))
                 tr.appendChild(td)
 
                 var td = document.createElement('td');
-                td.innerHTML = getFormattedTimeStringFromObject(data.schedules[currentScheduleIndex].classes[i].startTime) + " - " + getFormattedTimeStringFromObject(data.schedules[currentScheduleIndex].classes[i].endTime)
+                td.innerHTML = getFormattedTimeStringFromObject(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[i].startTime) + " - " + getFormattedTimeStringFromObject(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[i].endTime)
                 //td.appendChild(document.createTextNode(data.schedules[currentScheduleIndex].classes[i].name))
                 tr.appendChild(td);
 
