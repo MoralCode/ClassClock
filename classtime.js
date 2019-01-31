@@ -572,6 +572,14 @@ function getLocalStorageBoolean(key, unsetDefault=false) {
     }
 }
 
+function getLocalStorageIndex(key) {
+    if (localStorage.getItem(key) !== null) {
+        return (Number(localStorage.getItem(key)))
+    } else {
+        return undefined;
+    }
+}
+
 function flashMessage(message, type = FLASH_INFO, timeout = 5000) {
     flash = document.getElementById("flash")
 
