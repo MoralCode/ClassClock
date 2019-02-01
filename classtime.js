@@ -8,10 +8,6 @@ let FLASH_INFO = "INFO"
 let FLASH_WARN = "WARNING"
 let FLASH_DANGER = "DANGER"
 
-var currentDay = 0;
-var currentHours = 0;
-var currentMinutes = 0; 
-var currentSeconds = 0;
 var currentDate;
 
 var currentClassPeriodIndex = -1;
@@ -291,18 +287,12 @@ function isNoSchoolDay() {
 /**
  * This function updates the variables that keep track of the current time and date
  */
-function updateTime() {
-    currentDate = new Date();
-    
-    currentDay = currentDate.getDay(); // Sunday - Saturday : 0 - 6
+function updateTime() { currentDate = new Date();}
 
-    currentHours = currentDate.getHours();
-    currentMinutes = currentDate.getMinutes();
-    currentSeconds = currentDate.getSeconds();
-
+function getCurrentTimeObject() {
+   return {hours: currentDate.getHours(), minutes: currentDate.getMinutes(), seconds: currentDate.getSeconds()}
 }
-
-
+ 
 
 /**
  *
@@ -347,7 +337,7 @@ function getCurrentClassPeriodIndex() {
 function getCurrentScheduleIndex() {
     //using for over forEach() because we are breaking out of the loop early
     for (let i = 0; i < schools[selectedSchoolIndex].schedules.length; i++) {
-        if (schools[selectedSchoolIndex].schedules[i].days.includes(currentDay)) {
+        if (schools[selectedSchoolIndex].schedules[i].days.includes(currentDate.getDay())) {
             return i
         }
     }
@@ -362,7 +352,8 @@ function getCurrentScheduleIndex() {
  * @returns true if the given time occurred before the current time, false otherwise
  */
 function checkGivenTimeIsBeforeCurrentTime( givenTime ) {
-    if (givenTime.hours < currentHours || (givenTime.hours == currentHours && givenTime.minutes <= currentMinutes)) {
+    let currentTime = getCurrentTimeObject()
+    if (givenTime.hours < currentTime.hours || (givenTime.hours == currentTime.hours && givenTime.minutes <= currentTime.minutes)) {
         //hours match and given minutes are before or the same as current minutes
         return true
     } else { return false }
@@ -392,7 +383,8 @@ function checkEndTime(classPeriod) { return !checkGivenTimeIsBeforeCurrentTime(c
  * @returns the absolute value of the difference between the given time and the current time as an object 
  */
 function getTimeDelta(time) {
-    var currentTime = new Date(2000, 0, 1,  currentHours, currentMinutes, currentSeconds);
+    var currentTimeObject = getCurrentTimeObject();
+    var currentTime = new Date(2000, 0, 1,  currentTimeObject.hours, currentTimeObject.minutes, currentTimeObject.seconds);
     var givenTime = new Date(2000, 0, 1, time.hours, time.minutes, 0);
     
                                                 //order doesnt matter
