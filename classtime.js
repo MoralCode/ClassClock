@@ -374,7 +374,47 @@ function checkStartTime(classPeriod) { return checkGivenTimeIsBeforeCurrentTime(
  * @returns true if the end time of the class has not already passed, false otherwise
  */
 function checkEndTime(classPeriod) { return !checkGivenTimeIsBeforeCurrentTime(classPeriod.endTime)}
+/**
+ * Compares the hours and minutes of two times, aassuming all times occoured on the same day
+ *
+ * @param {*} time1
+ * @param {*} time2
+ * @returns -1 if time1 is before time2, 0 if they are the same, 1 if time1 is after time2
+ */
+function compareTimes( time1, time2 ) {
 
+    if ( time1.hours == time2.hours && time1.minutes == time2.minutes) {return 0;}
+
+    if (time1.hours < time2.hours || (time1.hours == time2.hours && time1.minutes <= time2.minutes)) {
+        //time1 is before time2
+        return -1
+    } else { return 1 }
+}
+
+/**
+ * This function checks if the current time is between the two given times
+ * This is useful for checking which class period you are currently in or for checking if school is in session.
+ * 
+ * @param {*} checkTime the time that the check results are returned for
+ * @param {*} startTime the start time of the range to check
+ * @param {*} endTimethe the end time of the range to check
+ * 
+ * @returns -1 if checkTime is before range, 0 if checkTime is within range, 1 if checkTime is after range
+ */
+function checkTimeRange(checkTime, startTime, endTime) {
+
+    let startCheck = compareTimes(checkTime, startTime)
+    let endCheck = compareTimes(checkTime, endTime)
+
+    if (startCheck == -1) { return -1 }
+    else if ( startCheck >= 0 && endCheck <= 0) { return 0 }
+    else { return 1 }
+
+}
+
+function checkClassTime(classPeriod) {
+    return checkTimeRange(getCurrentTimeObject(), classPeriod.startTime, classPeriod.endTime)
+}
 
 /**
  * this function gets the absolute value of the difference between the given time and the current time
