@@ -194,7 +194,7 @@ function updateText() {
 
         case OUTSIDE_SCHOOL_HOURS_FLAG:
 
-            if(!checkGivenTimeIsBeforeCurrentTime(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[0].startTime)) {
+            if(compareTimes(getCurrentTimeObject(), schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[0].startTime) == -1) {
                 document.getElementById("countdownLabel").innerHTML = "School starts in: "
                 document.getElementById('timeToEndOfClass').innerHTML =  getTimeToStartOfSchoolString();
             }
@@ -270,7 +270,11 @@ function classIsInSession() {
  */
 function schoolIsInSession() {
 
-    return (checkStartTime(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[0]) && checkEndTime(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes.length-1]))
+    return checkTimeRange(
+        getCurrentTimeObject(),
+        schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[0].startTime,
+        schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes.length-1].endTime
+        ) == 0
 }
 
 /**
@@ -321,7 +325,7 @@ function getCurrentClassPeriodIndex() {
 
     //using for over forEach() because we are breaking out of the loop early
     for (let i = 0; i < schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes.length; i++) {
-        if (checkStartTime(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[i]) && checkEndTime(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[i])) {
+        if (checkClassTime(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[i]) == 0) {
             return i
             break;//not sure if this is necessary so I included it anyway
         }
@@ -345,35 +349,7 @@ function getCurrentScheduleIndex() {
     return -1
 }
 
-/**
- * this function checks to see if the given time occurred before the current time, used for checking whether the current time falls within a scheduled class period
- *
- * @param {*} givenTime
- * @returns true if the given time occurred before the current time, false otherwise
- */
-function checkGivenTimeIsBeforeCurrentTime( givenTime ) {
-    let currentTime = getCurrentTimeObject()
-    if (givenTime.hours < currentTime.hours || (givenTime.hours == currentTime.hours && givenTime.minutes <= currentTime.minutes)) {
-        //hours match and given minutes are before or the same as current minutes
-        return true
-    } else { return false }
-}
 
-/**
- * checks that the time a class was scheduled to start has already passed (i.e. the class has started)
- *
- * @param {*} classPeriod the object representing the class period to be checked
- * @returns true if the start time of the class has already passed, false otherwise
- */
-function checkStartTime(classPeriod) { return checkGivenTimeIsBeforeCurrentTime(classPeriod.startTime)}
-
-/**
- * checks that the time a class was scheduled to end has not already passed (i.e. the class has not yet ended)
- *
- * @param {*} classPeriod the object representing the class period to be checked
- * @returns true if the end time of the class has not already passed, false otherwise
- */
-function checkEndTime(classPeriod) { return !checkGivenTimeIsBeforeCurrentTime(classPeriod.endTime)}
 /**
  * Compares the hours and minutes of two times, aassuming all times occoured on the same day
  *
@@ -469,7 +445,7 @@ function getTimeToEndOfCurrentClassString() {
  * @returns the time to the start of school as a string
  */
 function getTimeToStartOfSchoolString() {
-    if (!classIsInSession() && !isNoSchoolDay() && !checkGivenTimeIsBeforeCurrentTime(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[0].startTime)) {
+    if (!classIsInSession() && !isNoSchoolDay() && compareTimes(getCurrentTimeObject(), schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[0].startTime) == -1) {
         return getTimeStringFromObject(getTimeDelta(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[0].startTime));
     } else {
         return "No Class"
