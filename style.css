@@ -137,3 +137,8 @@ section#options > * {
     color: #721c24; /* copied from bootstrap */
     
 }
+
+.verticalFlex {
+    display: flex;
+    flex-direction: column;
+}
