@@ -197,6 +197,8 @@ function updateText() {
             if(compareTimes(getCurrentTimeObject(), schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[0].startTime) == -1) {
                 document.getElementById("countdownLabel").innerHTML = "School starts in: "
                 document.getElementById('timeToEndOfClass').innerHTML =  getTimeToStartOfSchoolString();
+            } else {
+                document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString();
             }
 
             document.getElementById("nextClass").innerHTML = getClassName(currentClassPeriodIndex+1)
