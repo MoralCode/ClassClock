@@ -397,7 +397,11 @@ function getCurrentScheduleIndex() {
  * @param {*} time2
  * @returns -1 if time1 is before time2, 0 if they are the same, 1 if time1 is after time2
  */
-function compareTimes( time1, time2 ) {
+function compareTimes( timeObject1, timeObject2 ) {
+
+    let time1 = sanitizeTimeObject(timeObject1)
+    let time2 = sanitizeTimeObject(timeObject2)
+
 
     let hoursDiff = time1.hours - time2.hours;
     let minutesDiff = time1.minutes - time2.minutes;
