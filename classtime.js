@@ -199,7 +199,7 @@ function updateText() {
                 document.getElementById("countdownLabel").innerHTML = "School starts in: "
                 document.getElementById('timeToEndOfClass').innerHTML =  getTimeToStartOfSchoolString();
             } else {
-                document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString();
+                document.getElementById('timeToEndOfClass').innerHTML = "No Class";
             }
 
             document.getElementById("nextClass").innerHTML = getClassName(currentClassPeriodIndex+1)
@@ -217,7 +217,7 @@ function updateText() {
 
         case CLASS_IN_SESSION_FLAG:
             document.getElementById("countdownLabel").innerHTML = "...which ends in: ";
-            document.getElementById('timeToEndOfClass').innerHTML =  getTimeToEndOfCurrentClassString();
+            document.getElementById('timeToEndOfClass').innerHTML =  getTimeStringFromObject(getTimeTo(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[getCurrentClassPeriodIndex()].endTime));
 
             document.getElementById("nextClass").innerHTML = getClassName(currentClassPeriodIndex+1)
             document.getElementById("currentClass").innerHTML = getClassName(currentClassPeriodIndex)
@@ -508,18 +508,6 @@ function convertMillisecondsToTime(milliseconds) {
 }
 
 /**
- *
- * @returns the time to the end of the current class as a string
- */
-function getTimeToEndOfCurrentClassString() {
-    if (classIsInSession()) {
-        return getTimeStringFromObject(getTimeTo(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[currentClassPeriodIndex].endTime));
-    } else {
-        return "No Class"
-    }
-}
-
-/**
  * This fucntion is used for calculating how long until school starts
  * @returns the time to the start of school as a string
  */
@@ -535,20 +523,6 @@ function getTimeToStartOfSchoolString() {
 function getTimeTo(timeObject) {
     return getTimeDelta(getCurrentTimeObject(), timeObject)
 }
-
-/**
- *  this is a an unused method that was written for a feature that never got implemented and, as of this point in time, identical to @function getTimeToEndOfCurrentClassString()
- *
- * @returns the time to the start of the next class as a string
- */
-function getTimeToStartOfNextClassString() {
-    if (classIsInSession() && currentClassPeriodIndex+1 < schools[selectedSchoolIndex].schedule[selectedSchedule].classes.length ) {
-        return getTimeStringFromObject(getTimeDelta(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[currentClassPeriodIndex+1].startTime));
-    } else {
-        return "No More Classes"
-    }
-}
-
 
 /**
  *  converts a time object into a string
