@@ -451,13 +451,12 @@ function checkClassTime(classPeriod) {
  * @param {*} time the time that you want to calculate the delta to from the current time
  * @returns the absolute value of the difference between the given time and the current time as an object 
  */
-function getTimeDelta(time) {
-    var currentTimeObject = getCurrentTimeObject();
-    var currentTime = new Date(2000, 0, 1,  currentTimeObject.hours, currentTimeObject.minutes, currentTimeObject.seconds);
-    var givenTime = new Date(2000, 0, 1, time.hours, time.minutes, 0);
+function getTimeDelta(timeObject1, timeObject2) {
+    var time1 = new Date(2000, 0, 1,  timeObject1.hours, timeObject1.minutes, timeObject1.seconds);
+    var time2 = new Date(2000, 0, 1, timeObject2.hours, timeObject2.minutes, timeObject2.seconds);
     
                                                 //order doesnt matter
-    return convertMillisecondsToTime(Math.abs(givenTime - currentTime));
+    return convertMillisecondsToTime(Math.abs(time1 - time2));
 }
 
 
@@ -508,7 +507,7 @@ function convertMillisecondsToTime(milliseconds) {
  */
 function getTimeToEndOfCurrentClassString() {
     if (classIsInSession()) {
-        return getTimeStringFromObject(getTimeDelta(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[currentClassPeriodIndex].endTime));
+        return getTimeStringFromObject(getTimeDelta(getCurrentTimeObject(), schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[currentClassPeriodIndex].endTime));
     } else {
         return "No Class"
     }
@@ -520,7 +519,7 @@ function getTimeToEndOfCurrentClassString() {
  */
 function getTimeToStartOfSchoolString() {
     if (!classIsInSession() && !isNoSchoolDay() && compareTimes(getCurrentTimeObject(), schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[0].startTime) == -1) {
-        return getTimeStringFromObject(getTimeDelta(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[0].startTime));
+        return getTimeStringFromObject(getTimeDelta(getCurrentTimeObject(), schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[0].startTime));
     } else {
         return "No Class"
     }
