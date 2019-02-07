@@ -361,12 +361,25 @@ function getCurrentScheduleIndex() {
  */
 function compareTimes( time1, time2 ) {
 
-    if ( time1.hours == time2.hours && time1.minutes == time2.minutes) {return 0;}
+    let hoursDiff = time1.hours - time2.hours;
+    let minutesDiff = time1.minutes - time2.minutes;
+    let secondsDiff = time1.seconds - time2.seconds;
 
-    if (time1.hours < time2.hours || (time1.hours == time2.hours && time1.minutes <= time2.minutes)) {
-        //time1 is before time2
-        return -1
-    } else { return 1 }
+    if (hoursDiff < 0) {return -1}
+    else if (hoursDiff > 0) {return 1}
+
+    //hours are the same if execution reaches here
+
+    if (minutesDiff < 0) {return -1}
+    else if (minutesDiff > 0) {return 1}
+
+    //hours and minutes are the same if execution reaches here
+
+    if (secondsDiff < 0) {return -1}
+    else if (secondsDiff > 0) {return 1}
+
+    //hours, minutes, and seconds are the same if execution reaches here
+    return 0
 }
 
 /**
