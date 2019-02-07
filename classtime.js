@@ -172,7 +172,6 @@ function update() {
 function updateVariables() {
     currentScheduleIndex = getCurrentScheduleIndex();
     currentClassPeriodIndex = getCurrentClassPeriodIndex();
-    //document.getElementById('currentClass').innerHTML = data.schedule[selectedSchedule][currentClassPeriodIndex].name;
 }
 
 /**
@@ -231,6 +230,9 @@ function updateText() {
 }
 
 
+/**
+ * @returns a flag that represents the current chunk of time categorically
+ */
 function getCurrentTimeState() {
 
     //there is no schedule that applies today
@@ -303,13 +305,11 @@ function getCurrentTimeObject() {
  
 
 /**
- *
  * @returns the current time as a formatted string
  */
 function getCurrentTimeString() { return currentDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: !use24HourTime }) }
 
 /**
- *
  * @returns the current date as a formatted string
  */
 function getCurrentDateString() { 
@@ -319,7 +319,7 @@ return "on <strong>" + currentDate.toLocaleString('en-US', { weekday: 'short', m
 /**
  * this function determines the index of the class period that is currently going on (if any)
  *
- * @returns an index for looking up the current class period, or -1 if there is no school today
+ * @returns an index for looking up the current class period, or -1 if there is no class happening right now 
  */
 function getCurrentClassPeriodIndex() {
     if (isNoSchoolDay()) {
@@ -340,8 +340,6 @@ function getCurrentClassPeriodIndex() {
 
 
 /**
- * 
- *
  * @returns the index of the class that started most recently
  */
 function getMostRecentlyStartedClassIndex() {
@@ -466,6 +464,13 @@ function getTimeDelta(timeObject1, timeObject2) {
 }
 
 
+/**
+ * this function returns a new time object that has been checked for inconsistencies
+ * such as omitted or invalid values and corrected
+ *
+ * @param {*} timeObject the timeObject to validate
+ * @returns a new, validated time object
+ */
 function sanitizeTimeObject(timeObject) {
     
     //this prevents the original object from being modified
@@ -520,6 +525,12 @@ function getTimeToStartOfSchoolString() {
 }
 
 
+/**
+ * A shortcut function that inserts the current time into getTimeDelta() for convenience
+ *
+ * @param {*} timeObject
+ * @returns
+ */
 function getTimeTo(timeObject) {
     return getTimeDelta(getCurrentTimeObject(), timeObject)
 }
