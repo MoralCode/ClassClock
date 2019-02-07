@@ -422,6 +422,27 @@ function getTimeDelta(time) {
     return convertMillisecondsToTime(Math.abs(givenTime - currentTime));
 }
 
+
+function sanitizeTimeObject(timeObject) {
+    
+    //this prevents the original object from being modified
+    var newTimeObject = timeObject;
+
+    if (newTimeObject.hours == undefined ) { newTimeObject.hours = 0; }
+    if (newTimeObject.minutes == undefined ) { newTimeObject.minutes = 0; }
+    if (newTimeObject.seconds == undefined ) { newTimeObject.seconds = 0; }
+    // if (timeObject.milliseconds == undefined ) { timeObject.milliseconds = 0; }
+
+    //timeObjects are always in 24-hour time
+    newTimeObject.hours = newTimeObject.hours % 24;
+    newTimeObject.minutes = newTimeObject.minutes % 60;
+    newTimeObject.seconds = newTimeObject.seconds % 60;
+    // timeObject.milliseconds = timeObject.milliseconds % 1000;
+    
+    return newTimeObject;
+}
+
+
 /**
  * converts a given number of milliseconds into a time object. Used for calculating the time between now and the end of the current class
  *
