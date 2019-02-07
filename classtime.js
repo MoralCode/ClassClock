@@ -332,8 +332,46 @@ function getCurrentClassPeriodIndex() {
             break;//not sure if this is necessary so I included it anyway
         }
     }
-    return -1
+    return -1 //no match found, there is no class currently in session
 }
+
+
+
+/**
+ * 
+ *
+ * @returns the index of the class that started most recently
+ */
+function getMostRecentlyStartedClassIndex() {
+
+    if (isNoSchoolDay()) {
+        //return immediately if there is no school today
+        return -1
+    }
+
+    
+    //using for over forEach() because we are breaking out of the loop early
+    for (let i = 0; i < schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes.length; i++) {
+        let classPeriodStatus = checkClassTime(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[i])
+        let nextClassPeriodStatus;
+        if (i+1 < schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes.length) {
+            nextClassPeriodStatus = checkClassTime(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[i+1])
+        }
+
+        if (classPeriodStatus == -1) {
+            //class hasnt started, do nothing
+        } else if (classPeriodStatus == 0 ){
+            //class is currently in session, return index
+            return i
+        } else if (classPeriodStatus == 1 && (typeof nextClassPeriodStatus !== "undefined" && nextClassPeriodStatus == -1)) {
+            //class has passed and next class hasnt started (indicating a passing period)
+            //return the class index
+            return i
+        }
+    }
+
+}
+
 
 /**
  * this function determines the index of the schedule that applies to today (if any)
