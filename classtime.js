@@ -25,6 +25,7 @@ var schools = [
         {
         fullName: "Lake Oswego High School",
         shortName: "LOHS",
+        passingPeriodName: "Passing Period", //the name to use for time gaps in the schedule between classes
         //order is as is on the school website, although it doesnt matter.
         schedules: [
             {
