@@ -210,8 +210,9 @@ function updateText() {
         case SCHOOL_IN_CLASS_OUT_FLAG:
             
 
-            document.getElementById("nextClass").innerHTML = getClassName(currentClassPeriodIndex+1)
-            document.getElementById("currentClass").innerHTML = getClassName(currentClassPeriodIndex)
+            document.getElementById("nextClass").innerHTML = getClassName(getMostRecentlyStartedClassIndex()+1)
+            document.getElementById("currentClass").innerHTML = schools[selectedSchoolIndex].passingPeriodName
+            document.getElementById('timeToEndOfClass').innerHTML =  getTimeStringFromObject(getTimeTo(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[getMostRecentlyStartedClassIndex()+1].startTime));
             break;
 
         case CLASS_IN_SESSION_FLAG:
@@ -512,7 +513,7 @@ function convertMillisecondsToTime(milliseconds) {
  */
 function getTimeToEndOfCurrentClassString() {
     if (classIsInSession()) {
-        return getTimeStringFromObject(getTimeDelta(getCurrentTimeObject(), schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[currentClassPeriodIndex].endTime));
+        return getTimeStringFromObject(getTimeTo(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[currentClassPeriodIndex].endTime));
     } else {
         return "No Class"
     }
@@ -524,10 +525,15 @@ function getTimeToEndOfCurrentClassString() {
  */
 function getTimeToStartOfSchoolString() {
     if (!classIsInSession() && !isNoSchoolDay() && compareTimes(getCurrentTimeObject(), schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[0].startTime) == -1) {
-        return getTimeStringFromObject(getTimeDelta(getCurrentTimeObject(), schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[0].startTime));
+        return getTimeStringFromObject(getTimeTo(schools[selectedSchoolIndex].schedules[currentScheduleIndex].classes[0].startTime));
     } else {
         return "No Class"
     }
+}
+
+
+function getTimeTo(timeObject) {
+    return getTimeDelta(getCurrentTimeObject(), timeObject)
 }
 
 /**
