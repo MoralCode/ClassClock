@@ -178,17 +178,25 @@ function updateVariables() {
  * Updates labels on the homepage
  */
 function updateText() {
-    document.getElementById("schedule").innerHTML = "You are viewing the <strong>" + getCurrentScheduleName() + "</strong> schedule"
-    document.getElementById("selectedSchoolDisplay").innerHTML = "from <strong>" + schools[selectedSchoolIndex].fullName + "</strong>.";
 
-    document.getElementById("viewScheduleLink").style.display = "block";
+    if (getCurrentTimeState() !== DAY_OFF_FLAG ) {
+        document.getElementById("schedule").innerHTML = "You are viewing the <strong>" + getCurrentScheduleName() + "</strong> schedule"
+        document.getElementById("selectedSchoolDisplay").innerHTML = "from <strong>" + schools[selectedSchoolIndex].fullName + "</strong>.";
 
+        document.getElementById("viewScheduleLink").style.display = "block";
+    }
 
 
     switch (getCurrentTimeState()) {
         case DAY_OFF_FLAG:
             document.getElementById("schedule").innerHTML = "There's <strong>no class</strong> today!"
             document.getElementById("viewScheduleLink").style.display = "none";
+
+            let labels = document.getElementsByClassName("label")
+            for (let i = 0; i < labels.length; i++ ) {
+                labels[i].style.display = "none";
+            }
+
             
             break;
 
