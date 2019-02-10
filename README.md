@@ -37,7 +37,7 @@ ClassTime is a web-based app that can be saved to your phone's home screen or bo
 
 ### iOS
 
-1. Navigate to https://classclock.app in Safari (not tested on other browsers)
+1. Navigate to ClassClock in Safari (not tested on other browsers)
 2. Click the "Share" or "Action" button (it looks like a square with an arrow pointing up out of the top) 
 3. Click "Add to Home Screen" on the bottom row (you might have to scroll sideways to see it)
 4. Click "Done" in the top corner of the screen to add it to your home screen.
@@ -45,7 +45,7 @@ ClassTime is a web-based app that can be saved to your phone's home screen or bo
 
 ### Android
 
-1. Navigate to https://classclock.app (instructions for Google Chrome)
+1. Navigate to ClassClock (instructions for Google Chrome)
 2. Click the "Overflow" button on the top right of your screen (it looks like three vertical dots) 
 3. Click "Add to Home Screen" button in the menu (it's about 2/3 of the way down)
 4. Click "Add" in the dialog box that pops up to add it to your home screen.
