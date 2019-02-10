@@ -117,6 +117,15 @@ section#options > * {
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 }
 
+#flash a {
+    font-weight: 700;
+    text-decoration: none;
+
+}
+#flash a:hover {
+    text-decoration: underline;
+}
+
 #flash.success {
     background-color: #d4edda; /* copied from bootstrap */
     color: #155724;
@@ -125,6 +134,10 @@ section#options > * {
 #flash.info {
     color: #0c5460; /* copied from bootstrap */
     background-color: #a7d6f5; 
+}
+
+#flash.info a {
+    color: #002752;
 }
 
 #flash.warning {
@@ -136,6 +149,10 @@ section#options > * {
     background-color: #f38c95; 
     color: #721c24; /* copied from bootstrap */
     
+}
+
+.alert-link {
+    font-weight: 700;
 }
 
 .verticalFlex {
