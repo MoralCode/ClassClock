@@ -33,7 +33,7 @@ Here are some features to look forward to in a future version:
 
 ## How to install?
 
-ClassTime is a web-based app that can be saved to your phone's home screen or bookmarked in your browser for easy access. 
+ClassClock is a web-based app that can be saved to your phone's home screen or bookmarked in your browser for easy access. 
 
 ### iOS
 
