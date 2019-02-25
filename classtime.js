@@ -16,10 +16,7 @@ var currentClassPeriodIndex = -1;
 var currentScheduleIndex = -1;
 var selectedSchoolIndex = 0;
 
-
 var use24HourTime = getLocalStorageBoolean("use24HourTime", false);
-
-
 
 var schools = [
         {
@@ -27,6 +24,7 @@ var schools = [
         shortName: "LOHS",
         passingPeriodName: "Passing Period", //the name to use for time gaps in the schedule between classes
         //order is as is on the school website, although it doesnt matter.
+        timeZone: 'America/Los_Angeles',
         schedules: [
             {
                 name: "Mon/Fri (Regular)",
@@ -305,23 +303,29 @@ function isNoSchoolDay() {
 /**
  * This function updates the variables that keep track of the current time and date
  */
-function updateTime() { currentDate = new Date();}
+function updateTime() {
+    if (typeof selectedSchoolIndex !== 'undefined') {
+        currentDate = moment().tz(schools[selectedSchoolIndex].timeZone); 
+    } else {
+        currentDate = moment()
+    }
+}
 
 function getCurrentTimeObject() {
-   return {hours: currentDate.getHours(), minutes: currentDate.getMinutes(), seconds: currentDate.getSeconds()}
+   return {hours: currentDate.hour(), minutes: currentDate.minute(), seconds: currentDate.second()}
 }
  
 
 /**
  * @returns the current time as a formatted string
  */
-function getCurrentTimeString() { return currentDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: !use24HourTime }) }
+function getCurrentTimeString() { return use24HourTime ? currentDate.format("h:mm:ss a") : currentDate.format("H:mm:ss") }
 
 /**
  * @returns the current date as a formatted string
  */
 function getCurrentDateString() { 
-return "on <strong>" + currentDate.toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }) + "</strong>"
+    return "on <strong>" + currentDate.format("ddd, MMM Do, YYYY") + "</strong>"
 }
 
 /**
@@ -389,7 +393,7 @@ function getMostRecentlyStartedClassIndex() {
 function getCurrentScheduleIndex() {
     //using for over forEach() because we are breaking out of the loop early
     for (let i = 0; i < schools[selectedSchoolIndex].schedules.length; i++) {
-        if (schools[selectedSchoolIndex].schedules[i].days.includes(currentDate.getDay())) {
+        if (schools[selectedSchoolIndex].schedules[i].days.includes(currentDate.day())) {
             return i
         }
     }
