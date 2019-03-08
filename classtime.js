@@ -622,8 +622,8 @@ function getFormattedTimeStringFromObject(timeObject) {
     var pmString = "";
 
     //convert to 12 hour if necessary
-    if (!use24HourTime && timeObject.hours > 12) {
-        timeObject.hours -= 12;
+    if (!use24HourTime && timeObject.hours >= 12) {
+        if (timeObject.hours > 12) { timeObject.hours -= 12};
         pmString = " PM";
 
     } else if (!use24HourTime) {
