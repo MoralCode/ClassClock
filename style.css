@@ -159,3 +159,38 @@ section#options > * {
     display: flex;
     flex-direction: column;
 }
+
+
+.footer__social {
+    list-style: none;
+    margin: 0;
+  }
+  
+  .footer__social li {
+    display: inline-block;
+    font-size: 15px;
+    padding: 0;
+    margin-right: 12px;
+  }
+  
+  .footer__social li a {
+    display: block;
+    font-size: 48px;
+    /* line-height: 32px; */
+    text-align: center;
+    /* background-color: rgba(255, 255, 255, 0.03); */
+    color: #ffffff;
+    /* border-radius: 50%; */
+  }
+  
+  .footer__social li a:hover,
+  .footer__social li a:focus,
+  .footer__social li a:active {
+    /* background-color: #5b4f96; */
+    color: #c7c7c7;
+    font-weight: normal;
+  }
+  
+  .footer__social li:last-child {
+    margin-right: 0;
+  }
