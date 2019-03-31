@@ -3,27 +3,33 @@ layout: default
 title: ClassClock
 onload: update()
 ---
+<a class="navbutton" href="settings.html"><i class="fas fa-cog"></i></a>
 <br>
 <p class="centered">It is currently: </p>
 <h1 class="centered time" id="time"></h1>
 <p class="centered bottomSpace" id="date"></p>
 
-<p class="centered bottomSpace" id="schedule"></p>
+<section id="scheduleInfo" class="verticalFlex">
 
-<p class="centered label">You are currently in: </p>
-<h1 class="centered bottomSpace" id="currentClass"></h1>
+    <p class="centered" id="schedule"></p>
+    <p class="centered" id="selectedSchoolDisplay"></p>
+    <a href="schedule.html" class="centered bottomSpace" id="viewScheduleLink">View Schedule</a>
 
-<p class="centered label" id="countdownLabel">...which ends in: </p>
-<h1 class="centered bottomSpace time bigger" id="timeToEndOfClass"></h1>
+    <p class="centered label">You are currently in: </p>
+    <h1 class="centered bottomSpace" id="currentClass"></h1>
 
-<p class="centered label">Your next class period is: </p>
-<h1 class="centered bottomSpace" id="nextClass"></h1>
+    <p class="centered label" id="countdownLabel">...which ends in: </p>
+    <h1 class="centered bottomSpace time bigger" id="timeToEndOfClass"></h1>
 
-<!-- <p class="centered bottomSpace" id="sentence"></p> -->
+    <p class="centered label">Your next class period is: </p>
+    <h1 class="centered bottomSpace" id="nextClass"></h1>
 
-<a href="schedule.html" class="centered topSpace" id="viewScheduleLink">View Schedule</a>
+    <!-- <p class="centered bottomSpace" id="sentence"></p> -->
 
-<a class="navbutton" href="settings.html"><i class="fas fa-cog"></i></a>
+    
+
+</section>
+
 <script src="classtime.js"></script>
 <script>
     
@@ -38,4 +44,3 @@ onload: update()
     }
 
 </script>
-</html>

@@ -16,8 +16,8 @@ title: ClassClock - Schedule
 <script>
     updateTime();
     updateVariables();  
-    document.getElementById("schoolName").innerHTML = data.fullName; 
-    document.getElementById("scheduleDisplay").innerHTML = getSummaryString();
+    document.getElementById("schoolName").innerHTML = schools[selectedSchoolIndex].fullName; 
+    document.getElementById("scheduleDisplay").innerHTML = getCurrentScheduleName() + " schedule.";
 
     populateScheduleTable();
 </script>

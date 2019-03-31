@@ -1,5 +1,14 @@
 <html>
     <head>
+        <!-- Matomo Tag Manager -->
+        <script type="text/javascript">
+        var _mtm = _mtm || [];
+        _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src='https://analytics.adriancedwards.com/js/container_b9i4lGUG.js'; s.parentNode.insertBefore(g,s);
+        </script>
+        <!-- End Matomo Tag Manager -->
+
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
         <meta content="utf-8" http-equiv="encoding">
@@ -17,22 +26,9 @@
         
     </head>
     <body onload="{{ page.onload |default: "" }}">
-        {{ content }}
+        <p id="flash"></p>
+        <div id="page">
+            {{ content }}
+        </div>
     </body>
-     <!-- Matomo -->
-     <script type="text/javascript" async>
-        var _paq = _paq || [];
-        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-        _paq.push(['trackPageView']);
-        _paq.push(['enableLinkTracking']);
-        (function() {
-        var u="//analytics.adriancedwards.com/";
-        _paq.push(['setTrackerUrl', u+'piwik.php']);
-        _paq.push(['setSiteId', '3']);
-        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-        })();
-    </script>
-    <noscript><p><img src="//analytics.adriancedwards.com/piwik.php?idsite=3&amp;rec=1" style="border:0;" alt="" /></p></noscript>
-    <!-- End Matomo Code -->
 </html>
