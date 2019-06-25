@@ -1,33 +1,196 @@
-.App {
-  text-align: center;
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationName { 
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+html, body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(270deg, #5e8596, #829ea9, #b06673, #ce6e70, #7f5468);
+    background-size: 1000% 1000%;
+    -webkit-animation: AnimationName 30s ease infinite;
+    -moz-animation: AnimationName 30s ease infinite;
+    animation: AnimationName 30s ease infinite;
+}
+body {
+    font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
+    color: white;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+div#page {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
 }
 
-.App-link {
-  color: #61dafb;
+.time {
+    font-family: 'Play', Courier, monospace;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.centered {
+    margin: 0 auto;
+    display: block;
+    text-align: center
+}
+.centeredInline {
+    margin: 0 auto;
+    text-align: center
+}
+
+.bottomSpace {
+    margin-bottom: 14;
+}
+.topSpace {
+    margin-top: 14;
+}
+
+.navButton {
+    font-size: 32px;
+    /* position: absolute;
+    top: 0;
+    left: 0; */
+    padding-right: 4px;
+    /* padding-bottom: 2px; */
+    border-bottom-right-radius: 10px;
+    color: white;
+}
+
+.navButton:hover {
+    background-color: grey;
+}
+
+a {
+    color: whitesmoke; 
+}
+a:hover, a:active {
+    font-weight: bold
+}
+
+table#scheduleTable tr td {
+    font-size: 150%;
+    padding: 4px 2px;
+}
+
+h1.bigger {
+    /* regular h1's are 2em */
+    font-size: 3em;
+}
+
+section#credits {
+    margin-top: 20vh
+}
+
+section#credits > a {
+    margin: 5px;
+}
+
+section#options > * {
+    display: block;
+    margin-top: 2vw;
+}
+
+#flash {
+    /* flex: 1; */
+    display:none;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+    width: 100vw;
+    /* border-bottom-right-radius: .5rem;
+    border-bottom-left-radius: .5rem; */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+#flash a {
+    font-weight: 700;
+    text-decoration: none;
+
+}
+#flash a:hover {
+    text-decoration: underline;
+}
+
+#flash.success {
+    background-color: #d4edda; /* copied from bootstrap */
+    color: #155724;
+}
+
+#flash.info {
+    color: #0c5460; /* copied from bootstrap */
+    background-color: #a7d6f5; 
+}
+
+#flash.info a {
+    color: #002752;
+}
+
+#flash.warning {
+    background-color: #faf0ce;
+    color: #856404;
+}
+
+#flash.danger {
+    background-color: #f38c95; 
+    color: #721c24; /* copied from bootstrap */
+    
+}
+
+.alert-link {
+    font-weight: 700;
+}
+
+.verticalFlex {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.footer__social {
+    list-style: none;
+    margin: 0;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .footer__social li {
+    display: inline-block;
+    font-size: 15px;
+    padding: 0;
+    margin-right: 12px;
   }
-}
+  
+  .footer__social li a {
+    display: block;
+    font-size: 48px;
+    /* line-height: 32px; */
+    text-align: center;
+    /* background-color: rgba(255, 255, 255, 0.03); */
+    color: #ffffff;
+    /* border-radius: 50%; */
+  }
+  
+  .footer__social li a:hover,
+  .footer__social li a:focus,
+  .footer__social li a:active {
+    /* background-color: #5b4f96; */
+    color: #c7c7c7;
+    font-weight: normal;
+  }
+  
+  .footer__social li:last-child {
+    margin-right: 0;
+  }
