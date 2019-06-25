@@ -209,7 +209,7 @@ class App extends Component {
 
             case App.OUTSIDE_SCHOOL_HOURS_FLAG:
 
-                if (this.compareTimes(this.getCurrentTimeObject(), this.schools[this.selectedSchoolIndex].schedules[this.currentScheduleIndex].classes[0].startTime) == -1) {
+                if (this.compareTimes(this.getCurrentTimeObject(), this.schools[this.selectedSchoolIndex].schedules[this.currentScheduleIndex].classes[0].startTime)=== -1) {
                     // document.getElementById("countdownLabel").innerHTML = "School starts in: "
                     // document.getElementById('timeToEndOfClass').innerHTML = this.getTimeToStartOfSchoolString();
                 } else {
@@ -295,7 +295,7 @@ class App extends Component {
             this.getCurrentTimeObject(),
             this.schools[this.selectedSchoolIndex].schedules[this.currentScheduleIndex].classes[0].startTime,
            this.schools[this.selectedSchoolIndex].schedules[this.currentScheduleIndex].classes[this.schools[this.selectedSchoolIndex].schedules[this.currentScheduleIndex].classes.length-1].endTime
-            ) == 0
+            )=== 0
     }
 
     /**
@@ -344,7 +344,7 @@ class App extends Component {
 
         //using for over forEach() because we are breaking out of the loop early
         for (let i = 0; i <this.schools[this.selectedSchoolIndex].schedules[this.currentScheduleIndex].classes.length; i++) {
-            if (this.checkClassTime(this.schools[this.selectedSchoolIndex].schedules[this.currentScheduleIndex].classes[i]) == 0) {
+            if (this.checkClassTime(this.schools[this.selectedSchoolIndex].schedules[this.currentScheduleIndex].classes[i])=== 0) {
                 return i
                 break;//not sure if this is necessary so I included it anyway
             }
@@ -373,12 +373,12 @@ class App extends Component {
                 nextClassPeriodStatus = this.checkClassTime(this.schools[this.selectedSchoolIndex].schedules[this.currentScheduleIndex].classes[i+1])
             }
 
-            if (classPeriodStatus == -1) {
+            if (classPeriodStatus=== -1) {
                 //class hasnt started, do nothing
-            } else if (classPeriodStatus == 0 ){
+            } else if (classPeriodStatus=== 0 ){
                 //class is currently in session, return index
                 return i
-            } else if (classPeriodStatus == 1 && (typeof nextClassPeriodStatus !== "undefined" && nextClassPeriodStatus == -1)) {
+            } else if (classPeriodStatus=== 1 && (typeof nextClassPeriodStatus !== "undefined" && nextClassPeriodStatus=== -1)) {
                 //class has passed and next class hasnt started (indicating a passing period)
                 //return the class index
                 return i
@@ -460,7 +460,7 @@ public checkTimeRange(checkTime: Time, startTime: Time, endTime: Time) {
     let startCheck = this.compareTimes(checkTime, startTime)
     let endCheck = this.compareTimes(checkTime, endTime)
 
-        if (startCheck == -1) { return -1 }
+        if (startCheck=== -1) { return -1 }
         else if ( startCheck >= 0 && endCheck <= 0) { return 0 }
         else { return 1 }
 
@@ -510,10 +510,10 @@ public sanitizeTimeObject(timeObject: Time) {
         //this prevents the original object from being modified
         var newTimeObject = timeObject;
 
-        if (newTimeObject.hours == undefined ) { newTimeObject.hours = 0; }
-        if (newTimeObject.minutes == undefined ) { newTimeObject.minutes = 0; }
-        if (newTimeObject.seconds == undefined ) { newTimeObject.seconds = 0; }
-        // if (timeObject.milliseconds == undefined ) { timeObject.milliseconds = 0; }
+        if (newTimeObject.hours=== undefined ) { newTimeObject.hours = 0; }
+        if (newTimeObject.minutes=== undefined ) { newTimeObject.minutes = 0; }
+        if (newTimeObject.seconds=== undefined ) { newTimeObject.seconds = 0; }
+        // if (timeObject.milliseconds=== undefined ) { timeObject.milliseconds = 0; }
 
         //timeObjects are always in 24-hour time
         newTimeObject.hours = newTimeObject.hours % 24;
@@ -551,7 +551,7 @@ public sanitizeTimeObject(timeObject: Time) {
      * @returns the time to the start of school as a string
      */
     public getTimeToStartOfSchoolString() {
-        if (!this.classIsInSession() && !this.isNoSchoolDay() && this.compareTimes(this.getCurrentTimeObject(),this.schools[this.selectedSchoolIndex].schedules[this.currentScheduleIndex].classes[0].startTime) == -1) {
+        if (!this.classIsInSession() && !this.isNoSchoolDay() && this.compareTimes(this.getCurrentTimeObject(),this.schools[this.selectedSchoolIndex].schedules[this.currentScheduleIndex].classes[0].startTime)=== -1) {
             return this.getTimeStringFromObject(this.getTimeTo(this.schools[this.selectedSchoolIndex].schedules[this.currentScheduleIndex].classes[0].startTime));
         } else {
             return "No Class"
@@ -681,7 +681,7 @@ public sanitizeTimeObject(timeObject: Time) {
             return unsetDefault
         } else {
             //this is a better way to to convert the string from localStorage into a boolean for checkbox.checked. https://stackoverflow.com/a/264037
-            return (localStorage.getItem(key) == "true")
+            return (localStorage.getItem(key)=== "true")
         }
     }
 
