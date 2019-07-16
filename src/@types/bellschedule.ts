@@ -37,6 +37,10 @@ export default class BellSchedule {
         return this.lastUpdatedDate;
     }
 
+    public hasChangedSince(date: Date) {
+        return date.getTime() - this.lastUpdatedDate.getTime() > 0;
+    }
+
     public getClassPeriodForTime(time: Time) {
         for (const classPeriod in this.classes) {
             if (this.classes.hasOwnProperty(classPeriod)) {

@@ -46,6 +46,11 @@ export default class School {
     public lastUpdated() {
         return this.lastUpdated;
     }
+
+    public hasChangedSince(date: Date) {
+        return date.getTime() - this.lastUpdatedDate.getTime() > 0;
+    }
+
     //can also be used as isNoSchoolDay() by checking for undefined
     public getScheduleForDate(date: Date) {
         for (const schedule in this.schedules) {
