@@ -9,19 +9,22 @@ export default class School {
     private timeZone: string;
     private schedules: BellSchedule[];
     private passingPeriodName: string;
+    private lastUpdatedDate: Date;
 
     constructor(
         fullName: string,
         acronym: string,
         timeZone: string,
-        schedules: ISchedule[],
-        passingPeriodName: string
+        schedules: BellSchedule[],
+        passingPeriodName: string,
+        lastUpdatedDate: Date
     ) {
         this.fullName = fullName;
         this.acronym = acronym;
         this.timeZone = timeZone;
         this.schedules = schedules;
         this.passingPeriodName = passingPeriodName;
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 
     public getSchedules() {
@@ -38,6 +41,10 @@ export default class School {
     }
     public getTimezone() {
         return this.timeZone;
+    }
+
+    public lastUpdated() {
+        return this.lastUpdated;
     }
     //can also be used as isNoSchoolDay() by checking for undefined
     public getScheduleForDate(date: Date) {

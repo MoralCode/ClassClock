@@ -7,11 +7,18 @@ export default class BellSchedule {
     private name: string;
     private dates: Date[];
     private classes: ClassPeriod[];
+    private lastUpdatedDate: Date;
 
-    constructor(name: string, dates: Date[], classes: ClassPeriod[]) {
+    constructor(
+        name: string,
+        dates: Date[],
+        classes: ClassPeriod[],
+        lastUpdatedDate: Date
+    ) {
         this.name = name;
         this.dates = dates;
         this.classes = classes;
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 
     public getName() {
@@ -24,6 +31,10 @@ export default class BellSchedule {
 
     public getAllClasses() {
         return this.classes;
+    }
+
+    public lastUpdated() {
+        return this.lastUpdatedDate;
     }
 
     public getClassPeriodForTime(time: Time) {
