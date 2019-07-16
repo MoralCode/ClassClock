@@ -34,12 +34,12 @@ export class Time {
 
     private hours: number;
     private minutes: number;
-    private seconds?: number;
+    private seconds: number;
 
     constructor(hours: number, minutes: number, seconds?: number) {
         this.hours = hours;
         this.minutes = minutes;
-        this.seconds = seconds;
+        this.seconds = seconds || 0;
     }
 
     public getHours() {
@@ -53,9 +53,8 @@ export class Time {
     }
     public getMillisecondsTo(otherTime: Time) {
         const hoursDiff = this.hours - otherTime.getHours();
-        //20 - 41 = -21 + 60 = 49
         const minutesDiff = this.minutes - otherTime.getMinutes();
-        const secondsDiff = (this.seconds || 0) - (this.seconds || 0);
+        const secondsDiff = this.seconds - otherTime.getSeconds();
 
         return hoursDiff * 60 * 60 * 1000 + minutesDiff * 60 * 1000 + secondsDiff * 1000;
     }
