@@ -19,9 +19,7 @@ export interface Period {
 }
 
 export class Time {
-
     public static fromMilliseconds(milliseconds: number): Time {
-
         const hours = Math.floor(milliseconds / 1000 / 60 / 60);
         milliseconds -= hours * 1000 * 60 * 60;
         const minutes = Math.floor(milliseconds / 1000 / 60);
@@ -29,7 +27,7 @@ export class Time {
         const seconds = Math.floor(milliseconds / 1000);
         milliseconds -= seconds * 1000;
 
-        return new Time(hours, minutes, seconds)
+        return new Time(hours, minutes, seconds);
     }
 
     private hours: number;
@@ -59,14 +57,14 @@ export class Time {
         return hoursDiff * 60 * 60 * 1000 + minutesDiff * 60 * 1000 + secondsDiff * 1000;
     }
     public getTimeDeltaTo(otherTime: Time) {
-        return Time.fromMilliseconds(this.getMillisecondsTo(otherTime));
+        return Time.fromMilliseconds(Math.abs(this.getMillisecondsTo(otherTime)));
     }
 
     public get_valid_time(): Time {
         return new Time(
-            this.hours % 24,
-            this.minutes % 60,
-            this.seconds !== undefined ? this.seconds % 60 : undefined
+            Math.abs(this.hours % 24),
+            Math.abs(this.minutes % 60),
+            Math.abs(this.seconds % 60)
         );
     }
 
