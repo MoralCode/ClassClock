@@ -1,4 +1,5 @@
 import Time from "./time";
+import { checkTimeRange } from "../utils/helpers";
 
 export default class ClassPeriod {
     private name: string;
@@ -25,5 +26,9 @@ export default class ClassPeriod {
 
     public getDuration() {
         return this.startTime.getTimeDeltaTo(this.endTime);
+    }
+
+    public stateForTime(time: Time) {
+        return checkTimeRange(time, this.startTime, this.endTime);
     }
 }
