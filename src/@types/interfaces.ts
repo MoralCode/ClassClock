@@ -2,7 +2,7 @@ import Time from "./time";
 
 export interface ISchedule {
     name: string;
-    days: number[];
+    dates: Date[];
     classes: IPeriod[];
 }
 
