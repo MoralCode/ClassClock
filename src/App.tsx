@@ -3,11 +3,6 @@ import React, { Component } from "react";
 import "./App.css";
 
 class App extends Component {
-    static DAY_OFF_FLAG = "day off";
-    static OUTSIDE_SCHOOL_HOURS_FLAG = "outside school hours";
-    static SCHOOL_IN_CLASS_OUT_FLAG = "school is in session, but class is not";
-    static CLASS_IN_SESSION_FLAG = "class is in session";
-
     static FLASH_SUCCESS = "SUCCESS";
     static FLASH_INFO = "INFO";
     static FLASH_WARN = "WARNING";
