@@ -57,11 +57,9 @@ export default class School {
 
     //can also be used as isNoSchoolDay() by checking for undefined
     public getScheduleForDate(date: Date) {
-        for (const schedule in this.schedules) {
-            if (this.schedules.hasOwnProperty(schedule)) {
-                if (schedule.dates.includes(date)) {
-                    return schedule;
-                }
+        for (const schedule of this.schedules) {
+            if (schedule.getDates().includes(date)) {
+                return schedule;
             }
         }
     }
