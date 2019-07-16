@@ -58,6 +58,9 @@ export class Time {
 
         return hoursDiff * 60 * 60 * 1000 + minutesDiff * 60 * 1000 + secondsDiff * 1000;
     }
+    public getTimeDeltaTo(otherTime: Time) {
+        return Time.fromMilliseconds(this.getMillisecondsTo(otherTime));
+    }
 
     public get_valid_time(): Time {
         return new Time(
