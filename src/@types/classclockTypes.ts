@@ -1,18 +1,18 @@
-export interface School {
+export interface ISchool {
     fullName: string;
     shortName: string;
     timeZone: string;
-    schedules: Schedule[];
+    schedules: ISchedule[];
     passingPeriodName: string;
 }
 
-export interface Schedule {
+export interface ISchedule {
     name: string;
     days: number[];
-    classes: Period[];
+    classes: IPeriod[];
 }
 
-export interface Period {
+export interface IPeriod {
     name: string;
     startTime: Time;
     endTime: Time;

@@ -1,4 +1,4 @@
-import { Time, Period } from "../@types/classclockTypes";
+import { Time, IPeriod } from "../@types/classclockTypes";
 import { TimeComparisons, TimeStates } from "./enums";
 
 /**
@@ -283,7 +283,7 @@ export function checkTimeRange(checkTime: Time, startTime: Time, endTime: Time) 
     }
 }
 
-export function checkClassTime(classPeriod: Period) {
+export function checkClassTime(classPeriod: IPeriod) {
     return this.checkTimeRange(
         this.getCurrentTimeObject(),
         classPeriod.startTime,
