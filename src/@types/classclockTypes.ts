@@ -69,4 +69,17 @@ export class Time {
             this.seconds !== undefined ? this.seconds % 60 : undefined
         );
     }
+
+    public toString(excludeSeconds: boolean = false) {
+        let stringified =
+            this.hours.toString().padStart(2, "0") +
+            ":" +
+            this.minutes.toString().padStart(2, "0");
+
+        if (excludeSeconds) {
+            stringified += ":" + this.seconds.toString().padStart(2, "0");
+        }
+
+        return stringified;
+    }
 }
