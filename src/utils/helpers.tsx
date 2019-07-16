@@ -15,7 +15,9 @@ export function getTimeStateForDate(date: Date) {
         return TimeStates.DAY_OFF;
     }
 
-    const currentClassPeriod = currentBellSchedule.getClassPeriodForTime(date);
+    const currentClassPeriod = currentBellSchedule.getClassPeriodForTime(
+        Time.fromDate(date)
+    );
 
     //it is a school day but it is not school hours
     if (!currentSchool.isInSession(date)) {
