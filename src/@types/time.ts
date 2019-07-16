@@ -1,24 +1,4 @@
-export interface ISchool {
-    fullName: string;
-    shortName: string;
-    timeZone: string;
-    schedules: ISchedule[];
-    passingPeriodName: string;
-}
-
-export interface ISchedule {
-    name: string;
-    days: number[];
-    classes: IPeriod[];
-}
-
-export interface IPeriod {
-    name: string;
-    startTime: Time;
-    endTime: Time;
-}
-
-export class Time {
+export default class Time {
     public static fromMilliseconds(milliseconds: number): Time {
         const hours = Math.floor(milliseconds / 1000 / 60 / 60);
         milliseconds -= hours * 1000 * 60 * 60;

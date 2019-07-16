@@ -1,4 +1,6 @@
-import { Time, IPeriod } from "../@types/classclockTypes";
+import { IPeriod } from "../@types/interfaces";
+import Time from "../@types/time";
+import School from "../@types/school";
 import { TimeComparisons, TimeStates } from "./enums";
 
 /**
