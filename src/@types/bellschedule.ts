@@ -50,8 +50,8 @@ export default class BellSchedule {
             if (this.classes.hasOwnProperty(classPeriod)) {
                 return checkTimeRange(
                     time,
-                    classPeriod.startTime,
-                    classPeriod.endTime
+                    classPeriod.getStartTime(),
+                    classPeriod.getEndTime()
                 ) === TimeComparisons.IS_DURING_OR_EXACTLY
                     ? classPeriod
                     : undefined;

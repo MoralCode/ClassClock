@@ -30,15 +30,19 @@ export default class School {
     public getSchedules() {
         return this.schedules;
     }
+
     public getName() {
         return this.fullName;
     }
+
     public getAcronym() {
         return this.acronym;
     }
+
     public getPassingTimeName() {
         return this.passingPeriodName;
     }
+
     public getTimezone() {
         return this.timeZone;
     }
@@ -72,8 +76,10 @@ export default class School {
         return (
             checkTimeRange(
                 currentTime,
-                currentSchedule.classes[0].startTime,
-                currentSchedule.classes[currentSchedule.classes.length - 1].endTime
+                currentSchedule.getAllClasses()[0].getStartTime(),
+                currentSchedule.getAllClasses[
+                    currentSchedule.getNumberOfClasses()
+                ].getEndTime()
             ) === TimeComparisons.IS_DURING_OR_EXACTLY
         );
     }
