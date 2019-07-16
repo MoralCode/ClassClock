@@ -1,6 +1,6 @@
 import Time from "./time";
 
-export class ClassPeriod {
+export default class ClassPeriod {
     private name: string;
     private startTime: Time;
     private endTime: Time;
