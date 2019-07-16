@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-
+import { connect } from "react-redux";
+import { push } from "redux-first-routing";
+import IPageInterface from "../utils/IPageInterface";
 import "../App.css";
 
-class App extends Component {
+class App extends Component<IPageInterface, {}> {
     static FLASH_SUCCESS = "SUCCESS";
     static FLASH_INFO = "INFO";
     static FLASH_WARN = "WARNING";
@@ -417,4 +419,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default connect()(App);
