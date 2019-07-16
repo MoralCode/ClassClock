@@ -1,13 +1,13 @@
-import { ISchedule } from "./interfaces";
 import { checkTimeRange } from "../utils/helpers";
 import Time from "./time";
 import { TimeComparisons } from "../utils/enums";
+import BellSchedule from "./bellschedule";
 
 export default class School {
     private fullName: string;
     private acronym: string;
     private timeZone: string;
-    private schedules: ISchedule[];
+    private schedules: BellSchedule[];
     private passingPeriodName: string;
 
     constructor(
