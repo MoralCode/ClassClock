@@ -46,15 +46,9 @@ export default class BellSchedule {
     }
 
     public getClassPeriodForTime(time: Time) {
-        for (const classPeriod in this.classes) {
-            if (this.classes.hasOwnProperty(classPeriod)) {
-                return checkTimeRange(
-                    time,
-                    classPeriod.getStartTime(),
-                    classPeriod.getEndTime()
-                ) === TimeComparisons.IS_DURING_OR_EXACTLY
-                    ? classPeriod
-                    : undefined;
+        for (const classPeriod of this.classes) {
+            if (classPeriod.stateForTime(time) === TimeComparisons.IS_DURING_OR_EXACTLY) {
+                return classPeriod;
             }
         }
     }
