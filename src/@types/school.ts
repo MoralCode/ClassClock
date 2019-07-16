@@ -75,9 +75,9 @@ export default class School {
             checkTimeRange(
                 currentTime,
                 currentSchedule.getAllClasses()[0].getStartTime(),
-                currentSchedule.getAllClasses[
-                    currentSchedule.getNumberOfClasses()
-                ].getEndTime()
+                currentSchedule
+                    .getAllClasses()
+                    [currentSchedule.numberOfClasses()].getEndTime()
             ) === TimeComparisons.IS_DURING_OR_EXACTLY
         );
     }
