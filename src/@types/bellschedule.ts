@@ -1,4 +1,4 @@
-import { ClassPeriod } from "./classperiod";
+import ClassPeriod from "./classperiod";
 import Time from "./time";
 import { TimeComparisons } from "../utils/enums";
 import { checkTimeRange } from "../utils/helpers";
