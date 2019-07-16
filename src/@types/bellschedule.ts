@@ -33,6 +33,10 @@ export default class BellSchedule {
         return this.classes;
     }
 
+    public numberOfClasses() {
+        return this.classes.length - 1;
+    }
+
     public lastUpdated() {
         return this.lastUpdatedDate;
     }
