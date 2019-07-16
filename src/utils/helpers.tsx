@@ -1,4 +1,4 @@
-import { IPeriod } from "../@types/interfaces";
+import ClassPeriod from "../@types/classperiod";
 import Time from "../@types/time";
 import School from "../@types/school";
 import { TimeComparisons, TimeStates } from "./enums";
@@ -285,7 +285,7 @@ export function checkTimeRange(checkTime: Time, startTime: Time, endTime: Time) 
     }
 }
 
-export function checkClassTime(classPeriod: IPeriod) {
+export function checkClassTime(classPeriod: ClassPeriod) {
     return this.checkTimeRange(
         this.getCurrentTimeObject(),
         classPeriod.startTime,
