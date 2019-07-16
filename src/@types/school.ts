@@ -39,11 +39,13 @@ export default class School {
     public getTimezone() {
         return this.timeZone;
     }
-
+    //can also be used as isNoSchoolDay() by checking for undefined
     public getScheduleForDate(date: Date) {
         for (const schedule in this.schedules) {
-            if (schedule.dates.includes(date)) {
-                return schedule;
+            if (this.schedules.hasOwnProperty(schedule)) {
+                if (schedule.dates.includes(date)) {
+                    return schedule;
+                }
             }
         }
     }
