@@ -1,4 +1,4 @@
-import { IPeriod } from "./interfaces";
+import { ClassPeriod } from "./classperiod";
 import Time from "./time";
 import { TimeComparisons } from "../utils/enums";
 import { checkTimeRange } from "../utils/helpers";
@@ -6,9 +6,9 @@ import { checkTimeRange } from "../utils/helpers";
 export default class BellSchedule {
     private name: string;
     private dates: Date[];
-    private classes: IPeriod[];
+    private classes: ClassPeriod[];
 
-    constructor(name: string, dates: Date[], classes: IPeriod[]) {
+    constructor(name: string, dates: Date[], classes: ClassPeriod[]) {
         this.name = name;
         this.dates = dates;
         this.classes = classes;
