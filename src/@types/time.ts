@@ -9,6 +9,9 @@ export default class Time {
 
         return new Time(hours, minutes, seconds);
     }
+    public static fromDate(date: Date) {
+        return new Time(date.getHours(), date.getMinutes(), date.getSeconds());
+    }
 
     private hours: number;
     private minutes: number;
