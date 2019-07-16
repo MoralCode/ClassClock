@@ -68,7 +68,7 @@ export class Time {
         );
     }
 
-    public toString(excludeSeconds: boolean = false) {
+    public toString(excludeSeconds = false) {
         let stringified =
             this.hours.toString().padStart(2, "0") +
             ":" +
@@ -79,5 +79,13 @@ export class Time {
         }
 
         return stringified;
+    }
+
+    public isAM() {
+        return this.hours < 12 && this.minutes < 60 && this.seconds < 60;
+    }
+
+    public getFormattedString(excludeSeconds = false) {
+        return this.toString(excludeSeconds) + this.isAM() ? " AM" : " PM";
     }
 }
