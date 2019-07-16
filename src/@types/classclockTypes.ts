@@ -19,6 +19,19 @@ export interface Period {
 }
 
 export class Time {
+
+    public static fromMilliseconds(milliseconds: number): Time {
+
+        const hours = Math.floor(milliseconds / 1000 / 60 / 60);
+        milliseconds -= hours * 1000 * 60 * 60;
+        const minutes = Math.floor(milliseconds / 1000 / 60);
+        milliseconds -= minutes * 1000 * 60;
+        const seconds = Math.floor(milliseconds / 1000);
+        milliseconds -= seconds * 1000;
+
+        return new Time(hours, minutes, seconds)
+    }
+
     private hours: number;
     private minutes: number;
     private seconds?: number;
