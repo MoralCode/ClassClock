@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { push } from "redux-first-routing";
 import IPageInterface from "../utils/IPageInterface";
-import "../App.css";
+import "../global.css";
 
 class App extends Component<IPageInterface, {}> {
     static FLASH_SUCCESS = "SUCCESS";
@@ -395,13 +395,14 @@ class App extends Component<IPageInterface, {}> {
                 <section id="scheduleInfo" className="verticalFlex">
                     <p className="centered" id="schedule" />
                     <p className="centered" id="selectedSchoolDisplay" />
-                    <a
-                        href="schedule.html"
+                    <Link
+                        // tslint:disable-next-line: jsx-no-lambda
+                        destination={() => this.navigate("/schedule.html")}
                         className="centered bottomSpace"
                         id="viewScheduleLink"
                     >
                         View Schedule
-                    </a>
+                    </Link>
                     <p className="centered label">You are currently in: </p>
                     <h1 className="centered bottomSpace" id="currentClass" />
                     <p className="centered label" id="countdownLabel">

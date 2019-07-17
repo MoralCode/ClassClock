@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { push } from "redux-first-routing";
 import IPageInterface from "../utils/IPageInterface";
 
-import "../App.css";
+import "../global.css";
 
 class Schedule extends Component<IPageInterface, {}> {
     // document.getElementById("schoolName").innerHTML = schools[selectedSchoolIndex].fullName;
