@@ -9,6 +9,7 @@ import App from "./pages/App";
 import Schedule from "./pages/Schedule";
 import Settings from "./pages/Settings";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
 const routes = [
     {
@@ -28,10 +29,10 @@ const routes = [
 const history = createBrowserHistory();
 
 // Create the store, passing it the history object
-const store = configureStore(history); //createStore(combineReducers(reducers), applyMiddleware(thunk));
+const configuredStore = configureStore(history); //createStore(combineReducers(reducers), applyMiddleware(thunk));
 
 // Start the history listener, which automatically dispatches actions to keep the store in sync with the history
-startListener(history, store);
+startListener(history, configuredStore.store);
 
 // Create the router
 const router = new UniversalRouter(routes);
@@ -42,20 +43,23 @@ function render(pathname: string) {
         // console.log(component);
 
         ReactDOM.render(
-            <Provider store={store}>{component}</Provider>,
+            <Provider store={configuredStore.store}>
+                <PersistGate loading={null} persistor={configuredStore.persistor}>
+                    {component}
+                </PersistGate>
+            </Provider>,
             document.getElementById("root")
         );
     });
 }
 
 // Get the current pathname
-let currentLocation = store.getState().router.pathname;
-console.log(currentLocation);
+let currentLocation = configuredStore.store.getState().router.pathname;
 
 // Subscribe to the store location
-const unsubscribe = store.subscribe(() => {
+const unsubscribe = configuredStore.store.subscribe(() => {
     const previousLocation = currentLocation;
-    currentLocation = store.getState().router.pathname;
+    currentLocation = configuredStore.store.getState().router.pathname;
 
     if (previousLocation !== currentLocation) {
         console.log(
