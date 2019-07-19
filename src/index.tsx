@@ -10,6 +10,8 @@ import Schedule from "./pages/Schedule";
 import Settings from "./pages/Settings";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import { Auth0Provider } from "./react-auth0-wrapper";
+import { Auth0 } from "./utils/constants";
 
 const routes = [
     {
@@ -25,6 +27,17 @@ const routes = [
         action: () => <Settings />
     }
 ];
+
+// A function that routes the user to the right place
+// after login
+const onRedirectCallback = (appState: any) => {
+    window.history.replaceState(
+        {},
+        document.title,
+        appState && appState.targetUrl ? appState.targetUrl : window.location.pathname
+    );
+};
+
 // Create the history object
 const history = createBrowserHistory();
 
@@ -45,7 +58,14 @@ function render(pathname: string) {
         ReactDOM.render(
             <Provider store={configuredStore.store}>
                 <PersistGate loading={null} persistor={configuredStore.persistor}>
-                    {component}
+                    <Auth0Provider
+                        domain={Auth0.domain}
+                        client_id={Auth0.clientId}
+                        redirect_uri={window.location.origin}
+                        onRedirectCallback={onRedirectCallback}
+                    >
+                        {component}
+                    </Auth0Provider>
                 </PersistGate>
             </Provider>,
             document.getElementById("root")
