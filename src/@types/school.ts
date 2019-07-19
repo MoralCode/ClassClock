@@ -4,6 +4,7 @@ import { TimeComparisons } from "../utils/enums";
 import BellSchedule from "./bellschedule";
 
 export default class School {
+    private id: string;
     private fullName: string;
     private acronym: string;
     private timeZone: string;
@@ -12,6 +13,7 @@ export default class School {
     private lastUpdatedDate: Date;
 
     constructor(
+        id: string,
         fullName: string,
         acronym: string,
         timeZone: string,
@@ -19,12 +21,17 @@ export default class School {
         passingPeriodName: string,
         lastUpdatedDate: Date
     ) {
+        this.id = id;
         this.fullName = fullName;
         this.acronym = acronym;
         this.timeZone = timeZone;
         this.schedules = schedules;
         this.passingPeriodName = passingPeriodName;
         this.lastUpdatedDate = lastUpdatedDate;
+    }
+
+    public getIdentifier(): string {
+        return this.id;
     }
 
     public getSchedules() {
