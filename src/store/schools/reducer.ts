@@ -1,9 +1,10 @@
-const initialState = {};
+import { SELECT_SCHOOL, SchoolActionTypes } from "./types";
 
-export default function reduce(state = initialState, action = {}) {
-    // switch (action.type) {
-    //     default:
-    //         return state;
-    // }
-    return state;
+export function selectedSchoolReducer(state = "", action: SchoolActionTypes): string {
+    switch (action.type) {
+        case SELECT_SCHOOL:
+            return action.id;
+        default:
+            return state;
+    }
 }

@@ -1,11 +1,11 @@
 import { combineReducers, applyMiddleware, createStore } from "redux";
 import { routerReducer, routerMiddleware } from "redux-first-routing";
-import * as reducers from "./reducers";
 import thunk from "redux-thunk";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
-
 import logger from "redux-logger";
+
+import { selectedSchoolReducer } from "./schools/reducer";
 
 const persistConfig = {
     key: "root",
@@ -16,7 +16,7 @@ const persistConfig = {
 export const configureStore = (hist: any, initialState = {}) => {
     // Add the reducer, which adds location state to the store
     const rootReducer = combineReducers({
-        ...reducers,
+        selectedSchoolId: selectedSchoolReducer,
         router: routerReducer // Convention is to use the "router" property
     });
 

@@ -1,3 +1,0 @@
-export const SCHOOL_REQUEST = "SCHOOL_REQUEST"
-export const SCHOOL_RECEIVE = "SCHOOL_RECEIVE"
-export const SCHOOL_ERROR = "SCHOOL_ERROR"
