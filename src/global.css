@@ -56,6 +56,11 @@ body > * {
     text-align: center;
 }
 
+span.blockInfo {
+    margin: 7px 0;
+    display: block;
+}
+
 div#page {
     flex: 1;
     width: 100%;
@@ -64,8 +69,9 @@ div#page {
     margin: 0;
 }
 
-.time {
+.timeFont {
     font-family: "Play", Courier, monospace;
+    font-weight: bold;
 }
 
 .centeredInline {
