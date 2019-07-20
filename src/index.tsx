@@ -12,6 +12,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { Auth0Provider } from "./react-auth0-wrapper";
 import { Auth0 } from "./utils/constants";
+import PrivateRoute from "./components/PrivateRoute";
 
 const routes = [
     {
@@ -20,7 +21,7 @@ const routes = [
     },
     {
         path: "/schedule.html",
-        action: () => <Schedule />
+        action: () => <PrivateRoute component={Schedule} path="/schedule.html" />
     },
     {
         path: "/settings.html",
