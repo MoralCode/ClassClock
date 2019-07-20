@@ -29,16 +29,6 @@ const routes = [
     }
 ];
 
-// A function that routes the user to the right place
-// after login
-const onRedirectCallback = (appState: any) => {
-    window.history.replaceState(
-        {},
-        document.title,
-        appState && appState.targetUrl ? appState.targetUrl : window.location.pathname
-    );
-};
-
 // Create the history object
 const history = createBrowserHistory();
 
@@ -50,6 +40,16 @@ startListener(history, configuredStore.store);
 
 // Create the router
 const router = new UniversalRouter(routes);
+
+// A function that routes the user to the right place
+// after login
+const onRedirectCallback = (appState: any) => {
+    configuredStore.store.dispatch(
+        push(
+            appState && appState.targetUrl ? appState.targetUrl : window.location.pathname
+        )
+    );
+};
 
 // Create the reactive render function
 function render(pathname: string) {
