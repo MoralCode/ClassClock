@@ -26,6 +26,10 @@ const routes = [
     {
         path: "/settings.html",
         action: () => <Settings />
+    },
+    {
+        path: "/callback",
+        action: () => <p>Redirecting...</p>
     }
 ];
 
@@ -62,7 +66,7 @@ function render(pathname: string) {
                     <Auth0Provider
                         domain={Auth0.domain}
                         client_id={Auth0.clientId}
-                        redirect_uri={window.location.origin}
+                        redirect_uri={"http://localhost:3000/callback"}
                         onRedirectCallback={onRedirectCallback}
                     >
                         {component}
