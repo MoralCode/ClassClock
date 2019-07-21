@@ -13,6 +13,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { Auth0Provider } from "./react-auth0-wrapper";
 import { Auth0 } from "./utils/constants";
 import PrivateRoute from "./components/PrivateRoute";
+import SchoolSelect from "./pages/SchoolSelect";
 
 const routes = [
     {
@@ -26,6 +27,10 @@ const routes = [
     {
         path: "/settings.html",
         action: () => <Settings />
+    },
+    {
+        path: "/select",
+        action: () => <SchoolSelect />
     },
     {
         path: "/callback",
