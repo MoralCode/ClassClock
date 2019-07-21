@@ -1,5 +1,7 @@
+import School from "../../@types/school";
+
 //API actions
-export const GET_SCHOOLS_LIST = "FETCH_SCHOOLS_LIST";
+export const REQUEST_SCHOOLS_LIST = "REQUEST_SCHOOLS_LIST";
 export const RECEIVE_SCHOOLS_LIST = "RECEIVE_SCHOOLS_LIST";
 export const FETCH_SCHOOLS_ERROR = "SCHOOLS_FETCH_ERROR";
 
@@ -16,4 +18,31 @@ interface ISelectSchoolAction {
     id: string;
 }
 
-export type SchoolActionTypes = ISelectSchoolAction;
+interface IReceiveSchoolsAction {
+    type: typeof RECEIVE_SCHOOLS_LIST;
+    schools: School[];
+    receivedAt: number;
+}
+
+interface ISchoolsErrorAction {
+    type: typeof FETCH_SCHOOLS_ERROR;
+    message: string;
+}
+
+interface IGetSchoolAction {
+    type: typeof REQUEST_SCHOOLS_LIST;
+}
+
+// interface DeleteMessageAction {
+//     type: typeof DELETE_MESSAGE;
+//     meta: {
+//         timestamp: number;
+//     };
+// }
+
+export type SchoolActionTypes =
+    | ISelectSchoolAction
+    | IReceiveSchoolsAction
+    | IGetSchoolAction
+    | ISchoolsErrorAction;
+// | IReceiveSchoolsAction; // | DeleteMessageAction;
