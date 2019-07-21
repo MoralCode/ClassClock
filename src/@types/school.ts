@@ -7,19 +7,19 @@ export default class School {
     private id: string;
     private fullName: string;
     private acronym: string;
-    private timeZone: string;
-    private schedules: BellSchedule[];
-    private passingPeriodName: string;
-    private lastUpdatedDate: Date;
+    private timeZone: string | undefined;
+    private schedules: BellSchedule[] | undefined;
+    private passingPeriodName: string | undefined;
+    private lastUpdatedDate: Date | undefined;
 
     constructor(
         id: string,
         fullName: string,
         acronym: string,
-        timeZone: string,
-        schedules: BellSchedule[],
-        passingPeriodName: string,
-        lastUpdatedDate: Date
+        timeZone?: string,
+        schedules?: BellSchedule[],
+        passingPeriodName?: string,
+        lastUpdatedDate?: Date
     ) {
         this.id = id;
         this.fullName = fullName;
@@ -59,15 +59,23 @@ export default class School {
     }
 
     public hasChangedSince(date: Date) {
-        return date.getTime() - this.lastUpdatedDate.getTime() > 0;
+        if (this.lastUpdatedDate !== undefined) {
+            return date.getTime() - this.lastUpdatedDate.getTime() > 0;
+        } else {
+            return undefined;
+        }
     }
 
     //can also be used as isNoSchoolDay() by checking for undefined
     public getScheduleForDate(date: Date) {
-        for (const schedule of this.schedules) {
-            if (schedule.getDates().includes(date)) {
-                return schedule;
+        if (this.schedules !== undefined) {
+            for (const schedule of this.schedules) {
+                if (schedule.getDates().includes(date)) {
+                    return schedule;
+                }
             }
+        } else {
+            return undefined;
         }
     }
 
