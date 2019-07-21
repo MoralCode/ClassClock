@@ -66,6 +66,7 @@ function render(pathname: string) {
                     <Auth0Provider
                         domain={Auth0.domain}
                         client_id={Auth0.clientId}
+                        audience={Auth0.audience}
                         redirect_uri={"http://localhost:3000/callback"}
                         onRedirectCallback={onRedirectCallback}
                     >
