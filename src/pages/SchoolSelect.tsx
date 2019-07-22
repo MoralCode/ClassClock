@@ -1,53 +1,99 @@
-import React, { Component, useEffect } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { push } from "redux-first-routing";
 import IPageInterface from "../utils/IPageInterface";
 import "../global.css";
 
-import { selectSchool, fetchSchoolsList, fetchSchool } from "../store/schools/actions";
+import { selectSchool } from "../store/schools/actions";
 import { useAuth0 } from "../react-auth0-wrapper";
 import School from "../@types/school";
+import ClassClockService from "../services/classclock";
 
 const SchoolSelect = (props: any) => {
     const { getTokenSilently } = useAuth0();
 
+    const [schoolList, setSchoolList] = useState([]);
+    const [lastRefresh, setlastRefresh] = useState(0);
+
     useEffect(() => {
-        const schoolIdList = Object.getOwnPropertyNames(props.schools);
-        if (schoolIdList.length === 0) {
-            fetchSchools();
-        } // else if (schoolIdList.length === 1) {
-        //     setSchool(Object.getOwnPropertyNames(props.schools)[0]);
-        // }
-    });
+        const controller = new AbortController();
+        const signal = controller.signal;
 
-    const fetchSchools = async () => {
-        const token = await getTokenSilently();
+        if (
+            schoolList.length === 0 &&
+            // isFetching === false &&
+            Math.abs(new Date().getTime() - lastRefresh) > 120000 //120000 ms
+        ) {
+            const fetchSchools = async (abortSignal: AbortSignal) => {
+                const token = await getTokenSilently();
 
-        props.dispatch(fetchSchoolsList(typeof token !== "undefined" ? token : ""));
-    };
+                if (token !== undefined) {
+                    try {
+                        await ClassClockService.getSchoolsList(token, {
+                            signal: abortSignal
+                        })
+                            .then(
+                                (response: Response) => {
+                                    if (response.ok) {
+                                        return response.json();
+                                    }
+                                },
+                                // Do not use catch, because that will also catch
+                                // any errors in the dispatch and resulting render,
+                                // causing a loop of 'Unexpected batch number' errors.
+                                // https://github.com/facebook/react/issues/6895
+                                (error: Error) => console.log("An error occurred.", error)
+                            )
+                            .then((json: any) => {
+                                setSchoolList(
+                                    json.data.map((value: any) =>
+                                        School.fromJsonApi(value)
+                                    )
+                                );
+                                setlastRefresh(new Date().getTime());
+                            });
+                    } catch (error) {
+                        console.log(error.message, error.type);
+                    }
+                }
+            };
+            fetchSchools(signal);
+        }
+
+        return () => {
+            controller.abort();
+        };
+    }, []);
 
     const setSchool = async (id: string) => {
         const token = await getTokenSilently();
-        if (props.selectedSchoolId !== id) {
-            props.dispatch(selectSchool(id));
+        if (props.selectedSchool.data.id !== id && token !== undefined) {
+            props.dispatch(selectSchool(token, id));
         }
-        if (token !== undefined) {
-            //check if the school has been fully fetched
-            // props.dispatch(fetchSchool(token, id));
-        }
+
         props.dispatch(push("/"));
     };
-
-    const list = Object.keys(props.schools).map((id: string) => (
-        <li onClick={() => setSchool(id)} key={id}>
-            {props.schools[id].data.fullName}
+    const list = schoolList.map((school: School) => (
+        <li
+            key={school.getIdentifier()}
+            onClick={() => setSchool(school.getIdentifier())}
+        >
+            {school.getName()}
         </li>
     ));
-    return <ul>{list}</ul>;
+
+    return (
+        <div>
+            <h2>Please select a school</h2>
+            {schoolList.length === 0 ? <span>Loading...</span> : <ul>{list}</ul>}
+
+            {/* <a onClick={}>Refresh</a> */}
+        </div>
+    );
 };
 
 const mapStateToProps = (state: any) => {
-    const { schoolsById, selectedSchoolId } = state;
-    return { schools: schoolsById, selectedSchoolId };
+    const { selectedSchool } = state;
+    return { selectedSchool };
 };
 export default connect(mapStateToProps)(SchoolSelect);
