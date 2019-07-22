@@ -4,6 +4,19 @@ import { TimeComparisons } from "../utils/enums";
 import BellSchedule from "./bellschedule";
 
 export default class School {
+    public static fromJsonApi(json: any) {
+        return new School(
+            json.id,
+            json.attributes.full_name,
+            json.attributes.acronym,
+            json.links.self,
+            undefined,
+            undefined,
+            json.attributes.alternate_freeperiod_name,
+            json.attributes.creation_date,
+            json.attributes.last_modified
+        );
+    }
     private id: string;
     private endpoint?: string;
     private fullName: string;

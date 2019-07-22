@@ -18,17 +18,7 @@ function requestSchool(): SchoolActionTypes {
 function receiveSchool(json: any): SchoolActionTypes {
     return {
         type: RECEIVE_SCHOOL,
-        school: new School(
-            json.id,
-            json.attributes.full_name,
-            json.attributes.acronym,
-            undefined,
-            undefined,
-            json.attributes.alternate_freeperiod_name,
-            json.links.self,
-            json.attributes.creation_date,
-            json.attributes.last_modified
-        ),
+        school: School.fromJsonApi(json),
         receivedAt: Date.now()
     };
 }
