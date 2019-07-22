@@ -17,6 +17,20 @@ export default class School {
             json.attributes.last_modified
         );
     }
+
+    public static fromState(json: any) {
+        return new School(
+            json.id,
+            json.fullName,
+            json.acronym,
+            json.endpoint,
+            undefined,
+            undefined,
+            json.passingPeriodName,
+            json.creationDate,
+            json.lastUpdatedDate
+        );
+    }
     private id: string;
     private endpoint?: string;
     private fullName: string;
