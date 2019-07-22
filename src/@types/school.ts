@@ -18,10 +18,10 @@ export default class School {
         id: string,
         fullName: string,
         acronym: string,
+        endpoint: string,
         timeZone?: string,
         schedules?: BellSchedule[],
         passingPeriodName?: string,
-        endpoint?: string,
         creationDate?: Date,
         lastUpdatedDate?: Date
     ) {
