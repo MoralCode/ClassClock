@@ -1,4 +1,3 @@
-import ClassPeriod from "../@types/classperiod";
 import Time from "../@types/time";
 import School from "../@types/school";
 import { TimeComparisons, TimeStates } from "./enums";
@@ -6,9 +5,8 @@ import { TimeComparisons, TimeStates } from "./enums";
 /**
  * @returns a flag that represents the current chunk of time categorically
  */
-export function getTimeStateForDate(date: Date) {
-    const currentSchool = getSelectedSchool();
-    const currentBellSchedule = currentSchool.getScheduleForDate(date);
+export function getTimeStateForDateAtSchool(date: Date, school: School) {
+    const currentBellSchedule = school.getScheduleForDate(date);
 
     //there is no schedule that applies today
     if (currentBellSchedule === undefined) {
@@ -20,12 +18,12 @@ export function getTimeStateForDate(date: Date) {
     );
 
     //it is a school day but it is not school hours
-    if (!currentSchool.isInSession(date)) {
+    if (!school.isInSession(date)) {
         return TimeStates.OUTSIDE_SCHOOL_HOURS;
     }
 
     //the current time lies between the start of the first schedules class and the end of the last
-    else if (currentSchool.isInSession(date) && currentClassPeriod === undefined) {
+    else if (school.isInSession(date) && currentClassPeriod === undefined) {
         return TimeStates.SCHOOL_IN_CLASS_OUT;
     }
 
@@ -35,47 +33,17 @@ export function getTimeStateForDate(date: Date) {
     }
 }
 
-export function getSelectedSchool(): School {}
-
 export function getCurrentTimeObject() {
     return Time.fromDate(new Date());
 }
 
 /**
- * @returns the current time as a formatted string
- */
-// export function getCurrentTimeString() {
-//     return this.currentDate.toLocaleString("en-US", {
-//         hour: "numeric",
-//         minute: "numeric",
-//         second: "numeric",
-//         hour12: !this.use24HourTime
-//     });
-// }
-
-// /**
-//  * @returns the current date as a formatted string
-//  */
-// export function getCurrentDateString() {
-//     return (
-//         "on <strong>" +
-//         this.currentDate.toLocaleString("en-US", {
-//             weekday: "short",
-//             month: "short",
-//             day: "numeric",
-//             year: "numeric"
-//         }) +
-//         "</strong>"
-//     );
-// }
-
-/**
  * @returns the index of the class that started most recently
  */
-export function getMostRecentlyStartedClass(date: Date) {
+export function getMostRecentlyStartedClassAtSchool(date: Date, school: School) {
     const time = Time.fromDate(date);
 
-    const bellchedule = getSelectedSchool().getScheduleForDate(date);
+    const bellchedule = school.getScheduleForDate(date);
 
     if (bellchedule === undefined) {
         return undefined;
@@ -85,7 +53,7 @@ export function getMostRecentlyStartedClass(date: Date) {
 
     const currentClass = bellchedule.getClassPeriodForTime(time);
 
-    switch (getTimeStateForDate(date)) {
+    switch (getTimeStateForDateAtSchool(date, school)) {
         case TimeStates.CLASS_IN_SESSION:
             return currentClass;
         case TimeStates.SCHOOL_IN_CLASS_OUT:
