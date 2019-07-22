@@ -4,34 +4,37 @@ import { push } from "redux-first-routing";
 import IPageInterface from "../utils/IPageInterface";
 import "../global.css";
 
-import { selectSchool, fetchSchoolsList } from "../store/schools/actions";
+import { selectSchool, fetchSchoolsList, fetchSchool } from "../store/schools/actions";
 import { useAuth0 } from "../react-auth0-wrapper";
 import School from "../@types/school";
 
 const SchoolSelect = (props: any) => {
-    const { isAuthenticated, getTokenSilently } = useAuth0();
+    const { getTokenSilently } = useAuth0();
 
     useEffect(() => {
-        // Update the document title using the browser API
-        // document.title = `You clicked ${count} times`;
-        const fetchSchools = async () => {
-            const token = await getTokenSilently();
-            if (isAuthenticated) {
-                props.dispatch(
-                    fetchSchoolsList(typeof token !== "undefined" ? token : "")
-                );
-            }
-        };
-
-        if (Object.getOwnPropertyNames(props.schools).length === 0) {
+        const schoolIdList = Object.getOwnPropertyNames(props.schools);
+        if (schoolIdList.length === 0) {
             fetchSchools();
-        } else if (Object.getOwnPropertyNames(props.schools).length === 1) {
-            setSchool(Object.getOwnPropertyNames(props.schools)[0]);
-        }
+        } // else if (schoolIdList.length === 1) {
+        //     setSchool(Object.getOwnPropertyNames(props.schools)[0]);
+        // }
     });
 
-    const setSchool = (id: string) => {
-        props.dispatch(selectSchool(id));
+    const fetchSchools = async () => {
+        const token = await getTokenSilently();
+
+        props.dispatch(fetchSchoolsList(typeof token !== "undefined" ? token : ""));
+    };
+
+    const setSchool = async (id: string) => {
+        const token = await getTokenSilently();
+        if (props.selectedSchoolId !== id) {
+            props.dispatch(selectSchool(id));
+        }
+        if (token !== undefined) {
+            //check if the school has been fully fetched
+            // props.dispatch(fetchSchool(token, id));
+        }
         props.dispatch(push("/"));
     };
 
