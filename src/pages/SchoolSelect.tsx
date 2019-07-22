@@ -36,7 +36,9 @@ const SchoolSelect = (props: any) => {
     };
 
     const list = Object.keys(props.schools).map((id: string) => (
-        <li onClick={() => setSchool(id)}>{props.schools[id].data.fullName}</li>
+        <li onClick={() => setSchool(id)} key={id}>
+            {props.schools[id].data.fullName}
+        </li>
     ));
     return <ul>{list}</ul>;
 };
