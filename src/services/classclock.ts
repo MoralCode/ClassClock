@@ -1,26 +1,41 @@
 export default class ClassClockService {
-    public baseURL: string = "http://localhost:5000/v0";
+    public static baseURL: string = "http://localhost:5000/v0";
 
-    getSchoolsList = async (authToken: string): Promise<Response> => {
-        return await fetch(this.baseURL + "/schools/", this.getHeaders(authToken, "GET"));
-    };
-
-    getSchool = async (authToken: string, schoolId: string): Promise<Response> => {
+    static getSchoolsList = async (
+        authToken: string,
+        params?: any
+    ): Promise<Response> => {
         return await fetch(
-            this.baseURL + "/school/" + schoolId + "/",
-            this.getHeaders(authToken, "GET")
+            ClassClockService.baseURL + "/schools/",
+            ClassClockService.getHeaders(authToken, "GET", params)
         );
     };
-    private getHeaders = (
+
+    static getSchool = async (
         authToken: string,
-        method: string
+        schoolId: string,
+        params?: any
+    ): Promise<Response> => {
+        return await fetch(
+            ClassClockService.baseURL + "/school/" + schoolId + "/",
+            ClassClockService.getHeaders(authToken, "GET", params)
+        );
+    };
+    private static getHeaders = (
+        authToken: string,
+        method: string,
+        params?: any
     ): { method: string; headers: Headers } => {
-        return {
-            method,
-            headers: new Headers({
-                Accept: "application/vnd.api+json",
-                Authorization: "Bearer " + authToken
-            })
-        };
+        return Object.assign(
+            {},
+            {
+                method,
+                headers: new Headers({
+                    Accept: "application/vnd.api+json",
+                    Authorization: "Bearer " + authToken
+                })
+            },
+            params
+        );
     };
 }
