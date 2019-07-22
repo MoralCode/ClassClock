@@ -5,12 +5,14 @@ import BellSchedule from "./bellschedule";
 
 export default class School {
     private id: string;
+    private endpoint?: string;
     private fullName: string;
     private acronym: string;
-    private timeZone: string | undefined;
-    private schedules: BellSchedule[] | undefined;
-    private passingPeriodName: string | undefined;
-    private lastUpdatedDate: Date | undefined;
+    private timeZone?: string;
+    private schedules?: BellSchedule[];
+    private passingPeriodName?: string;
+    private creationDate?: Date;
+    private lastUpdatedDate?: Date;
 
     constructor(
         id: string,
@@ -19,19 +21,27 @@ export default class School {
         timeZone?: string,
         schedules?: BellSchedule[],
         passingPeriodName?: string,
+        endpoint?: string,
+        creationDate?: Date,
         lastUpdatedDate?: Date
     ) {
         this.id = id;
+        this.endpoint = endpoint;
         this.fullName = fullName;
         this.acronym = acronym;
         this.timeZone = timeZone;
         this.schedules = schedules;
         this.passingPeriodName = passingPeriodName;
+        this.creationDate = creationDate;
         this.lastUpdatedDate = lastUpdatedDate;
     }
 
     public getIdentifier(): string {
         return this.id;
+    }
+
+    public getEndpoint() {
+        return this.endpoint;
     }
 
     public getSchedules() {
@@ -52,6 +62,10 @@ export default class School {
 
     public getTimezone() {
         return this.timeZone;
+    }
+
+    public getCreationDate() {
+        return this.creationDate;
     }
 
     public lastUpdated() {
