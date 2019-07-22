@@ -2,7 +2,8 @@ import {
     SELECT_SCHOOL,
     SchoolActionTypes,
     RECEIVE_SCHOOLS_LIST,
-    FETCH_ERROR
+    FETCH_ERROR,
+    RECEIVE_SCHOOL
     // ISchoolsByIdState
 } from "./types";
 import School from "../../@types/school";
@@ -18,15 +19,15 @@ export function selectedSchoolReducer(state = "", action: SchoolActionTypes): st
 
 // default values
 export function schoolsByIdReducer(state = {}, action: SchoolActionTypes) {
+    const schoolTemplate = {
+        isFetching: false,
+        didInvalidate: false,
+        data: {}
+    };
+
     switch (action.type) {
         case RECEIVE_SCHOOLS_LIST:
             const schoolsById: { [k: string]: any } = {};
-
-            const schoolTemplate = {
-                isFetching: false,
-                didInvalidate: false,
-                data: {}
-            };
 
             for (const school of action.schools) {
                 // console.log(school);
@@ -37,13 +38,15 @@ export function schoolsByIdReducer(state = {}, action: SchoolActionTypes) {
             }
 
             return schoolsById;
+        case RECEIVE_SCHOOL:
+            const schoolContent = Object.assign({}, schoolTemplate, {
+                data: action.school,
+                lastUpdated: action.receivedAt
+            });
+            return Object.assign({}, state, {
+                [action.school.getIdentifier()]: schoolContent
+            });
 
-        /*
-            <id>: {
-                details
-            }
-
-            */
         default:
             return state;
     }
