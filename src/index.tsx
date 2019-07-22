@@ -18,7 +18,7 @@ import SchoolSelect from "./pages/SchoolSelect";
 const routes = [
     {
         path: "/",
-        action: () => <App />
+        action: () => <PrivateRoute component={App} path="/" />
     },
     {
         path: "/schedule.html",
@@ -26,11 +26,11 @@ const routes = [
     },
     {
         path: "/settings.html",
-        action: () => <Settings />
+        action: () => <PrivateRoute component={Settings} path="/settings.html" />
     },
     {
         path: "/select",
-        action: () => <SchoolSelect />
+        action: () => <PrivateRoute component={SchoolSelect} path="/select" />
     },
     {
         path: "/callback",
