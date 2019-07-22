@@ -21,6 +21,10 @@ const App = (props: { selectedSchool: School; dispatch: any }) => {
             setDate(new Date());
         }, 500);
 
+        if (props.selectedSchool === undefined) {
+            props.dispatch(push(pages.selectSchool));
+        }
+
         return () => clearInterval(interval);
     }, [currentDate]);
 
