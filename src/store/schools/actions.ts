@@ -6,7 +6,7 @@ import {
     REQUEST_SCHOOL
 } from "./types";
 import { Dispatch } from "redux";
-import { API } from "../../utils/constants";
+import ClassClockService from "../../services/classclock";
 import School from "../../@types/school";
 
 function requestSchool(): SchoolActionTypes {
@@ -34,17 +34,9 @@ export function selectSchool(authToken: string, schoolId: string) {
     return async (dispatch: Dispatch) => {
         dispatch(requestSchool());
 
-        const fetchData = {
-            method: "GET",
-            // body: data,
-            headers: new Headers({
-                Accept: "application/vnd.api+json",
-                Authorization: "Bearer " + authToken
-            })
-        };
-        return await fetch(API.baseURL + "/school/" + schoolId + "/", fetchData)
+        return await ClassClockService.getSchool(authToken, schoolId)
             .then(
-                response => {
+                (response: Response) => {
                     if (response.ok) {
                         return response.json();
                     }
@@ -53,8 +45,8 @@ export function selectSchool(authToken: string, schoolId: string) {
                 // any errors in the dispatch and resulting render,
                 // causing a loop of 'Unexpected batch number' errors.
                 // https://github.com/facebook/react/issues/6895
-                error => dispatch(fetchError(error.message)) //console.log("An error occurred.", error)
+                (error: Error) => dispatch(fetchError(error.message)) //console.log("An error occurred.", error)
             )
-            .then(json => dispatch(receiveSchool(json.data)));
+            .then((json: any) => dispatch(receiveSchool(json.data)));
     };
 }
