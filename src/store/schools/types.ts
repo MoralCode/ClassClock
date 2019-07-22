@@ -28,6 +28,16 @@ interface IRequestSchoolsAction {
     type: typeof REQUEST_SCHOOLS_LIST;
 }
 
+interface IReceiveSchoolAction {
+    type: typeof RECEIVE_SCHOOL;
+    school: School;
+    receivedAt: number;
+}
+
+interface IRequestSchoolAction {
+    type: typeof REQUEST_SCHOOL;
+}
+
 interface IFetchErrorAction {
     type: typeof FETCH_ERROR;
     message: string;
@@ -44,5 +54,7 @@ export type SchoolActionTypes =
     | ISelectSchoolAction
     | IReceiveSchoolsAction
     | IRequestSchoolsAction
+    | IReceiveSchoolAction
+    | IRequestSchoolAction
     | IFetchErrorAction;
 // | IReceiveSchoolsAction; // | DeleteMessageAction;
