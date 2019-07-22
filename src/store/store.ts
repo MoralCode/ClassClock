@@ -14,7 +14,7 @@ import {
 const persistConfig = {
     key: "root",
     storage,
-    blacklist: ["router"]
+    blacklist: ["router", "error"]
 };
 
 export const configureStore = (hist: any, initialState = {}) => {
