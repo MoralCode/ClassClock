@@ -43,8 +43,8 @@ const SchoolSelect = (props: any) => {
     return <ul>{list}</ul>;
 };
 
-const mapStateToProps = (state: any, ownProps: any = {}) => {
-    const { schoolsById } = state;
-    return { schools: schoolsById };
+const mapStateToProps = (state: any) => {
+    const { schoolsById, selectedSchoolId } = state;
+    return { schools: schoolsById, selectedSchoolId };
 };
 export default connect(mapStateToProps)(SchoolSelect);
