@@ -22,7 +22,6 @@ export const configureStore = (hist: any, initialState = {}) => {
     const rootReducer = combineReducers({
         selectedSchoolId: selectedSchoolReducer,
         error: fetchErrorReducer,
-        schoolsById: schoolsByIdReducer,
         router: routerReducer // Convention is to use the "router" property
     });
 
