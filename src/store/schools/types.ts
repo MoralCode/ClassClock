@@ -12,7 +12,6 @@ export const INVALIDATE_SCHOOL = "INVALIDATE_SCHOOL";
 
 interface ISelectSchoolAction {
     type: typeof SELECT_SCHOOL;
-    id: string;
 }
 
 interface IReceiveSchoolAction {

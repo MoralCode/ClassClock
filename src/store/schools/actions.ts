@@ -9,10 +9,9 @@ import { Dispatch } from "redux";
 import { API } from "../../utils/constants";
 import School from "../../@types/school";
 
-export function selectSchool(schoolId: string): SchoolActionTypes {
+function requestSchool(): SchoolActionTypes {
     return {
-        type: SELECT_SCHOOL,
-        id: schoolId
+        type: SELECT_SCHOOL
     };
 }
 
@@ -34,12 +33,6 @@ function receiveSchool(json: any): SchoolActionTypes {
     };
 }
 
-function requestSchool(): SchoolActionTypes {
-    return {
-        type: REQUEST_SCHOOL
-    };
-}
-
 function fetchError(message: string): SchoolActionTypes {
     return {
         type: FETCH_ERROR,
@@ -47,7 +40,7 @@ function fetchError(message: string): SchoolActionTypes {
     };
 }
 
-export function fetchSchool(authToken: string, schoolId: string) {
+export function selectSchool(authToken: string, schoolId: string) {
     return async (dispatch: Dispatch) => {
         dispatch(requestSchool());
 

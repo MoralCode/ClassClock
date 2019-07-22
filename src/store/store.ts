@@ -20,7 +20,7 @@ const persistConfig = {
 export const configureStore = (hist: any, initialState = {}) => {
     // Add the reducer, which adds location state to the store
     const rootReducer = combineReducers({
-        selectedSchoolId: selectedSchoolReducer,
+        selectedSchool: selectedSchoolReducer,
         error: fetchErrorReducer,
         router: routerReducer // Convention is to use the "router" property
     });

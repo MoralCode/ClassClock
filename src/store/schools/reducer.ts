@@ -7,10 +7,34 @@ import {
 } from "./types";
 import School from "../../@types/school";
 
-export function selectedSchoolReducer(state = "", action: SchoolActionTypes): string {
+export function selectedSchoolReducer(
+    state = {
+        isFetching: false,
+        didInvalidate: false,
+        data: {}
+    },
+    action: SchoolActionTypes
+) {
     switch (action.type) {
         case SELECT_SCHOOL:
-            return action.id;
+            return Object.assign({}, state, {
+                isFetching: true
+            });
+
+        case RECEIVE_SCHOOL:
+            return Object.assign({}, state, {
+                isFetching: false,
+                data: action.school,
+                lastUpdated: action.receivedAt
+            });
+
+        // case RECEIVE_SCHEDULES:
+        //     return Object.assign({}, state, {
+        //         isFetching: false,
+        //         data: action.school,
+        //         lastUpdated: action.receivedAt
+        //     });
+
         default:
             return state;
     }
