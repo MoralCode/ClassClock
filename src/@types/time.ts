@@ -57,7 +57,7 @@ export default class Time {
             ":" +
             this.minutes.toString().padStart(2, "0");
 
-        if (excludeSeconds) {
+        if (!excludeSeconds) {
             stringified += ":" + this.seconds.toString().padStart(2, "0");
         }
 
@@ -69,6 +69,6 @@ export default class Time {
     }
 
     public getFormattedString(excludeSeconds = false) {
-        return this.toString(excludeSeconds) + this.isAM() ? " AM" : " PM";
+        return this.toString(excludeSeconds) + (this.isAM() ? " AM" : " PM");
     }
 }
