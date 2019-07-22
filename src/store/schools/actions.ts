@@ -3,7 +3,7 @@ import {
     RECEIVE_SCHOOLS_LIST,
     SchoolActionTypes,
     REQUEST_SCHOOLS_LIST,
-    FETCH_SCHOOLS_ERROR
+    FETCH_ERROR
 } from "./types";
 import { Dispatch } from "redux";
 import { API } from "../../utils/constants";
@@ -33,10 +33,10 @@ function requestSchoolsList(): SchoolActionTypes {
     };
 }
 
-function schoolsListError(message: string): SchoolActionTypes {
+function fetchError(message: string): SchoolActionTypes {
     return {
-        type: FETCH_SCHOOLS_ERROR,
-        message: message
+        type: FETCH_ERROR,
+        message
     };
 }
 
@@ -80,7 +80,7 @@ export function fetchSchoolsList(authToken: string) {
                 // any errors in the dispatch and resulting render,
                 // causing a loop of 'Unexpected batch number' errors.
                 // https://github.com/facebook/react/issues/6895
-                error => dispatch(schoolsListError(error.message)) //console.log("An error occurred.", error)
+                error => dispatch(fetchError(error.message)) //console.log("An error occurred.", error)
             )
             .then(json => {
                 // console.log("akflds");
