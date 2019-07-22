@@ -4,8 +4,8 @@ import School from "../../@types/school";
 export const REQUEST_SCHOOLS_LIST = "REQUEST_SCHOOLS_LIST";
 export const RECEIVE_SCHOOLS_LIST = "RECEIVE_SCHOOLS_LIST";
 
-export const GET_SCHOOL = "FETCH_SCHOOL";
-export const SCHOOL_RECEIVE = "SCHOOL_RECEIVE";
+export const REQUEST_SCHOOL = "FETCH_SCHOOL";
+export const RECEIVE_SCHOOL = "RECEIVE_SCHOOL";
 
 export const FETCH_ERROR = "FETCH_ERROR";
 
@@ -24,13 +24,13 @@ interface IReceiveSchoolsAction {
     receivedAt: number;
 }
 
-interface ISchoolsErrorAction {
-    type: typeof FETCH_ERROR;
-    message: string;
+interface IRequestSchoolsAction {
+    type: typeof REQUEST_SCHOOLS_LIST;
 }
 
-interface IGetSchoolAction {
-    type: typeof REQUEST_SCHOOLS_LIST;
+interface IFetchErrorAction {
+    type: typeof FETCH_ERROR;
+    message: string;
 }
 
 // interface DeleteMessageAction {
@@ -43,6 +43,6 @@ interface IGetSchoolAction {
 export type SchoolActionTypes =
     | ISelectSchoolAction
     | IReceiveSchoolsAction
-    | IGetSchoolAction
-    | ISchoolsErrorAction;
+    | IRequestSchoolsAction
+    | IFetchErrorAction;
 // | IReceiveSchoolsAction; // | DeleteMessageAction;
