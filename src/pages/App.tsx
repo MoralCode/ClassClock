@@ -7,6 +7,7 @@ import Icon from "../components/Icon";
 import Text from "../components/Text";
 import Time from "../@types/time";
 import School from "../@types/school";
+import { pages } from "../utils/constants";
 
 const App = (props: { selectedSchool: School; dispatch: any }) => {
     const [currentDate, setDate] = useState(new Date());
@@ -28,7 +29,7 @@ const App = (props: { selectedSchool: School; dispatch: any }) => {
             <Link
                 className="cornerNavButton smallIcon"
                 // tslint:disable-next-line: jsx-no-lambda
-                destination={() => navigate("/settings.html")}
+                destination={() => navigate(pages.settings)}
             >
                 <Icon icon="fa-cog" />
             </Link>
@@ -47,7 +48,7 @@ const App = (props: { selectedSchool: School; dispatch: any }) => {
                 {/* <Text>{props.selectedSchool.data.fullName}</Text> */}
                 <Link
                     // tslint:disable-next-line: jsx-no-lambda
-                    destination={() => navigate("/schedule.html")}
+                    destination={() => navigate(pages.fullSchedule)}
                     className="centered bottomSpace"
                     id="viewScheduleLink"
                 >

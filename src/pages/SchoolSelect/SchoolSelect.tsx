@@ -8,6 +8,7 @@ import { selectSchool } from "../../store/schools/actions";
 import { useAuth0 } from "../../react-auth0-wrapper";
 import School from "../../@types/school";
 import ClassClockService from "../../services/classclock";
+import { pages } from "../../utils/constants";
 
 const SchoolSelect = (props: any) => {
     const { getTokenSilently } = useAuth0();
@@ -71,7 +72,7 @@ const SchoolSelect = (props: any) => {
             props.dispatch(selectSchool(token, id));
         }
 
-        props.dispatch(push("/"));
+        props.dispatch(push(pages.main));
     };
     const list = schoolList.map((school: School) => (
         <li

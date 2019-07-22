@@ -5,38 +5,11 @@ import * as serviceWorker from "./serviceWorker";
 import { configureStore } from "./store/store";
 import { createBrowserHistory, startListener, push, replace } from "redux-first-routing";
 import UniversalRouter from "universal-router";
-import App from "./pages/App";
-import Schedule from "./pages/Schedule";
-import Settings from "./pages/Settings";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { Auth0Provider } from "./react-auth0-wrapper";
 import { Auth0 } from "./utils/constants";
-import PrivateRoute from "./components/PrivateRoute";
-import SchoolSelect from "./pages/SchoolSelect/SchoolSelect";
-
-const routes = [
-    {
-        path: "/",
-        action: () => <PrivateRoute component={App} path="/" />
-    },
-    {
-        path: "/schedule.html",
-        action: () => <PrivateRoute component={Schedule} path="/schedule.html" />
-    },
-    {
-        path: "/settings.html",
-        action: () => <PrivateRoute component={Settings} path="/settings.html" />
-    },
-    {
-        path: "/select",
-        action: () => <PrivateRoute component={SchoolSelect} path="/select" />
-    },
-    {
-        path: "/callback",
-        action: () => <p>Redirecting...</p>
-    }
-];
+import { routes } from "./utils/routes";
 
 // Create the history object
 const history = createBrowserHistory();
