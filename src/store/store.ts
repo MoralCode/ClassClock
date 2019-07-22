@@ -5,11 +5,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import logger from "redux-logger";
 
-import {
-    selectedSchoolReducer,
-    schoolsByIdReducer,
-    fetchErrorReducer
-} from "./schools/reducer";
+import { selectedSchoolReducer, fetchErrorReducer } from "./schools/reducer";
 
 const persistConfig = {
     key: "root",
