@@ -1,7 +1,8 @@
 import {
     SELECT_SCHOOL,
     SchoolActionTypes,
-    RECEIVE_SCHOOLS_LIST
+    RECEIVE_SCHOOLS_LIST,
+    FETCH_ERROR
     // ISchoolsByIdState
 } from "./types";
 import School from "../../@types/school";
@@ -45,5 +46,13 @@ export function schoolsByIdReducer(state = {}, action: SchoolActionTypes) {
             */
         default:
             return state;
+    }
+}
+
+export function fetchErrorReducer(state = {}, action: SchoolActionTypes) {
+    if (action.type === FETCH_ERROR) {
+        return action.message;
+    } else {
+        return state;
     }
 }
