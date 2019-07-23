@@ -10,8 +10,14 @@ export default class School {
             json.attributes.full_name,
             json.attributes.acronym,
             json.links.self,
-            undefined,
-            undefined,
+            "LA",
+            json.attributes.schedules
+                ? [
+                      json.attributes.schedules.map((schedule: any) =>
+                          BellSchedule.fromJsonApi(schedule)
+                      )
+                  ]
+                : undefined,
             json.attributes.alternate_freeperiod_name,
             json.attributes.creation_date,
             json.attributes.last_modified
@@ -24,8 +30,8 @@ export default class School {
             json.fullName,
             json.acronym,
             json.endpoint,
-            undefined,
-            undefined,
+            json.timezone,
+            json.schedules,
             json.passingPeriodName,
             json.creationDate,
             json.lastUpdatedDate
