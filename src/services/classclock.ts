@@ -21,6 +21,34 @@ export default class ClassClockService {
             ClassClockService.getHeaders(authToken, "GET", params)
         );
     };
+
+    static getSchedulesListForSchool = async (
+        authToken: string,
+        schoolId: string,
+        params?: any
+    ): Promise<Response> => {
+        return await fetch(
+            ClassClockService.baseURL + "/school/" + schoolId + "/bellschedules/",
+            ClassClockService.getHeaders(authToken, "GET", params)
+        );
+    };
+
+    static getDetailedScheduleForSchool = async (
+        authToken: string,
+        schoolId: string,
+        scheduleId: string,
+        params?: any
+    ): Promise<Response> => {
+        return await fetch(
+            ClassClockService.baseURL +
+                "/school/" +
+                schoolId +
+                "/bellschedule/" +
+                scheduleId +
+                "/",
+            ClassClockService.getHeaders(authToken, "GET", params)
+        );
+    };
     private static getHeaders = (
         authToken: string,
         method: string,
