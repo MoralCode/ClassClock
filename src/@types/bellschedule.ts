@@ -1,28 +1,48 @@
 import ClassPeriod from "./classperiod";
 import Time from "./time";
 import { TimeComparisons } from "../utils/enums";
-import { checkTimeRange } from "../utils/helpers";
 
 export default class BellSchedule {
+    private id: string;
     private name: string;
+    private endpoint: string;
+    private displayName?: string;
     private dates: Date[];
     private classes: ClassPeriod[];
     private lastUpdatedDate: Date;
 
     constructor(
+        id: string,
         name: string,
+        endpoint: string,
         dates: Date[],
         classes: ClassPeriod[],
-        lastUpdatedDate: Date
+        lastUpdatedDate: Date,
+        displayName?: string
     ) {
+        this.id = id;
         this.name = name;
+        this.endpoint = endpoint;
+        this.displayName = displayName;
         this.dates = dates;
         this.classes = classes;
         this.lastUpdatedDate = lastUpdatedDate;
     }
 
+    public getIdentifier() {
+        return this.id;
+    }
+
     public getName() {
-        return this.name;
+        if (this.displayName !== undefined) {
+            return this.displayName;
+        } else {
+            return this.name;
+        }
+    }
+
+    public getEndpoint() {
+        return this.endpoint;
     }
 
     public getDates() {
