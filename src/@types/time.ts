@@ -9,8 +9,21 @@ export default class Time {
 
         return new Time(hours, minutes, seconds);
     }
+
     public static fromDate(date: Date) {
         return new Time(date.getHours(), date.getMinutes(), date.getSeconds());
+    }
+
+    public static fromString(time: string) {
+        const parts = time.split(":");
+        if (parts.length < 2 || parts.length > 3) {
+            //error
+        }
+        return new Time(
+            parseInt(parts[0], 10),
+            parseInt(parts[1], 10),
+            parts.length === 3 ? parseInt(parts[0], 10) : undefined
+        );
     }
 
     private hours: number;

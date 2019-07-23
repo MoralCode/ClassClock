@@ -3,6 +3,19 @@ import Time from "./time";
 import { TimeComparisons } from "../utils/enums";
 
 export default class BellSchedule {
+    public static fromJsonApi(json: any) {
+        return new BellSchedule(
+            json.id,
+            json.attributes.full_name,
+            json.links.self,
+            json.attributes.dates.map((date: string) => new Date(date)),
+            json.attributes.meeting_times.map((meetingTime: any) =>
+                ClassPeriod.fromJson(meetingTime)
+            ),
+            json.attributes.last_modified
+        );
+    }
+
     private id: string;
     private name: string;
     private endpoint: string;

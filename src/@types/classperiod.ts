@@ -2,6 +2,14 @@ import Time from "./time";
 import { checkTimeRange } from "../utils/helpers";
 
 export default class ClassPeriod {
+    public static fromJson(json: any) {
+        return new ClassPeriod(
+            json.name,
+            Time.fromString(json.start_time),
+            Time.fromString(json.end_time),
+            new Date(json.creation_date)
+        );
+    }
     private name: string;
     private startTime: Time;
     private endTime: Time;
