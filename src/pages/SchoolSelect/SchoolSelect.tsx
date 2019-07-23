@@ -29,33 +29,17 @@ const SchoolSelect = (props: any) => {
                 const token = await getTokenSilently();
 
                 if (token !== undefined) {
-                    try {
-                        await ClassClockService.getSchoolsList(token, {
+                    ClassClockService.validateResponse(
+                        ClassClockService.getSchoolsList(token, {
                             signal: abortSignal
                         })
-                            .then(
-                                (response: Response) => {
-                                    if (response.ok) {
-                                        return response.json();
-                                    }
-                                },
-                                // Do not use catch, because that will also catch
-                                // any errors in the dispatch and resulting render,
-                                // causing a loop of 'Unexpected batch number' errors.
-                                // https://github.com/facebook/react/issues/6895
-                                (error: Error) => console.log("An error occurred.", error)
-                            )
-                            .then((json: any) => {
-                                setSchoolList(
-                                    json.data.map((value: any) =>
-                                        School.fromJsonApi(value)
-                                    )
-                                );
-                                setlastRefresh(new Date().getTime());
-                            });
-                    } catch (error) {
-                        console.log(error.message, error.type);
-                    }
+                    ).then((json: any) => {
+                        setSchoolList(
+                            json.data.map((value: any) => School.fromJsonApi(value))
+                        );
+
+                        setlastRefresh(new Date().getTime());
+                    });
                 }
             };
             fetchSchools(signal);
