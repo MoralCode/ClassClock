@@ -5,11 +5,13 @@ export default class ClassPeriod {
     private name: string;
     private startTime: Time;
     private endTime: Time;
+    private creationDate: Date;
 
-    constructor(name: string, startTime: Time, endTime: Time) {
+    constructor(name: string, startTime: Time, endTime: Time, creationDate: Date) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.creationDate = creationDate;
     }
 
     public getName() {
