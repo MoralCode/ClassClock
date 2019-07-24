@@ -126,6 +126,10 @@ export default class School {
         }
     }
 
+    public hasSchedules() {
+        return this.schedules !== undefined;
+    }
+
     public isInSession(date: Date) {
         const currentTime = Time.fromDate(date);
         const currentSchedule = this.getScheduleForDate(date);
