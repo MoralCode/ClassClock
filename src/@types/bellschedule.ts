@@ -82,6 +82,8 @@ export default class BellSchedule {
         for (const classPeriod of this.classes) {
             if (classPeriod.stateForTime(time) === TimeComparisons.IS_DURING_OR_EXACTLY) {
                 return classPeriod;
+            } else {
+                return undefined;
             }
         }
     }

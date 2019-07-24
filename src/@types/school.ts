@@ -121,6 +121,7 @@ export default class School {
                     return schedule;
                 }
             }
+            return undefined;
         } else {
             return undefined;
         }
@@ -135,7 +136,7 @@ export default class School {
         const currentSchedule = this.getScheduleForDate(date);
 
         if (currentSchedule === undefined) {
-            return undefined;
+            return false;
         }
         return (
             checkTimeRange(
