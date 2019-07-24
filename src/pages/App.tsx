@@ -12,7 +12,11 @@ import BellSchedule from "../@types/bellschedule";
 import { IState } from "../store/schools/types";
 
 export interface IAppProps {
-    selectedSchool: any;
+    selectedSchool: {
+        isFetching: boolean;
+        didInvalidate: false;
+        data: School;
+    };
     dispatch: any;
 }
 
@@ -112,8 +116,9 @@ const App = (props: IAppProps) => {
     }
 };
 
-const mapStateToProps = (state: IState) => ({
-    selectedSchool: state.selectedSchool
-});
+const mapStateToProps = (state: IState) => {
+    const { selectedSchool } = state;
+    return { selectedSchool };
+};
 
 export default connect(mapStateToProps)(App);
