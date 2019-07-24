@@ -9,8 +9,14 @@ import { useAuth0 } from "../../react-auth0-wrapper";
 import School from "../../@types/school";
 import ClassClockService from "../../services/classclock";
 import { pages } from "../../utils/constants";
+import { IState } from "../../store/schools/types";
 
-const SchoolSelect = (props: any) => {
+export interface ISelectProps {
+    selectedSchool: any;
+    dispatch: any;
+}
+
+const SchoolSelect = (props: ISelectProps) => {
     const { getTokenSilently } = useAuth0();
 
     const [schoolList, setSchoolList] = useState([]);
@@ -83,7 +89,7 @@ const SchoolSelect = (props: any) => {
     );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: IState) => {
     const { selectedSchool } = state;
     return { selectedSchool };
 };
