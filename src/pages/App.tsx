@@ -32,38 +32,21 @@ const App = (props: IAppProps) => {
             setDate(new Date());
         }, 500);
 
-        // if (
-        //     props.selectedSchool === undefined ||
-        //     props.selectedSchool.getScheduleForDate(currentDate) === undefined
-        // ) {
-        //     props.dispatch(push(pages.selectSchool));
-        // }
-
         return () => clearInterval(interval);
     }, [currentDate]);
 
-    // //this is causing a loop
-    // const forceDefined = (value: any) => {
-    //     if (value === undefined) {
-    //
-    //     } else {
-    //         return value;
-    //     }
-    // };
-
-    // const currentSchedule: BellSchedule = props.selectedSchool.getScheduleForDate(
-    //     currentDate
-    // );
-    // const currentClass = currentSchedule.getClassPeriodForTime(
-    //     Time.fromDate(currentDate)
-    // );
+    const currentSchedule = props.selectedSchool.data.getScheduleForDate(currentDate);
 
     if (props.selectedSchool.isFetching) {
         return <span>Loading...</span>;
-    } else if (props.selectedSchool.data.getScheduleForDate(currentDate) === undefined) {
-        props.dispatch(push(pages.selectSchool));
+    } else if (currentSchedule === undefined) {
+        if (props.selectedSchool.data.hasSchedules()) {
+            return <span>No School Today</span>;
+        } else {
+            props.dispatch(push(pages.selectSchool));
+            return <span>Error</span>; //this is just here to ensure that this branch of code returns an Element so that there isnt a big nasty typescript error
+        }
     } else {
-        const currentSchedule = props.selectedSchool.data.getScheduleForDate(currentDate);
         const currentClass = currentSchedule.getClassPeriodForTime(
             Time.fromDate(currentDate)
         );
@@ -87,7 +70,7 @@ const App = (props: IAppProps) => {
                 </Text>
                 <section id="scheduleInfo" className="verticalFlex">
                     <Text>{currentSchedule.getName()}</Text>
-                    <Text>{props.selectedSchool.getName()}</Text>
+                    <Text>{props.selectedSchool.data.getName()}</Text>
                     <Link
                         // tslint:disable-next-line: jsx-no-lambda
                         destination={() => navigate(pages.fullSchedule)}
@@ -101,7 +84,7 @@ const App = (props: IAppProps) => {
                     <Text>
                         {currentClass !== undefined
                             ? currentClass.getName()
-                            : props.selectedSchool.getPassingTimeName()}
+                            : props.selectedSchool.data.getPassingTimeName()}
                     </Text>
                     <p className="centered label" id="countdownLabel">
                         ...which ends in:
@@ -118,6 +101,7 @@ const App = (props: IAppProps) => {
 
 const mapStateToProps = (state: IState) => {
     const { selectedSchool } = state;
+    selectedSchool.data = School.fromState(selectedSchool.data);
     return { selectedSchool };
 };
 
