@@ -16,7 +16,7 @@ const SchoolTransform = createTransform(
         // convert mySet back to a Set.
         return {
             ...outboundState,
-            selectedSchool: School.fromState(outboundState.selectedSchool)
+            selectedSchool: School.fromJson(outboundState.selectedSchool)
         };
     },
     // define which reducers this transform gets called for.

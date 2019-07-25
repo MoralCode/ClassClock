@@ -9,6 +9,7 @@ import { Dispatch } from "redux";
 import ClassClockService from "../../services/classclock";
 import School from "../../@types/school";
 import BellSchedule from "../../@types/bellschedule";
+import { deconstructJsonApiResource } from "../../utils/helpers";
 
 function requestSchool(): SchoolActionTypes {
     return {
@@ -19,7 +20,7 @@ function requestSchool(): SchoolActionTypes {
 function receiveSchool(json: any): SchoolActionTypes {
     return {
         type: RECEIVE_SCHOOL,
-        school: School.fromJsonApi(json),
+        school: School.fromJson(deconstructJsonApiResource(json)),
         receivedAt: Date.now()
     };
 }

@@ -3,12 +3,12 @@ import Time from "./time";
 import { TimeComparisons } from "../utils/enums";
 
 export default class BellSchedule {
-    public static fromJsonApi(json: any) {
+    public static fromJson(json: any) {
         return new BellSchedule(
             json.id,
-            json.attributes.full_name,
-            json.links.self,
-            json.attributes.dates.map((date: string) => {
+            json.full_name,
+            json.endpoint,
+            json.dates.map((date: string) => {
                 const parts = date.split("-");
                 return new Date(
                     parseInt(parts[0], 10),
@@ -16,10 +16,10 @@ export default class BellSchedule {
                     parseInt(parts[2], 10)
                 );
             }),
-            json.attributes.meeting_times.map((meetingTime: any) =>
+            json.meeting_times.map((meetingTime: any) =>
                 ClassPeriod.fromJson(meetingTime)
             ),
-            json.attributes.last_modified
+            json.last_modified
         );
     }
 

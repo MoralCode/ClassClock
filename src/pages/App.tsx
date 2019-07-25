@@ -101,7 +101,7 @@ const App = (props: IAppProps) => {
 
 const mapStateToProps = (state: IState) => {
     const { selectedSchool } = state;
-    selectedSchool.data = School.fromState(selectedSchool.data);
+    selectedSchool.data = School.fromJson(selectedSchool.data);
     return { selectedSchool };
 };
 

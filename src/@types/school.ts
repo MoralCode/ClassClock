@@ -1,40 +1,27 @@
-import { checkTimeRange } from "../utils/helpers";
+import { checkTimeRange, deconstructJsonApiResource } from "../utils/helpers";
 import Time from "./time";
 import { TimeComparisons } from "../utils/enums";
 import BellSchedule from "./bellschedule";
 
 export default class School {
-    public static fromJsonApi(json: any) {
+    public static fromJson(json: any) {
         return new School(
             json.id,
-            json.attributes.full_name,
-            json.attributes.acronym,
-            json.links.self,
+            json.full_name,
+            json.acronym,
+            json.endpoint,
             "LA",
-            json.attributes.schedules
-                ? json.attributes.schedules.map((schedule: any) =>
-                      BellSchedule.fromJsonApi(schedule)
+            json.schedules
+                ? json.schedules.map((schedule: any) =>
+                      BellSchedule.fromJson(deconstructJsonApiResource(schedule))
                   )
                 : undefined,
-            json.attributes.alternate_freeperiod_name,
-            json.attributes.creation_date,
-            json.attributes.last_modified
+            json.alternate_freeperiod_name,
+            json.creation_date,
+            json.last_modified
         );
     }
 
-    public static fromState(json: any) {
-        return new School(
-            json.id,
-            json.fullName,
-            json.acronym,
-            json.endpoint,
-            json.timezone,
-            json.schedules,
-            json.passingPeriodName,
-            json.creationDate,
-            json.lastUpdatedDate
-        );
-    }
     private id: string;
     private endpoint?: string;
     private fullName: string;
