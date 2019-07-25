@@ -67,10 +67,10 @@ export function selectSchool(authToken: string, schoolId: string) {
 
             Promise.all(scheduleDataList).then((schedulesList: any) => {
                 schoolResult.data.attributes.schedules = schedulesList.map(
-                    (schedule: any) => BellSchedule.fromJsonApi(schedule)
+                    (schedule: any) => schedule.data
                 );
-                
-                dispatch(receiveSchool(School.fromJsonApi(schoolResult)));
+                console.log("schoolResult: ", schoolResult.data);
+                dispatch(receiveSchool(schoolResult.data));
             });
         });
     };
