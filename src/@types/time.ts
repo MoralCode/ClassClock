@@ -84,4 +84,9 @@ export default class Time {
     public getFormattedString(excludeSeconds = false) {
         return this.toString(excludeSeconds) + (this.isAM() ? " AM" : " PM");
     }
+
+    //this overrides the automatic serialization of Time Objects and makes them return a string and not a plain object (which is more annoying to parse back in and rwould require an extra factory method)
+    public toJSON() {
+        return this.toString();
+    }
 }
