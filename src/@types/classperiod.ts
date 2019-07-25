@@ -1,13 +1,13 @@
 import Time from "./time";
-import { checkTimeRange } from "../utils/helpers";
+import { checkTimeRange, getValueIfKeyInList } from "../utils/helpers";
 
 export default class ClassPeriod {
     public static fromJson(json: any) {
         return new ClassPeriod(
-            json.name,
-            Time.fromString(json.start_time),
-            Time.fromString(json.end_time),
-            new Date(json.creation_date)
+            getValueIfKeyInList(["name", "classPeriodName", "class_period_name"], json),
+            Time.fromString(getValueIfKeyInList(["startTime", "start_time"], json)),
+            Time.fromString(getValueIfKeyInList(["endTime", "end_time"], json)),
+            new Date(getValueIfKeyInList(["creationDate", "creation_date"], json))
         );
     }
     private name: string;

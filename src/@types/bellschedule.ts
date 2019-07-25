@@ -1,14 +1,15 @@
 import ClassPeriod from "./classperiod";
 import Time from "./time";
 import { TimeComparisons } from "../utils/enums";
+import { getValueIfKeyInList } from "../utils/helpers";
 
 export default class BellSchedule {
     public static fromJson(json: any) {
         return new BellSchedule(
-            json.id,
-            json.full_name,
-            json.endpoint,
-            json.dates.map((date: string) => {
+            getValueIfKeyInList(["id", "identifier"], json),
+            getValueIfKeyInList(["name", "full_name", "fullName"], json),
+            getValueIfKeyInList(["endpoint"], json),
+            getValueIfKeyInList(["dates"], json).map((date: string) => {
                 const parts = date.split("-");
                 return new Date(
                     parseInt(parts[0], 10),
@@ -16,10 +17,10 @@ export default class BellSchedule {
                     parseInt(parts[2], 10)
                 );
             }),
-            json.meeting_times.map((meetingTime: any) =>
+            getValueIfKeyInList(["classes"], json).map((meetingTime: any) =>
                 ClassPeriod.fromJson(meetingTime)
             ),
-            json.last_modified
+            getValueIfKeyInList(["lastModified", "last_modified"], json)
         );
     }
 

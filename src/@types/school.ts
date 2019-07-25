@@ -1,24 +1,27 @@
-import { checkTimeRange, deconstructJsonApiResource } from "../utils/helpers";
+import {
+    checkTimeRange,
+    deconstructJsonApiResource,
+    getValueIfKeyInList
+} from "../utils/helpers";
 import Time from "./time";
 import { TimeComparisons } from "../utils/enums";
 import BellSchedule from "./bellschedule";
 
 export default class School {
     public static fromJson(json: any) {
+        const schedules = getValueIfKeyInList(["schedules"], json);
         return new School(
-            json.id,
-            json.full_name,
-            json.acronym,
-            json.endpoint,
+            getValueIfKeyInList(["id", "identifier"], json),
+            getValueIfKeyInList(["name", "fullName", "full_name"], json),
+            getValueIfKeyInList(["acronym"], json),
+            getValueIfKeyInList(["endpoint"], json),
             "LA",
-            json.schedules
-                ? json.schedules.map((schedule: any) =>
-                      BellSchedule.fromJson(deconstructJsonApiResource(schedule))
-                  )
+            schedules
+                ? schedules.map((schedule: any) => BellSchedule.fromJson(schedule))
                 : undefined,
-            json.alternate_freeperiod_name,
-            json.creation_date,
-            json.last_modified
+            getValueIfKeyInList(["alternate_freeperiod_name", "passingPeriodName"], json),
+            getValueIfKeyInList(["creation_date", "creationDate"], json),
+            getValueIfKeyInList(["last_modified", "lastModified"], json)
         );
     }
 

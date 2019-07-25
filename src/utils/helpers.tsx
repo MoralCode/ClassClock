@@ -2,6 +2,14 @@ import Time from "../@types/time";
 import School from "../@types/school";
 import { TimeComparisons, TimeStates } from "./enums";
 
+export function getValueIfKeyInList(list: string[], object: any) {
+    for (const key of list) {
+        if (object.hasOwnProperty(key)) {
+            return object[key];
+        }
+    }
+}
+
 export function deconstructJsonApiResource(json: any) {
     const data = {
         type: json.type,
