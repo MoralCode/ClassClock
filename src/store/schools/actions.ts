@@ -8,6 +8,7 @@ import {
 import { Dispatch } from "redux";
 import ClassClockService from "../../services/classclock";
 import School from "../../@types/school";
+import BellSchedule from "../../@types/bellschedule";
 
 function requestSchool(): SchoolActionTypes {
     return {
@@ -34,19 +35,43 @@ export function selectSchool(authToken: string, schoolId: string) {
     return async (dispatch: Dispatch) => {
         dispatch(requestSchool());
 
-        return await ClassClockService.getSchool(authToken, schoolId)
-            .then(
-                (response: Response) => {
-                    if (response.ok) {
-                        return response.json();
-                    }
-                },
-                // Do not use catch, because that will also catch
-                // any errors in the dispatch and resulting render,
-                // causing a loop of 'Unexpected batch number' errors.
-                // https://github.com/facebook/react/issues/6895
-                (error: Error) => dispatch(fetchError(error.message)) //console.log("An error occurred.", error)
-            )
-            .then((json: any) => dispatch(receiveSchool(json.data)));
+        const school = ClassClockService.validateResponse(
+            ClassClockService.getSchool(authToken, schoolId)
+        );
+
+        const schedules = ClassClockService.validateResponse(
+            ClassClockService.getSchedulesListForSchool(authToken, schoolId)
+        );
+
+        Promise.all([school, schedules]).then((result: any) => {
+            const [schoolResult, scheduleResult] = result;
+
+            //result = [school() result, schedules() result]
+            //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all#Using_Promise.all
+
+            const scheduleDataList: Array<Promise<any>> = [];
+
+            for (const schedule of scheduleResult.data) {
+                const scheduleId = schedule.id;
+                // const sched_uri = schedule.links.self;
+                const scheduleRequest = ClassClockService.validateResponse(
+                    ClassClockService.getDetailedScheduleForSchool(
+                        authToken,
+                        schoolId,
+                        scheduleId
+                    )
+                );
+
+                scheduleDataList.push(scheduleRequest);
+            }
+
+            Promise.all(scheduleDataList).then((schedulesList: any) => {
+                schoolResult.data.attributes.schedules = schedulesList.map(
+                    (schedule: any) => BellSchedule.fromJsonApi(schedule)
+                );
+                
+                dispatch(receiveSchool(School.fromJsonApi(schoolResult)));
+            });
+        });
     };
 }
