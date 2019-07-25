@@ -12,11 +12,9 @@ export default class School {
             json.links.self,
             "LA",
             json.attributes.schedules
-                ? [
-                      json.attributes.schedules.map((schedule: any) =>
-                          BellSchedule.fromJsonApi(schedule)
-                      )
-                  ]
+                ? json.attributes.schedules.map((schedule: any) =>
+                      BellSchedule.fromJsonApi(schedule)
+                  )
                 : undefined,
             json.attributes.alternate_freeperiod_name,
             json.attributes.creation_date,
