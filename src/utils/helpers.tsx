@@ -14,7 +14,9 @@ export function deconstructJsonApiResource(json: any) {
     const data = {
         type: json.type,
         id: json.id,
-        endpoint: json.links.self
+        ...(json.links !== undefined && {
+            endpoint: json.links.self
+        })
     };
     return Object.assign({}, data, json.attributes);
 }
