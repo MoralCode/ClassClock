@@ -8,7 +8,14 @@ export default class BellSchedule {
             json.id,
             json.attributes.full_name,
             json.links.self,
-            json.attributes.dates.map((date: string) => new Date(date)),
+            json.attributes.dates.map((date: string) => {
+                const parts = date.split("-");
+                return new Date(
+                    parseInt(parts[0], 10),
+                    parseInt(parts[1], 10) - 1,
+                    parseInt(parts[2], 10)
+                );
+            }),
             json.attributes.meeting_times.map((meetingTime: any) =>
                 ClassPeriod.fromJson(meetingTime)
             ),
