@@ -6,10 +6,12 @@ import storage from "redux-persist/lib/storage"; // defaults to localStorage for
 import logger from "redux-logger";
 
 import { selectedSchoolReducer, fetchErrorReducer } from "./schools/reducer";
+import SchoolTransform from "../utils/typetransform";
 
 const persistConfig = {
     key: "root",
     storage,
+    transforms: [SchoolTransform],
     blacklist: ["router", "error"]
 };
 
