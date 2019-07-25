@@ -2,6 +2,15 @@ import Time from "../@types/time";
 import School from "../@types/school";
 import { TimeComparisons, TimeStates } from "./enums";
 
+export function deconstructJsonApiResource(json: any) {
+    const data = {
+        type: json.type,
+        id: json.id,
+        endpoint: json.links.self
+    };
+    return Object.assign({}, data, json.attributes);
+}
+
 /**
  * @returns a flag that represents the current chunk of time categorically
  */
