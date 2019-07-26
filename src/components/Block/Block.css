@@ -1,8 +1,8 @@
-span.infoBlock {
-    margin: 7px 0;
-    display: block;
+.infoBlock {
+    margin: 10px 0;
 }
 
-.infoBlock.label {
+.infoBlock * {
     margin: 1px 0;
+    padding: 0;
 }

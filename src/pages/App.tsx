@@ -4,7 +4,7 @@ import { push } from "redux-first-routing";
 import "../global.css";
 import Link from "../components/Link";
 import Icon from "../components/Icon";
-import Text from "../components/Block/Block";
+import Block from "../components/Block/Block";
 import Time from "../@types/time";
 import School from "../@types/school";
 import { pages } from "../utils/constants";
@@ -36,15 +36,16 @@ const App = (props: IAppProps) => {
     }, [currentDate]);
 
     const currentSchedule = props.selectedSchool.data.getScheduleForDate(currentDate);
+    // console.log("csched: ", currentSchedule, currentDate);
 
     if (props.selectedSchool.isFetching) {
-        return <span>Loading...</span>;
+        return <p>Loading...</p>;
     } else if (currentSchedule === undefined) {
         if (props.selectedSchool.data.hasSchedules()) {
-            return <span>No School Today</span>;
+            return <p>No School Today</p>;
         } else {
             props.dispatch(push(pages.selectSchool));
-            return <span>Error</span>; //this is just here to ensure that this branch of code returns an Element so that there isnt a big nasty typescript error
+            return <p>Error</p>; //this is just here to ensure that this branch of code returns an Element so that there isnt a big nasty typescript error
         }
     } else {
         const currentClass = currentSchedule.getClassPeriodForTime(
@@ -60,24 +61,27 @@ const App = (props: IAppProps) => {
                     <Icon icon="fa-cog" />
                 </Link>
                 <br />
-                <Text>It is currently: </Text>
-                <Text className="timeFont" style={{ fontSize: "40px" }}>
-                    {Time.fromDate(currentDate).getFormattedString()}
-                </Text>
-                <Text>
-                    <span>on </span>
-                    <b>
-                        {currentDate.toLocaleDateString("en-US", {
-                            weekday: "long",
-                            year: "numeric",
-                            month: "short",
-                            day: "numeric"
-                        })}
-                    </b>
-                </Text>
-                <section id="scheduleInfo" className="verticalFlex">
-                    {/* <Text>{props.selectedSchool.data.getName()}</Text> */}
-                    <Text>
+                <Block>
+                    <p>It is currently: </p>
+                    <p className="timeFont" style={{ fontSize: "40px" }}>
+                        {Time.fromDate(currentDate).getFormattedString()}
+                    </p>
+                    <p>
+                        on{" "}
+                        <b>
+                            {currentDate.toLocaleDateString("en-US", {
+                                weekday: "long",
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric"
+                            })}
+                        </b>
+                    </p>
+                </Block>
+
+                {/* <Text>{props.selectedSchool.data.getName()}</Text> */}
+                <Block>
+                    <p>
                         Today is a{" "}
                         <Link
                             // tslint:disable-next-line: jsx-no-lambda
@@ -87,21 +91,29 @@ const App = (props: IAppProps) => {
                         >
                             {currentSchedule.getName()}
                         </Link>
-                    </Text>
-                    <Text>You are currently in: </Text>
-                    <Text>
-                        {currentClass !== undefined
-                            ? currentClass.getName()
-                            : props.selectedSchool.data.getPassingTimeName()}
-                    </Text>
-                    <p className="centered label" id="countdownLabel">
-                        ...which ends in:
                     </p>
+                </Block>
+                <Block>
+                    <p>You are currently in: </p>
+                    <p style={{ fontSize: "30px" }}>
+                        <b>
+                            {currentClass !== undefined
+                                ? currentClass.getName()
+                                : props.selectedSchool.data.getPassingTimeName()}
+                        </b>
+                    </p>
+                </Block>
+                <Block>
+                    <p>...which ends in:</p>
                     {/* <h1 className="centered bottomSpace time bigger" id="timeToEndOfClass" /> */}
-                    <Text>{currentClass !== undefined ? currentClass : "Not Found"}</Text>
-                    <p className="centered label">Your next class period is: </p>
-                    <h1 className="centered bottomSpace" id="nextClass" />
-                </section>
+                    <p style={{ fontSize: "60px" }}>
+                        <b>{currentClass !== undefined ? currentClass : "Not Found"}</b>
+                    </p>
+                    <p>Your next class period is: </p>
+                    <p style={{ fontSize: "30px" }}>
+                        <b>{}</b>
+                    </p>
+                </Block>
             </div>
         );
     }

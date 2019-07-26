@@ -10,7 +10,7 @@ export default class Block extends Component<ITextProps, {}> {
         return (
             <div
                 className={
-                    "blockInfo" + (this.props.className ? " " + this.props.className : "")
+                    "infoBlock" + (this.props.className ? " " + this.props.className : "")
                 }
                 style={this.props.style}
             >
