@@ -3,10 +3,12 @@ import { checkTimeRange, getValueIfKeyInList } from "../utils/helpers";
 
 export default class ClassPeriod {
     public static fromJson(json: any) {
+        const start = getValueIfKeyInList(["startTime", "start_time"], json);
+        const end = getValueIfKeyInList(["endTime", "end_time"], json);
         return new ClassPeriod(
             getValueIfKeyInList(["name", "classPeriodName", "class_period_name"], json),
-            Time.fromString(getValueIfKeyInList(["startTime", "start_time"], json)),
-            Time.fromString(getValueIfKeyInList(["endTime", "end_time"], json)),
+            start instanceof Time ? start : Time.fromString(start),
+            end instanceof Time ? end : Time.fromString(end),
             new Date(getValueIfKeyInList(["creationDate", "creation_date"], json))
         );
     }
