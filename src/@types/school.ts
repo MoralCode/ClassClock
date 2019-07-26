@@ -105,7 +105,12 @@ export default class School {
     public getScheduleForDate(date: Date) {
         if (this.schedules !== undefined) {
             for (const schedule of this.schedules) {
-                if (schedule.getDates().includes(date)) {
+                if (
+                    schedule
+                        .getDates()
+                        .map((d: Date) => d.toDateString())
+                        .includes(date.toDateString())
+                ) {
                     return schedule;
                 }
             }
