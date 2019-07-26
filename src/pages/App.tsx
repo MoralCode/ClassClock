@@ -10,6 +10,7 @@ import School from "../@types/school";
 import { pages } from "../utils/constants";
 import BellSchedule from "../@types/bellschedule";
 import { IState } from "../store/schools/types";
+import { getNextImportantTime } from "../utils/helpers";
 
 export interface IAppProps {
     selectedSchool: {
@@ -50,6 +51,11 @@ const App = (props: IAppProps) => {
     } else {
         const currentClass = currentSchedule.getClassPeriodForTime(
             Time.fromDate(currentDate)
+        );
+
+        const nextImportantTime = getNextImportantTime(
+            currentDate,
+            props.selectedSchool.data
         );
         return (
             <div className="App">
@@ -106,7 +112,13 @@ const App = (props: IAppProps) => {
                     <p>...which ends in:</p>
                     {/* <h1 className="centered bottomSpace time bigger" id="timeToEndOfClass" /> */}
                     <p className="timeFont" style={{ fontSize: "60px" }}>
-                        <b>{currentClass !== undefined ? currentClass : "No Class"}</b>
+                        <b>
+                            {nextImportantTime !== undefined
+                                ? Time.fromDate(currentDate)
+                                      .getTimeDeltaTo(nextImportantTime)
+                                      .getFormattedString()
+                                : "No Class"}
+                        </b>
                     </p>
                     <p>Your next class period is: </p>
                     <p className="timeFont" style={{ fontSize: "30px" }}>
