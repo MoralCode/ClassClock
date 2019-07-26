@@ -76,18 +76,19 @@ const App = (props: IAppProps) => {
                     </b>
                 </Text>
                 <section id="scheduleInfo" className="verticalFlex">
-                    <Text>{currentSchedule.getName()}</Text>
-                    <Text>{props.selectedSchool.data.getName()}</Text>
-                    <Link
-                        // tslint:disable-next-line: jsx-no-lambda
-                        destination={() => navigate(pages.fullSchedule)}
-                        className="centered bottomSpace"
-                        id="viewScheduleLink"
-                    >
-                        View Schedule
-                    </Link>
-                    <p className="centered label">You are currently in: </p>
-                    {/* <h1 className="centered bottomSpace" id="currentClass" /> */}
+                    {/* <Text>{props.selectedSchool.data.getName()}</Text> */}
+                    <Text>
+                        Today is a{" "}
+                        <Link
+                            // tslint:disable-next-line: jsx-no-lambda
+                            destination={() => navigate(pages.fullSchedule)}
+                            className="centered bottomSpace"
+                            id="viewScheduleLink"
+                        >
+                            {currentSchedule.getName()}
+                        </Link>
+                    </Text>
+                    <Text>You are currently in: </Text>
                     <Text>
                         {currentClass !== undefined
                             ? currentClass.getName()
