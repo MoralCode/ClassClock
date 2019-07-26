@@ -1,6 +1,7 @@
 import Time from "../@types/time";
 import School from "../@types/school";
 import { TimeComparisons, TimeStates } from "./enums";
+import ClassPeriod from "../@types/classperiod";
 
 export function getValueIfKeyInList(list: string[], object: any) {
     for (const key of list) {
@@ -53,33 +54,27 @@ export function getTimeStateForDateAtSchool(date: Date, school: School) {
 }
 
 /**
- * @returns the index of the class that started most recently
+ * @returns the next relevent time to count down to
  */
-export function getMostRecentlyStartedClassAtSchool(date: Date, school: School) {
-    const time = Time.fromDate(date);
+export function getNextImportantTime(date: Date, school: School) {
+    const currentBellSchedule = school.getScheduleForDate(date);
 
-    const bellchedule = school.getScheduleForDate(date);
-
-    if (bellchedule === undefined) {
-        return undefined;
+    //there is no schedule that applies today
+    if (currentBellSchedule === undefined) {
+        return;
     }
 
-    const classes = bellchedule.getAllClasses();
+    const importantTimes: Time[] = [];
 
-    const currentClass = bellchedule.getClassPeriodForTime(time);
+    currentBellSchedule.getAllClasses().forEach((value: ClassPeriod) => {
+        importantTimes.push(value.getStartTime());
+        importantTimes.push(value.getEndTime());
+    });
 
-    switch (getTimeStateForDateAtSchool(date, school)) {
-        case TimeStates.CLASS_IN_SESSION:
-            return currentClass;
-        case TimeStates.SCHOOL_IN_CLASS_OUT:
-            for (const classPeriod of classes) {
-                if (classPeriod.stateForTime(time) === TimeComparisons.IS_BEFORE) {
-                    return classes[classes.indexOf(classPeriod) - 1];
-                }
-            }
-            break;
-        default:
-            return undefined;
+    for (const time of importantTimes) {
+        if (time.getMillisecondsTo(Time.fromDate(date)) >= 0) {
+            return time;
+        }
     }
 }
 
