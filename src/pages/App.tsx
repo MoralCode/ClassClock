@@ -86,7 +86,6 @@ const App = (props: IAppProps) => {
                         <Link
                             // tslint:disable-next-line: jsx-no-lambda
                             destination={() => navigate(pages.fullSchedule)}
-                            className="centered bottomSpace"
                             id="viewScheduleLink"
                         >
                             {currentSchedule.getName()}
@@ -95,7 +94,7 @@ const App = (props: IAppProps) => {
                 </Block>
                 <Block>
                     <p>You are currently in: </p>
-                    <p style={{ fontSize: "30px" }}>
+                    <p className="timeFont" style={{ fontSize: "30px" }}>
                         <b>
                             {currentClass !== undefined
                                 ? currentClass.getName()
@@ -106,11 +105,11 @@ const App = (props: IAppProps) => {
                 <Block>
                     <p>...which ends in:</p>
                     {/* <h1 className="centered bottomSpace time bigger" id="timeToEndOfClass" /> */}
-                    <p style={{ fontSize: "60px" }}>
-                        <b>{currentClass !== undefined ? currentClass : "Not Found"}</b>
+                    <p className="timeFont" style={{ fontSize: "60px" }}>
+                        <b>{currentClass !== undefined ? currentClass : "No Class"}</b>
                     </p>
                     <p>Your next class period is: </p>
-                    <p style={{ fontSize: "30px" }}>
+                    <p className="timeFont" style={{ fontSize: "30px" }}>
                         <b>{}</b>
                     </p>
                 </Block>
