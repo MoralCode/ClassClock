@@ -17,8 +17,8 @@ export default class BellSchedule {
                     parseInt(parts[2], 10)
                 );
             }),
-            getValueIfKeyInList(["classes"], json).map((meetingTime: any) =>
-                ClassPeriod.fromJson(meetingTime)
+            getValueIfKeyInList(["classes", "meeting_times"], json).map(
+                (meetingTime: any) => ClassPeriod.fromJson(meetingTime)
             ),
             getValueIfKeyInList(["lastModified", "last_modified"], json)
         );
