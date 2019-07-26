@@ -66,7 +66,14 @@ const App = (props: IAppProps) => {
                 </Text>
                 <Text>
                     <span>on </span>
-                    <b>{currentDate.toLocaleDateString()}</b>
+                    <b>
+                        {currentDate.toLocaleDateString("en-US", {
+                            weekday: "long",
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric"
+                        })}
+                    </b>
                 </Text>
                 <section id="scheduleInfo" className="verticalFlex">
                     <Text>{currentSchedule.getName()}</Text>
