@@ -20,7 +20,7 @@ function requestSchool(): SchoolActionTypes {
 function receiveSchool(json: any): SchoolActionTypes {
     return {
         type: RECEIVE_SCHOOL,
-        school: School.fromJson(deconstructJsonApiResource(json)),
+        school: School.fromJson(json),
         receivedAt: Date.now()
     };
 }
@@ -68,10 +68,10 @@ export function selectSchool(authToken: string, schoolId: string) {
 
             Promise.all(scheduleDataList).then((schedulesList: any) => {
                 schoolResult.data.attributes.schedules = schedulesList.map(
-                    (schedule: any) => schedule.data
+                    (schedule: any) => deconstructJsonApiResource(schedule.data)
                 );
                 console.log("schoolResult: ", schoolResult.data);
-                dispatch(receiveSchool(schoolResult.data));
+                dispatch(receiveSchool(deconstructJsonApiResource(schoolResult.data)));
             });
         });
     };
