@@ -29,9 +29,13 @@ const Schedule = (props: IAppProps) => {
 
     return (
         <div>
-            <a className="navbutton" href="index.html">
-                <i className="fas fa-home" />
-            </a>
+            <Link
+                className="cornerNavButton smallIcon"
+                // tslint:disable-next-line: jsx-no-lambda
+                destination={() => props.dispatch(push(pages.main))}
+            >
+                <Icon icon="fa-home" />
+            </Link>
             <br />
             <h1 className="centered topSpace bottomSpace" id="schoolName" />
             <p className="centered bottomSpace" id="scheduleDisplay" />
