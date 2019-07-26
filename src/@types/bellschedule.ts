@@ -9,14 +9,7 @@ export default class BellSchedule {
             getValueIfKeyInList(["id", "identifier"], json),
             getValueIfKeyInList(["name", "full_name", "fullName"], json),
             getValueIfKeyInList(["endpoint"], json),
-            getValueIfKeyInList(["dates"], json).map((date: string) => {
-                const parts = date.split("-");
-                return new Date(
-                    parseInt(parts[0], 10),
-                    parseInt(parts[1], 10) - 1,
-                    parseInt(parts[2], 10)
-                );
-            }),
+            getValueIfKeyInList(["dates"], json).map((date: string) => new Date(date)),
             getValueIfKeyInList(["classes", "meeting_times"], json).map(
                 (meetingTime: any) => ClassPeriod.fromJson(meetingTime)
             ),
