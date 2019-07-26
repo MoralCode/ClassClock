@@ -1,21 +1,21 @@
 import React, { Component, CSSProperties } from "react";
-import "./Text.css";
+import "./Block.css";
 
 interface ITextProps {
     className?: string;
     style?: CSSProperties;
 }
-export default class Text extends Component<ITextProps, {}> {
+export default class Block extends Component<ITextProps, {}> {
     render() {
         return (
-            <span
+            <div
                 className={
                     "blockInfo" + (this.props.className ? " " + this.props.className : "")
                 }
                 style={this.props.style}
             >
                 {this.props.children}
-            </span>
+            </div>
         );
     }
 }
