@@ -64,7 +64,9 @@ export default class Time {
         );
     }
 
-    public toString(excludeSeconds = false) {
+    public toString(excludeSeconds = false, use24HourTime = false) {
+        const hours = use24HourTime ? this.hours % 12 : this.hours;
+
         let stringified =
             this.hours.toString().padStart(2, "0") +
             ":" +
@@ -81,8 +83,9 @@ export default class Time {
         return this.hours < 12 && this.minutes < 60 && this.seconds < 60;
     }
 
-    public getFormattedString(excludeSeconds = false) {
-        return this.toString(excludeSeconds) + (this.isAM() ? " AM" : " PM");
+    public getFormattedString(excludeSeconds = false, use24HourTime = false) {
+        const ending = this.isAM() ? " AM" : " PM";
+        return this.toString(excludeSeconds) + (use24HourTime ? ending : "");
     }
 
     //this overrides the automatic serialization of Time Objects and makes them return a string and not a plain object (which is more annoying to parse back in and rwould require an extra factory method)
