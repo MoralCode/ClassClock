@@ -52,10 +52,6 @@ export function getTimeStateForDateAtSchool(date: Date, school: School) {
     }
 }
 
-export function getCurrentTimeObject() {
-    return Time.fromDate(new Date());
-}
-
 /**
  * @returns the index of the class that started most recently
  */
