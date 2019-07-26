@@ -4,7 +4,7 @@ import { push } from "redux-first-routing";
 import "../global.css";
 import Link from "../components/Link";
 import Icon from "../components/Icon";
-import Text from "../components/Text";
+import Text from "../components/Text/Text";
 import Time from "../@types/time";
 import School from "../@types/school";
 import { pages } from "../utils/constants";

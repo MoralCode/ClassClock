@@ -56,11 +56,6 @@ body > * {
     text-align: center;
 }
 
-span.blockInfo {
-    margin: 7px 0;
-    display: block;
-}
-
 div#page {
     flex: 1;
     width: 100%;

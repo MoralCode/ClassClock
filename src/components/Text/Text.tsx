@@ -1,4 +1,5 @@
 import React, { Component, CSSProperties } from "react";
+import "./Text.css";
 
 interface ITextProps {
     className?: string;
