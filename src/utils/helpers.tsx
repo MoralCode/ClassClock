@@ -56,7 +56,10 @@ export function getTimeStateForDateAtSchool(date: Date, school: School) {
 /**
  * @returns the next relevent time to count down to
  */
-export function getNextImportantTime(date: Date, school: School) {
+export function getNextImportantTime(
+    date: Date,
+    school: School
+): [ClassPeriod, Time] | undefined {
     const currentBellSchedule = school.getScheduleForDate(date);
 
     //there is no schedule that applies today
@@ -64,18 +67,13 @@ export function getNextImportantTime(date: Date, school: School) {
         return;
     }
 
-    const importantTimes: Time[] = [];
-
     currentBellSchedule.getAllClasses().forEach((value: ClassPeriod) => {
-        importantTimes.push(value.getStartTime());
-        importantTimes.push(value.getEndTime());
-    });
-
-    for (const time of importantTimes) {
-        if (time.getMillisecondsTo(Time.fromDate(date)) >= 0) {
-            return time;
+        for (const time of [value.getStartTime(), value.getEndTime()]) {
+            if (time.getMillisecondsTo(Time.fromDate(date)) >= 0) {
+                return [value, time];
+            }
         }
-    }
+    });
 }
 
 /**

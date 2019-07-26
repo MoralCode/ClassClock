@@ -53,10 +53,13 @@ const App = (props: IAppProps) => {
             Time.fromDate(currentDate)
         );
 
-        const nextImportantTime = getNextImportantTime(
+        const nextImportantInfo = getNextImportantTime(
             currentDate,
             props.selectedSchool.data
         );
+        const [nextClass, nextImportantTime] = nextImportantInfo
+            ? nextImportantInfo
+            : [undefined, undefined];
         return (
             <div className="App">
                 <Link
@@ -122,7 +125,9 @@ const App = (props: IAppProps) => {
                     </p>
                     <p>Your next class period is: </p>
                     <p className="timeFont" style={{ fontSize: "30px" }}>
-                        <b>{}</b>
+                        <b>
+                            {nextClass !== undefined ? nextClass.getName() : "No Class"}
+                        </b>
                     </p>
                 </Block>
             </div>
