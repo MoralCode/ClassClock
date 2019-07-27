@@ -22,6 +22,10 @@ export function deconstructJsonApiResource(json: any) {
     return Object.assign({}, data, json.attributes);
 }
 
+export function getCurrentDate() {
+    return new Date();
+}
+
 /**
  * @returns a flag that represents the current chunk of time categorically
  */

@@ -10,7 +10,7 @@ import School from "../@types/school";
 import { pages } from "../utils/constants";
 import BellSchedule from "../@types/bellschedule";
 import { IState } from "../store/schools/types";
-import { getNextImportantTime } from "../utils/helpers";
+import { getNextImportantTime, getCurrentDate } from "../utils/helpers";
 
 export interface IAppProps {
     selectedSchool: {
@@ -22,7 +22,7 @@ export interface IAppProps {
 }
 
 const App = (props: IAppProps) => {
-    const [currentDate, setDate] = useState(new Date());
+    const [currentDate, setDate] = useState(getCurrentDate());
 
     const navigate = (to: string) => {
         props.dispatch(push(to));
@@ -30,14 +30,13 @@ const App = (props: IAppProps) => {
 
     useEffect(() => {
         const interval: NodeJS.Timeout = setInterval(() => {
-            setDate(new Date());
+            setDate(getCurrentDate());
         }, 500);
 
         return () => clearInterval(interval);
     }, [currentDate]);
 
     const currentSchedule = props.selectedSchool.data.getScheduleForDate(currentDate);
-    // console.log("csched: ", currentSchedule, currentDate);
 
     if (props.selectedSchool.isFetching) {
         return <p>Loading...</p>;
