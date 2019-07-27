@@ -9,7 +9,10 @@ import { IState } from "../store/schools/types";
 import Link from "../components/Link";
 import { pages } from "../utils/constants";
 import Icon from "../components/Icon";
-import { getCurrentDate } from "../utils/helpers";
+import { getCurrentDate, sortClassesByStartTime } from "../utils/helpers";
+import ClassPeriod from "../@types/classperiod";
+import ScheduleEntry from "../components/ScheduleEntry/ScheduleEntry";
+import List from "../components/List/List";
 
 export interface IAppProps {
     selectedSchool: {
@@ -37,7 +40,34 @@ const Schedule = (props: IAppProps) => {
             content = (
                 <>
                     <p>{currentSchedule.getName()}</p>
-                    {/* <table id="scheduleTable" className="centeredInline topSpace" /> */}
+                    {/* <List items={scheduleItems} /> */}
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>
+                                    <b>Class</b>
+                                </td>
+                                <td>
+                                    <b>Time</b>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {sortClassesByStartTime(currentSchedule.getAllClasses()).map(
+                                (value: ClassPeriod) => (
+                                    <>
+                                        <tr>
+                                            <td>{value.getName()}</td>
+                                            <td>
+                                                {value.getStartTime().toString()} -{" "}
+                                                {value.getEndTime().toString()}
+                                            </td>
+                                        </tr>
+                                    </>
+                                )
+                            )}
+                        </tbody>
+                    </table>
                 </>
             );
             break;
