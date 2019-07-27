@@ -46,9 +46,9 @@ export default class Time {
         return this.seconds;
     }
     public getMillisecondsTo(otherTime: Time) {
-        const hoursDiff = this.hours - otherTime.getHours();
-        const minutesDiff = this.minutes - otherTime.getMinutes();
-        const secondsDiff = this.seconds - otherTime.getSeconds();
+        const hoursDiff = otherTime.getHours() - this.hours;
+        const minutesDiff = otherTime.getMinutes() - this.minutes;
+        const secondsDiff = otherTime.getSeconds() - this.seconds;
 
         return hoursDiff * 60 * 60 * 1000 + minutesDiff * 60 * 1000 + secondsDiff * 1000;
     }
