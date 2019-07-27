@@ -83,9 +83,8 @@ export default class BellSchedule {
         for (const classPeriod of sortClassesByStartTime(this.classes)) {
             if (classPeriod.stateForTime(time) === TimeComparisons.IS_DURING_OR_EXACTLY) {
                 return classPeriod;
-            } else {
-                return undefined;
             }
         }
+        return;
     }
 }

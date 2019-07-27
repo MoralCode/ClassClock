@@ -89,7 +89,7 @@ const App = (props: IAppProps) => {
                         {/* <h1 className="centered bottomSpace time bigger" id="timeToEndOfClass" /> */}
                         <p className="timeFont" style={{ fontSize: "60px" }}>
                             <b>
-                                {nextImportantTime !== undefined
+                                {nextImportantTime
                                     ? Time.fromDate(currentDate)
                                           .getTimeDeltaTo(nextImportantTime)
                                           .getFormattedString()
@@ -98,11 +98,7 @@ const App = (props: IAppProps) => {
                         </p>
                         <p>Your next class period is: </p>
                         <p className="timeFont" style={{ fontSize: "30px" }}>
-                            <b>
-                                {nextClass !== undefined
-                                    ? nextClass.getName()
-                                    : "No Class"}
-                            </b>
+                            <b>{nextClass ? nextClass.getName() : "No Class"}</b>
                         </p>
                     </Block>
                 </>
