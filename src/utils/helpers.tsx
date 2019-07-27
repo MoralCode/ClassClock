@@ -33,7 +33,7 @@ export function getTimeStateForDateAtSchool(date: Date, school: School) {
     const currentBellSchedule = school.getScheduleForDate(date);
 
     //there is no schedule that applies today
-    if (currentBellSchedule === undefined) {
+    if (!currentBellSchedule) {
         return TimeStates.DAY_OFF;
     }
 
@@ -47,7 +47,7 @@ export function getTimeStateForDateAtSchool(date: Date, school: School) {
     }
 
     //the current time lies between the start of the first schedules class and the end of the last
-    else if (school.isInSession(date) && currentClassPeriod === undefined) {
+    else if (school.isInSession(date) && !currentClassPeriod) {
         return TimeStates.SCHOOL_IN_CLASS_OUT;
     }
 
@@ -67,7 +67,7 @@ export function getNextImportantTime(
     const currentBellSchedule = school.getScheduleForDate(date);
 
     //there is no schedule that applies today
-    if (currentBellSchedule === undefined) {
+    if (!currentBellSchedule) {
         return;
     }
 

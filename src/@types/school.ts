@@ -103,7 +103,7 @@ export default class School {
 
     //can also be used as isNoSchoolDay() by checking for undefined
     public getScheduleForDate(date: Date) {
-        if (this.schedules !== undefined) {
+        if (this.schedules) {
             for (const schedule of this.schedules) {
                 if (
                     schedule
@@ -114,10 +114,9 @@ export default class School {
                     return schedule;
                 }
             }
-            return undefined;
-        } else {
-            return undefined;
+            return null; //no schedule today
         }
+        return; // no schedules defined
     }
 
     public hasSchedules() {
@@ -128,7 +127,7 @@ export default class School {
         const currentTime = Time.fromDate(date);
         const currentSchedule = this.getScheduleForDate(date);
 
-        if (currentSchedule === undefined) {
+        if (!currentSchedule) {
             return false;
         }
         return (
