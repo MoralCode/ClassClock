@@ -26,13 +26,13 @@ const router = new UniversalRouter(routes);
 // A function that routes the user to the right place
 // after login
 const onRedirectCallback = (appState: any) => {
-    // Temporary Firefox workaround
+    // Temporary Firefox workaround: https://github.com/auth0/auth0-spa-js/blob/master/FAQ.md
     window.location.hash = window.location.hash; // eslint-disable-line no-self-assign
 
-    window.history.replaceState(
-        {},
-        document.title,
-        appState && appState.targetUrl ? appState.targetUrl : window.location.pathname
+    configuredStore.store.dispatch(
+        replace(
+            appState && appState.targetUrl ? appState.targetUrl : window.location.pathname
+        )
     );
 };
 
