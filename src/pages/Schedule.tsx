@@ -9,6 +9,7 @@ import { IState } from "../store/schools/types";
 import Link from "../components/Link";
 import { pages } from "../utils/constants";
 import Icon from "../components/Icon";
+import { getCurrentDate } from "../utils/helpers";
 
 export interface IAppProps {
     selectedSchool: {
@@ -20,12 +21,27 @@ export interface IAppProps {
 }
 
 const Schedule = (props: IAppProps) => {
-    // document.getElementById("schoolName").innerHTML = schools[selectedSchoolIndex].fullName;
-    // document.getElementById("scheduleDisplay").innerHTML = getCurrentScheduleName() + " schedule.";
+    let content: JSX.Element = <></>;
+    const currentSchedule = props.selectedSchool.data.getScheduleForDate(
+        getCurrentDate()
+    );
 
-    // populateScheduleTable();
-
-    //input:  onchange="updateSettings()"
+    switch (currentSchedule) {
+        case undefined:
+            props.dispatch(push(pages.selectSchool));
+            break;
+        case null:
+            content = <p>No School Today</p>;
+            break;
+        default:
+            content = (
+                <>
+                    <p>{currentSchedule.getName()}</p>
+                    {/* <table id="scheduleTable" className="centeredInline topSpace" /> */}
+                </>
+            );
+            break;
+    }
 
     return (
         <div>
@@ -37,9 +53,11 @@ const Schedule = (props: IAppProps) => {
                 <Icon icon="fa-home" />
             </Link>
             <br />
-            <h1 className="centered topSpace bottomSpace" id="schoolName" />
-            <p className="centered bottomSpace" id="scheduleDisplay" />
-            <table id="scheduleTable" className="centeredInline topSpace" />
+            <p style={{ fontSize: "30px" }}>
+                <b>{props.selectedSchool.data.getName()}</b>
+            </p>
+
+            {content}
         </div>
     );
 };
