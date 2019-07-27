@@ -31,9 +31,9 @@ export default class Time {
     private seconds: number;
 
     constructor(hours: number, minutes: number, seconds?: number) {
-        this.hours = hours;
-        this.minutes = minutes;
-        this.seconds = seconds || 0;
+        this.hours = Math.abs(hours % 24);
+        this.minutes = Math.abs(minutes % 60);
+        this.seconds = Math.abs(seconds || 0 % 60);
     }
 
     public getHours() {
@@ -54,14 +54,6 @@ export default class Time {
     }
     public getTimeDeltaTo(otherTime: Time) {
         return Time.fromMilliseconds(Math.abs(this.getMillisecondsTo(otherTime)));
-    }
-
-    public get_valid_time(): Time {
-        return new Time(
-            Math.abs(this.hours % 24),
-            Math.abs(this.minutes % 60),
-            Math.abs(this.seconds % 60)
-        );
     }
 
     public toString(excludeSeconds = false, use24HourTime = false) {
