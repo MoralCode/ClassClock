@@ -38,100 +38,109 @@ const App = (props: IAppProps) => {
 
     const currentSchedule = props.selectedSchool.data.getScheduleForDate(currentDate);
 
-    if (props.selectedSchool.isFetching) {
-        return <p>Loading...</p>;
-    } else if (currentSchedule === undefined) {
-        if (props.selectedSchool.data.hasSchedules()) {
-            return <p>No School Today</p>;
-        } else {
+    let content: JSX.Element = <></>;
+
+    switch (currentSchedule) {
+        case undefined:
             props.dispatch(push(pages.selectSchool));
-            return <p>Error</p>; //this is just here to ensure that this branch of code returns an Element so that there isnt a big nasty typescript error
-        }
-    } else {
-        const currentClass = currentSchedule.getClassPeriodForTime(
-            Time.fromDate(currentDate)
-        );
+            break;
+        case null:
+            content = <p>No School Today</p>;
+            break;
+        default:
+            const nextImportantInfo = getNextImportantTime(
+                currentDate,
+                props.selectedSchool.data
+            );
+            const [nextClass, nextImportantTime] = nextImportantInfo
+                ? nextImportantInfo
+                : [undefined, undefined];
 
-        const nextImportantInfo = getNextImportantTime(
-            currentDate,
-            props.selectedSchool.data
-        );
-        const [nextClass, nextImportantTime] = nextImportantInfo
-            ? nextImportantInfo
-            : [undefined, undefined];
-        return (
-            <div className="App">
-                <Link
-                    className="cornerNavButton smallIcon"
-                    // tslint:disable-next-line: jsx-no-lambda
-                    destination={() => navigate(pages.settings)}
-                >
-                    <Icon icon="fa-cog" />
-                </Link>
-                <br />
-                <Block>
-                    <p>It is currently: </p>
-                    <p className="timeFont" style={{ fontSize: "40px" }}>
-                        {Time.fromDate(currentDate).getFormattedString()}
-                    </p>
-                    <p>
-                        on{" "}
-                        <b>
-                            {currentDate.toLocaleDateString("en-US", {
-                                weekday: "long",
-                                year: "numeric",
-                                month: "short",
-                                day: "numeric"
-                            })}
-                        </b>
-                    </p>
-                </Block>
+            const currentClass = currentSchedule.getClassPeriodForTime(
+                Time.fromDate(currentDate)
+            );
 
-                {/* <Text>{props.selectedSchool.data.getName()}</Text> */}
-                <Block>
-                    <p>
-                        Today is a{" "}
-                        <Link
-                            // tslint:disable-next-line: jsx-no-lambda
-                            destination={() => navigate(pages.fullSchedule)}
-                            id="viewScheduleLink"
-                        >
-                            {currentSchedule.getName()}
-                        </Link>
-                    </p>
-                </Block>
-                <Block>
-                    <p>You are currently in: </p>
-                    <p className="timeFont" style={{ fontSize: "30px" }}>
-                        <b>
-                            {currentClass !== undefined
-                                ? currentClass.getName()
-                                : props.selectedSchool.data.getPassingTimeName()}
-                        </b>
-                    </p>
-                </Block>
-                <Block>
-                    <p>...which ends in:</p>
-                    {/* <h1 className="centered bottomSpace time bigger" id="timeToEndOfClass" /> */}
-                    <p className="timeFont" style={{ fontSize: "60px" }}>
-                        <b>
-                            {nextImportantTime !== undefined
-                                ? Time.fromDate(currentDate)
-                                      .getTimeDeltaTo(nextImportantTime)
-                                      .getFormattedString()
-                                : "No Class"}
-                        </b>
-                    </p>
-                    <p>Your next class period is: </p>
-                    <p className="timeFont" style={{ fontSize: "30px" }}>
-                        <b>
-                            {nextClass !== undefined ? nextClass.getName() : "No Class"}
-                        </b>
-                    </p>
-                </Block>
-            </div>
-        );
+            content = (
+                <>
+                    <Block>
+                        <p>
+                            Today is a{" "}
+                            <Link
+                                // tslint:disable-next-line: jsx-no-lambda
+                                destination={() => navigate(pages.fullSchedule)}
+                                id="viewScheduleLink"
+                            >
+                                {currentSchedule.getName()}
+                            </Link>
+                        </p>
+                    </Block>
+                    <Block>
+                        <p>You are currently in: </p>
+                        <p className="timeFont" style={{ fontSize: "30px" }}>
+                            <b>
+                                {currentClass !== undefined
+                                    ? currentClass.getName()
+                                    : props.selectedSchool.data.getPassingTimeName()}
+                            </b>
+                        </p>
+                    </Block>
+                    <Block>
+                        <p>...which ends in:</p>
+                        {/* <h1 className="centered bottomSpace time bigger" id="timeToEndOfClass" /> */}
+                        <p className="timeFont" style={{ fontSize: "60px" }}>
+                            <b>
+                                {nextImportantTime !== undefined
+                                    ? Time.fromDate(currentDate)
+                                          .getTimeDeltaTo(nextImportantTime)
+                                          .getFormattedString()
+                                    : "No Class"}
+                            </b>
+                        </p>
+                        <p>Your next class period is: </p>
+                        <p className="timeFont" style={{ fontSize: "30px" }}>
+                            <b>
+                                {nextClass !== undefined
+                                    ? nextClass.getName()
+                                    : "No Class"}
+                            </b>
+                        </p>
+                    </Block>
+                </>
+            );
+            break;
     }
+
+    return (
+        <div className="App">
+            <Link
+                className="cornerNavButton smallIcon"
+                // tslint:disable-next-line: jsx-no-lambda
+                destination={() => navigate(pages.settings)}
+            >
+                <Icon icon="fa-cog" />
+            </Link>
+            <br />
+            <Block>
+                <p>It is currently: </p>
+                <p className="timeFont" style={{ fontSize: "40px" }}>
+                    {Time.fromDate(currentDate).getFormattedString()}
+                </p>
+                <p>
+                    on{" "}
+                    <b>
+                        {currentDate.toLocaleDateString("en-US", {
+                            weekday: "long",
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric"
+                        })}
+                    </b>
+                </p>
+            </Block>
+
+            {content}
+        </div>
+    );
 };
 
 const mapStateToProps = (state: IState) => {
