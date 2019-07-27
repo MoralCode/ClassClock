@@ -1,7 +1,7 @@
 import ClassPeriod from "./classperiod";
 import Time from "./time";
 import { TimeComparisons } from "../utils/enums";
-import { getValueIfKeyInList } from "../utils/helpers";
+import { getValueIfKeyInList, sortClassesByStartTime } from "../utils/helpers";
 
 export default class BellSchedule {
     public static fromJson(json: any) {
@@ -80,7 +80,7 @@ export default class BellSchedule {
     }
 
     public getClassPeriodForTime(time: Time) {
-        for (const classPeriod of this.classes) {
+        for (const classPeriod of sortClassesByStartTime(this.classes)) {
             if (classPeriod.stateForTime(time) === TimeComparisons.IS_DURING_OR_EXACTLY) {
                 return classPeriod;
             } else {

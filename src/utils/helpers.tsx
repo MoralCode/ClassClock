@@ -26,6 +26,10 @@ export function getCurrentDate() {
     return new Date();
 }
 
+export function sortClassesByStartTime(classes: ClassPeriod[]) {
+    return classes.sort((a, b) => -a.getStartTime().getMillisecondsTo(b.getStartTime()));
+}
+
 /**
  * @returns a flag that represents the current chunk of time categorically
  */
@@ -71,13 +75,15 @@ export function getNextImportantTime(
         return;
     }
 
-    currentBellSchedule.getAllClasses().forEach((value: ClassPeriod) => {
-        for (const time of [value.getStartTime(), value.getEndTime()]) {
-            if (time.getMillisecondsTo(Time.fromDate(date)) >= 0) {
-                return [value, time];
+    sortClassesByStartTime(currentBellSchedule.getAllClasses()).forEach(
+        (value: ClassPeriod) => {
+            for (const time of [value.getStartTime(), value.getEndTime()]) {
+                if (time.getMillisecondsTo(Time.fromDate(date)) >= 0) {
+                    return [value, time];
+                }
             }
         }
-    });
+    );
 }
 
 /**
