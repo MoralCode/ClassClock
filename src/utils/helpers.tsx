@@ -103,9 +103,9 @@ export function checkTimeRange(checkTime: Time, startTime: Time, endTime: Time) 
     const startCheck = checkTime.getMillisecondsTo(startTime);
     const endCheck = checkTime.getMillisecondsTo(endTime);
 
-    if (startCheck > 0) {
+    if (startCheck > 0 && endCheck > 0) {
         return TimeComparisons.IS_BEFORE;
-    } else if (endCheck < 0) {
+    } else if (endCheck < 0 && endCheck < 0) {
         return TimeComparisons.IS_AFTER;
     } else {
         return TimeComparisons.IS_DURING_OR_EXACTLY;
