@@ -40,6 +40,7 @@ export default class ClassPeriod {
         return this.startTime.getTimeDeltaTo(this.endTime);
     }
 
+    //remove me
     public stateForTime(time: Time) {
         return checkTimeRange(time, this.startTime, this.endTime);
     }

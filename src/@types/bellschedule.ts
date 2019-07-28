@@ -14,6 +14,7 @@ export default class BellSchedule {
                 (meetingTime: any) => ClassPeriod.fromJson(meetingTime)
             ),
             getValueIfKeyInList(["lastModified", "last_modified"], json)
+            //display name
         );
     }
 
@@ -48,7 +49,7 @@ export default class BellSchedule {
     }
 
     public getName() {
-        if (this.displayName !== undefined) {
+        if (this.displayName) {
             return this.displayName;
         } else {
             return this.name;

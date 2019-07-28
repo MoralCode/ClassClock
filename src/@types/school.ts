@@ -119,10 +119,12 @@ export default class School {
         return; // no schedules defined
     }
 
+    //remove
     public hasSchedules() {
         return this.schedules !== undefined;
     }
 
+    //change input to a time
     public isInSession(date: Date) {
         const currentTime = Time.fromDate(date);
         const currentSchedule = this.getScheduleForDate(date);

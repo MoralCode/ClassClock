@@ -22,7 +22,7 @@ export default class Time {
         return new Time(
             parseInt(parts[0], 10),
             parseInt(parts[1], 10),
-            parts.length === 3 ? parseInt(parts[0], 10) : undefined
+            parts.length === 3 ? parseInt(parts[2], 10) : undefined
         );
     }
 

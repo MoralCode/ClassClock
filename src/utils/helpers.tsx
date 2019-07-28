@@ -11,6 +11,7 @@ export function getValueIfKeyInList(list: string[], object: any) {
     }
 }
 
+//resource object
 export function deconstructJsonApiResource(json: any) {
     const data = {
         type: json.type,
