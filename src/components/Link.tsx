@@ -4,6 +4,7 @@ interface ILinkProps {
     destination: any;
     className?: string;
     style?: CSSProperties;
+    title?: string;
     id?: string;
 }
 
@@ -14,6 +15,7 @@ export default class Link extends Component<ILinkProps, {}> {
                 className={this.props.className}
                 id={this.props.id}
                 style={this.props.style}
+                title={this.props.title}
                 href={
                     typeof this.props.destination === "function"
                         ? undefined
