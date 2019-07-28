@@ -122,10 +122,6 @@ h1.bigger {
     font-size: 3em;
 }
 
-section#credits {
-    margin-top: 20vh;
-}
-
 section#credits > a {
     margin: 5px;
 }
@@ -191,6 +187,7 @@ section#options > * {
 .footer__social {
     list-style: none;
     margin: 0;
+    padding: 0;
 }
 
 .footer__social li {
