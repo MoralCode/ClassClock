@@ -4,10 +4,12 @@ import { push } from "redux-first-routing";
 import IPageInterface from "../utils/IPageInterface";
 import "../global.css";
 import { IState } from "../store/schools/types";
+import { IState as UserSettingsIState } from "../store/usersettings/types";
 import School from "../@types/school";
 
 export interface ISettingProps {
     selectedSchoolName: string;
+    userSettings: { use24HourTime: boolean }; //this is duplicated. ugh
     dispatch: any;
 }
 
@@ -65,9 +67,12 @@ const Settings = (props: ISettingProps) => {
     );
 };
 
-const mapStateToProps = (state: IState) => {
-    const { selectedSchool } = state;
-    return { selectedSchoolName: School.fromJson(selectedSchool.data).getName() };
+const mapStateToProps = (state: IState & UserSettingsIState) => {
+    const { selectedSchool, userSettings } = state;
+    return {
+        selectedSchoolName: School.fromJson(selectedSchool.data).getName(),
+        userSettings
+    };
 };
 
 export default connect(mapStateToProps)(Settings);
