@@ -95,6 +95,10 @@ div#page {
     background-color: grey;
 }
 
+.smallText {
+    font-size: 10px;
+}
+
 .smallIcon {
     font-size: 32px;
 }

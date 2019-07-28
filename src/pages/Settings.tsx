@@ -13,7 +13,8 @@ import { URLs } from "../utils/constants";
 import { setTimeFormatPreference } from "../store/usersettings/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons";
-import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { useAuth0 } from "../react-auth0-wrapper";
 
 export interface ISettingProps {
     selectedSchoolName: string;
@@ -22,6 +23,8 @@ export interface ISettingProps {
 }
 
 const Settings = (props: ISettingProps) => {
+    const { logout, user } = useAuth0();
+
     const navigate = (to: string) => {
         props.dispatch(push(to));
     };
@@ -38,8 +41,35 @@ const Settings = (props: ISettingProps) => {
             <br />
 
             <h1>Settings</h1>
+            {user ? (
+                <span>
+                    Hello <b>{user.name || user.email}</b>,
+                </span>
+            ) : (
+                undefined
+            )}
+            <br />
+            <Link
+                // tslint:disable-next-line: jsx-no-lambda
+                destination={() => logout()}
+                title="Log Out"
+            >
+                <FontAwesomeIcon icon={faSignOutAlt} /> Log Out
+            </Link>
+            <p>
+                You have selected{" "}
+                <Link
+                    // tslint:disable-next-line: jsx-no-lambda
+                    destination={() => navigate(pages.selectSchool)}
+                    title="Change School"
+                >
+                    {props.selectedSchoolName}
+                </Link>
+                <br />
+                <em className="smallerText">(Click to change)</em>
+            </p>
             <label>
-                <b>Use 24-hour Time?</b>
+                <b>Use 24-hour Time?</b>{" "}
                 <input
                     type="checkbox"
                     checked={props.userSettings.use24HourTime}
@@ -53,16 +83,8 @@ const Settings = (props: ISettingProps) => {
             </label>
 
             <p>
-                <b>Selected School:</b>{" "}
-                <Link
-                    // tslint:disable-next-line: jsx-no-lambda
-                    destination={() => navigate(pages.selectSchool)}
-                    title="Change School"
-                >
-                    {props.selectedSchoolName}
-                </Link>
+                <em className="smallerText">Settings are automatically saved</em>
             </p>
-            <em>Settings are automatically saved</em>
 
             <p style={{ marginTop: "20vh" }}>Follow ClassClock:</p>
             <ul className="footer__social">
