@@ -76,15 +76,15 @@ export function getNextImportantTime(
         return;
     }
 
-    sortClassesByStartTime(currentBellSchedule.getAllClasses()).forEach(
-        (value: ClassPeriod) => {
-            for (const time of [value.getStartTime(), value.getEndTime()]) {
-                if (time.getMillisecondsTo(Time.fromDate(date)) >= 0) {
-                    return [value, time];
-                }
+    const classes = sortClassesByStartTime(currentBellSchedule.getAllClasses());
+
+    for (const classPeriod of classes) {
+        for (const time of [classPeriod.getStartTime(), classPeriod.getEndTime()]) {
+            if (Time.fromDate(date).getMillisecondsTo(time) >= 0) {
+                return [classPeriod, time];
             }
         }
-    );
+    }
 }
 
 /**
