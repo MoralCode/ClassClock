@@ -10,7 +10,7 @@ import School from "../@types/school";
 import { pages } from "../utils/constants";
 import BellSchedule from "../@types/bellschedule";
 import { IState } from "../store/schools/types";
-import { getNextImportantTime, getCurrentDate } from "../utils/helpers";
+import { getNextImportantInfo, getCurrentDate } from "../utils/helpers";
 
 export interface IAppProps {
     selectedSchool: {
@@ -48,7 +48,7 @@ const App = (props: IAppProps) => {
             content = <p>No School Today</p>;
             break;
         default:
-            const nextImportantInfo = getNextImportantTime(
+            const nextImportantInfo = getNextImportantInfo(
                 currentDate,
                 props.selectedSchool.data
             );

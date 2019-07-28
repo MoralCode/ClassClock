@@ -2,6 +2,7 @@ import Time from "../@types/time";
 import School from "../@types/school";
 import { TimeComparisons, TimeStates } from "./enums";
 import ClassPeriod from "../@types/classperiod";
+import BellSchedule from "../@types/bellschedule";
 
 export function getValueIfKeyInList(list: string[], object: any) {
     for (const key of list) {
@@ -65,7 +66,7 @@ export function getTimeStateForDateAtSchool(date: Date, school: School) {
 /**
  * @returns the next relevent time to count down to
  */
-export function getNextImportantTime(
+export function getNextImportantInfo(
     date: Date,
     school: School
 ): [ClassPeriod, Time] | undefined {
@@ -77,11 +78,16 @@ export function getNextImportantTime(
     }
 
     const classes = sortClassesByStartTime(currentBellSchedule.getAllClasses());
-
-    for (const classPeriod of classes) {
-        for (const time of [classPeriod.getStartTime(), classPeriod.getEndTime()]) {
+    //loop through all classes in order until you get to the first time that has not passed
+    for (let i = 0; i < classes.length; i++) {
+        for (const time of [classes[i].getStartTime(), classes[i].getEndTime()]) {
             if (Time.fromDate(date).getMillisecondsTo(time) >= 0) {
-                return [classPeriod, time];
+                const nextClass =
+                    classes[i].stateForTime(Time.fromDate(date)) ===
+                    TimeComparisons.IS_DURING_OR_EXACTLY
+                        ? classes[i + 1]
+                        : classes[i];
+                return [nextClass, time];
             }
         }
     }
