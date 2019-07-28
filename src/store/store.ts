@@ -7,6 +7,7 @@ import logger from "redux-logger";
 
 import { selectedSchoolReducer, fetchErrorReducer } from "./schools/reducer";
 import SchoolTransform from "../utils/typetransform";
+import { userSettingsReducer } from "./usersettings/reducer";
 
 const persistConfig = {
     key: "root",
@@ -19,6 +20,7 @@ export const configureStore = (hist: any, initialState = {}) => {
     // Add the reducer, which adds location state to the store
     const rootReducer = combineReducers({
         selectedSchool: selectedSchoolReducer,
+        userSettings: userSettingsReducer,
         error: fetchErrorReducer,
         router: routerReducer // Convention is to use the "router" property
     });
