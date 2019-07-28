@@ -11,6 +11,8 @@ import { pages } from "../utils/constants";
 import BellSchedule from "../@types/bellschedule";
 import { IState } from "../store/schools/types";
 import { getNextImportantInfo, getCurrentDate } from "../utils/helpers";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCog } from "@fortawesome/free-solid-svg-icons";
 
 export interface IAppProps {
     selectedSchool: {
@@ -113,7 +115,7 @@ const App = (props: IAppProps) => {
                 // tslint:disable-next-line: jsx-no-lambda
                 destination={() => navigate(pages.settings)}
             >
-                <Icon icon="fa-cog" />
+                <FontAwesomeIcon icon={faCog} />
             </Link>
             <br />
             <Block>

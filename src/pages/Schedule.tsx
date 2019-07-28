@@ -13,6 +13,8 @@ import { getCurrentDate, sortClassesByStartTime } from "../utils/helpers";
 import ClassPeriod from "../@types/classperiod";
 import ScheduleEntry from "../components/ScheduleEntry/ScheduleEntry";
 import List from "../components/List/List";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 export interface IAppProps {
     selectedSchool: {
@@ -80,7 +82,7 @@ const Schedule = (props: IAppProps) => {
                 // tslint:disable-next-line: jsx-no-lambda
                 destination={() => props.dispatch(push(pages.main))}
             >
-                <Icon icon="fa-home" />
+                <FontAwesomeIcon icon={faHome} />
             </Link>
             <br />
             <p style={{ fontSize: "30px" }}>
