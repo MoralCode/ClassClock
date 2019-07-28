@@ -14,7 +14,7 @@ export default class Link extends Component<ILinkProps, {}> {
             <a
                 className={this.props.className}
                 id={this.props.id}
-                style={this.props.style}
+                style={Object.assign({}, this.props.style, { cursor: "pointer" })}
                 title={this.props.title}
                 href={
                     typeof this.props.destination === "function"
