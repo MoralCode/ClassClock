@@ -57,16 +57,20 @@ const Settings = (props: ISettingProps) => {
                 <FontAwesomeIcon icon={faSignOutAlt} /> Log Out
             </Link>
             <p>
-                You have selected{" "}
-                <Link
-                    // tslint:disable-next-line: jsx-no-lambda
-                    destination={() => navigate(pages.selectSchool)}
-                    title="Change School"
-                >
-                    {props.selectedSchoolName}
-                </Link>
+                You have selected <b>{props.selectedSchoolName}</b>
                 <br />
-                <em className="smallerText">(Click to change)</em>
+                <em className="smallerText">
+                    (
+                    <Link
+                        // tslint:disable-next-line: jsx-no-lambda
+                        destination={() => navigate(pages.selectSchool)}
+                        title="Change School"
+                    >
+                        Change School
+                    </Link>
+                    )
+                </em>
+                <br />
             </p>
             <label>
                 <b>Use 24-hour Time?</b>{" "}
