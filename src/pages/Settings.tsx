@@ -16,6 +16,7 @@ import { faGithub, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-i
 import { faHome, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "../react-auth0-wrapper";
 import distanceInWordsToNow from "date-fns/distance_in_words_to_now";
+import { selectSchool } from "../store/schools/actions";
 
 export interface ISettingProps {
     selectedSchool: any;
@@ -24,10 +25,19 @@ export interface ISettingProps {
 }
 
 const Settings = (props: ISettingProps) => {
-    const { logout, user } = useAuth0();
+    const { logout, user, getTokenSilently } = useAuth0();
 
     const navigate = (to: string) => {
         props.dispatch(push(to));
+    };
+
+    const refreshSchedule = async () => {
+        const token = await getTokenSilently;
+        if (token === undefined) {
+            props.dispatch(
+                selectSchool(token, props.selectedSchool.data.getIdentifier())
+            );
+        }
     };
 
     return (
@@ -57,17 +67,14 @@ const Settings = (props: ISettingProps) => {
             >
                 <FontAwesomeIcon icon={faSignOutAlt} /> Log Out
             </Link>
+            <h2>Selected School:</h2>
             <p>
-                You have selected <b>{props.selectedSchool.data.getName()}</b>
                 <br />
-                <em className="smallerText">
-                    Last Updated:{" "}
-                    {distanceInWordsToNow(
-                        new Date(props.selectedSchool.lastUpdated).toString(),
-                        { addSuffix: true }
-                    )}
-                </em>
-                <br />
+                {props.selectedSchool.isFetching ? (
+                    <p>Loading School...</p>
+                ) : (
+                    <b>{props.selectedSchool.data.getName() + " "}</b>
+                )}
                 <em className="smallerText">
                     (
                     <Link
@@ -80,6 +87,24 @@ const Settings = (props: ISettingProps) => {
                     )
                 </em>
                 <br />
+                <em className="smallerText">
+                    Last Updated:{" "}
+                    {distanceInWordsToNow(
+                        new Date(props.selectedSchool.lastUpdated).toString(),
+                        { addSuffix: true }
+                    ) + " "}
+                </em>
+                <em className="smallerText">
+                    (
+                    <Link
+                        // tslint:disable-next-line: jsx-no-lambda
+                        destination={refreshSchedule}
+                        title="Reload Schedule"
+                    >
+                        Refresh
+                    </Link>
+                    )
+                </em>
             </p>
             <label>
                 <b>Use 24-hour Time?</b>{" "}
@@ -94,7 +119,7 @@ const Settings = (props: ISettingProps) => {
                     }}
                 />
             </label>
-
+            <br />
             <p>
                 <em className="smallerText">
                     Settings are automatically saved on your device
