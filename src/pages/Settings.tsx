@@ -17,7 +17,7 @@ import { faHome, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "../react-auth0-wrapper";
 
 export interface ISettingProps {
-    selectedSchoolName: string;
+    selectedSchool: any;
     userSettings: { use24HourTime: boolean }; //this is duplicated. ugh
     dispatch: any;
 }
@@ -57,7 +57,7 @@ const Settings = (props: ISettingProps) => {
                 <FontAwesomeIcon icon={faSignOutAlt} /> Log Out
             </Link>
             <p>
-                You have selected <b>{props.selectedSchoolName}</b>
+                You have selected <b>{props.selectedSchool.data.getName()}</b>
                 <br />
                 <em className="smallerText">
                     (
@@ -121,7 +121,9 @@ const Settings = (props: ISettingProps) => {
 const mapStateToProps = (state: IState & UserSettingsIState) => {
     const { selectedSchool, userSettings } = state;
     return {
-        selectedSchoolName: School.fromJson(selectedSchool.data).getName(),
+        selectedSchool: Object.assign({}, selectedSchool, {
+            data: School.fromJson(selectedSchool.data)
+        }),
         userSettings
     };
 };
