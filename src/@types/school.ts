@@ -12,6 +12,7 @@ export default class School {
         const schedules = getValueIfKeyInList(["schedules"], json);
         return new School(
             getValueIfKeyInList(["id", "identifier"], json),
+            getValueIfKeyInList(["ownerId", "owner_id"], json),
             getValueIfKeyInList(["name", "fullName", "full_name"], json),
             getValueIfKeyInList(["acronym"], json),
             getValueIfKeyInList(["endpoint"], json),
@@ -26,6 +27,7 @@ export default class School {
     }
 
     private id: string;
+    private ownerId: string;
     private endpoint?: string;
     private fullName: string;
     private acronym: string;
@@ -37,6 +39,7 @@ export default class School {
 
     constructor(
         id: string,
+        ownerId: string,
         fullName: string,
         acronym: string,
         endpoint: string,
@@ -47,6 +50,7 @@ export default class School {
         lastUpdatedDate?: Date
     ) {
         this.id = id;
+        this.ownerId = ownerId;
         this.endpoint = endpoint;
         this.fullName = fullName;
         this.acronym = acronym;
