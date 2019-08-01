@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faHome, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "../react-auth0-wrapper";
+import distanceInWordsToNow from "date-fns/distance_in_words_to_now";
 
 export interface ISettingProps {
     selectedSchool: any;
@@ -58,6 +59,14 @@ const Settings = (props: ISettingProps) => {
             </Link>
             <p>
                 You have selected <b>{props.selectedSchool.data.getName()}</b>
+                <br />
+                <em className="smallerText">
+                    Last Updated:{" "}
+                    {distanceInWordsToNow(
+                        new Date(props.selectedSchool.lastUpdated).toString(),
+                        { addSuffix: true }
+                    )}
+                </em>
                 <br />
                 <em className="smallerText">
                     (
