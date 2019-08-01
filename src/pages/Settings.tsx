@@ -87,7 +87,9 @@ const Settings = (props: ISettingProps) => {
             </label>
 
             <p>
-                <em className="smallerText">Settings are automatically saved</em>
+                <em className="smallerText">
+                    Settings are automatically saved on your device
+                </em>
             </p>
 
             <p style={{ marginTop: "20vh" }}>Follow ClassClock:</p>
