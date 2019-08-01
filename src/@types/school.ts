@@ -65,6 +65,10 @@ export default class School {
         return this.id;
     }
 
+    public getOwnerIdentifier(): string {
+        return this.ownerId;
+    }
+
     public getEndpoint() {
         return this.endpoint;
     }
