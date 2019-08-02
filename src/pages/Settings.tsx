@@ -54,24 +54,25 @@ const Settings = (props: ISettingProps) => {
             <h1>Settings</h1>
             {user ? (
                 <span>
-                    Hello <b>{user.name || user.email}</b>,
+                    Hello <b>{user.name || user.email}</b> (
+                    <Link
+                        // tslint:disable-next-line: jsx-no-lambda
+                        destination={() => {
+                            logout();
+                        }}
+                        title="Log Out"
+                    >
+                        <FontAwesomeIcon icon={faSignOutAlt} /> Log Out
+                    </Link>
+                    )
                 </span>
             ) : (
                 undefined
             )}
-            <br />
-            <Link
-                // tslint:disable-next-line: jsx-no-lambda
-                destination={() => logout()}
-                title="Log Out"
-            >
-                <FontAwesomeIcon icon={faSignOutAlt} /> Log Out
-            </Link>
-            <h2>Selected School:</h2>
+
             <p>
-                <br />
                 {props.selectedSchool.isFetching ? (
-                    <p>Loading School...</p>
+                    <span>Loading School...</span>
                 ) : (
                     <b>{props.selectedSchool.data.getName() + " "}</b>
                 )}
@@ -104,7 +105,7 @@ const Settings = (props: ISettingProps) => {
                 )}
                 <br />
                 <em className="smallerText">
-                    Schedule Last Updated:{" "}
+                    Updated:{" "}
                     {format(
                         new Date(props.selectedSchool.lastUpdated),
                         "MMM D YYYY h:mm:ss a"
