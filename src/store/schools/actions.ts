@@ -3,7 +3,8 @@ import {
     SchoolActionTypes,
     FETCH_ERROR,
     RECEIVE_SCHOOL,
-    REQUEST_SCHOOL
+    REQUEST_SCHOOL,
+    INVALIDATE_SCHOOL
 } from "./types";
 import { Dispatch } from "redux";
 import ClassClockService from "../../services/classclock";
@@ -14,6 +15,12 @@ import { deconstructJsonApiResource } from "../../utils/helpers";
 function requestSchool(): SchoolActionTypes {
     return {
         type: SELECT_SCHOOL
+    };
+}
+
+export function invalidateSchool(): SchoolActionTypes {
+    return {
+        type: INVALIDATE_SCHOOL
     };
 }
 

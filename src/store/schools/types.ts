@@ -32,6 +32,10 @@ interface IRequestSchoolAction {
     type: typeof REQUEST_SCHOOL;
 }
 
+interface IInvalidateSchoolAction {
+    type: typeof INVALIDATE_SCHOOL;
+}
+
 interface IFetchErrorAction {
     type: typeof FETCH_ERROR;
     message: string;
@@ -48,5 +52,6 @@ export type SchoolActionTypes =
     | ISelectSchoolAction
     | IReceiveSchoolAction
     | IRequestSchoolAction
+    | IInvalidateSchoolAction
     | IFetchErrorAction;
 // | IReceiveSchoolsAction; // | DeleteMessageAction;

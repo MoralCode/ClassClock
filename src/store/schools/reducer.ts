@@ -2,7 +2,8 @@ import {
     SELECT_SCHOOL,
     SchoolActionTypes,
     FETCH_ERROR,
-    RECEIVE_SCHOOL
+    RECEIVE_SCHOOL,
+    INVALIDATE_SCHOOL
     // ISchoolsByIdState
 } from "./types";
 import School from "../../@types/school";
@@ -10,7 +11,6 @@ import School from "../../@types/school";
 export function selectedSchoolReducer(
     state = {
         isFetching: false,
-        didInvalidate: false,
         data: {}
     },
     action: SchoolActionTypes
@@ -28,12 +28,11 @@ export function selectedSchoolReducer(
                 lastUpdated: action.receivedAt
             });
 
-        // case RECEIVE_SCHEDULES:
-        //     return Object.assign({}, state, {
-        //         isFetching: false,
-        //         data: action.school,
-        //         lastUpdated: action.receivedAt
-        //     });
+        case INVALIDATE_SCHOOL:
+            return Object.assign({}, state, {
+                isFetching: false,
+                data: {}
+            });
 
         default:
             return state;
