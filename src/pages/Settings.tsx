@@ -75,6 +75,7 @@ const Settings = (props: ISettingProps) => {
                 ) : (
                     <b>{props.selectedSchool.data.getName() + " "}</b>
                 )}
+                <br />
                 <em className="smallerText">
                     (
                     <Link
