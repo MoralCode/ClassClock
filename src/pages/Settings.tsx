@@ -15,7 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faHome, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "../react-auth0-wrapper";
-import distanceInWordsToNow from "date-fns/distance_in_words_to_now";
+import format from "date-fns/format";
 import { selectSchool } from "../store/schools/actions";
 
 export interface ISettingProps {
@@ -88,10 +88,10 @@ const Settings = (props: ISettingProps) => {
                 </em>
                 <br />
                 <em className="smallerText">
-                    Last Updated:{" "}
-                    {distanceInWordsToNow(
-                        new Date(props.selectedSchool.lastUpdated).toString(),
-                        { addSuffix: true }
+                    Schedule Last Updated:{" "}
+                    {format(
+                        new Date(props.selectedSchool.lastUpdated),
+                        "MMM D YYYY h:mm:ss a"
                     ) + " "}
                 </em>
                 <em className="smallerText">
