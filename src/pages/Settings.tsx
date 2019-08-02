@@ -87,6 +87,21 @@ const Settings = (props: ISettingProps) => {
                     </Link>
                     )
                 </em>
+                {user && props.selectedSchool.data.getOwnerIdentifier() === user.id ? (
+                    <em className="smallerText">
+                        (
+                        <Link
+                            // tslint:disable-next-line: jsx-no-lambda
+                            destination={pages.admin}
+                            title="Manage School"
+                        >
+                            Manage School
+                        </Link>
+                        )
+                    </em>
+                ) : (
+                    undefined
+                )}
                 <br />
                 <em className="smallerText">
                     Schedule Last Updated:{" "}

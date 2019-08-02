@@ -9,7 +9,8 @@ export const pages = {
     fullSchedule: "/schedule.html",
     settings: "/settings.html",
     selectSchool: "/select",
-    loginCallback: "/callback"
+    loginCallback: "/callback",
+    admin: "/admin"
 };
 
 export const URLs = {
