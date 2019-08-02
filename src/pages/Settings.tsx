@@ -16,7 +16,7 @@ import { faGithub, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-i
 import { faHome, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "../react-auth0-wrapper";
 import format from "date-fns/format";
-import { selectSchool } from "../store/schools/actions";
+import { selectSchool, invalidateSchool } from "../store/schools/actions";
 
 export interface ISettingProps {
     selectedSchool: any;
@@ -59,6 +59,7 @@ const Settings = (props: ISettingProps) => {
                         // tslint:disable-next-line: jsx-no-lambda
                         destination={() => {
                             logout();
+                            props.dispatch(invalidateSchool());
                         }}
                         title="Log Out"
                     >
