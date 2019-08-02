@@ -32,8 +32,8 @@ const Settings = (props: ISettingProps) => {
     };
 
     const refreshSchedule = async () => {
-        const token = await getTokenSilently;
-        if (token === undefined) {
+        const token = await getTokenSilently();
+        if (token !== undefined) {
             props.dispatch(
                 selectSchool(token, props.selectedSchool.data.getIdentifier())
             );
