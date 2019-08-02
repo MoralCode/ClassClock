@@ -40,6 +40,10 @@ const Settings = (props: ISettingProps) => {
         }
     };
 
+    if (props.selectedSchool.data === {} && !props.selectedSchool.isFetching) {
+        navigate(pages.selectSchool);
+    }
+
     return (
         <div>
             <Link
