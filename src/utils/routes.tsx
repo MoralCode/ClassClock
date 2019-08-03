@@ -5,6 +5,7 @@ import Settings from "../pages/Settings";
 import PrivateRoute from "../components/PrivateRoute";
 import SchoolSelect from "../pages/SchoolSelect/SchoolSelect";
 import { pages } from "./constants";
+import Admin from "../pages/Admin";
 
 export const routes = [
     {
@@ -22,6 +23,10 @@ export const routes = [
     {
         path: pages.selectSchool,
         action: () => <PrivateRoute component={SchoolSelect} path={pages.selectSchool} />
+    },
+    {
+        path: pages.admin,
+        action: () => <PrivateRoute component={Admin} path={pages.admin} />
     },
     {
         path: pages.loginCallback,
