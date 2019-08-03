@@ -93,12 +93,12 @@ const Settings = (props: ISettingProps) => {
                     </Link>
                     )
                 </em>
-                {user && props.selectedSchool.data.getOwnerIdentifier() === user.id ? (
+                {user && props.selectedSchool.data.getOwnerIdentifier() === user.sub ? (
                     <em className="smallerText">
                         (
                         <Link
                             // tslint:disable-next-line: jsx-no-lambda
-                            destination={pages.admin}
+                            destination={navigate(pages.admin)}
                             title="Manage School"
                         >
                             Manage School
