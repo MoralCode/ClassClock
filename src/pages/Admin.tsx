@@ -9,6 +9,7 @@ import { IState } from "../store/schools/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "../react-auth0-wrapper";
+import Calendar from "../components/Calendar/Calendar";
 
 export interface IAdminProps {
     selectedSchool: {
@@ -26,12 +27,64 @@ const Admin = (props: IAdminProps) => {
         props.dispatch(push(to));
     };
 
-    if (props.selectedSchool.data.getOwnerIdentifier() !== user.id) {
-        //user does not own school
-        navigate(pages.main);
-    }
+    // if (
+    //     user === undefined ||
+    //     props.selectedSchool.data.getOwnerIdentifier() !== user.sub
+    // ) {
+    //     //user does not own school
+    //     navigate(pages.main);
+    // }
 
-    return <></>;
+    //https://stackoverflow.com/a/1484514
+    const getRandomHtmlColor = () => {
+        const letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    };
+
+    const getScheduleOptions = () => {
+        const schedules = props.selectedSchool.data.getSchedules();
+        const optionProps: { [key: string]: { name: string; color: string } } = {};
+        if (schedules !== undefined) {
+            for (const schedule of schedules) {
+                optionProps[schedule.getIdentifier()] = {
+                    color: getRandomHtmlColor(),
+                    name: schedule.getName()
+                };
+            }
+        }
+        return optionProps;
+    };
+
+    const scheduleOptions = getScheduleOptions();
+    const key = [];
+    for (const option in scheduleOptions) {
+        if (scheduleOptions.hasOwnProperty(option)) {
+            key.push(
+                <li style={{ backgroundColor: scheduleOptions[option].color }}>
+                    {scheduleOptions[option].name}
+                </li>
+            );
+        }
+    }
+    return (
+        <div>
+            <h1>Admin</h1>
+            <Calendar options={scheduleOptions} />
+            <ul
+                style={{
+                    listStyleType: "none",
+                    margin: 0,
+                    padding: 0
+                }}
+            >
+                {key}
+            </ul>
+        </div>
+    );
 };
 
 const mapStateToProps = (state: IState) => {
