@@ -116,17 +116,21 @@ const Settings = (props: ISettingProps) => {
                         "MMM D YYYY h:mm:ss a"
                     ) + " "}
                 </em>
-                <em className="smallerText">
-                    (
-                    <Link
-                        // tslint:disable-next-line: jsx-no-lambda
-                        destination={refreshSchedule}
-                        title="Reload Schedule"
-                    >
-                        Refresh
-                    </Link>
-                    )
-                </em>
+                {!props.selectedSchool.isFetching ? (
+                    <em className="smallerText">
+                        (
+                        <Link
+                            // tslint:disable-next-line: jsx-no-lambda
+                            destination={refreshSchedule}
+                            title="Reload Schedule"
+                        >
+                            Refresh
+                        </Link>
+                        )
+                    </em>
+                ) : (
+                    undefined
+                )}
             </p>
             <label>
                 <b>Use 24-hour Time?</b>{" "}
