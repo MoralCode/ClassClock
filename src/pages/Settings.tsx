@@ -98,7 +98,7 @@ const Settings = (props: ISettingProps) => {
                         (
                         <Link
                             // tslint:disable-next-line: jsx-no-lambda
-                            destination={navigate(pages.admin)}
+                            destination={() => navigate(pages.admin)}
                             title="Manage School"
                         >
                             Manage School
