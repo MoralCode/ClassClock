@@ -11,11 +11,11 @@ export interface ICalendarProps {
 
 const Calendar = (props: ICalendarProps) => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
-    const emptyOptions: { [key: string]: number[] } = {};
+    const initialOptions: { [key: string]: number[] } = {};
     for (const option of Object.keys(props.options)) {
-        emptyOptions[option] = [];
+        initialOptions[option] = [];
     }
-    const [selectedDates, setSelectedDates] = useState(emptyOptions);
+    const [selectedDates, setSelectedDates] = useState(initialOptions);
 
     const config = { weekStartsOn: 1 };
     const startDate = dateFns.startOfWeek(dateFns.startOfMonth(currentMonth), config);
