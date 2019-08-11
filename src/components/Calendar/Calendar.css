@@ -1,12 +1,8 @@
 .calendar {
 }
-.monthSelect {
-    display: flex;
-    /* flex-direction: row */
-    justify-content: space-between;
-}
-
-.monthSelect > * {
+#monthDisplay {
+    width: 80%;
+    display: inline-block;
 }
 
 table.calendarGrid {
@@ -14,6 +10,7 @@ table.calendarGrid {
     margin: 0;
     padding: 0;
     font-size: 1.1em;
+    margin: 0 auto;
 }
 
 .calendarGrid thead {
