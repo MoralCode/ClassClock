@@ -187,39 +187,39 @@ const Calendar = (props: ICalendarProps) => {
     };
 
     return (
-        <div className="calendar">
-            {/* <div>{displayWeekdayNames()}</div> */}
-            <div className="monthSelect">
-                <Link
-                    destination={() =>
-                        setCurrentMonth(dateFns.subMonths(currentMonth, 1))
-                    }
-                    className="smallIcon"
-                >
-                    <FontAwesomeIcon icon={faChevronLeft} />
-                </Link>
-                <span>{dateFns.format(currentMonth, "MMMM YYYY")}</span>
-                <Link
-                    destination={() =>
-                        setCurrentMonth(dateFns.addMonths(currentMonth, 1))
-                    }
-                    className="smallIcon"
-                >
-                    <FontAwesomeIcon icon={faChevronRight} />
-                </Link>
-            </div>
-
-            <table className="calendarGrid">
-                <thead>
-                    <tr>
-                        {getWeekdayNameHeaders().map((value: string, index: number) => (
-                            <td key={index}>{value}</td>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>{getMonthGrid()}</tbody>
-            </table>
-        </div>
+        <table className="calendarGrid">
+            <thead>
+                <tr>
+                    <th colSpan={7}>
+                        <Link
+                            destination={() =>
+                                setCurrentMonth(dateFns.subMonths(currentMonth, 1))
+                            }
+                            className="smallIcon"
+                        >
+                            <FontAwesomeIcon icon={faChevronLeft} />
+                        </Link>
+                        <span id="monthDisplay">
+                            {dateFns.format(currentMonth, "MMMM YYYY")}
+                        </span>
+                        <Link
+                            destination={() =>
+                                setCurrentMonth(dateFns.addMonths(currentMonth, 1))
+                            }
+                            className="smallIcon"
+                        >
+                            <FontAwesomeIcon icon={faChevronRight} />
+                        </Link>
+                    </th>
+                </tr>
+                <tr>
+                    {getWeekdayNameHeaders().map((value: string, index: number) => (
+                        <td key={index}>{value}</td>
+                    ))}
+                </tr>
+            </thead>
+            <tbody>{getMonthGrid()}</tbody>
+        </table>
     );
 };
 
