@@ -31,15 +31,6 @@ const Settings = (props: ISettingProps) => {
         props.dispatch(push(to));
     };
 
-    const refreshSchedule = async () => {
-        const token = await getTokenSilently();
-        if (token !== undefined) {
-            props.dispatch(
-                selectSchool(token, props.selectedSchool.data.getIdentifier())
-            );
-        }
-    };
-
     if (props.selectedSchool.data === {} && !props.selectedSchool.isFetching) {
         navigate(pages.selectSchool);
     }
@@ -121,7 +112,13 @@ const Settings = (props: ISettingProps) => {
                         (
                         <Link
                             // tslint:disable-next-line: jsx-no-lambda
-                            destination={refreshSchedule}
+                            destination={() =>
+                                props.dispatch(
+                                    selectSchool(
+                                        props.selectedSchool.data.getIdentifier()
+                                    )
+                                )
+                            }
                             title="Reload Schedule"
                         >
                             Refresh

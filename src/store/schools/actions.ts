@@ -39,16 +39,16 @@ function fetchError(message: string): SchoolActionTypes {
     };
 }
 
-export function selectSchool(authToken: string, schoolId: string) {
+export function selectSchool(schoolId: string) {
     return async (dispatch: Dispatch) => {
         dispatch(requestSchool());
 
         const school = ClassClockService.validateResponse(
-            ClassClockService.getSchool(authToken, schoolId)
+            ClassClockService.getSchool(schoolId)
         );
 
         const schedules = ClassClockService.validateResponse(
-            ClassClockService.getSchedulesListForSchool(authToken, schoolId)
+            ClassClockService.getSchedulesListForSchool(schoolId)
         );
 
         Promise.all([school, schedules]).then((result: any) => {
@@ -63,11 +63,7 @@ export function selectSchool(authToken: string, schoolId: string) {
                 const scheduleId = schedule.id;
                 // const sched_uri = schedule.links.self;
                 const scheduleRequest = ClassClockService.validateResponse(
-                    ClassClockService.getDetailedScheduleForSchool(
-                        authToken,
-                        schoolId,
-                        scheduleId
-                    )
+                    ClassClockService.getDetailedScheduleForSchool(schoolId, scheduleId)
                 );
 
                 scheduleDataList.push(scheduleRequest);
@@ -77,7 +73,6 @@ export function selectSchool(authToken: string, schoolId: string) {
                 schoolResult.data.attributes.schedules = schedulesList.map(
                     (schedule: any) => deconstructJsonApiResource(schedule.data)
                 );
-                console.log("schoolResult: ", schoolResult.data);
                 dispatch(receiveSchool(deconstructJsonApiResource(schoolResult.data)));
             });
         });

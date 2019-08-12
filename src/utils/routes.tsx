@@ -10,19 +10,19 @@ import Admin from "../pages/Admin";
 export const routes = [
     {
         path: pages.main,
-        action: () => <PrivateRoute component={App} path={pages.main} />
+        action: () => <App />
     },
     {
         path: pages.fullSchedule,
-        action: () => <PrivateRoute component={Schedule} path={pages.fullSchedule} />
+        action: () => <Schedule />
     },
     {
         path: pages.settings,
-        action: () => <PrivateRoute component={Settings} path={pages.settings} />
+        action: () => <Settings />
     },
     {
         path: pages.selectSchool,
-        action: () => <PrivateRoute component={SchoolSelect} path={pages.selectSchool} />
+        action: () => <SchoolSelect />
     },
     {
         path: pages.admin,

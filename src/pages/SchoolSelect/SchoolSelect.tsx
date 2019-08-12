@@ -37,7 +37,7 @@ const SchoolSelect = (props: ISelectProps) => {
 
                 if (token !== undefined) {
                     ClassClockService.validateResponse(
-                        ClassClockService.getSchoolsList(token, {
+                        ClassClockService.getSchoolsList({
                             signal: abortSignal
                         })
                     ).then((json: any) => {
@@ -59,18 +59,13 @@ const SchoolSelect = (props: ISelectProps) => {
         };
     }, []);
 
-    const setSchool = async (id: string) => {
-        const token = await getTokenSilently();
-        if (props.selectedSchool.data.id !== id && token !== undefined) {
-            props.dispatch(selectSchool(token, id));
-        }
-
-        props.dispatch(push(pages.main));
-    };
     const list = schoolList.map((school: School) => (
         <li
             key={school.getIdentifier()}
-            onClick={() => setSchool(school.getIdentifier())}
+            onClick={() => {
+                props.dispatch(selectSchool(school.getIdentifier()));
+                props.dispatch(push(pages.main));
+            }}
         >
             <span className="schoolAcronym">{school.getAcronym()}</span>
             <br />
