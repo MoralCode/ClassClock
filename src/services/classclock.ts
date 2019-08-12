@@ -1,40 +1,31 @@
 export default class ClassClockService {
     public static baseURL: string = "http://localhost:5000/v0";
 
-    static getSchoolsList = async (
-        authToken: string,
-        params?: any
-    ): Promise<Response> => {
+    static getSchoolsList = async (params?: any): Promise<Response> => {
         return await fetch(
             ClassClockService.baseURL + "/schools/",
-            ClassClockService.getHeaders(authToken, "GET", params)
+            ClassClockService.getHeaders("GET", params)
         );
     };
 
-    static getSchool = async (
-        authToken: string,
-        schoolId: string,
-        params?: any
-    ): Promise<Response> => {
+    static getSchool = async (schoolId: string, params?: any): Promise<Response> => {
         return await fetch(
             ClassClockService.baseURL + "/school/" + schoolId + "/",
-            ClassClockService.getHeaders(authToken, "GET", params)
+            ClassClockService.getHeaders("GET", params)
         );
     };
 
     static getSchedulesListForSchool = async (
-        authToken: string,
         schoolId: string,
         params?: any
     ): Promise<Response> => {
         return await fetch(
             ClassClockService.baseURL + "/school/" + schoolId + "/bellschedules/",
-            ClassClockService.getHeaders(authToken, "GET", params)
+            ClassClockService.getHeaders("GET", params)
         );
     };
 
     static getDetailedScheduleForSchool = async (
-        authToken: string,
         schoolId: string,
         scheduleId: string,
         params?: any
@@ -46,7 +37,7 @@ export default class ClassClockService {
                 "/bellschedule/" +
                 scheduleId +
                 "/",
-            ClassClockService.getHeaders(authToken, "GET", params)
+            ClassClockService.getHeaders("GET", params)
         );
     };
 
@@ -77,9 +68,7 @@ export default class ClassClockService {
             {},
             {
                 method,
-                headers: new Headers({
-                    Accept: "application/vnd.api+json"
-                })
+                headers: new Headers({ Accept: "application/vnd.api+json" })
             },
             parameters
         );
