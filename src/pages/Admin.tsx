@@ -9,7 +9,7 @@ import { IState } from "../store/schools/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "../react-auth0-wrapper";
-import Calendar from "../components/Calendar/Calendar";
+import Calendar, { IScheduleDates } from "../components/Calendar/Calendar";
 
 export interface IAdminProps {
     selectedSchool: {
@@ -47,7 +47,7 @@ const Admin = (props: IAdminProps) => {
 
     const getScheduleOptions = () => {
         const schedules = props.selectedSchool.data.getSchedules();
-        const optionProps: { [key: string]: { name: string; color: string } } = {};
+        const optionProps: IScheduleDates = {};
         if (schedules !== undefined) {
             for (const schedule of schedules) {
                 optionProps[schedule.getIdentifier()] = {

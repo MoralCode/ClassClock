@@ -5,8 +5,12 @@ import { faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons
 import dateFns from "date-fns";
 import Link from "../Link";
 
+export interface IScheduleDates {
+    [key: string]: { name: string; color: string; dates?: number[] };
+}
+
 export interface ICalendarProps {
-    options: { [key: string]: { name: string; color: string } };
+    options: IScheduleDates;
 }
 
 const Calendar = (props: ICalendarProps) => {
