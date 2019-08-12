@@ -66,20 +66,22 @@ export default class ClassClockService {
     };
 
     private static getHeaders = (
-        authToken: string,
         method: string,
+        authToken?: string,
         params?: any
     ): { method: string; headers: Headers } => {
+        const parameters = authToken
+            ? { ...params, Authorization: "Bearer " + authToken }
+            : params;
         return Object.assign(
             {},
             {
                 method,
                 headers: new Headers({
-                    Accept: "application/vnd.api+json",
-                    Authorization: "Bearer " + authToken
+                    Accept: "application/vnd.api+json"
                 })
             },
-            params
+            parameters
         );
     };
 }
