@@ -13,7 +13,7 @@ import { URLs } from "../utils/constants";
 import { setTimeFormatPreference } from "../store/usersettings/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons";
-import { faHome, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faSignOutAlt, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "../react-auth0-wrapper";
 import format from "date-fns/format";
 import { selectSchool, invalidateSchool } from "../store/schools/actions";
@@ -25,7 +25,7 @@ export interface ISettingProps {
 }
 
 const Settings = (props: ISettingProps) => {
-    const { logout, user, getTokenSilently } = useAuth0();
+    const { logout, user, loginWithRedirect } = useAuth0();
 
     const navigate = (to: string) => {
         props.dispatch(push(to));
@@ -63,7 +63,17 @@ const Settings = (props: ISettingProps) => {
                     )
                 </span>
             ) : (
-                undefined
+                <Link
+                    // tslint:disable-next-line: jsx-no-lambda
+                    destination={() =>
+                        loginWithRedirect({
+                            appState: { targetUrl: pages.settings }
+                        })
+                    }
+                    title="Admin Login"
+                >
+                    Admin Log In
+                </Link>
             )}
 
             <p>
