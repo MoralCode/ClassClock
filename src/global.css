@@ -95,8 +95,8 @@ div#page {
     background-color: grey;
 }
 
-.smallText {
-    font-size: 10px;
+.smallerText {
+    font-size: 0.85em;
 }
 
 .smallIcon {
