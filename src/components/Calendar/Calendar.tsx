@@ -123,19 +123,24 @@ const Calendar = (props: ICalendarProps) => {
     };
 
     const getGroupAndPositionForDate = (date: Date): [string, number] | undefined => {
-        // const groups: Array<[string, number]> = [];
         for (const key in selectedDates) {
             if (selectedDates.hasOwnProperty(key)) {
+                // const possibleDates = dates.filter((value: number) => {
+                //     const selDate = new Date(value);
+                //     return (
+                //         selDate.getFullYear() === date.getFullYear() &&
+                //         selDate.getMonth() === date.getMonth() &&
+                //         selDate.getDate() === date.getDate()
+                //     );
+                // });
+                // console.log("poss: ", date.getTime(), possibleDates);
                 const indexInGroup = selectedDates[key].indexOf(date.getTime());
                 if (indexInGroup !== -1) {
                     return [key, indexInGroup];
                 }
             }
         }
-
         return;
-        // const dateInUnixTime = date.getTime();
-        // const index = selectedDates[key].indexOf(dateInUnixTime);
     };
 
     const getWeekdayNameHeaders = () => {
