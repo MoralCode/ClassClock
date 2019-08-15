@@ -16,9 +16,14 @@ export interface ICalendarProps {
 const Calendar = (props: ICalendarProps) => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
     const initialOptions: { [key: string]: number[] } = {};
-    for (const option of Object.keys(props.options)) {
-        initialOptions[option] = [];
-    }
+
+    Object.entries(props.options).forEach(value => {
+        const [id, options] = value;
+        if (options.dates) {
+            initialOptions[id] = options.dates;
+        }
+    });
+
     const [selectedDates, setSelectedDates] = useState(initialOptions);
 
     const config = { weekStartsOn: 1 };
