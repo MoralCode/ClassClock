@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "../react-auth0-wrapper";
 import Calendar, { IScheduleDates } from "../components/Calendar/Calendar";
+import { startOfDay } from "date-fns";
 
 export interface IAdminProps {
     selectedSchool: {
@@ -52,7 +53,10 @@ const Admin = (props: IAdminProps) => {
             for (const schedule of schedules) {
                 optionProps[schedule.getIdentifier()] = {
                     color: getRandomHtmlColor(),
-                    name: schedule.getName()
+                    name: schedule.getName(),
+                    dates: schedule
+                        .getDates()
+                        .map((value: Date) => startOfDay(value).getTime())
                 };
             }
         }
