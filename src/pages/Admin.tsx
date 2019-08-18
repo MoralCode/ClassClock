@@ -74,9 +74,41 @@ const Admin = (props: IAdminProps) => {
             );
         }
     }
+
     return (
         <div>
             <h1>Admin</h1>
+            <div id="schoolOptions">
+                <label>
+                    School name:
+                    <input
+                        type="text"
+                        value={props.selectedSchool.data.getName()}
+                        // disabled={true}
+                        readOnly={true}
+                    />
+                </label>
+                <br />
+                <label>
+                    School acronym:
+                    <input
+                        type="text"
+                        value={props.selectedSchool.data.getAcronym()}
+                        // disabled={true}
+                        readOnly={true}
+                    />
+                </label>
+                <br />
+                <label>
+                    Name of Passing Period:
+                    <input
+                        type="text"
+                        value={props.selectedSchool.data.getPassingTimeName()}
+                        onChange={() => {}}
+                    />
+                </label>
+            </div>
+            <br />
             <Calendar options={scheduleOptions} />
             <ul
                 style={{
