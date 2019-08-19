@@ -11,6 +11,7 @@ import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "../react-auth0-wrapper";
 import Calendar, { IScheduleDates } from "../components/Calendar/Calendar";
 import { startOfDay } from "date-fns";
+import SelectHeader from "../components/SelectHeader";
 
 export interface IAdminProps {
     selectedSchool: {
@@ -28,6 +29,7 @@ const Admin = (props: IAdminProps) => {
         props.dispatch(push(to));
     };
 
+    const schedules = props.selectedSchool.data.getSchedules();
     // if (
     //     user === undefined ||
     //     props.selectedSchool.data.getOwnerIdentifier() !== user.sub
@@ -47,7 +49,6 @@ const Admin = (props: IAdminProps) => {
     };
 
     const getScheduleOptions = () => {
-        const schedules = props.selectedSchool.data.getSchedules();
         const optionProps: IScheduleDates = {};
         if (schedules !== undefined) {
             for (const schedule of schedules) {
