@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import "./Calendar.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import dateFns from "date-fns";
-import Link from "../Link";
+import SelectHeader from "../SelectHeader";
 
 export interface IScheduleDates {
     [key: string]: { name: string; color: string; dates?: number[] };
@@ -205,25 +203,15 @@ const Calendar = (props: ICalendarProps) => {
             <thead>
                 <tr>
                     <th colSpan={7}>
-                        <Link
-                            destination={() =>
+                        <SelectHeader
+                            lastAction={() =>
                                 setCurrentMonth(dateFns.subMonths(currentMonth, 1))
                             }
-                            className="smallIcon"
-                        >
-                            <FontAwesomeIcon icon={faChevronLeft} />
-                        </Link>
-                        <span id="monthDisplay">
-                            {dateFns.format(currentMonth, "MMMM YYYY")}
-                        </span>
-                        <Link
-                            destination={() =>
+                            content={dateFns.format(currentMonth, "MMMM YYYY")}
+                            nextAction={() =>
                                 setCurrentMonth(dateFns.addMonths(currentMonth, 1))
                             }
-                            className="smallIcon"
-                        >
-                            <FontAwesomeIcon icon={faChevronRight} />
-                        </Link>
+                        />
                     </th>
                 </tr>
                 <tr>
