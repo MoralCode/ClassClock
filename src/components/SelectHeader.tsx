@@ -4,21 +4,31 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 interface ISelectHeaderProps {
-    lastAction: () => void;
-    nextAction: () => void;
+    lastAction?: () => void;
+    nextAction?: () => void;
     content: string;
 }
 
 const SelectHeader = (props: ISelectHeaderProps) => {
     return (
         <>
-            <Link destination={props.lastAction} className="smallIcon">
-                <FontAwesomeIcon icon={faChevronLeft} />
-            </Link>
+            {props.lastAction ? (
+                <Link destination={props.lastAction} className="smallIcon">
+                    <FontAwesomeIcon icon={faChevronLeft} />
+                </Link>
+            ) : (
+                undefined
+            )}
+
             <span id="monthDisplay">{props.content}</span>
-            <Link destination={props.nextAction} className="smallIcon">
-                <FontAwesomeIcon icon={faChevronRight} />
-            </Link>
+
+            {props.nextAction ? (
+                <Link destination={props.nextAction} className="smallIcon">
+                    <FontAwesomeIcon icon={faChevronRight} />
+                </Link>
+            ) : (
+                undefined
+            )}
         </>
     );
 };
