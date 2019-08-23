@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Calendar.css";
-import dateFns from "date-fns";
+import dateFns, { isSameDay } from "date-fns";
 import SelectHeader from "../SelectHeader";
 
 export interface IScheduleDates {
@@ -169,7 +169,7 @@ const Calendar = (props: ICalendarProps) => {
             const location = getGroupAndPositionForDate(date);
             const currentOptionKey = location ? location[0] : undefined;
 
-            const color = currentOptionKey
+            const bgColor = currentOptionKey
                 ? { backgroundColor: props.options[currentOptionKey].color }
                 : undefined;
 
@@ -183,7 +183,11 @@ const Calendar = (props: ICalendarProps) => {
                                 : undefined
                         }
                         data-date={date.getTime()}
-                        style={color}
+                        style={
+                            isSameDay(new Date(), date)
+                                ? { ...bgColor, color: "gray" }
+                                : bgColor
+                        }
                     >
                         {date.getDate()}
                     </span>
