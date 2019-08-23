@@ -12,7 +12,7 @@ export interface ICalendarProps {
 }
 
 const Calendar = (props: ICalendarProps) => {
-    const [currentMonth, setCurrentMonth] = useState(new Date());
+    const [selectedMonth, setSelectedMonth] = useState(new Date());
     const initialOptions: { [key: string]: number[] } = {};
 
     Object.entries(props.options).forEach(value => {
@@ -25,8 +25,8 @@ const Calendar = (props: ICalendarProps) => {
     const [selectedDates, setSelectedDates] = useState(initialOptions);
 
     const config = { weekStartsOn: 1 };
-    const startDate = dateFns.startOfWeek(dateFns.startOfMonth(currentMonth), config);
-    const endDate = dateFns.endOfWeek(dateFns.endOfMonth(currentMonth), config);
+    const startDate = dateFns.startOfWeek(dateFns.startOfMonth(selectedMonth), config);
+    const endDate = dateFns.endOfWeek(dateFns.endOfMonth(selectedMonth), config);
 
     const onDateClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
         const dateValue: Date = new Date(parseInt(event.currentTarget.dataset.date!, 10));
@@ -178,7 +178,7 @@ const Calendar = (props: ICalendarProps) => {
                     <span
                         onClick={event => onDateClick(event)}
                         className={
-                            dateFns.getMonth(date) !== dateFns.getMonth(currentMonth)
+                            dateFns.getMonth(date) !== dateFns.getMonth(selectedMonth)
                                 ? "disabled"
                                 : undefined
                         }
@@ -205,11 +205,11 @@ const Calendar = (props: ICalendarProps) => {
                     <th colSpan={7}>
                         <SelectHeader
                             lastAction={() =>
-                                setCurrentMonth(dateFns.subMonths(currentMonth, 1))
+                                setSelectedMonth(dateFns.subMonths(selectedMonth, 1))
                             }
-                            content={dateFns.format(currentMonth, "MMMM YYYY")}
+                            content={dateFns.format(selectedMonth, "MMMM YYYY")}
                             nextAction={() =>
-                                setCurrentMonth(dateFns.addMonths(currentMonth, 1))
+                                setSelectedMonth(dateFns.addMonths(selectedMonth, 1))
                             }
                         />
                     </th>
