@@ -18,8 +18,6 @@ export interface ISelectProps {
 }
 
 const SchoolSelect = (props: ISelectProps) => {
-    const { getTokenSilently } = useAuth0();
-
     const [schoolList, setSchoolList] = useState([]);
     const [lastRefresh, setlastRefresh] = useState(0);
 
@@ -33,23 +31,19 @@ const SchoolSelect = (props: ISelectProps) => {
             Math.abs(new Date().getTime() - lastRefresh) > 120000 //120000 ms
         ) {
             const fetchSchools = async (abortSignal: AbortSignal) => {
-                const token = await getTokenSilently();
+                ClassClockService.validateResponse(
+                    ClassClockService.getSchoolsList({
+                        signal: abortSignal
+                    })
+                ).then((json: any) => {
+                    setSchoolList(
+                        json.data.map((value: any) =>
+                            School.fromJson(deconstructJsonApiResource(value))
+                        )
+                    );
 
-                if (token !== undefined) {
-                    ClassClockService.validateResponse(
-                        ClassClockService.getSchoolsList({
-                            signal: abortSignal
-                        })
-                    ).then((json: any) => {
-                        setSchoolList(
-                            json.data.map((value: any) =>
-                                School.fromJson(deconstructJsonApiResource(value))
-                            )
-                        );
-
-                        setlastRefresh(new Date().getTime());
-                    });
-                }
+                    setlastRefresh(new Date().getTime());
+                });
             };
             fetchSchools(signal);
         }
