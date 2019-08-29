@@ -1,5 +1,5 @@
 export default class ClassClockService {
-    public static baseURL: string = "http://localhost:5000/v0";
+    public static baseURL: string = "https://api.classclock.app/v0";
 
     static getSchoolsList = async (params?: any): Promise<Response> => {
         return await fetch(
