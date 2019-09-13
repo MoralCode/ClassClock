@@ -85,14 +85,22 @@ div#page {
     font-size: 32px; /*Default size */
     position: absolute;
     top: 0;
-    left: 0;
     padding-right: 0.15em;
     padding-left: 0.15em;
-    border-bottom-right-radius: 10px;
 }
 
 .cornerNavButton:hover {
     background-color: grey;
+}
+
+.cornerNavLeft {
+    left: 0;
+    border-bottom-right-radius: 10px;
+}
+
+.cornerNavRight {
+    right: 0;
+    border-bottom-left-radius: 10px;
 }
 
 .smallText {

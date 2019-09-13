@@ -78,7 +78,7 @@ const Schedule = (props: IAppProps) => {
     return (
         <div>
             <Link
-                className="cornerNavButton smallIcon"
+                className="cornerNavButton cornerNavLeft smallIcon"
                 // tslint:disable-next-line: jsx-no-lambda
                 destination={() => props.dispatch(push(pages.main))}
             >

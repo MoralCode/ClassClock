@@ -38,7 +38,7 @@ const Settings = (props: ISettingProps) => {
     return (
         <div>
             <Link
-                className="cornerNavButton smallIcon"
+                className="cornerNavButton cornerNavLeft smallIcon"
                 // tslint:disable-next-line: jsx-no-lambda
                 destination={() => navigate(pages.main)}
             >
