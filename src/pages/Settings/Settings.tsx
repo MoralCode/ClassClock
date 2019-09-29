@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { push } from "redux-first-routing";
 import IPageInterface from "../../utils/IPageInterface";
 import "../../global.css";
+import "./settings.css";
 import { IState } from "../../store/schools/types";
 import { IState as UserSettingsIState } from "../../store/usersettings/types";
 import School from "../../@types/school";
