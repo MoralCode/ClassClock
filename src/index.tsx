@@ -8,7 +8,7 @@ import UniversalRouter from "universal-router";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { Auth0Provider } from "./react-auth0-wrapper";
-import { Auth0 } from "./utils/constants";
+import { Auth0, pages } from "./utils/constants";
 import { routes } from "./utils/routes";
 
 // Create the history object
@@ -48,7 +48,7 @@ function render(pathname: string) {
                         domain={Auth0.domain}
                         client_id={Auth0.clientId}
                         audience={Auth0.audience}
-                        redirect_uri={"http://localhost:3000/callback"}
+                        redirect_uri={pages.loginCallback}
                         onRedirectCallback={onRedirectCallback}
                     >
                         {component}

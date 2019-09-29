@@ -1,5 +1,5 @@
 export default class ClassClockService {
-    public static baseURL: string = "http://localhost:5000/v0";
+    public static baseURL: string = "https://api.classclock.app/v0";
 
     static getSchoolsList = async (params?: any): Promise<Response> => {
         return await fetch(
@@ -41,7 +41,10 @@ export default class ClassClockService {
         );
     };
 
-    static validateResponse = async (call: Promise<Response>) => {
+    static validateResponse = async (
+        call: Promise<Response>,
+        onError?: (error: Error) => void
+    ) => {
         return await call.then(
             (response: Response) => {
                 if (response.ok) {
@@ -52,7 +55,10 @@ export default class ClassClockService {
             // any errors in the dispatch and resulting render,
             // causing a loop of 'Unexpected batch number' errors.
             // https://github.com/facebook/react/issues/6895
-            (error: Error) => console.log("An error occurred.", error)
+            (error: Error) => {
+                console.log(onError);
+                onError ? onError(error) : console.log("An error occurred: ", error);
+            }
         );
     };
 

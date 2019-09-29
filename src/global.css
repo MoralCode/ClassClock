@@ -50,7 +50,7 @@ body {
     flex-direction: column;
 }
 
-body > * {
+div#root {
     margin: 0 auto;
     display: block;
     text-align: center;

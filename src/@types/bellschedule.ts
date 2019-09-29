@@ -2,6 +2,7 @@ import ClassPeriod from "./classperiod";
 import Time from "./time";
 import { TimeComparisons } from "../utils/enums";
 import { getValueIfKeyInList, sortClassesByStartTime } from "../utils/helpers";
+import { parse } from "date-fns";
 
 export default class BellSchedule {
     public static fromJson(json: any) {
@@ -9,7 +10,7 @@ export default class BellSchedule {
             getValueIfKeyInList(["id", "identifier"], json),
             getValueIfKeyInList(["name", "full_name", "fullName"], json),
             getValueIfKeyInList(["endpoint"], json),
-            getValueIfKeyInList(["dates"], json).map((date: string) => new Date(date)),
+            getValueIfKeyInList(["dates"], json).map((date: string) => parse(date)),
             getValueIfKeyInList(["classes", "meeting_times"], json).map(
                 (meetingTime: any) => ClassPeriod.fromJson(meetingTime)
             ),

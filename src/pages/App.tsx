@@ -44,7 +44,9 @@ const App = (props: IAppProps) => {
 
     switch (currentSchedule) {
         case undefined:
-            props.dispatch(push(pages.selectSchool));
+            if (!props.selectedSchool.isFetching) {
+                props.dispatch(push(pages.selectSchool));
+            }
             break;
         case null:
             content = <p>No School Today</p>;
