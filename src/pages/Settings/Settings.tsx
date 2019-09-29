@@ -66,47 +66,26 @@ const Settings = (props: ISettingProps) => {
             ) : (
                 undefined
             )}
-
-            <p>
+            <h2 className="settingsHeader">Selected School: </h2>
+            <div>
                 {props.selectedSchool.isFetching ? (
                     <span>Loading School...</span>
                 ) : (
-                    <b>{props.selectedSchool.data.getName() + " "}</b>
-                )}
-                <br />
-                <em className="smallerText">
-                    (
                     <Link
                         // tslint:disable-next-line: jsx-no-lambda
                         destination={() => navigate(pages.selectSchool)}
                         title="Change School"
                     >
-                        Change School
+                        {props.selectedSchool.data.getName() + " "}
                     </Link>
-                    )
-                </em>
-                {user && props.selectedSchool.data.getOwnerIdentifier() === user.sub ? (
-                    <em className="smallerText">
-                        (
-                        <Link
-                            // tslint:disable-next-line: jsx-no-lambda
-                            destination={() => navigate(pages.admin)}
-                            title="Manage School"
-                        >
-                            Manage School
-                        </Link>
-                        )
-                    </em>
-                ) : (
-                    undefined
                 )}
                 <br />
                 <em className="smallerText">
-                    Updated:{" "}
+                    Last updated{" "}
                     {distanceInWords(
                         new Date(),
                         new Date(props.selectedSchool.lastUpdated)
-                    ) + " "}
+                    ) + " ago "}
                 </em>
                 {!props.selectedSchool.isFetching ? (
                     <em className="smallerText">
@@ -129,9 +108,24 @@ const Settings = (props: ISettingProps) => {
                 ) : (
                     undefined
                 )}
-            </p>
+                <br />
+                {user && props.selectedSchool.data.getOwnerIdentifier() === user.sub ? (
+                    <em className="smallerText">
+                        <Link
+                            // tslint:disable-next-line: jsx-no-lambda
+                            destination={() => navigate(pages.admin)}
+                            title="Edit Schedules"
+                        >
+                            Edit Schedules
+                        </Link>
+                    </em>
+                ) : (
+                    undefined
+                )}
+            </div>
+            <h2 className="settingsHeader">Time Display:</h2>
             <label>
-                <b>Use 24-hour Time?</b>{" "}
+                Use 24-hour Time?{" "}
                 <input
                     type="checkbox"
                     checked={props.userSettings.use24HourTime}
