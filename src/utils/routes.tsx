@@ -1,7 +1,7 @@
 import React from "react";
 import App from "../pages/App";
 import Schedule from "../pages/Schedule";
-import Settings from "../pages/Settings";
+import Settings from "../pages/Settings/Settings";
 import PrivateRoute from "../components/PrivateRoute";
 import SchoolSelect from "../pages/SchoolSelect/SchoolSelect";
 import { pages } from "./constants";
