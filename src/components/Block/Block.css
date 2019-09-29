@@ -1,0 +1,8 @@
+.infoBlock {
+    margin: 10px 0;
+}
+
+.infoBlock * {
+    margin: 1px 0;
+    padding: 0;
+}
