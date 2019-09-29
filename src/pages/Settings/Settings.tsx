@@ -16,7 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faHome, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "../../react-auth0-wrapper";
-import format from "date-fns/format";
+import distanceInWords from "date-fns/distance_in_words";
 import { selectSchool, invalidateSchool } from "../../store/schools/actions";
 
 export interface ISettingProps {
@@ -103,9 +103,9 @@ const Settings = (props: ISettingProps) => {
                 <br />
                 <em className="smallerText">
                     Updated:{" "}
-                    {format(
-                        new Date(props.selectedSchool.lastUpdated),
-                        "MMM D YYYY h:mm:ss a"
+                    {distanceInWords(
+                        new Date(),
+                        new Date(props.selectedSchool.lastUpdated)
                     ) + " "}
                 </em>
                 {!props.selectedSchool.isFetching ? (
