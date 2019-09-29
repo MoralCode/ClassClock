@@ -1,0 +1,61 @@
+.calendar {
+}
+#monthDisplay {
+    width: 80%;
+    display: inline-block;
+}
+
+table.calendarGrid {
+    /* border: 1px solid black; */
+    margin: 0;
+    padding: 0;
+    font-size: 1.1em;
+    margin: 0 auto;
+}
+
+.calendarGrid thead {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.calendarGrid thead > * {
+    /* border: 2px solid black; */
+    font-weight: bold;
+}
+
+.calendarGrid td {
+    /* border: 1px solid black; */
+    width: 40px;
+    height: 40px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+td > label {
+    width: 40px;
+    height: 40px;
+    /* line-height: 100%; */
+    display: block;
+    /* vertical-align: middle; */
+}
+
+.disabled {
+    color: darkgray;
+    pointer-events: none;
+}
+
+input[type="checkbox"]:checked + label.disabled {
+    background-color: gray;
+}
+
+input[type="checkbox"] + label {
+    border-radius: 20px;
+}
+
+input[type="checkbox"]:checked + label {
+    font-weight: bold;
+    background-color: green;
+}
