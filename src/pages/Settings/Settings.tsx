@@ -53,7 +53,6 @@ const Settings = (props: ISettingProps) => {
                     // tslint:disable-next-line: jsx-no-lambda
                     destination={() => {
                         logout();
-                        props.dispatch(invalidateSchool());
                     }}
                     title="Log Out"
                 >
