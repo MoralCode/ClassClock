@@ -1,22 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { push } from "redux-first-routing";
-import IPageInterface from "../utils/IPageInterface";
+import IPageInterface from "../../utils/IPageInterface";
 import "../global.css";
-import { IState } from "../store/schools/types";
-import { IState as UserSettingsIState } from "../store/usersettings/types";
-import School from "../@types/school";
-import Link from "../components/Link";
-import { pages } from "../utils/constants";
-import Icon from "../components/Icon";
-import { URLs } from "../utils/constants";
-import { setTimeFormatPreference } from "../store/usersettings/actions";
+import { IState } from "../../store/schools/types";
+import { IState as UserSettingsIState } from "../../store/usersettings/types";
+import School from "../../@types/school";
+import Link from "../../components/Link";
+import { pages } from "../../utils/constants";
+import Icon from "../../components/Icon";
+import { URLs } from "../../utils/constants";
+import { setTimeFormatPreference } from "../../store/usersettings/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faHome, faSignOutAlt, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
-import { useAuth0 } from "../react-auth0-wrapper";
+import { useAuth0 } from "../../react-auth0-wrapper";
 import format from "date-fns/format";
-import { selectSchool, invalidateSchool } from "../store/schools/actions";
+import { selectSchool, invalidateSchool } from "../../store/schools/actions";
 
 export interface ISettingProps {
     selectedSchool: any;
