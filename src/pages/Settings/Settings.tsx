@@ -26,7 +26,7 @@ export interface ISettingProps {
 }
 
 const Settings = (props: ISettingProps) => {
-    const { logout, user, getTokenSilently } = useAuth0();
+    const { logout, user, loginWithRedirect } = useAuth0();
 
     const navigate = (to: string) => {
         props.dispatch(push(to));
