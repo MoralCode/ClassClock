@@ -45,22 +45,20 @@ const Settings = (props: ISettingProps) => {
             >
                 <FontAwesomeIcon icon={faHome} />
             </Link>
-            <br />
-
-            <h1>Settings</h1>
-            {user ? (
+            {user && (
                 <Link
+                    className="cornerNavButton cornerNavRight smallIcon"
                     // tslint:disable-next-line: jsx-no-lambda
                     destination={() => {
                         logout();
                     }}
                     title="Log Out"
                 >
-                    <FontAwesomeIcon icon={faSignOutAlt} /> Log Out
+                    <FontAwesomeIcon icon={faSignOutAlt} />
                 </Link>
-            ) : (
-                undefined
             )}
+
+            <h1>Settings</h1>
             <h2 className="settingsHeader">Selected School: </h2>
             <div>
                 {props.selectedSchool.isFetching ? (
