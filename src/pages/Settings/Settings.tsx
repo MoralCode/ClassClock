@@ -64,42 +64,39 @@ const Settings = (props: ISettingProps) => {
                 {props.selectedSchool.isFetching ? (
                     <span>Loading School...</span>
                 ) : (
-                    <Link
-                        // tslint:disable-next-line: jsx-no-lambda
-                        destination={() => navigate(pages.selectSchool)}
-                        title="Change School"
-                    >
-                        {props.selectedSchool.data.getName() + " "}
-                    </Link>
-                )}
-                <br />
-                <em className="smallerText">
-                    Last updated{" "}
-                    {distanceInWords(
-                        new Date(),
-                        new Date(props.selectedSchool.lastUpdated)
-                    ) + " ago "}
-                </em>
-                {!props.selectedSchool.isFetching ? (
-                    <em className="smallerText">
-                        (
+                    <>
                         <Link
                             // tslint:disable-next-line: jsx-no-lambda
-                            destination={() =>
-                                props.dispatch(
-                                    selectSchool(
-                                        props.selectedSchool.data.getIdentifier()
-                                    )
-                                )
-                            }
-                            title="Reload Schedule"
+                            destination={() => navigate(pages.selectSchool)}
+                            title="Change School"
                         >
-                            Refresh
+                            {props.selectedSchool.data.getName() + " "}
                         </Link>
-                        )
-                    </em>
-                ) : (
-                    undefined
+                        <br />
+                        <em className="smallerText">
+                            Last updated{" "}
+                            {distanceInWords(
+                                new Date(),
+                                new Date(props.selectedSchool.lastUpdated)
+                            ) + " ago "}
+                        </em>
+
+                        <em className="smallerText">
+                            <Link
+                                // tslint:disable-next-line: jsx-no-lambda
+                                destination={() =>
+                                    props.dispatch(
+                                        selectSchool(
+                                            props.selectedSchool.data.getIdentifier()
+                                        )
+                                    )
+                                }
+                                title="Reload Schedule"
+                            >
+                                Refresh
+                            </Link>
+                        </em>
+                    </>
                 )}
                 <br />
                 {user && props.selectedSchool.data.getOwnerIdentifier() === user.sub ? (
