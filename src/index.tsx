@@ -48,7 +48,7 @@ function render(pathname: string) {
                         domain={Auth0.domain}
                         client_id={Auth0.clientId}
                         audience={Auth0.audience}
-                        redirect_uri={pages.loginCallback}
+                        redirect_uri={"http://localhost:3000" + pages.loginCallback}
                         onRedirectCallback={onRedirectCallback}
                     >
                         {component}
