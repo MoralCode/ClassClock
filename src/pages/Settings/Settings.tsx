@@ -49,20 +49,16 @@ const Settings = (props: ISettingProps) => {
 
             <h1>Settings</h1>
             {user ? (
-                <span>
-                    Hello <b>{user.name || user.email}</b> (
-                    <Link
-                        // tslint:disable-next-line: jsx-no-lambda
-                        destination={() => {
-                            logout();
-                            props.dispatch(invalidateSchool());
-                        }}
-                        title="Log Out"
-                    >
-                        <FontAwesomeIcon icon={faSignOutAlt} /> Log Out
-                    </Link>
-                    )
-                </span>
+                <Link
+                    // tslint:disable-next-line: jsx-no-lambda
+                    destination={() => {
+                        logout();
+                        props.dispatch(invalidateSchool());
+                    }}
+                    title="Log Out"
+                >
+                    <FontAwesomeIcon icon={faSignOutAlt} /> Log Out
+                </Link>
             ) : (
                 undefined
             )}
