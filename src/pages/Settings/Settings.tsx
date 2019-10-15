@@ -36,6 +36,39 @@ const Settings = (props: ISettingProps) => {
         navigate(pages.selectSchool);
     }
 
+    const getAdminButton = () => {
+        let isOwner = false;
+
+        let destination;
+        let buttonText = isOwner ? "Edit Schedules" : "Log in to edit schedules";
+        let hover = "Edit Schedules";
+
+        if (user) {
+            isOwner = props.selectedSchool.data.getOwnerIdentifier() === user.sub;
+            destination = () => (isOwner ? navigate(pages.admin) : undefined);
+            if (!isOwner) {
+                hover = "You are not the owner of this class";
+            }
+        } else {
+            destination = () =>
+                loginWithRedirect({
+                    appState: { targetUrl: pages.admin }
+                });
+
+            //TODO: maybe have it automatically find the school you ARE an admin of
+        }
+
+        return (
+            <Link
+                // tslint:disable-next-line: jsx-no-lambda
+                destination={destination}
+                title={hover}
+            >
+                <button disabled={undefined}>{buttonText}</button>
+            </Link>
+        );
+    };
+
     return (
         <div>
             <Link
@@ -99,19 +132,8 @@ const Settings = (props: ISettingProps) => {
                     </>
                 )}
                 <br />
-                {user && props.selectedSchool.data.getOwnerIdentifier() === user.sub ? (
-                    <em className="smallerText">
-                        <Link
-                            // tslint:disable-next-line: jsx-no-lambda
-                            destination={() => navigate(pages.admin)}
-                            title="Edit Schedules"
-                        >
-                            Edit Schedules
-                        </Link>
-                    </em>
-                ) : (
-                    undefined
-                )}
+                <br />
+                {getAdminButton()}
             </div>
             <h2 className="settingsHeader">Time Display:</h2>
             <label>
