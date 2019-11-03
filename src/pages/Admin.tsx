@@ -10,6 +10,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "../react-auth0-wrapper";
 import Calendar, { IScheduleDates } from "../components/Calendar/Calendar";
+import { startOfDay } from "date-fns";
+import SelectHeader from "../components/SelectHeader";
 
 export interface IAdminProps {
     selectedSchool: {
@@ -27,6 +29,7 @@ const Admin = (props: IAdminProps) => {
         props.dispatch(push(to));
     };
 
+    const schedules = props.selectedSchool.data.getSchedules();
     // if (
     //     user === undefined ||
     //     props.selectedSchool.data.getOwnerIdentifier() !== user.sub
@@ -46,13 +49,15 @@ const Admin = (props: IAdminProps) => {
     };
 
     const getScheduleOptions = () => {
-        const schedules = props.selectedSchool.data.getSchedules();
         const optionProps: IScheduleDates = {};
         if (schedules !== undefined) {
             for (const schedule of schedules) {
                 optionProps[schedule.getIdentifier()] = {
                     color: getRandomHtmlColor(),
-                    name: schedule.getName()
+                    name: schedule.getName(),
+                    dates: schedule
+                        .getDates()
+                        .map((value: Date) => startOfDay(value).getTime())
                 };
             }
         }
@@ -70,9 +75,41 @@ const Admin = (props: IAdminProps) => {
             );
         }
     }
+
     return (
         <div>
             <h1>Admin</h1>
+            <div id="schoolOptions">
+                <label>
+                    School name:
+                    <input
+                        type="text"
+                        value={props.selectedSchool.data.getName()}
+                        // disabled={true}
+                        readOnly={true}
+                    />
+                </label>
+                <br />
+                <label>
+                    School acronym:
+                    <input
+                        type="text"
+                        value={props.selectedSchool.data.getAcronym()}
+                        // disabled={true}
+                        readOnly={true}
+                    />
+                </label>
+                <br />
+                <label>
+                    Name of Passing Period:
+                    <input
+                        type="text"
+                        value={props.selectedSchool.data.getPassingTimeName()}
+                        onChange={() => {}}
+                    />
+                </label>
+            </div>
+            <br />
             <Calendar options={scheduleOptions} />
             <ul
                 style={{

@@ -44,6 +44,8 @@ td > label {
 
 .disabled {
     color: darkgray;
+    /* important is necessary here to override the inline styles on the dates */
+    background-color: transparent !important;
     pointer-events: none;
 }
 

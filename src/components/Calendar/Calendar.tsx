@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import "./Calendar.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import dateFns from "date-fns";
-import Link from "../Link";
+import dateFns, { isSameDay } from "date-fns";
+import SelectHeader from "../SelectHeader";
 
 export interface IScheduleDates {
     [key: string]: { name: string; color: string; dates?: number[] };
@@ -14,16 +12,21 @@ export interface ICalendarProps {
 }
 
 const Calendar = (props: ICalendarProps) => {
-    const [currentMonth, setCurrentMonth] = useState(new Date());
+    const [selectedMonth, setSelectedMonth] = useState(new Date());
     const initialOptions: { [key: string]: number[] } = {};
-    for (const option of Object.keys(props.options)) {
-        initialOptions[option] = [];
-    }
+
+    Object.entries(props.options).forEach(value => {
+        const [id, options] = value;
+        if (options.dates) {
+            initialOptions[id] = options.dates;
+        }
+    });
+
     const [selectedDates, setSelectedDates] = useState(initialOptions);
 
     const config = { weekStartsOn: 1 };
-    const startDate = dateFns.startOfWeek(dateFns.startOfMonth(currentMonth), config);
-    const endDate = dateFns.endOfWeek(dateFns.endOfMonth(currentMonth), config);
+    const startDate = dateFns.startOfWeek(dateFns.startOfMonth(selectedMonth), config);
+    const endDate = dateFns.endOfWeek(dateFns.endOfMonth(selectedMonth), config);
 
     const onDateClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
         const dateValue: Date = new Date(parseInt(event.currentTarget.dataset.date!, 10));
@@ -118,19 +121,24 @@ const Calendar = (props: ICalendarProps) => {
     };
 
     const getGroupAndPositionForDate = (date: Date): [string, number] | undefined => {
-        // const groups: Array<[string, number]> = [];
         for (const key in selectedDates) {
             if (selectedDates.hasOwnProperty(key)) {
+                // const possibleDates = dates.filter((value: number) => {
+                //     const selDate = new Date(value);
+                //     return (
+                //         selDate.getFullYear() === date.getFullYear() &&
+                //         selDate.getMonth() === date.getMonth() &&
+                //         selDate.getDate() === date.getDate()
+                //     );
+                // });
+                // console.log("poss: ", date.getTime(), possibleDates);
                 const indexInGroup = selectedDates[key].indexOf(date.getTime());
                 if (indexInGroup !== -1) {
                     return [key, indexInGroup];
                 }
             }
         }
-
         return;
-        // const dateInUnixTime = date.getTime();
-        // const index = selectedDates[key].indexOf(dateInUnixTime);
     };
 
     const getWeekdayNameHeaders = () => {
@@ -161,7 +169,7 @@ const Calendar = (props: ICalendarProps) => {
             const location = getGroupAndPositionForDate(date);
             const currentOptionKey = location ? location[0] : undefined;
 
-            const color = currentOptionKey
+            const bgColor = currentOptionKey
                 ? { backgroundColor: props.options[currentOptionKey].color }
                 : undefined;
 
@@ -170,12 +178,16 @@ const Calendar = (props: ICalendarProps) => {
                     <span
                         onClick={event => onDateClick(event)}
                         className={
-                            dateFns.getMonth(date) !== dateFns.getMonth(currentMonth)
+                            dateFns.getMonth(date) !== dateFns.getMonth(selectedMonth)
                                 ? "disabled"
                                 : undefined
                         }
                         data-date={date.getTime()}
-                        style={color}
+                        style={
+                            isSameDay(new Date(), date)
+                                ? { ...bgColor, color: "gray" }
+                                : bgColor
+                        }
                     >
                         {date.getDate()}
                     </span>
@@ -195,25 +207,15 @@ const Calendar = (props: ICalendarProps) => {
             <thead>
                 <tr>
                     <th colSpan={7}>
-                        <Link
-                            destination={() =>
-                                setCurrentMonth(dateFns.subMonths(currentMonth, 1))
+                        <SelectHeader
+                            lastAction={() =>
+                                setSelectedMonth(dateFns.subMonths(selectedMonth, 1))
                             }
-                            className="smallIcon"
-                        >
-                            <FontAwesomeIcon icon={faChevronLeft} />
-                        </Link>
-                        <span id="monthDisplay">
-                            {dateFns.format(currentMonth, "MMMM YYYY")}
-                        </span>
-                        <Link
-                            destination={() =>
-                                setCurrentMonth(dateFns.addMonths(currentMonth, 1))
+                            content={dateFns.format(selectedMonth, "MMMM YYYY")}
+                            nextAction={() =>
+                                setSelectedMonth(dateFns.addMonths(selectedMonth, 1))
                             }
-                            className="smallIcon"
-                        >
-                            <FontAwesomeIcon icon={faChevronRight} />
-                        </Link>
+                        />
                     </th>
                 </tr>
                 <tr>

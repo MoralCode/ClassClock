@@ -3,6 +3,16 @@ import School from "../@types/school";
 import { TimeComparisons, TimeStates } from "./enums";
 import ClassPeriod from "../@types/classperiod";
 import BellSchedule from "../@types/bellschedule";
+import { useState } from "react";
+
+//https://stackoverflow.com/a/55862077
+export const useForceUpdate = () => {
+    const [, setTick] = useState(0);
+    const update = () => {
+        setTick((tick: number) => tick + 1);
+    };
+    return update;
+};
 
 export function getValueIfKeyInList(list: string[], object: any) {
     for (const key of list) {

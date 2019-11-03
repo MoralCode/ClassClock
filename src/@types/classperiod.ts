@@ -28,12 +28,24 @@ export default class ClassPeriod {
         return this.name;
     }
 
+    public setName(name: string) {
+        this.name = name;
+    }
+
     public getStartTime() {
         return this.startTime;
     }
 
+    public setStartTime(time: Time) {
+        this.startTime = time;
+    }
+
     public getEndTime() {
         return this.endTime;
+    }
+
+    public setEndTime(time: Time) {
+        this.endTime = time;
     }
 
     public getDuration() {
