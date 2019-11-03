@@ -38,6 +38,7 @@ table.calendarGrid {
 td > div {
     width: 45px;
     height: 45px;
+    cursor: pointer;
     /* line-height: 100%; */
     /* vertical-align: middle; */
 }
