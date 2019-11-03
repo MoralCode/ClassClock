@@ -49,17 +49,36 @@ const Admin = (props: IAdminProps) => {
         return color;
     };
 
+    //https://mika-s.github.io/javascript/colors/hsl/2017/12/05/generating-random-colors-in-javascript.html
+    const generateHslaColors = (saturation: number, lightness: number, alpha: number, amount: number) => {
+        const colors = []
+        const huedelta = Math.trunc(360 / amount)
+
+        for (let i = 0; i < amount; i++) {
+            const hue = i * huedelta
+            colors.push(`hsla(${hue},${saturation}%,${lightness}%,${alpha})`)
+        }
+
+        return colors
+    }
+
+
+
     const getScheduleOptions = () => {
         const optionProps: IScheduleDates = {};
+        let colorIndex = 0;
         if (schedules !== undefined) {
+            const colors = generateHslaColors(80, 50, 1, schedules.length)
+
             for (const schedule of schedules) {
                 optionProps[schedule.getIdentifier()] = {
-                    color: getRandomHtmlColor(),
+                    color: colors[colorIndex],
                     name: schedule.getName(),
                     dates: schedule
                         .getDates()
                         .map((value: Date) => startOfDay(value).getTime())
                 };
+                colorIndex++;
             }
         }
         return optionProps;
