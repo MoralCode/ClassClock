@@ -65,15 +65,30 @@ const Admin = (props: IAdminProps) => {
     };
 
     const scheduleOptions = getScheduleOptions();
-    const key = [];
-    for (const option in scheduleOptions) {
-        if (scheduleOptions.hasOwnProperty(option)) {
-            key.push(
-                <li style={{ backgroundColor: scheduleOptions[option].color }}>
-                    {scheduleOptions[option].name}
-                </li>
-            );
+
+
+    const getKey = () => {
+        const key = [];
+        for (const option in scheduleOptions) {
+            if (scheduleOptions.hasOwnProperty(option)) {
+                key.push(
+                    <li key={option} style={{ backgroundColor: scheduleOptions[option].color }}>
+                        {scheduleOptions[option].name}
+                    </li>
+                );
+            }
         }
+        return (<ul
+            style={{
+                listStyleType: "none",
+                margin: 0,
+                padding: 0,
+                display: "inline-block"
+            }}
+            id="key"
+        >
+            {key}
+        </ul>)
     }
 
     return (
@@ -111,15 +126,7 @@ const Admin = (props: IAdminProps) => {
             </div>
             <br />
             <Calendar options={scheduleOptions} />
-            <ul
-                style={{
-                    listStyleType: "none",
-                    margin: 0,
-                    padding: 0
-                }}
-            >
-                {key}
-            </ul>
+            {getKey()}
         </div>
     );
 };
