@@ -185,7 +185,7 @@ const Calendar = (props: ICalendarProps) => {
 
             tempRowData.push(
                 <td key={"date" + dateIndex}>
-                    <span
+                    <div
                         onClick={event => onDateClick(event)}
                         className={
                             dateFns.getMonth(date) !== dateFns.getMonth(selectedMonth)
@@ -196,7 +196,7 @@ const Calendar = (props: ICalendarProps) => {
                         style={bgColor}
                     >
                         {date.getDate()}
-                    </span>
+                    </div>
                 </td>
             );
 

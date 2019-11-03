@@ -24,8 +24,9 @@ table.calendarGrid {
 
 .calendarGrid td {
     /* border: 1px solid black; */
-    width: 40px;
-    height: 40px;
+    padding: 0;
+    width: 45px;
+    height: 45px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -34,11 +35,10 @@ table.calendarGrid {
     user-select: none;
 }
 
-td > label {
-    width: 40px;
-    height: 40px;
+td > div {
+    width: 45px;
+    height: 45px;
     /* line-height: 100%; */
-    display: block;
     /* vertical-align: middle; */
 }
 
