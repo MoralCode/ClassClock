@@ -9,6 +9,7 @@ export interface IScheduleDates {
 
 export interface ICalendarProps {
     options: IScheduleDates;
+    selectedSchedule: string;
 }
 
 const Calendar = (props: ICalendarProps) => {
@@ -31,8 +32,13 @@ const Calendar = (props: ICalendarProps) => {
     const onDateClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
         const dateValue: Date = new Date(parseInt(event.currentTarget.dataset.date!, 10));
         if (isValidDate(dateValue)) {
-            const next = getNextOptionForDate(dateValue);
-            setOptionForDate(dateValue, next);
+            // const next = getNextOptionForDate(dateValue);
+            if (props.selectedSchedule === "") {
+                alert("Please select a schedule to assign a date")
+            } else{
+                setOptionForDate(dateValue, props.selectedSchedule);
+
+            }
         } else {
             console.log("invalid date");
         }
@@ -40,22 +46,22 @@ const Calendar = (props: ICalendarProps) => {
         // event.currentTarget.value = props.options[(key + 1) % props.options.length];
     };
 
-    const getNextOptionForDate = (date: Date) => {
-        const location = getGroupAndPositionForDate(date);
-        const currentOptionKey = location ? location[0] : undefined;
-        const optionKeys = Object.keys(props.options);
+    // const getNextOptionForDate = (date: Date) => {
+    //     const location = getGroupAndPositionForDate(date);
+    //     const currentOptionKey = location ? location[0] : undefined;
+    //     const optionKeys = Object.keys(props.options);
 
-        if (!location) {
-            return optionKeys[0];
-        } else if (
-            currentOptionKey &&
-            currentOptionKey === optionKeys[optionKeys.length - 1]
-        ) {
-            return;
-        } else if (currentOptionKey) {
-            return optionKeys[optionKeys.indexOf(currentOptionKey) + 1];
-        }
-    };
+    //     if (!location) {
+    //         return optionKeys[0];
+    //     } else if (
+    //         currentOptionKey &&
+    //         currentOptionKey === optionKeys[optionKeys.length - 1]
+    //     ) {
+    //         return;
+    //     } else if (currentOptionKey) {
+    //         return optionKeys[optionKeys.indexOf(currentOptionKey) + 1];
+    //     }
+    // };
 
     const setOptionForDate = (date: Date, option?: string) => {
         const location = getGroupAndPositionForDate(date);
@@ -76,6 +82,10 @@ const Calendar = (props: ICalendarProps) => {
                     date
                 );
                 setSelectedDates(updatedSelections);
+            } else {
+                setSelectedDates(
+                    removeDateFromSelectionList(selectedDates, optionKey, posInOption)
+                );
             }
         } else if (!location && option) {
             setSelectedDates(addDateToSelectionList(selectedDates, option, date));

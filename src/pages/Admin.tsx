@@ -151,7 +151,7 @@ const Admin = (props: IAdminProps) => {
             <br />
             <div className="horizontalFlex">
                 {getKey()}
-                <Calendar options={scheduleOptions} />
+                <Calendar options={scheduleOptions} selectedSchedule={selectedSchedule} />
                 
             </div>
         </div>
