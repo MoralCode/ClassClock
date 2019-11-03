@@ -130,8 +130,11 @@ const Admin = (props: IAdminProps) => {
                 </label>
             </div>
             <br />
-            <Calendar options={scheduleOptions} />
-            {getKey()}
+            <div className="horizontalFlex">
+                {getKey()}
+                <Calendar options={scheduleOptions} />
+                
+            </div>
         </div>
     );
 };

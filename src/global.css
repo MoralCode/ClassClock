@@ -196,6 +196,15 @@ section#options > * {
     flex-direction: column;
 }
 
+.horizontalFlex {
+    display: flex;
+}
+
+.horizontalFlex > * {
+    /* Important is used to override inline styles for the table and key */
+    margin: .5em !important;
+}
+
 
 ul#key > .selected {
     position: relative;
