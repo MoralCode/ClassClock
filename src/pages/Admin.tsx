@@ -29,6 +29,7 @@ const Admin = (props: IAdminProps) => {
         props.dispatch(push(to));
     };
 
+    const [selectedSchedule, selectSchedule] = useState("");
     const schedules = props.selectedSchool.data.getSchedules();
     // if (
     //     user === undefined ||
@@ -72,7 +73,11 @@ const Admin = (props: IAdminProps) => {
         for (const option in scheduleOptions) {
             if (scheduleOptions.hasOwnProperty(option)) {
                 key.push(
-                    <li key={option} style={{ backgroundColor: scheduleOptions[option].color }}>
+                    <li
+                        key={option}
+                        style={{ backgroundColor: scheduleOptions[option].color, cursor: "pointer"}}
+                        className={option === selectedSchedule ? "selected" : undefined }
+                        onClick={() => {selectSchedule(option)}}>
                         {scheduleOptions[option].name}
                     </li>
                 );

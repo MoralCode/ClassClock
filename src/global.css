@@ -196,6 +196,13 @@ section#options > * {
     flex-direction: column;
 }
 
+
+ul#key > .selected {
+    position: relative;
+    left: 10px;
+    
+}
+
 .footer__social {
     list-style: none;
     margin: 0;
