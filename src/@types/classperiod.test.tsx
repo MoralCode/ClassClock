@@ -12,7 +12,9 @@ const startTime = new Time(8, 25);
 const endTime = new Time(9, 55);
 
 const classPeriodA = new ClassPeriod(name, startTime, endTime, currentDate);
+
 describe("ClassPeriod", () => {
+    
     it("gets from json", () => {
         expect(
             ClassPeriod.fromJson({
@@ -40,9 +42,5 @@ describe("ClassPeriod", () => {
 
     it("can get its duration", () => {
         expect(classPeriodA.getDuration()).toEqual(new Time(1, 30));
-    });
-
-    it("can get its duration", () => {
-        expect(classPeriodA.getDuration()).toBe(new Time(1, 30));
     });
 });

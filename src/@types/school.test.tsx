@@ -39,6 +39,7 @@ const school = new School(
 );
 
 describe("School", () => {
+    
     it("should get from JSON", () => {
         expect(
             School.fromJson({

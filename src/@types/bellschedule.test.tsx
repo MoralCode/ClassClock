@@ -26,6 +26,7 @@ const schedule = new BellSchedule(
 );
 
 describe("BellSchedule", () => {
+
     it("should get from JSON", () => {
         expect(
             BellSchedule.fromJson({
@@ -64,12 +65,16 @@ describe("BellSchedule", () => {
     it("can get a class period for a given time", () => {
         //before
         expect(schedule.getClassPeriodForTime(new Time(9, 0))).toBeFalsy();
+
         //exactly start
         expect(schedule.getClassPeriodForTime(new Time(9, 10))).toEqual(classPeriod);
+
         //middle
         expect(schedule.getClassPeriodForTime(new Time(9, 30))).toEqual(classPeriod);
+
         //exactly end
         expect(schedule.getClassPeriodForTime(new Time(10, 25))).toEqual(classPeriod);
+        
         //after
         expect(schedule.getClassPeriodForTime(new Time(11, 0))).toBeFalsy();
     });
