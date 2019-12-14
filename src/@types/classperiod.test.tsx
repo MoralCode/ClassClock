@@ -21,7 +21,7 @@ describe("ClassPeriod", () => {
                 endTime: "09:55",
                 creationDate: "2019-07-28T07:37:50.634Z"
             })
-        ).toBe(classPeriodA);
+        ).toEqual(classPeriodA);
     });
 
     //gonna assume the constructor works
@@ -39,7 +39,7 @@ describe("ClassPeriod", () => {
     });
 
     it("can get its duration", () => {
-        expect(classPeriodA.getDuration()).toBe(new Time(1, 30));
+        expect(classPeriodA.getDuration()).toEqual(new Time(1, 30));
     });
 
     it("can get its duration", () => {
