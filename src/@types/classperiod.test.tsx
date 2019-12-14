@@ -4,7 +4,7 @@ import BellSchedule from "./bellschedule";
 import ClassPeriod from "./classperiod";
 import Time from "./time";
 
-const currentDate = new Date();
+const currentDate = new Date("2019-07-28T07:37:50.634Z");
 
 const name = "First Period";
 
@@ -19,7 +19,7 @@ describe("ClassPeriod", () => {
                 name: "First Period",
                 startTime: "08:25",
                 endTime: "09:55",
-                currentDate
+                creationDate: "2019-07-28T07:37:50.634Z"
             })
         ).toBe(classPeriodA);
     });
