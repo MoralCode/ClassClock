@@ -64,6 +64,7 @@ describe("School", () => {
     });
 
     it("can check if school is in session", () => {
-        expect(school.isInSession(new Date("2019-07-28T09:15:50.634Z"))).toBeTruthy();
+        expect(school.isInSession(inClass)).toBeTruthy();
+        expect(school.isInSession(afterSchoolHours)).toBeFalsy();
     });
 });
