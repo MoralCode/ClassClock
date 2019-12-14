@@ -60,7 +60,35 @@ describe("BellSchedule", () => {
         expect(schedule.getName() in ["Regular Schedule", "Display Name"]).toBeTruthy();
     });
 
-    //got bored of testing getters...
+    it("can return API endpoint", () => {
+        expect(schedule.getEndpoint()).toBe("/path/to/sched");
+    });
+
+
+    it("can get its dates", () => {
+        expect(schedule.getDates()).toEqual([
+            new Date("2019-07-28T07:37:50.634Z"),
+            new Date("2019-07-29T07:38:10.979Z"),
+            new Date("2019-07-23T07:38:28.263Z")
+        ]);
+    });
+
+    it("can return its classes", () => {
+        expect(schedule.getAllClasses()).toEqual([classPeriod]);
+    });
+
+    it("can get the correct number of classes", () => {
+        expect(schedule.numberOfClasses()).toEqual([classPeriod].length);
+    });
+
+    it("can return date last updated", () => {
+        expect(schedule.lastUpdated()).toEqual(new Date("2019-07-28T07:37:50.634Z"));
+    });
+
+    it("can test if it has changed since a given date", () => {
+        expect(schedule.hasChangedSince(new Date("2019-07-28T07:07:50.634Z"))).toBeTruthy();
+        expect(schedule.hasChangedSince(new Date("2019-07-28T08:07:50.634Z"))).toBeFalsy();
+    });
 
     it("can get a class period for a given time", () => {
         //before

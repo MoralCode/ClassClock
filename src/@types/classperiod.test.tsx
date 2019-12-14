@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import BellSchedule from "./bellschedule";
 import ClassPeriod from "./classperiod";
 import Time from "./time";
+import { TimeComparisons } from "../utils/enums";
 
 const currentDate = new Date("2019-07-28T07:37:50.634Z");
 
@@ -14,7 +15,7 @@ const endTime = new Time(9, 55);
 const classPeriodA = new ClassPeriod(name, startTime, endTime, currentDate);
 
 describe("ClassPeriod", () => {
-    
+
     it("gets from json", () => {
         expect(
             ClassPeriod.fromJson({
@@ -42,5 +43,16 @@ describe("ClassPeriod", () => {
 
     it("can get its duration", () => {
         expect(classPeriodA.getDuration()).toEqual(new Time(1, 30));
+    });
+
+    it("can check if a time falls in its range", () => {
+
+        expect(classPeriodA.stateForTime(new Time(8, 0))).toBe(TimeComparisons.IS_BEFORE);
+
+        expect(classPeriodA.stateForTime(startTime)).toBe(TimeComparisons.IS_DURING_OR_EXACTLY);
+
+        expect(classPeriodA.stateForTime(endTime)).toBe(TimeComparisons.IS_DURING_OR_EXACTLY);
+
+        expect(classPeriodA.stateForTime(new Time(10, 0))).toBe(TimeComparisons.IS_AFTER);
     });
 });

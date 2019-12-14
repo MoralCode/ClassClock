@@ -39,7 +39,7 @@ const school = new School(
 );
 
 describe("School", () => {
-    
+
     it("should get from JSON", () => {
         expect(
             School.fromJson({
@@ -77,13 +77,60 @@ describe("School", () => {
         ).toEqual(school);
     });
 
-    test("can get schedule for date", () => {
+    //assuming constructor works, although maybe it could be tested against the fromJSON method?
+
+    it("can return identifier", () => {
+        expect(school.getIdentifier()).toBe("10");
+    });
+
+    it("can return API endpoint", () => {
+        expect(school.getEndpoint()).toBe("/some/endpoint");
+    });
+
+    it("can return schedules", () => {
+        expect(school.getSchedules()).toEqual([bellSchedule]);
+    });
+
+    it("can return name", () => {
+        expect(school.getName()).toBe("The High School");
+    });
+
+    it("can return acronym", () => {
+        expect(school.getAcronym()).toBe("THS");
+    });
+
+    it("can return passing time name", () => {
+        expect(school.getPassingTimeName()).toBe("Transition Time");
+    });
+
+    it("can return timezone", () => {
+        expect(school.getTimezone()).toBe("America/Cupertino");
+    });
+
+    it("can return creation date", () => {
+        expect(school.getCreationDate()).toEqual(new Date("2019-07-28T07:37:50.634Z"));
+    });
+
+    it("can return date last updated", () => {
+        expect(school.lastUpdated()).toEqual(new Date("2019-07-28T07:37:50.634Z"));
+    });
+
+    it("can Test if it has changed since a given date", () => {
+        expect(school.hasChangedSince(new Date("2019-07-28T07:07:50.634Z"))).toBeTruthy();
+        expect(school.hasChangedSince(new Date("2019-07-28T08:07:50.634Z"))).toBeFalsy();
+    });
+
+    it("can get schedule for date", () => {
         expect(school.getScheduleForDate(new Date("2019-07-28T07:37:50.634Z"))).toEqual(
             bellSchedule
         );
     });
 
-    test("can check if school is in session", () => {
+    it("can check if it has schedules", () => {
+        expect(school.hasSchedules).toBeTruthy();
+    });
+
+    it("can check if school is in session", () => {
         expect(school.isInSession(new Date("2019-07-28T09:15:50.634Z"))).toBeTruthy();
     });
 });
