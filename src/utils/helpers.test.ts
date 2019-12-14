@@ -1,5 +1,4 @@
-import React from "react";
-import ReactDOM from "react-dom";
+
 import {
     getValueIfKeyInList,
     deconstructJsonApiResource,
@@ -7,6 +6,7 @@ import {
 } from "./helpers";
 import ClassPeriod from "../@types/classperiod";
 import Time from "../@types/time";
+import { classPeriod2, classPeriod } from "./testconstants";
 
 test("get value if key in list", () => {
     const object1 = { value1: "foo" };
@@ -15,6 +15,7 @@ test("get value if key in list", () => {
 
     expect(getValueIfKeyInList(list, object1)).toBe("foo");
     expect(getValueIfKeyInList(list, object2)).toBe("foo");
+    expect(getValueIfKeyInList(["doesNotExist"], object1)).toBeFalsy();
 });
 
 test("deconstruct JSON:API responses", () => {
@@ -48,19 +49,10 @@ test("deconstruct JSON:API responses", () => {
 //ignoring getCurrentDate
 
 test("sort classes by start time", () => {
-    const currentDate = new Date();
 
-    const classes = [
-        new ClassPeriod("lunch", new Time(9, 10), new Time(10, 25), currentDate),
-        new ClassPeriod("second", new Time(10, 30), new Time(12, 0), currentDate),
-        new ClassPeriod("first", new Time(8, 25), new Time(9, 5), currentDate)
-    ];
+    const classes = [classPeriod2, classPeriod];
 
-    const sortedClasses = [
-        new ClassPeriod("first", new Time(8, 25), new Time(9, 5), currentDate),
-        new ClassPeriod("lunch", new Time(9, 10), new Time(10, 25), currentDate),
-        new ClassPeriod("second", new Time(10, 30), new Time(12, 0), currentDate)
-    ];
+    const sortedClasses = [classPeriod, classPeriod2];
 
     expect(sortClassesByStartTime(classes)).toEqual(sortedClasses);
 });
