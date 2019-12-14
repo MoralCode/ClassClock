@@ -34,6 +34,42 @@ export const classPeriodJSON = {
            creationDate: currentDate
        };
 
+
+export const class2Name = "Second Period";
+
+export const startTime2 = new Time(10, 5);
+export const startTime2String = "10:05";
+export const class2Duration = new Time(1, 30);
+export const duringClass2 = new Time(11, 0);
+export const endTime2 = new Time(11, 35);
+export const endTime2String = "11:35";
+export const afterClass2 = new Time(11, 40);
+
+export const classPeriod2 = new ClassPeriod(
+    class2Name,
+    startTime2,
+    endTime2,
+    currentDate
+);
+
+export const classPeriod2JSON = {
+    name: class2Name,
+    startTime: startTime2String,
+    endTime: endTime2String,
+    creationDate: currentDate
+};
+
+
+// export const schoolInSession = new Date("2019-07-28T07:37:50.634Z");
+export const noSchool = new Date("2019-07-27T07:37:50.634Z");
+export const beforeSchoolHours = new Date("2019-07-28T0" + beforeClassString + ":00.000Z");
+//start of class?
+export const betweenClass = new Date("2019-07-28T" + afterClassString + ":50.634Z");
+export const inClass = new Date("2019-07-28T0" + duringClassString + ":50.634Z");
+//end of class?
+export const afterSchoolHours = new Date("2019-07-28T12:00:50.634Z");
+
+
 export const bellScheduleId = "1";
 export const bellScheduleName = "Regular Schedule";
 export const bellScheduleEndpoint = "/path/to/sched";
