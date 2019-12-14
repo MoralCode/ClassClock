@@ -25,7 +25,7 @@ const schedule = new BellSchedule(
     "Display Name"
 );
 
-describe("Time", () => {
+describe("BellSchedule", () => {
     it("should get from JSON", () => {
         expect(
             BellSchedule.fromJson({
