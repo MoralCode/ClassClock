@@ -2,11 +2,13 @@
 import {
     getValueIfKeyInList,
     deconstructJsonApiResource,
-    sortClassesByStartTime
+    sortClassesByStartTime,
+    getTimeStateForDateAtSchool
 } from "./helpers";
 import ClassPeriod from "../@types/classperiod";
 import Time from "../@types/time";
-import { classPeriod2, classPeriod } from "./testconstants";
+import { classPeriod2, classPeriod, beforeSchoolHours, school, betweenClass, inClass, noSchool, afterSchoolHours } from "./testconstants";
+import { TimeStates } from "./enums";
 
 test("get value if key in list", () => {
     const object1 = { value1: "foo" };
@@ -56,3 +58,27 @@ test("sort classes by start time", () => {
 
     expect(sortClassesByStartTime(classes)).toEqual(sortedClasses);
 });
+
+
+test("get time states for given date and school", () => {
+    expect(getTimeStateForDateAtSchool(beforeSchoolHours, school)).toBe(
+        TimeStates.OUTSIDE_SCHOOL_HOURS
+    );
+
+    expect(getTimeStateForDateAtSchool(noSchool, school)).toBe(
+        TimeStates.DAY_OFF
+    );
+
+    expect(getTimeStateForDateAtSchool(betweenClass, school)).toBe(
+        TimeStates.SCHOOL_IN_CLASS_OUT
+    );
+
+    expect(getTimeStateForDateAtSchool(inClass, school)).toBe(
+        TimeStates.CLASS_IN_SESSION
+    );
+
+    expect(getTimeStateForDateAtSchool(afterSchoolHours, school)).toBe(
+        TimeStates.OUTSIDE_SCHOOL_HOURS
+    );
+    
+})
