@@ -4,18 +4,24 @@ import Time from "../@types/time";
 import School from "../@types/school";
 import BellSchedule from "../@types/bellschedule";
 import ClassPeriod from "../@types/classperiod";
+import ClassClockService from "../services/classclock";
 
 
-export const schoolId = "10";
+export const schoolId = "cb93cef79e9d11e986f2181dea92ad79";
 export const schoolName = "The High School";
 export const schoolAcronym = "THS";
-export const schoolEndpoint = "/some/endpoint";
+export const schoolEndpoint = ClassClockService.baseURL + "/school/" + schoolId + "/";
 export const schoolTimezone = "America/Cupertino";
 export const passingPeriodName = "Transition Time";
 
-export const bellScheduleId = "1";
+export const bellScheduleId = "33d14ca5c91111e996ad181dea92ad79";
 export const bellScheduleName = "Regular Schedule";
-export const bellScheduleEndpoint = "/path/to/sched";
+export const bellScheduleEndpoint =
+    ClassClockService.baseURL + "/school/" +
+    schoolId +
+    "/bellschedule/" +
+    bellScheduleId +
+    "/";
 export const bellScheduleDisplayName = "Display Name";
 
 
@@ -133,4 +139,130 @@ export const schoolJSON = {
            passingPeriodName,
            creationDate: currentDate,
            lastModified: currentDate
+       };
+
+
+
+/*
+ * Variales for testing Redux and API calls
+ * 
+ */
+
+ export const scheduleListEndpoint = ClassClockService.baseURL + "/school/" + schoolId + "/bellschedules/";
+
+export const fakeSchoolResponse = {
+           jsonapi: {
+               version: "1.0"
+           },
+           data: {
+               type: "school",
+               id: schoolId,
+               links: {
+                   self: schoolEndpoint
+               },
+               attributes: {
+                   owner_id: "google-oauth2|11658634A847763B38395",
+                   creation_date: "2019-07-04T13:53:37",
+                   acronym: schoolAcronym,
+                   last_modified: "2019-12-15T13:24:00.058171",
+                   full_name: schoolName,
+                   alternate_freeperiod_name: passingPeriodName
+               }
+           }
+       };
+
+
+
+export const fakeBellScheduleListResponse = {
+           jsonapi: {
+               version: "1.0"
+           },
+           data: [
+               {
+                   type: "bellschedule",
+                   id: bellScheduleId,
+                   links: {
+                       self: bellScheduleEndpoint
+                   },
+                   attributes: {
+                       display_name: bellScheduleDisplayName,
+                       full_name: bellScheduleName
+                   },
+                   relationships: {
+                       schools: {
+                           links: {
+                               self: schoolEndpoint
+                           }
+                       }
+                   }
+               }
+           ]
+       };
+
+
+
+export const fakeBellScheduleFullResponse = {
+           jsonapi: {
+               version: "1.0"
+           },
+           data: {
+               type: "bellschedule",
+               id: bellScheduleId,
+               links: {
+                   self: bellScheduleEndpoint
+                       
+               },
+               attributes: {
+                   creation_date: "2019-08-27T17:25:33",
+                   display_name: bellScheduleDisplayName,
+                   last_modified: "2019-08-27T17:25:33",
+                   dates: ["2019-08-27", "2019-08-28"],
+                   meeting_times: [
+                       {
+                           creation_date: "2019-08-27T17:40:43",
+                           end_time: "10:05:00",
+                           start_time: "09:50:00",
+                           name: "Break"
+                       },
+                       {
+                           creation_date: "2019-08-27T17:40:43",
+                           end_time: "09:50:00",
+                           start_time: "08:25:00",
+                           name: "First Period"
+                       },
+                       {
+                           creation_date: "2019-08-27T17:40:43",
+                           end_time: "15:30:00",
+                           start_time: "14:05:00",
+                           name: "Fourth Period"
+                       },
+                       {
+                           creation_date: "2019-08-27T17:40:43",
+                           end_time: "12:30:00",
+                           start_time: "11:55:00",
+                           name: "Lunch"
+                       },
+                       {
+                           creation_date: "2019-08-27T17:40:43",
+                           end_time: "11:55:00",
+                           start_time: "10:10:00",
+                           name: "Second Period (Extended)"
+                       },
+                       {
+                           creation_date: "2019-08-27T17:40:43",
+                           end_time: "14:00:00",
+                           start_time: "12:35:00",
+                           name: "Third Period"
+                       }
+                   ],
+                   full_name: bellScheduleName
+               },
+               relationships: {
+                   schools: {
+                       links: {
+                           self: schoolEndpoint
+                       }
+                   }
+               }
+           }
        };
