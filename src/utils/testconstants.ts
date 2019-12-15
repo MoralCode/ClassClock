@@ -6,7 +6,17 @@ import BellSchedule from "../@types/bellschedule";
 import ClassPeriod from "../@types/classperiod";
 
 
+export const schoolId = "10";
+export const schoolName = "The High School";
+export const schoolAcronym = "THS";
+export const schoolEndpoint = "/some/endpoint";
+export const schoolTimezone = "America/Cupertino";
+export const passingPeriodName = "Transition Time";
 
+export const bellScheduleId = "1";
+export const bellScheduleName = "Regular Schedule";
+export const bellScheduleEndpoint = "/path/to/sched";
+export const bellScheduleDisplayName = "Display Name";
 
 
 export const currentDate = new Date("2019-07-28T07:37:50.634Z");
@@ -70,10 +80,6 @@ export const inClass = new Date("2019-07-28T0" + duringClassString + ":50.634Z")
 export const afterSchoolHours = new Date("2019-07-28T12:00:50.634Z");
 
 
-export const bellScheduleId = "1";
-export const bellScheduleName = "Regular Schedule";
-export const bellScheduleEndpoint = "/path/to/sched";
-export const bellScheduleDisplayName = "Display Name";
 
 
 export const bellSchedule = new BellSchedule(
@@ -103,12 +109,7 @@ export const bellScheduleJSON = {
        };
 
 
-export const schoolId = "10";
-export const schoolName = "The High School";
-export const schoolAcronym = "THS";
-export const schoolEndpoint = "/some/endpoint";
-export const schoolTimezone = "America/Cupertino";
-export const passingPeriodName = "Transition Time";
+
 
 export const school = new School(
     schoolId,
