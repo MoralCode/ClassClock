@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Link renders correctly with a static link 1`] = `
+<a
+  href="https://classclock.app"
+/>
+`;
