@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Link renders correctly with a static link 1`] = `
+exports[`Link Component renders correctly with a function 1`] = `
 <a
-  href="https://classclock.app"
+  onClick={[Function]}
 />
 `;
 
-exports[`renders correctly with a function 1`] = `
+exports[`Link Component renders correctly with a static link 1`] = `
 <a
-  onClick={[Function]}
+  href="https://classclock.app"
 />
 `;
