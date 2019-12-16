@@ -86,6 +86,8 @@ export const inClass = new Date("2019-07-28T0" + duringClassString + ":50.634Z")
 export const afterSchoolHours = new Date("2019-07-28T12:00:50.634Z");
 
 
+export const bellScheduleClasses = [classPeriod, classPeriod2];
+export const bellScheduleClassesJSON = [classPeriodJSON, classPeriod2JSON];
 
 
 export const bellSchedule = new BellSchedule(
@@ -97,7 +99,7 @@ export const bellSchedule = new BellSchedule(
         new Date("2019-07-29T07:38:10.979Z"),
         new Date("2019-07-23T07:38:28.263Z")
     ],
-    [classPeriod],
+    bellScheduleClasses,
     currentDate
 );
 
@@ -110,7 +112,7 @@ export const bellScheduleJSON = {
                "2019-07-29T07:38:10.979Z",
                "2019-07-23T07:38:28.263Z"
            ],
-           classes: [classPeriodJSON],
+           classes: bellScheduleClassesJSON,
            lastModified: currentDate
        };
 
