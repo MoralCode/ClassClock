@@ -5,3 +5,9 @@ exports[`Link renders correctly with a static link 1`] = `
   href="https://classclock.app"
 />
 `;
+
+exports[`renders correctly with a function 1`] = `
+<a
+  onClick={[Function]}
+/>
+`;
