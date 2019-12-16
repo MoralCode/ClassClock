@@ -7,7 +7,7 @@ import {
 } from "./helpers";
 import ClassPeriod from "../@types/classperiod";
 import Time from "../@types/time";
-import { classPeriod2, classPeriod, beforeSchoolHours, school, betweenClass, inClass, noSchool, afterSchoolHours } from "./testconstants";
+import { classPeriod2, classPeriod, beforeSchoolHours, school, betweenClass, inClass, noSchool, afterSchoolHours, bellScheduleClasses } from "./testconstants";
 import { TimeStates } from "./enums";
 
 test("get value if key in list", () => {
@@ -51,12 +51,7 @@ test("deconstruct JSON:API responses", () => {
 //ignoring getCurrentDate
 
 test("sort classes by start time", () => {
-
-    const classes = [classPeriod2, classPeriod];
-
-    const sortedClasses = [classPeriod, classPeriod2];
-
-    expect(sortClassesByStartTime(classes)).toEqual(sortedClasses);
+    expect(sortClassesByStartTime(bellScheduleClasses.reverse())).toEqual(bellScheduleClasses);
 });
 
 

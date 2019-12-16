@@ -1,6 +1,6 @@
 import BellSchedule from "./bellschedule";
 import Time from "./time";
-import { bellSchedule as schedule, bellScheduleJSON, classPeriod, bellScheduleEndpoint, bellScheduleName, bellScheduleDisplayName, bellScheduleId, startTime, beforeClass, duringClass, endTime, afterClass } from "../utils/testconstants";
+import { bellSchedule as schedule, bellScheduleJSON, classPeriod, bellScheduleEndpoint, bellScheduleName, bellScheduleDisplayName, bellScheduleId, startTime, beforeClass, duringClass, endTime, afterClass, bellScheduleClasses } from "../utils/testconstants";
 
 describe("BellSchedule", () => {
 
@@ -32,7 +32,7 @@ describe("BellSchedule", () => {
     });
 
     it("can return its classes", () => {
-        expect(schedule.getAllClasses()).toEqual([classPeriod]);
+        expect(schedule.getAllClasses()).toEqual(bellScheduleClasses);
     });
 
     it("can get the correct number of classes", () => {
