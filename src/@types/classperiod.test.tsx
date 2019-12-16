@@ -4,14 +4,25 @@ import BellSchedule from "./bellschedule";
 import ClassPeriod from "./classperiod";
 import Time from "./time";
 import { TimeComparisons } from "../utils/enums";
-import { classPeriod, className, startTime, endTime, classDuration, beforeClass, afterClass, duringClass, classPeriodJSON } from "../utils/testconstants";
+import { classPeriod, className, startTime, endTime, classDuration, beforeClass, afterClass, duringClass, classPeriodJSON, currentDate } from "../utils/testconstants";
+
+export const classPeriodJSONObjectTime = {
+    name: className,
+    startTime,
+    endTime,
+    creationDate: currentDate
+};
 
 describe("ClassPeriod", () => {
 
-    it("gets from json", () => {
+    it("gets from json with string times", () => {
         expect(
             ClassPeriod.fromJson(classPeriodJSON)
         ).toEqual(classPeriod);
+    });
+
+    it("gets from json with object times", () => {
+        expect(ClassPeriod.fromJson(classPeriodJSONObjectTime)).toEqual(classPeriod);
     });
 
     //gonna assume the constructor works

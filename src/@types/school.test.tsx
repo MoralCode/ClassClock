@@ -1,6 +1,18 @@
 import School from "./school";
 import { school, bellSchedule, schoolJSON, schoolId, schoolEndpoint, schoolName, schoolAcronym, passingPeriodName, schoolTimezone, currentDate, inClass, afterSchoolHours } from '../utils/testconstants';
 
+const schoolNoSchedules = new School(
+    schoolId,
+    schoolName,
+    schoolAcronym,
+    schoolEndpoint,
+    schoolTimezone,
+    [],
+    passingPeriodName,
+    currentDate,
+    currentDate
+);
+
 
 describe("School", () => {
 
@@ -57,10 +69,13 @@ describe("School", () => {
         expect(school.getScheduleForDate(currentDate)).toEqual(
             bellSchedule
         );
+
+        expect(schoolNoSchedules.getScheduleForDate(currentDate)).toBeFalsy();        
     });
 
     it("can check if it has schedules", () => {
-        expect(school.hasSchedules).toBeTruthy();
+        expect(school.hasSchedules()).toBeTruthy();
+        expect(schoolNoSchedules.hasSchedules()).toBeFalsy();
     });
 
     it("can check if school is in session", () => {
