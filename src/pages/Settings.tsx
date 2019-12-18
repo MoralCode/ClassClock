@@ -4,7 +4,7 @@ import { push } from "redux-first-routing";
 import IPageInterface from "../utils/IPageInterface";
 import "../global.css";
 
-class Settings extends Component<IPageInterface, {}> {
+export class Settings extends Component<IPageInterface, {}> {
     // document.getElementById("use24HourTime").checked = getLocalStorageBoolean("use24HourTime");
 
     public updateSettings() {
