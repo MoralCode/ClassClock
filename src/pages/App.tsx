@@ -21,7 +21,7 @@ export interface IAppProps {
     dispatch: any;
 }
 
-const App = (props: IAppProps) => {
+export const App = (props: IAppProps) => {
     const [currentDate, setDate] = useState(getCurrentDate());
 
     const navigate = (to: string) => {
