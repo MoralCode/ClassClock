@@ -15,7 +15,7 @@ import { getNextImportantTime, getCurrentDate } from "../utils/helpers";
 export interface IAppProps {
     selectedSchool: {
         isFetching: boolean;
-        didInvalidate: false;
+        didInvalidate: boolean;
         data: School;
     };
     dispatch: any;
