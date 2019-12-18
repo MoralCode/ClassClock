@@ -1,0 +1,301 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Schedule shows the day's schedule regardless of the time 1`] = `
+<div>
+  <a
+    className="cornerNavButton smallIcon"
+    onClick={[Function]}
+  >
+    <i
+      className="fas fa-home"
+    />
+  </a>
+  <br />
+  <p
+    style={
+      Object {
+        "fontSize": "30px",
+      }
+    }
+  >
+    <b>
+      The High School
+    </b>
+  </p>
+  <p>
+    Regular Schedule
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <td>
+          <b>
+            Class
+          </b>
+        </td>
+        <td>
+          <b>
+            Time
+          </b>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          First Period
+        </td>
+        <td>
+          08:25:00
+           -
+           
+          09:55:00
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Second Period
+        </td>
+        <td>
+          10:05:00
+           -
+           
+          11:35:00
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`Schedule shows the day's schedule regardless of the time 2`] = `
+<div>
+  <a
+    className="cornerNavButton smallIcon"
+    onClick={[Function]}
+  >
+    <i
+      className="fas fa-home"
+    />
+  </a>
+  <br />
+  <p
+    style={
+      Object {
+        "fontSize": "30px",
+      }
+    }
+  >
+    <b>
+      The High School
+    </b>
+  </p>
+  <p>
+    No School Today
+  </p>
+</div>
+`;
+
+exports[`Schedule shows the day's schedule regardless of the time 3`] = `
+<div>
+  <a
+    className="cornerNavButton smallIcon"
+    onClick={[Function]}
+  >
+    <i
+      className="fas fa-home"
+    />
+  </a>
+  <br />
+  <p
+    style={
+      Object {
+        "fontSize": "30px",
+      }
+    }
+  >
+    <b>
+      The High School
+    </b>
+  </p>
+  <p>
+    Regular Schedule
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <td>
+          <b>
+            Class
+          </b>
+        </td>
+        <td>
+          <b>
+            Time
+          </b>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          First Period
+        </td>
+        <td>
+          08:25:00
+           -
+           
+          09:55:00
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Second Period
+        </td>
+        <td>
+          10:05:00
+           -
+           
+          11:35:00
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`Schedule shows the day's schedule regardless of the time 4`] = `
+<div>
+  <a
+    className="cornerNavButton smallIcon"
+    onClick={[Function]}
+  >
+    <i
+      className="fas fa-home"
+    />
+  </a>
+  <br />
+  <p
+    style={
+      Object {
+        "fontSize": "30px",
+      }
+    }
+  >
+    <b>
+      The High School
+    </b>
+  </p>
+  <p>
+    Regular Schedule
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <td>
+          <b>
+            Class
+          </b>
+        </td>
+        <td>
+          <b>
+            Time
+          </b>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          First Period
+        </td>
+        <td>
+          08:25:00
+           -
+           
+          09:55:00
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Second Period
+        </td>
+        <td>
+          10:05:00
+           -
+           
+          11:35:00
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`Schedule shows the day's schedule regardless of the time 5`] = `
+<div>
+  <a
+    className="cornerNavButton smallIcon"
+    onClick={[Function]}
+  >
+    <i
+      className="fas fa-home"
+    />
+  </a>
+  <br />
+  <p
+    style={
+      Object {
+        "fontSize": "30px",
+      }
+    }
+  >
+    <b>
+      The High School
+    </b>
+  </p>
+  <p>
+    Regular Schedule
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <td>
+          <b>
+            Class
+          </b>
+        </td>
+        <td>
+          <b>
+            Time
+          </b>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          First Period
+        </td>
+        <td>
+          08:25:00
+           -
+           
+          09:55:00
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Second Period
+        </td>
+        <td>
+          10:05:00
+           -
+           
+          11:35:00
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

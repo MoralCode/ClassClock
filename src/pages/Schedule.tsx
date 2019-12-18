@@ -17,13 +17,13 @@ import List from "../components/List/List";
 export interface IAppProps {
     selectedSchool: {
         isFetching: boolean;
-        didInvalidate: false;
+        didInvalidate: boolean;
         data: School;
     };
     dispatch: any;
 }
 
-const Schedule = (props: IAppProps) => {
+export const Schedule = (props: IAppProps) => {
     let content: JSX.Element = <></>;
     const currentSchedule = props.selectedSchool.data.getScheduleForDate(
         getCurrentDate()
