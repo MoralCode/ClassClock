@@ -183,6 +183,10 @@ const Calendar = (props: ICalendarProps) => {
                 ? { backgroundColor: props.options[currentOptionKey].color }
                 : undefined;
 
+            const name = currentOptionKey
+                ? props.options[currentOptionKey].name
+                : undefined;
+
             tempRowData.push(
                 <td key={"date" + dateIndex}>
                     <div
@@ -194,6 +198,7 @@ const Calendar = (props: ICalendarProps) => {
                         }
                         data-date={date.getTime()}
                         style={bgColor}
+                        title={name}
                     >
                         {date.getDate()}
                     </div>
