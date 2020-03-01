@@ -1,3 +1,5 @@
+import BellSchedule from "../@types/bellschedule";
+
 export default class ClassClockService {
     public static baseURL: string = "https://api.classclock.app/v0";
 
@@ -61,6 +63,27 @@ export default class ClassClockService {
             }
         );
     };
+
+    static updateBellSchedule = async (
+        schoolId: string,
+        scheduleId: string,
+        authToken: string,
+        schedule: BellSchedule
+    ) => {
+        return await fetch(
+            ClassClockService.baseURL +
+                "/school/" +
+                schoolId +
+                "/bellschedule/" +
+                scheduleId +
+                "/",
+            ClassClockService.getHeaders("PATCH", authToken, {
+                body: schedule.toJSONAPI()
+            })
+        );
+        // return await response.json(); // parses JSON response into native JavaScript objects
+
+    }
 
     private static getHeaders = (
         method: string,
