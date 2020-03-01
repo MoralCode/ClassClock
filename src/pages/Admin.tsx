@@ -120,6 +120,12 @@ const Admin = (props: IAdminProps) => {
         </ul>)
     }
 
+    const confirmClear = () => {
+        if (window.confirm("Are you sure you want to reset all of your changes?")) {
+             setSelectedDates(getScheduleOptions())
+       }
+    }
+
     return (
         <div>
             <h1>Admin</h1>
@@ -159,6 +165,7 @@ const Admin = (props: IAdminProps) => {
                 <Calendar options={selectedDates} onDateChange={(options: IScheduleDates) => setSelectedDates(options)} selectedSchedule={selectedSchedule} />
                 
             </div>
+            <button onClick={confirmClear}>Clear Changes</button>
         </div>
     );
 };
