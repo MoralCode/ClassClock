@@ -32,9 +32,7 @@ const Admin = (props: IAdminProps) => {
     const [selectedSchedule, selectSchedule] = useState("");
     const schedules = props.selectedSchool.data.getSchedules();
 
-    //the selected calendar dates
-    const [selectedDates, setSelectedDates] = useState({});
-
+   
 
     // if (
     //     user === undefined ||
@@ -90,7 +88,8 @@ const Admin = (props: IAdminProps) => {
     };
 
     const scheduleOptions = getScheduleOptions();
-    setSelectedDates(scheduleOptions);
+    //the selected calendar dates
+    const [selectedDates, setSelectedDates] = useState(scheduleOptions);
 
 
     const getKey = () => {
