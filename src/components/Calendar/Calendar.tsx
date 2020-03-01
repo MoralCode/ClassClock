@@ -138,9 +138,7 @@ const Calendar = (props: ICalendarProps) => {
             ];
         }
 
-        const result = Object.assign({}, datesSelected, updatedOption);
-
-        return result;
+        return updatedOption;
     };
 
     const getGroupAndPositionForDate = (date: Date): [string, number] | undefined => {
