@@ -31,6 +31,11 @@ const Admin = (props: IAdminProps) => {
 
     const [selectedSchedule, selectSchedule] = useState("");
     const schedules = props.selectedSchool.data.getSchedules();
+
+    //the selected calendar dates
+    const [selectedDates, setSelectedDates] = useState({});
+
+
     // if (
     //     user === undefined ||
     //     props.selectedSchool.data.getOwnerIdentifier() !== user.sub
@@ -85,6 +90,7 @@ const Admin = (props: IAdminProps) => {
     };
 
     const scheduleOptions = getScheduleOptions();
+    setSelectedDates(scheduleOptions);
 
 
     const getKey = () => {
@@ -151,7 +157,7 @@ const Admin = (props: IAdminProps) => {
             <br />
             <div className="horizontalFlex">
                 {getKey()}
-                <Calendar options={scheduleOptions} selectedSchedule={selectedSchedule} />
+                <Calendar options={selectedDates} onDateChange={(options: IScheduleDates) => setSelectedDates(options)} selectedSchedule={selectedSchedule} />
                 
             </div>
         </div>

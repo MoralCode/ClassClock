@@ -9,21 +9,23 @@ export interface IScheduleDates {
 
 export interface ICalendarProps {
     options: IScheduleDates;
+    onDateChange: (options: IScheduleDates) => void;
     selectedSchedule: string;
 }
 
 const Calendar = (props: ICalendarProps) => {
     const [selectedMonth, setSelectedMonth] = useState(new Date());
-    const initialOptions: { [key: string]: number[] } = {};
+    // const initialOptions: { [key: string]: number[] } = {};
 
-    Object.entries(props.options).forEach(value => {
-        const [id, options] = value;
-        if (options.dates) {
-            initialOptions[id] = options.dates;
-        }
-    });
+    // Object.entries(props.options).forEach(value => {
+    //     const [id, options] = value;
+    //     if (options.dates) {
+    //         initialOptions[id] = options.dates;
+    //     }
+    // });
 
-    const [selectedDates, setSelectedDates] = useState(initialOptions);
+    // //this probably needs to be moved up a level so that it can be sent to the API
+    // const [selectedDates, setSelectedDates] = useState(initialOptions);
 
     const config = { weekStartsOn: 1 };
     const startDate = dateFns.startOfWeek(dateFns.startOfMonth(selectedMonth), config);
@@ -70,7 +72,7 @@ const Calendar = (props: ICalendarProps) => {
             const [optionKey, posInOption] = location;
 
             if (optionKey !== option) {
-                let updatedSelections = selectedDates;
+                let updatedSelections = props.options;
                 updatedSelections = removeDateFromSelectionList(
                     updatedSelections,
                     optionKey,
@@ -81,18 +83,18 @@ const Calendar = (props: ICalendarProps) => {
                     option,
                     date
                 );
-                setSelectedDates(updatedSelections);
+                props.onDateChange(updatedSelections);
             } else {
-                setSelectedDates(
-                    removeDateFromSelectionList(selectedDates, optionKey, posInOption)
+                props.onDateChange(
+                    removeDateFromSelectionList(props.options, optionKey, posInOption)
                 );
             }
         } else if (!location && option) {
-            setSelectedDates(addDateToSelectionList(selectedDates, option, date));
+            props.onDateChange(addDateToSelectionList(props.options, option, date));
         } else if (location && !option) {
             const [optionKey, posInOption] = location;
-            setSelectedDates(
-                removeDateFromSelectionList(selectedDates, optionKey, posInOption)
+            props.onDateChange(
+                removeDateFromSelectionList(props.options, optionKey, posInOption)
             );
         }
     };
@@ -142,7 +144,7 @@ const Calendar = (props: ICalendarProps) => {
                 //     );
                 // });
                 // console.log("poss: ", date.getTime(), possibleDates);
-                const indexInGroup = selectedDates[key].indexOf(date.getTime());
+                const indexInGroup = props.options[key].indexOf(date.getTime());
                 if (indexInGroup !== -1) {
                     return [key, indexInGroup];
                 }
