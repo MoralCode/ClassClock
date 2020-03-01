@@ -155,7 +155,12 @@ const Calendar = (props: ICalendarProps) => {
                 //     );
                 // });
                 // console.log("poss: ", date.getTime(), possibleDates);
-                const indexInGroup = props.options[key].indexOf(date.getTime());
+
+                const dates = props.options[key].dates;
+
+                if (!dates) { return; }
+                
+                const indexInGroup = dates.indexOf(date.getTime());
                 if (indexInGroup !== -1) {
                     return [key, indexInGroup];
                 }
