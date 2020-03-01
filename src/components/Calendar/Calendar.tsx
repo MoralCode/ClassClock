@@ -70,20 +70,23 @@ const Calendar = (props: ICalendarProps) => {
 
         if (location && option) {
             const [optionKey, posInOption] = location;
-
+            //the date is in a different schedule than the one provided. move it
             if (optionKey !== option) {
                 let updatedSelections = props.options;
+                //remove from the old schedule
                 updatedSelections = removeDateFromSelectionList(
                     updatedSelections,
                     optionKey,
                     posInOption
                 );
+                //add to the new schedule
                 updatedSelections = addDateToSelectionList(
                     updatedSelections,
                     option,
                     date
                 );
                 props.onDateChange(updatedSelections);
+            
             } else {
                 props.onDateChange(
                     removeDateFromSelectionList(props.options, optionKey, posInOption)
@@ -105,36 +108,44 @@ const Calendar = (props: ICalendarProps) => {
     };
 
     const addDateToSelectionList = (
-        datesSelected: { [key: string]: number[] },
+        datesSelected: IScheduleDates,
         option: string,
         date: Date
     ) => {
-        const updatedGroup: { [key: string]: number[] } = {};
-        updatedGroup[option] = [...datesSelected[option], date.getTime()];
-        const result = Object.assign({}, datesSelected, updatedGroup);
+        const selectedDates = datesSelected[option].dates;
+        const updatedOption: IScheduleDates = Object.assign({}, datesSelected);
 
-        return result;
+        if (selectedDates) {
+            updatedOption[option].dates = [...selectedDates, date.getTime()];
+        }
+
+        return updatedOption;
     };
 
+
     const removeDateFromSelectionList = (
-        datesSelected: { [key: string]: number[] },
+        datesSelected: IScheduleDates,
         option: string,
         index: number
     ) => {
-        const updatedGroup: { [key: string]: number[] } = {};
-        updatedGroup[option] = [
-            ...datesSelected[option].slice(0, index),
-            ...datesSelected[option].slice(index + 1)
-        ];
+        const selectedDates = datesSelected[option].dates;
+        const updatedOption: IScheduleDates = Object.assign({}, datesSelected);
 
-        const result = Object.assign({}, datesSelected, updatedGroup);
+        if (selectedDates) {
+            updatedOption[option].dates = [
+                ...selectedDates.slice(0, index),
+                ...selectedDates.slice(index + 1)
+            ];
+        }
+
+        const result = Object.assign({}, datesSelected, updatedOption);
 
         return result;
     };
 
     const getGroupAndPositionForDate = (date: Date): [string, number] | undefined => {
-        for (const key in selectedDates) {
-            if (selectedDates.hasOwnProperty(key)) {
+        for (const key in props.options) {
+            if (props.options.hasOwnProperty(key)) {
                 // const possibleDates = dates.filter((value: number) => {
                 //     const selDate = new Date(value);
                 //     return (
