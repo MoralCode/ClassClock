@@ -10,7 +10,6 @@ import School from "../../@types/school";
 import ClassClockService from "../../services/classclock";
 import { pages } from "../../utils/constants";
 import { IState } from "../../store/schools/types";
-import { deconstructJsonApiResource } from "../../utils/helpers";
 
 export interface ISelectProps {
     selectedSchool: any;
@@ -38,7 +37,7 @@ const SchoolSelect = (props: ISelectProps) => {
                 ).then((json: any) => {
                     setSchoolList(
                         json.data.map((value: any) =>
-                            School.fromJson(deconstructJsonApiResource(value))
+                            School.fromJson(value)
                         )
                     );
 

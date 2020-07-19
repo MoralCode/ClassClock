@@ -22,23 +22,7 @@ export default class ClassClockService {
         params?: any
     ): Promise<Response> => {
         return await fetch(
-            ClassClockService.baseURL + "/school/" + schoolId + "/bellschedules/",
-            ClassClockService.getHeaders("GET", params)
-        );
-    };
-
-    static getDetailedScheduleForSchool = async (
-        schoolId: string,
-        scheduleId: string,
-        params?: any
-    ): Promise<Response> => {
-        return await fetch(
-            ClassClockService.baseURL +
-                "/school/" +
-                schoolId +
-                "/bellschedule/" +
-                scheduleId +
-                "/",
+            ClassClockService.baseURL + "/bellschedules/" + schoolId + "/",
             ClassClockService.getHeaders("GET", params)
         );
     };
@@ -65,20 +49,16 @@ export default class ClassClockService {
     };
 
     static updateBellSchedule = async (
-        schoolId: string,
-        scheduleId: string,
-        authToken: string,
-        schedule: BellSchedule
+        schedule: BellSchedule,
+        authToken: string
     ) => {
         return await fetch(
             ClassClockService.baseURL +
-                "/school/" +
-                schoolId +
                 "/bellschedule/" +
-                scheduleId +
+                schedule.getIdentifier() +
                 "/",
             ClassClockService.getHeaders("PATCH", authToken, {
-                body: schedule.toJSONAPI()
+                body: JSON.stringify(schedule)
             })
         );
         // return await response.json(); // parses JSON response into native JavaScript objects
@@ -97,7 +77,7 @@ export default class ClassClockService {
             {},
             {
                 method,
-                headers: new Headers({ Accept: "application/vnd.api+json" })
+                headers: new Headers({ Accept: "application/json" })
             },
             parameters
         );

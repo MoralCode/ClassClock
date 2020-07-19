@@ -1,6 +1,5 @@
 import {
     checkTimeRange,
-    deconstructJsonApiResource,
     getValueIfKeyInList
 } from "../utils/helpers";
 import Time from "./time";

@@ -22,18 +22,6 @@ export function getValueIfKeyInList(list: string[], object: any) {
     }
 }
 
-//resource object
-export function deconstructJsonApiResource(json: any) {
-    const data = {
-        type: json.type,
-        id: json.id,
-        ...(json.links !== undefined && {
-            endpoint: json.links.self
-        })
-    };
-    return Object.assign({}, data, json.attributes);
-}
-
 export function getCurrentDate() {
     return new Date();
 }
