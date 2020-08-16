@@ -65,6 +65,10 @@ export default class BellSchedule {
         return this.dates;
     }
 
+    public setDates(dates: Date[]) {
+        this.dates = dates;
+    }
+
     public getAllClasses() {
         return this.classes;
     }
