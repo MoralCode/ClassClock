@@ -12,6 +12,7 @@ import { useAuth0 } from "../react-auth0-wrapper";
 import Calendar, { IScheduleDates } from "../components/Calendar/Calendar";
 import { startOfDay } from "date-fns";
 import SelectHeader from "../components/SelectHeader";
+import ClassClockService from "../services/classclock";
 
 export interface IAdminProps {
     selectedSchool: {
@@ -126,6 +127,43 @@ const Admin = (props: IAdminProps) => {
        }
     }
 
+    const confirmUpdate = async () => {
+        if (window.confirm("Are you sure you want to publish these schedule changes?")) {
+            const token:string = await getTokenSilently() || '';
+            
+            if (schedules !== undefined) {
+                for (const schedule of schedules) {
+                    
+                    // props.selectedSchool.data
+
+                    let updatedUnixDates = selectedDates[schedule.getIdentifier()].dates;
+                    let updatedDates:Date[];
+
+                    if (updatedUnixDates) {
+                        updatedDates = updatedUnixDates.map((value: number) => new Date(value))
+                    } else {
+                        updatedDates = []
+                    }
+
+                    //set dates
+                    schedule.setDates(updatedDates)
+
+                    if (token != '') {
+                        //send to API
+                        ClassClockService.validateResponse(
+                            ClassClockService.updateBellSchedule(schedule, token)
+                        );
+                    } else {
+                        //this should never happen
+                    }
+
+                }
+            } else {
+                //major problem
+            }
+        }
+    }
+
     return (
         <div>
             <h1>Admin</h1>
@@ -165,6 +203,7 @@ const Admin = (props: IAdminProps) => {
                 <Calendar options={selectedDates} onDateChange={(options: IScheduleDates) => setSelectedDates(options)} selectedSchedule={selectedSchedule} />
                 
             </div>
+            <button onClick={confirmUpdate}>Update Schedules</button>
             <button onClick={confirmClear}>Clear Changes</button>
         </div>
     );
