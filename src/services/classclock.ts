@@ -1,5 +1,6 @@
 import BellSchedule from "../@types/bellschedule";
-
+import { format } from 'date-fns'
+import { objectKeysToSnakeCase } from "../utils/helpers";
 export default class ClassClockService {
     public static baseURL: string = "https://api.classclock.app/v0";
 
@@ -58,7 +59,7 @@ export default class ClassClockService {
                 schedule.getIdentifier() +
                 "/",
             ClassClockService.getHeaders("PATCH", authToken, {
-                body: JSON.stringify(schedule)
+                body: JSON.stringify(schedule, ClassClockService.jsonifyReplacer)
             })
         );
         // return await response.json(); // parses JSON response into native JavaScript objects
@@ -82,4 +83,38 @@ export default class ClassClockService {
             parameters
         );
     };
+
+    // prepares an object for being sent to the ClassClock API
+    private static jsonifyReplacer(key: string, value: any) {
+        console.log(key, value)
+        if (key == 'date') {
+            return format(value, 'YYYY-MM-DD');
+            // Date-fns v2
+            // return format(value, 'yyyy-MM-dd');
+        } else if (key == 'dates') {
+
+            return value.map((currentValue: Date) => {
+                return format(currentValue, 'YYYY-MM-DD');
+                // Date-fns v2
+                // return format(value, 'yyyy-MM-dd');
+            })
+        } else if (Object.prototype.toString.call(value) === '[object Array]') {
+
+            var copyArray: any[] = [];
+
+            for (const element in copyArray) {
+                if (typeof element === 'object') {
+                    copyArray.push(objectKeysToSnakeCase(element));
+                } else {
+                    copyArray.push(element);
+                }
+            }
+        
+            return copyArray;
+        } else if (typeof value === 'object') {
+           return objectKeysToSnakeCase(value);
+        } 
+        return value;
+    }
+
 }
