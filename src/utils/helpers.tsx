@@ -22,6 +22,41 @@ export function getValueIfKeyInList(list: string[], object: any) {
     }
 }
 
+
+export function objectKeysToSnakeCase(object: object) {
+    let copyObject: any = Object.assign({}, object);
+
+    //iterate over object
+    for (const [objKey, objValue] of Object.entries(copyObject)) {
+        // if (value.hasOwnProperty(objKey))
+        const snake = toSnakeCase(objKey);
+        if (objKey !== snake) {
+            copyObject[snake] = objValue;
+            delete copyObject[objKey];
+        }
+    }
+    return copyObject;
+}
+
+// https://stackoverflow.com/a/54246525/
+export function toSnakeCase(input: string) {
+    // https://stackoverflow.com/a/55521416/
+    const ALPHA = new Set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+    function isAlpha(char: string) {
+        return ALPHA.has(char);
+    }
+    
+    return input.split('').map((character, index) => {
+        if (character == character.toUpperCase() && isAlpha(character)) {
+            return (index != 0 ? '_': '') + character.toLowerCase();
+        } else {
+            return character;
+        }
+    }).join('');
+}
+
+
 export function getCurrentDate() {
     return new Date();
 }
