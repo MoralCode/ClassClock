@@ -66,21 +66,29 @@ export default class ClassClockService {
 
     }
 
+    //sets up request headers for outgoing API calls
     private static getHeaders = (
         method: string,
         authToken?: string,
-        params?: any
+        params?: object
     ): { method: string; headers: Headers } => {
-        const parameters = authToken
-            ? { ...params, Authorization: "Bearer " + authToken }
-            : params;
+
+        let headers = new Headers({
+            Accept: "application/json",
+            "Content-Type": "application/json"
+        })
+
+        if (authToken) {
+            headers.append("Authorization", "Bearer " + authToken)
+        }
+
         return Object.assign(
             {},
             {
                 method,
-                headers: new Headers({ Accept: "application/json" })
+                headers: headers
             },
-            parameters
+            params
         );
     };
 
