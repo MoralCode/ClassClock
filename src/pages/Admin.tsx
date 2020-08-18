@@ -230,14 +230,6 @@ const Admin = (props: IAdminProps) => {
                     />
                 </label>
                 <br />
-                <label>
-                    Name of Passing Period:
-                    <input
-                        type="text"
-                        value={props.selectedSchool.data.getPassingTimeName()}
-                        onChange={() => {}}
-                    />
-                </label>
             </div>
             <br />
             {(selectedSchedule !== "")? (
