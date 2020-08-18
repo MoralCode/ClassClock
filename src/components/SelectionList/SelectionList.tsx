@@ -13,6 +13,7 @@ import { IState } from "../../store/schools/types";
 
 export interface ISelectProps {
     title: string;
+    loading: boolean;
 }
 
 const SelectionList = (props: ISelectProps) => {
@@ -20,8 +21,8 @@ const SelectionList = (props: ISelectProps) => {
 
     return (
         <div>
-            {schoolList.length === 0 ? (
             <h2>{props.title}</h2>
+            {props.loading? (
                 <span>Loading...</span>
             ) : (
                 <ul className="selectionList">{list}</ul>
