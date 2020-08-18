@@ -1,0 +1,23 @@
+ul.schoolSelectionList {
+    padding: 0; /* have no clue whats causing the random left padding of 20px on <ul>s */
+}
+ul.schoolSelectionList > li {
+    list-style-type: none;
+    padding: 5px;
+    margin: 2px;
+    background-color: rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+ul.schoolSelectionList > li > .schoolAcronym {
+    font-size: 2em;
+    opacity: 0.5;
+}
+ul.schoolSelectionList > li > .schoolName {
+    font-size: 0.8em;
+}
+ul.schoolSelectionList li:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    margin: 5px 0;
+    cursor: pointer;
+}
