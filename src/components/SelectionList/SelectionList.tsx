@@ -72,7 +72,7 @@ const SelectionList = (props: ISelectProps) => {
             {schoolList.length === 0 ? (
                 <span>Loading...</span>
             ) : (
-                <ul className="schoolSelectionList">{list}</ul>
+                <ul className="selectionList">{list}</ul>
             )}
 
             {/* <a onClick={}>Refresh</a> */}
