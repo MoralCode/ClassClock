@@ -13,6 +13,7 @@ import Calendar, { IScheduleDates } from "../components/Calendar/Calendar";
 import { startOfDay } from "date-fns";
 import SelectHeader from "../components/SelectHeader";
 import ClassClockService from "../services/classclock";
+import SelectionList from "../components/SelectionList/SelectionList";
 
 export interface IAdminProps {
     selectedSchool: {
@@ -164,6 +165,24 @@ const Admin = (props: IAdminProps) => {
         }
     }
 
+    const getBellScheduleSelectionList = (scheduleOptions:IScheduleDates) => {
+        const selectionList = [];
+        for (const option in scheduleOptions) {
+            if (scheduleOptions.hasOwnProperty(option)) {
+                selectionList.push(
+                    <li
+                        key={option}
+                        style={{ cursor: "pointer" }}
+                        onClick={() => { selectSchedule(option) }}>
+                        {scheduleOptions[option].name}
+                    </li>
+                );
+            }
+        }
+        return selectionList;
+    }
+
+
     const ScheduleAdmin = () => {
         return (
             <>
@@ -211,7 +230,17 @@ const Admin = (props: IAdminProps) => {
                 </label>
             </div>
             <br />
-            <ScheduleAdmin />
+            {(selectedSchedule !== "")? (
+                <ScheduleAdmin />
+            ):(
+                <SelectionList title="Select a Schedule to Edit" loading={false} >
+
+                        {getBellScheduleSelectionList(scheduleOptions)}
+
+
+                </SelectionList>
+            )}
+            
         </div>
     );
 };
