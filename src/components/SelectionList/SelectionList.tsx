@@ -12,59 +12,10 @@ import { pages } from "../../utils/constants";
 import { IState } from "../../store/schools/types";
 
 export interface ISelectProps {
-    selectedSchool: any;
-    dispatch: any;
 }
 
 const SelectionList = (props: ISelectProps) => {
-    const [schoolList, setSchoolList] = useState([]);
-    const [lastRefresh, setlastRefresh] = useState(0);
 
-    useEffect(() => {
-        const controller = new AbortController();
-        const signal = controller.signal;
-
-        if (
-            schoolList.length === 0 &&
-            // isFetching === false &&
-            Math.abs(new Date().getTime() - lastRefresh) > 120000 //120000 ms
-        ) {
-            const fetchSchools = async (abortSignal: AbortSignal) => {
-                ClassClockService.validateResponse(
-                    ClassClockService.getSchoolsList({
-                        signal: abortSignal
-                    })
-                ).then((json: any) => {
-                    setSchoolList(
-                        json.data.map((value: any) =>
-                            School.fromJson(value)
-                        )
-                    );
-
-                    setlastRefresh(new Date().getTime());
-                });
-            };
-            fetchSchools(signal);
-        }
-
-        return () => {
-            controller.abort();
-        };
-    }, []);
-
-    const list = schoolList.map((school: School) => (
-        <li
-            key={school.getIdentifier()}
-            onClick={() => {
-                props.dispatch(selectSchool(school.getIdentifier()));
-                props.dispatch(push(pages.main));
-            }}
-        >
-            <span className="schoolAcronym">{school.getAcronym()}</span>
-            <br />
-            <span className="schoolName">{school.getName()}</span>
-        </li>
-    ));
 
     return (
         <div>
@@ -80,8 +31,4 @@ const SelectionList = (props: ISelectProps) => {
     );
 };
 
-const mapStateToProps = (state: IState) => {
-    const { selectedSchool } = state;
-    return { selectedSchool };
-};
-export default connect(mapStateToProps)(SelectionList);
+export default SelectionList;
