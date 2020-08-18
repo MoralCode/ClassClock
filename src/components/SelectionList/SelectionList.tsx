@@ -1,9 +1,11 @@
+import React, { ReactElement } from "react";
 import "../../global.css";
 import "./SelectionList.css";
 
 export interface ISelectProps {
     title: string;
     loading: boolean;
+    children?: ReactElement[];
 }
 
 const SelectionList = (props: ISelectProps) => {
