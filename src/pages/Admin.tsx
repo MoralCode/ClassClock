@@ -164,6 +164,19 @@ const Admin = (props: IAdminProps) => {
         }
     }
 
+    const ScheduleAdmin = () => {
+        return (
+            <>
+            <div className="horizontalFlex">
+                {getKey()}
+                <Calendar options={selectedDates} onDateChange={(options: IScheduleDates) => setSelectedDates(options)} selectedSchedule={selectedSchedule} />
+            </div>
+            <button onClick={confirmUpdate}>Update Schedules</button>
+            <button onClick={confirmClear}>Clear Changes</button>
+            </>
+        )
+    }
+
     return (
         <div>
             <h1>Admin</h1>
@@ -198,12 +211,7 @@ const Admin = (props: IAdminProps) => {
                 </label>
             </div>
             <br />
-            <div className="horizontalFlex">
-                {getKey()}
-                <Calendar options={selectedDates} onDateChange={(options: IScheduleDates) => setSelectedDates(options)} selectedSchedule={selectedSchedule} />
-            </div>
-            <button onClick={confirmUpdate}>Update Schedules</button>
-            <button onClick={confirmClear}>Clear Changes</button>
+            <ScheduleAdmin />
         </div>
     );
 };
