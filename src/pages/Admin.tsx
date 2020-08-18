@@ -33,7 +33,7 @@ const Admin = (props: IAdminProps) => {
     const [selectedSchedule, selectSchedule] = useState("");
     const schedules = props.selectedSchool.data.getSchedules();
 
-   
+
 
     // if (
     //     user === undefined ||
@@ -100,9 +100,9 @@ const Admin = (props: IAdminProps) => {
                 key.push(
                     <li
                         key={option}
-                        style={{ backgroundColor: scheduleOptions[option].color, cursor: "pointer"}}
-                        className={option === selectedSchedule ? "selected" : undefined }
-                        onClick={() => {selectSchedule(option)}}>
+                        style={{ backgroundColor: scheduleOptions[option].color, cursor: "pointer" }}
+                        className={option === selectedSchedule ? "selected" : undefined}
+                        onClick={() => { selectSchedule(option) }}>
                         {scheduleOptions[option].name}
                     </li>
                 );
@@ -123,21 +123,21 @@ const Admin = (props: IAdminProps) => {
 
     const confirmClear = () => {
         if (window.confirm("Are you sure you want to reset all of your changes?")) {
-             setSelectedDates(getScheduleOptions())
-       }
+            setSelectedDates(getScheduleOptions())
+        }
     }
 
     const confirmUpdate = async () => {
         if (window.confirm("Are you sure you want to publish these schedule changes?")) {
-            const token:string = await getTokenSilently() || '';
-            
+            const token: string = await getTokenSilently() || '';
+
             if (schedules !== undefined) {
                 for (const schedule of schedules) {
-                    
+
                     // props.selectedSchool.data
 
                     let updatedUnixDates = selectedDates[schedule.getIdentifier()].dates;
-                    let updatedDates:Date[];
+                    let updatedDates: Date[];
 
                     if (updatedUnixDates) {
                         updatedDates = updatedUnixDates.map((value: number) => new Date(value))
@@ -201,7 +201,6 @@ const Admin = (props: IAdminProps) => {
             <div className="horizontalFlex">
                 {getKey()}
                 <Calendar options={selectedDates} onDateChange={(options: IScheduleDates) => setSelectedDates(options)} selectedSchedule={selectedSchedule} />
-                
             </div>
             <button onClick={confirmUpdate}>Update Schedules</button>
             <button onClick={confirmClear}>Clear Changes</button>
