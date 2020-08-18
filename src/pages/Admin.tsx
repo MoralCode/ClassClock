@@ -14,6 +14,7 @@ import { startOfDay } from "date-fns";
 import SelectHeader from "../components/SelectHeader";
 import ClassClockService from "../services/classclock";
 import SelectionList from "../components/SelectionList/SelectionList";
+import Link from "../components/Link";
 
 export interface IAdminProps {
     selectedSchool: {
@@ -186,6 +187,15 @@ const Admin = (props: IAdminProps) => {
     const ScheduleAdmin = () => {
         return (
             <>
+            <p>
+                You are editing the{" "}
+                <Link
+                    // tslint:disable-next-line: jsx-no-lambda
+                    destination={() => selectSchedule("")}
+                >
+                    {scheduleOptions[selectedSchedule].name}
+                </Link>
+            </p>
             <div className="horizontalFlex">
                 {getKey()}
                 <Calendar options={selectedDates} onDateChange={(options: IScheduleDates) => setSelectedDates(options)} selectedSchedule={selectedSchedule} />
