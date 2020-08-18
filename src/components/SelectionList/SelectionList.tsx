@@ -12,6 +12,7 @@ import { pages } from "../../utils/constants";
 import { IState } from "../../store/schools/types";
 
 export interface ISelectProps {
+    title: string;
 }
 
 const SelectionList = (props: ISelectProps) => {
@@ -19,8 +20,8 @@ const SelectionList = (props: ISelectProps) => {
 
     return (
         <div>
-            <h2>Please select a school</h2>
             {schoolList.length === 0 ? (
+            <h2>{props.title}</h2>
                 <span>Loading...</span>
             ) : (
                 <ul className="selectionList">{list}</ul>
