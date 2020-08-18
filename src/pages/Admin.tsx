@@ -15,6 +15,7 @@ import SelectHeader from "../components/SelectHeader";
 import ClassClockService from "../services/classclock";
 import SelectionList from "../components/SelectionList/SelectionList";
 import Link from "../components/Link";
+import EditableField from "../components/EditableField";
 
 export interface IAdminProps {
     selectedSchool: {
@@ -210,26 +211,15 @@ const Admin = (props: IAdminProps) => {
         <div>
             <h1>Admin</h1>
             <div id="schoolOptions">
-                <label>
-                    School name:
-                    <input
-                        type="text"
-                        value={props.selectedSchool.data.getName()}
-                        // disabled={true}
-                        readOnly={true}
-                    />
-                </label>
+                <EditableField label="School name:"
+                    value={props.selectedSchool.data.getName()}
+                    onChange={() => {}}
+                    readOnly={true} />
                 <br />
-                <label>
-                    School acronym:
-                    <input
-                        type="text"
-                        value={props.selectedSchool.data.getAcronym()}
-                        // disabled={true}
-                        readOnly={true}
-                    />
-                </label>
-                <br />
+                <EditableField label="School acronym:"
+                    value={props.selectedSchool.data.getAcronym()}
+                    onChange={() => { }}
+                    readOnly={true} />
             </div>
             <br />
             {(selectedSchedule !== "")? (
