@@ -55,9 +55,9 @@ export default class ClassClockService {
     ) => {
         return await fetch(
             ClassClockService.baseURL +
-                "/bellschedule/" +
-                schedule.getIdentifier() +
-                "/",
+            "/bellschedule/" +
+            schedule.getIdentifier() +
+            "/",
             ClassClockService.getHeaders("PATCH", authToken, {
                 body: JSON.stringify(schedule, ClassClockService.jsonifyReplacer)
             })

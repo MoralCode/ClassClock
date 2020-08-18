@@ -1,15 +1,13 @@
 import React, { Component, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { push } from "redux-first-routing";
-import "../../global.css";
-import "./SchoolSelect.css";
-
-import { selectSchool } from "../../store/schools/actions";
-import { useAuth0 } from "../../react-auth0-wrapper";
-import School from "../../@types/school";
-import ClassClockService from "../../services/classclock";
-import { pages } from "../../utils/constants";
-import { IState } from "../../store/schools/types";
+import "../global.css";
+import { selectSchool } from "../store/schools/actions";
+import School from "../@types/school";
+import ClassClockService from "../services/classclock";
+import { pages } from "../utils/constants";
+import { IState } from "../store/schools/types";
+import SelectionList from "../components/SelectionList/SelectionList";
 
 export interface ISelectProps {
     selectedSchool: any;
@@ -67,16 +65,9 @@ const SchoolSelect = (props: ISelectProps) => {
     ));
 
     return (
-        <div>
-            <h2>Please select a school</h2>
-            {schoolList.length === 0 ? (
-                <span>Loading...</span>
-            ) : (
-                <ul className="schoolSelectionList">{list}</ul>
-            )}
-
-            {/* <a onClick={}>Refresh</a> */}
-        </div>
+        <SelectionList title="Please select a school" loading={schoolList.length === 0} >
+            {list}
+        </SelectionList>
     );
 };
 
