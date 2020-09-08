@@ -34,6 +34,7 @@ const Admin = (props: IAdminProps) => {
     };
 
     const [selectedScheduleID, selectSchedule] = useState("");
+    const school = props.selectedSchool.data;
     const schedules = props.selectedSchool.data.getSchedules();
 
 
@@ -95,21 +96,24 @@ const Admin = (props: IAdminProps) => {
     //the selected calendar dates
     const [selectedDates, setSelectedDates] = useState(scheduleOptions);
 
+    const getKey = (bellschedules?: BellSchedule[]) => {
+        const keyItems: JSX.Element[] = [];
 
-    const getKey = () => {
-        const key = [];
-        for (const option in scheduleOptions) {
-            if (scheduleOptions.hasOwnProperty(option)) {
-                key.push(
+        if (bellschedules) {
+            const colors = generateHslaColors(80, 50, 1, bellschedules.length)
+
+            bellschedules.forEach((schedule, index) => {
+                keyItems.push(
                     <li
-                        key={option}
-                        style={{ backgroundColor: scheduleOptions[option].color, cursor: "pointer" }}
-                        className={option === selectedScheduleID ? "selected" : undefined}
-                        onClick={() => { selectSchedule(option) }}>
-                        {scheduleOptions[option].name}
+                        key={schedule.getIdentifier()}
+                        style={{ backgroundColor: colors[index], cursor: "pointer" }}
+                        className={schedule.getIdentifier() === selectedScheduleID ? "selected" : undefined}
+                        onClick={() => { selectSchedule(schedule.getIdentifier()) }}>
+                        {schedule.getName()}
                     </li>
                 );
-            }
+                
+            });
         }
         return (<ul
             style={{
@@ -120,7 +124,7 @@ const Admin = (props: IAdminProps) => {
             }}
             id="key"
         >
-            {key}
+            {keyItems}
         </ul>)
     }
 
