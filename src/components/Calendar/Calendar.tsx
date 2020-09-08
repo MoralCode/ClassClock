@@ -6,10 +6,11 @@ import SelectHeader from "../SelectHeader";
 export interface IScheduleDates {
     [key: string]: { name: string; color: string; dates?: number[] };
 }
+import BellSchedule from "../../@types/bellschedule";
 
 export interface ICalendarProps {
     options: IScheduleDates;
-    onDateChange: (options: IScheduleDates) => void;
+    onDateChange: (schedule: BellSchedule) => void;
     selectedSchedule: string;
 }
 

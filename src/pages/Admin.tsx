@@ -198,12 +198,13 @@ const Admin = (props: IAdminProps) => {
                     // tslint:disable-next-line: jsx-no-lambda
                     destination={() => selectSchedule("")}
                 >
-                    {scheduleOptions[selectedScheduleID].name}
+                    {/* This shoud be fine because its behind the selection screen */}
+                    {school.getSchedule(selectedScheduleID)?.getName()}
                 </Link>
             </p>
             <div className="horizontalFlex">
-                {getKey()}
-                <Calendar options={selectedDates} onDateChange={(options: IScheduleDates) => setSelectedDates(options)} selectedSchedule={selectedScheduleID} />
+                {getKey(schedules)}
+                <Calendar options={selectedDates} onDateChange={(schedule: BellSchedule) => setSelectedDates(schedule.getIdentifier())} selectedSchedule={selectedScheduleID} />
             </div>
             <button onClick={confirmUpdate}>Update Schedules</button>
             <button onClick={confirmClear}>Clear Changes</button>
@@ -231,7 +232,7 @@ const Admin = (props: IAdminProps) => {
             ):(
                 <SelectionList title="Select a Schedule to Edit" loading={false} >
 
-                        {getBellScheduleSelectionList(scheduleOptions)}
+                        {getBellScheduleSelectionList(schedules)}
 
 
                 </SelectionList>
