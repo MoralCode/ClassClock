@@ -71,29 +71,6 @@ const Admin = (props: IAdminProps) => {
     }
 
 
-
-    const getScheduleOptions = () => {
-        const optionProps: IScheduleDates = {};
-        let colorIndex = 0;
-        if (schedules !== undefined) {
-            const colors = generateHslaColors(80, 50, 1, schedules.length)
-
-            for (const schedule of schedules) {
-                optionProps[schedule.getIdentifier()] = {
-                    color: colors[colorIndex],
-                    name: schedule.getName(),
-                    dates: schedule
-                        .getDates()
-                        .map((value: Date) => startOfDay(value).getTime())
-                };
-                colorIndex++;
-            }
-        }
-        return optionProps;
-    };
-
-    const scheduleOptions = getScheduleOptions();
-    //the selected calendar dates
     const [selectedDates, setSelectedDates] = useState(scheduleOptions);
 
     const getKey = (bellschedules?: BellSchedule[]) => {
