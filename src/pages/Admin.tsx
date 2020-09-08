@@ -170,20 +170,20 @@ const Admin = (props: IAdminProps) => {
             }
         }
     }
+    const getBellScheduleSelectionList = (scheduleList?: BellSchedule[]) => {
+        const selectionList: JSX.Element[] = [];
 
-    const getBellScheduleSelectionList = (scheduleOptions:IScheduleDates) => {
-        const selectionList = [];
-        for (const option in scheduleOptions) {
-            if (scheduleOptions.hasOwnProperty(option)) {
+        if (scheduleList) {
+            scheduleList.forEach((schedule) => {
                 selectionList.push(
                     <li
-                        key={option}
+                        key={schedule.getIdentifier()}
                         style={{ cursor: "pointer" }}
-                        onClick={() => { selectSchedule(option) }}>
-                        {scheduleOptions[option].name}
+                        onClick={() => { selectSchedule(schedule.getIdentifier()) }}>
+                        {schedule.getName()}
                     </li>
                 );
-            }
+            });
         }
         return selectionList;
     }
