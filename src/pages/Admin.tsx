@@ -33,7 +33,7 @@ const Admin = (props: IAdminProps) => {
         props.dispatch(push(to));
     };
 
-    const [selectedSchedule, selectSchedule] = useState("");
+    const [selectedScheduleID, selectSchedule] = useState("");
     const schedules = props.selectedSchool.data.getSchedules();
 
 
@@ -104,7 +104,7 @@ const Admin = (props: IAdminProps) => {
                     <li
                         key={option}
                         style={{ backgroundColor: scheduleOptions[option].color, cursor: "pointer" }}
-                        className={option === selectedSchedule ? "selected" : undefined}
+                        className={option === selectedScheduleID ? "selected" : undefined}
                         onClick={() => { selectSchedule(option) }}>
                         {scheduleOptions[option].name}
                     </li>
@@ -194,12 +194,12 @@ const Admin = (props: IAdminProps) => {
                     // tslint:disable-next-line: jsx-no-lambda
                     destination={() => selectSchedule("")}
                 >
-                    {scheduleOptions[selectedSchedule].name}
+                    {scheduleOptions[selectedScheduleID].name}
                 </Link>
             </p>
             <div className="horizontalFlex">
                 {getKey()}
-                <Calendar options={selectedDates} onDateChange={(options: IScheduleDates) => setSelectedDates(options)} selectedSchedule={selectedSchedule} />
+                <Calendar options={selectedDates} onDateChange={(options: IScheduleDates) => setSelectedDates(options)} selectedSchedule={selectedScheduleID} />
             </div>
             <button onClick={confirmUpdate}>Update Schedules</button>
             <button onClick={confirmClear}>Clear Changes</button>
@@ -222,7 +222,7 @@ const Admin = (props: IAdminProps) => {
                     readOnly={true} />
             </div>
             <br />
-            {(selectedSchedule !== "")? (
+            {(selectedScheduleID !== "")? (
                 <ScheduleAdmin />
             ):(
                 <SelectionList title="Select a Schedule to Edit" loading={false} >
