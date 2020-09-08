@@ -103,9 +103,7 @@ const Admin = (props: IAdminProps) => {
                 key.push(
                     <li
                         key={option}
-                        style={{ backgroundColor: scheduleOptions[option].color, cursor: "pointer" }}
-                        className={option === selectedSchedule ? "selected" : undefined}
-                        onClick={() => { selectSchedule(option) }}>
+                        style={{ backgroundColor: scheduleOptions[option].color }}>
                         {scheduleOptions[option].name}
                     </li>
                 );
