@@ -9,7 +9,7 @@ import { IState } from "../store/schools/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "../react-auth0-wrapper";
-import Calendar, { IScheduleDates } from "../components/Calendar/Calendar";
+import Calendar from "../components/Calendar/Calendar";
 import { startOfDay } from "date-fns";
 import SelectHeader from "../components/SelectHeader";
 import ClassClockService from "../services/classclock";
