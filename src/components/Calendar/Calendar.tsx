@@ -9,7 +9,7 @@ export interface IScheduleDates {
 import BellSchedule from "../../@types/bellschedule";
 
 export interface ICalendarProps {
-    options: IScheduleDates;
+    schedules: BellSchedule[];
     onDateChange: (schedule: BellSchedule) => void;
     selectedSchedule: string;
 }
