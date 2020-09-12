@@ -2,10 +2,6 @@ import React, { useState } from "react";
 import "./Calendar.css";
 import dateFns from "date-fns";
 import SelectHeader from "../SelectHeader";
-
-export interface IScheduleDates {
-    [key: string]: { name: string; color: string; dates?: number[] };
-}
 import BellSchedule from "../../@types/bellschedule";
 import find from "lodash.find";
 
@@ -37,7 +33,6 @@ const Calendar = (props: ICalendarProps) => {
     const onDateClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
         const dateValue: Date = new Date(parseInt(event.currentTarget.dataset.date!, 10));
         if (isValidDate(dateValue)) {
-            // const next = getNextOptionForDate(dateValue);
             if (props.selectedScheduleId === "") {
                 alert("Please select a schedule to assign a date")
             } else{
@@ -60,22 +55,6 @@ const Calendar = (props: ICalendarProps) => {
             return find(schedules, schedule => { return schedule.getIdentifier() === id; });
         }
     }
-    // const getNextOptionForDate = (date: Date) => {
-    //     const location = getScheduleAndIndexForDate(date);
-    //     const currentOptionKey = location ? location[0] : undefined;
-    //     const optionKeys = Object.keys(props.options);
-
-    //     if (!location) {
-    //         return optionKeys[0];
-    //     } else if (
-    //         currentOptionKey &&
-    //         currentOptionKey === optionKeys[optionKeys.length - 1]
-    //     ) {
-    //         return;
-    //     } else if (currentOptionKey) {
-    //         return optionKeys[optionKeys.indexOf(currentOptionKey) + 1];
-    //     }
-    // };
 
     const setScheduleForDate = (date: Date, schedule?: BellSchedule) => {
         const currentScheduleandIndex = getScheduleAndIndexForDate(date);
@@ -112,40 +91,6 @@ const Calendar = (props: ICalendarProps) => {
     //https://stackoverflow.com/a/1353711
     const isValidDate = (d: Date) => {
         return d instanceof Date && !isNaN(d.getTime());
-    };
-
-    const addDateToSelectionList = (
-        datesSelected: IScheduleDates,
-        scheduleId: string,
-        date: Date
-    ) => {
-        const selectedDates = datesSelected[scheduleId].dates;
-        const updatedOption: IScheduleDates = Object.assign({}, datesSelected);
-
-        if (selectedDates) {
-            updatedOption[scheduleId].dates = [...selectedDates, date.getTime()];
-        }
-
-        return updatedOption;
-    };
-
-
-    const removeDateFromSelectionList = (
-        datesSelected: IScheduleDates,
-        scheduleId: string,
-        index: number
-    ) => {
-        const selectedDates = datesSelected[scheduleId].dates;
-        const updatedOption: IScheduleDates = Object.assign({}, datesSelected);
-
-        if (selectedDates) {
-            updatedOption[scheduleId].dates = [
-                ...selectedDates.slice(0, index),
-                ...selectedDates.slice(index + 1)
-            ];
-        }
-
-        return updatedOption;
     };
 
     const getScheduleAndIndexForDate = (date: Date): [BellSchedule, number] | undefined => {
