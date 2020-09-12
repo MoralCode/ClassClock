@@ -77,13 +77,13 @@ const Calendar = (props: ICalendarProps) => {
     //     }
     // };
 
-    const setScheduleForDate = (date: Date, option?: string) => {
+    const setScheduleForDate = (date: Date, scheduleId?: string) => {
         const location = getScheduleAndIndexForDate(date);
 
-        if (location && option) {
+        if (location && scheduleId) {
             const [optionKey, posInOption] = location;
             //the date is in a different schedule than the one provided. move it
-            if (optionKey !== option) {
+            if (optionKey !== scheduleId) {
                 let updatedSelections = props.options;
                 //remove from the old schedule
                 updatedSelections = removeDateFromSelectionList(
@@ -94,7 +94,7 @@ const Calendar = (props: ICalendarProps) => {
                 //add to the new schedule
                 updatedSelections = addDateToSelectionList(
                     updatedSelections,
-                    option,
+                    scheduleId,
                     date
                 );
                 props.onDateChange(updatedSelections);
@@ -104,9 +104,9 @@ const Calendar = (props: ICalendarProps) => {
                     removeDateFromSelectionList(props.options, optionKey, posInOption)
                 );
             }
-        } else if (!location && option) {
-            props.onDateChange(addDateToSelectionList(props.options, option, date));
-        } else if (location && !option) {
+        } else if (!location && scheduleId) {
+            props.onDateChange(addDateToSelectionList(props.options, scheduleId, date));
+        } else if (location && !scheduleId) {
             const [optionKey, posInOption] = location;
             props.onDateChange(
                 removeDateFromSelectionList(props.options, optionKey, posInOption)
@@ -121,14 +121,14 @@ const Calendar = (props: ICalendarProps) => {
 
     const addDateToSelectionList = (
         datesSelected: IScheduleDates,
-        option: string,
+        scheduleId: string,
         date: Date
     ) => {
-        const selectedDates = datesSelected[option].dates;
+        const selectedDates = datesSelected[scheduleId].dates;
         const updatedOption: IScheduleDates = Object.assign({}, datesSelected);
 
         if (selectedDates) {
-            updatedOption[option].dates = [...selectedDates, date.getTime()];
+            updatedOption[scheduleId].dates = [...selectedDates, date.getTime()];
         }
 
         return updatedOption;
@@ -137,14 +137,14 @@ const Calendar = (props: ICalendarProps) => {
 
     const removeDateFromSelectionList = (
         datesSelected: IScheduleDates,
-        option: string,
+        scheduleId: string,
         index: number
     ) => {
-        const selectedDates = datesSelected[option].dates;
+        const selectedDates = datesSelected[scheduleId].dates;
         const updatedOption: IScheduleDates = Object.assign({}, datesSelected);
 
         if (selectedDates) {
-            updatedOption[option].dates = [
+            updatedOption[scheduleId].dates = [
                 ...selectedDates.slice(0, index),
                 ...selectedDates.slice(index + 1)
             ];
