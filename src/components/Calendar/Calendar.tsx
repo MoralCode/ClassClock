@@ -61,7 +61,7 @@ const Calendar = (props: ICalendarProps) => {
         }
     }
     // const getNextOptionForDate = (date: Date) => {
-    //     const location = getGroupAndPositionForDate(date);
+    //     const location = getScheduleAndIndexForDate(date);
     //     const currentOptionKey = location ? location[0] : undefined;
     //     const optionKeys = Object.keys(props.options);
 
@@ -78,7 +78,7 @@ const Calendar = (props: ICalendarProps) => {
     // };
 
     const setScheduleForDate = (date: Date, option?: string) => {
-        const location = getGroupAndPositionForDate(date);
+        const location = getScheduleAndIndexForDate(date);
 
         if (location && option) {
             const [optionKey, posInOption] = location;
@@ -153,10 +153,10 @@ const Calendar = (props: ICalendarProps) => {
         return updatedOption;
     };
 
-    const getScheduleForDate = (date: Date): BellSchedule | undefined => {
+    const getScheduleAndIndexForDate = (date: Date): [BellSchedule, number] | undefined => {
         for (const schedule of props.schedules) {
             if (schedule.getDates().indexOf(date)){
-                return schedule;
+                return [schedule, props.schedules.indexOf(schedule)];
             }
         }
         return;
