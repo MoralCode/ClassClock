@@ -10,6 +10,7 @@ import BellSchedule from "../../@types/bellschedule";
 
 export interface ICalendarProps {
     schedules: BellSchedule[];
+    colors: string[];
     onDateChange: (schedule: BellSchedule) => void;
     selectedSchedule: string;
 }
