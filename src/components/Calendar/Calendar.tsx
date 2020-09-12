@@ -127,16 +127,15 @@ const Calendar = (props: ICalendarProps) => {
                 config
             );
 
-            const location = getGroupAndPositionForDate(date);
-            const currentOptionKey = location ? location[0] : undefined;
+            const location = getScheduleAndIndexForDate(date);
+            const schedule = location ? location[0] : undefined;
+            const index = location ? location[1] : undefined;
 
-            const bgColor = currentOptionKey
-                ? { backgroundColor: props.options[currentOptionKey].color }
+            const bgColor = index
+                ? { backgroundColor: props.colors[index] }
                 : undefined;
 
-            const name = currentOptionKey
-                ? props.options[currentOptionKey].name
-                : undefined;
+            const name = schedule ? schedule.getName() : undefined;
 
             tempRowData.push(
                 <td key={"date" + dateIndex}>
