@@ -39,7 +39,7 @@ const Calendar = (props: ICalendarProps) => {
             if (props.selectedSchedule === "") {
                 alert("Please select a schedule to assign a date")
             } else{
-                setOptionForDate(dateValue, props.selectedSchedule);
+                setScheduleForDate(dateValue, props.selectedSchedule);
 
             }
         } else {
@@ -66,7 +66,7 @@ const Calendar = (props: ICalendarProps) => {
     //     }
     // };
 
-    const setOptionForDate = (date: Date, option?: string) => {
+    const setScheduleForDate = (date: Date, option?: string) => {
         const location = getGroupAndPositionForDate(date);
 
         if (location && option) {
