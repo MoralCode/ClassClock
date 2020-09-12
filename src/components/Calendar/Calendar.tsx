@@ -6,7 +6,7 @@ import BellSchedule from "../../@types/bellschedule";
 import find from "lodash.find";
 
 export interface ICalendarProps {
-    schedules: BellSchedule[];
+    schedules?: BellSchedule[];
     colors: string[];
     onDateChange: (date: Date, from?: BellSchedule, to?: BellSchedule) => void;
     selectedScheduleId: string;
@@ -33,7 +33,7 @@ const Calendar = (props: ICalendarProps) => {
     const onDateClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
         const dateValue: Date = new Date(parseInt(event.currentTarget.dataset.date!, 10));
         if (isValidDate(dateValue)) {
-            const selectedSchedule = getScheduleById(props.schedules, props.selectedScheduleId);
+            const selectedSchedule = getScheduleById(props.selectedScheduleId);
             if (!selectedSchedule) {
                 alert("Please select a schedule to assign a date")
             } else {
@@ -47,12 +47,12 @@ const Calendar = (props: ICalendarProps) => {
     };
 
 
-    const getScheduleById = (schedules: BellSchedule[], id: string) => {
-        //kinda duplicated from bellschedule defenition
-        if (schedules === []) {
+    const getScheduleById = (id: string) => {
+        //kinda duplicated from school defenition
+        if (!props.schedules || props.schedules === []) {
             return
         } else {
-            return find(schedules, schedule => { return schedule.getIdentifier() === id; });
+            return find(props.schedules, schedule => { return schedule.getIdentifier() === id; });
         }
     }
 
@@ -94,9 +94,11 @@ const Calendar = (props: ICalendarProps) => {
     };
 
     const getScheduleAndIndexForDate = (date: Date): [BellSchedule, number] | undefined => {
-        for (const schedule of props.schedules) {
-            if (schedule.getDate(date)){
-                return [schedule, props.schedules.indexOf(schedule)];
+        if (props.schedules) {
+            for (const schedule of props.schedules) {
+                if (schedule.getDate(date)){
+                    return [schedule, props.schedules.indexOf(schedule)];
+                }
             }
         }
         return;
