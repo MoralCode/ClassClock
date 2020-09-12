@@ -16,6 +16,7 @@ import ClassClockService from "../services/classclock";
 import SelectionList from "../components/SelectionList/SelectionList";
 import Link from "../components/Link";
 import EditableField from "../components/EditableField";
+import cloneDeep from 'lodash.clonedeep'
 
 export interface IAdminProps {
     selectedSchool: {
@@ -70,6 +71,10 @@ const Admin = (props: IAdminProps) => {
         return colors
     }
 
+    const getCopyOfCurrentSchool = () => {
+        //might want to use deltas later rather than storing a full copy
+        return cloneDeep(props.selectedSchool.data)
+    }
 
     const [selectedDates, setSelectedDates] = useState(scheduleOptions);
 
