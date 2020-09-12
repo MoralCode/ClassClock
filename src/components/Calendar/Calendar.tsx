@@ -13,7 +13,7 @@ export interface ICalendarProps {
     schedules: BellSchedule[];
     colors: string[];
     onDateChange: (schedule: BellSchedule) => void;
-    selectedSchedule: string;
+    selectedScheduleId: string;
 }
 
 const Calendar = (props: ICalendarProps) => {
@@ -38,10 +38,10 @@ const Calendar = (props: ICalendarProps) => {
         const dateValue: Date = new Date(parseInt(event.currentTarget.dataset.date!, 10));
         if (isValidDate(dateValue)) {
             // const next = getNextOptionForDate(dateValue);
-            if (props.selectedSchedule === "") {
+            if (props.selectedScheduleId === "") {
                 alert("Please select a schedule to assign a date")
             } else{
-                setScheduleForDate(dateValue, props.selectedSchedule);
+                setScheduleForDate(dateValue, props.selectedScheduleId);
 
             }
         } else {
