@@ -2,7 +2,7 @@ import ClassPeriod from "./classperiod";
 import Time from "./time";
 import { TimeComparisons } from "../utils/enums";
 import { getValueIfKeyInList, sortClassesByStartTime } from "../utils/helpers";
-import { parse } from "date-fns";
+import { parse, differenceInDays } from "date-fns";
 
 export default class BellSchedule {
     public static fromJson(json: any) {
@@ -63,6 +63,14 @@ export default class BellSchedule {
 
     public getDates() {
         return this.dates;
+    }
+
+    public hasDate(date: Date) {
+        for (const scheduleDate of this.getDates()) {
+            if (differenceInDays(scheduleDate, date) < 1) {
+                return true;
+            }
+        }
     }
 
     public setDates(dates: Date[]) {
