@@ -155,7 +155,7 @@ const Calendar = (props: ICalendarProps) => {
 
     const getScheduleAndIndexForDate = (date: Date): [BellSchedule, number] | undefined => {
         for (const schedule of props.schedules) {
-            if (schedule.hasDate(date)){
+            if (schedule.getDate(date)){
                 return [schedule, props.schedules.indexOf(schedule)];
             }
         }
