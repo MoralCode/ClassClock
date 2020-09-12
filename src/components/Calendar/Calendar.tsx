@@ -77,40 +77,35 @@ const Calendar = (props: ICalendarProps) => {
     //     }
     // };
 
-    const setScheduleForDate = (date: Date, scheduleId?: string) => {
-        const location = getScheduleAndIndexForDate(date);
+    const setScheduleForDate = (date: Date, schedule?: BellSchedule) => {
+        const currentScheduleandIndex = getScheduleAndIndexForDate(date);
+        const currentSchedule = currentScheduleandIndex ? currentScheduleandIndex[0] : undefined;
 
-        if (location && scheduleId) {
-            const [optionKey, posInOption] = location;
+
+        if (currentSchedule && schedule) {
             //the date is in a different schedule than the one provided. move it
-            if (optionKey !== scheduleId) {
-                let updatedSelections = props.options;
+            if (currentSchedule.getIdentifier() !== schedule.getIdentifier()) {
                 //remove from the old schedule
-                updatedSelections = removeDateFromSelectionList(
-                    updatedSelections,
-                    optionKey,
-                    posInOption
-                );
+                currentSchedule.removeDate(date);
+                
                 //add to the new schedule
-                updatedSelections = addDateToSelectionList(
-                    updatedSelections,
-                    scheduleId,
-                    date
-                );
-                props.onDateChange(updatedSelections);
+                schedule.addDate(date);
+
+                //callback
+                props.onDateChange(date, currentSchedule, schedule);
             
             } else {
-                props.onDateChange(
-                    removeDateFromSelectionList(props.options, optionKey, posInOption)
-                );
+                //theyre in the same schedule, no change
+                // props.onDateChange(date, schedule, schedule);
             }
-        } else if (!location && scheduleId) {
-            props.onDateChange(addDateToSelectionList(props.options, scheduleId, date));
-        } else if (location && !scheduleId) {
-            const [optionKey, posInOption] = location;
-            props.onDateChange(
-                removeDateFromSelectionList(props.options, optionKey, posInOption)
-            );
+        } else if (!currentSchedule && schedule) {
+            //date was not in a schedule previously
+            schedule.addDate(date)
+            props.onDateChange(date, undefined, schedule);
+        } else if (currentSchedule && !schedule) {
+            //date is in a schedule and is being removed
+            currentSchedule.removeDate(date)
+            props.onDateChange(date, currentSchedule, undefined);
         }
     };
 
