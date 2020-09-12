@@ -153,27 +153,10 @@ const Calendar = (props: ICalendarProps) => {
         return updatedOption;
     };
 
-    const getGroupAndPositionForDate = (date: Date): [string, number] | undefined => {
-        for (const key in props.options) {
-            if (props.options.hasOwnProperty(key)) {
-                // const possibleDates = dates.filter((value: number) => {
-                //     const selDate = new Date(value);
-                //     return (
-                //         selDate.getFullYear() === date.getFullYear() &&
-                //         selDate.getMonth() === date.getMonth() &&
-                //         selDate.getDate() === date.getDate()
-                //     );
-                // });
-                // console.log("poss: ", date.getTime(), possibleDates);
-
-                const dates = props.options[key].dates;
-
-                if (!dates) { return; }
-                
-                const indexInGroup = dates.indexOf(date.getTime());
-                if (indexInGroup !== -1) {
-                    return [key, indexInGroup];
-                }
+    const getScheduleForDate = (date: Date): BellSchedule | undefined => {
+        for (const schedule of props.schedules) {
+            if (schedule.getDates().indexOf(date)){
+                return schedule;
             }
         }
         return;
