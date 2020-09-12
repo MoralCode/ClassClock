@@ -33,11 +33,11 @@ const Calendar = (props: ICalendarProps) => {
     const onDateClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
         const dateValue: Date = new Date(parseInt(event.currentTarget.dataset.date!, 10));
         if (isValidDate(dateValue)) {
-            if (props.selectedScheduleId === "") {
+            const selectedSchedule = getScheduleById(props.schedules, props.selectedScheduleId);
+            if (!selectedSchedule) {
                 alert("Please select a schedule to assign a date")
-            } else{
-                setScheduleForDate(dateValue, props.selectedScheduleId);
-
+            } else {
+                setScheduleForDate(dateValue, selectedSchedule);
             }
         } else {
             console.log("invalid date");
