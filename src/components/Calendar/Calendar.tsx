@@ -7,6 +7,7 @@ export interface IScheduleDates {
     [key: string]: { name: string; color: string; dates?: number[] };
 }
 import BellSchedule from "../../@types/bellschedule";
+import find from "lodash.find";
 
 export interface ICalendarProps {
     schedules: BellSchedule[];
@@ -50,6 +51,15 @@ const Calendar = (props: ICalendarProps) => {
         // event.currentTarget.value = props.options[(key + 1) % props.options.length];
     };
 
+
+    const getScheduleById = (schedules: BellSchedule[], id: string) => {
+        //kinda duplicated from bellschedule defenition
+        if (!schedules) {
+            return
+        } else {
+            return find(schedules, schedule => { return schedule.getIdentifier() === id; });
+        }
+    }
     // const getNextOptionForDate = (date: Date) => {
     //     const location = getGroupAndPositionForDate(date);
     //     const currentOptionKey = location ? location[0] : undefined;
