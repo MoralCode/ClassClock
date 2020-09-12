@@ -86,6 +86,9 @@ export default class BellSchedule {
     
     public removeDate(date: Date) {
         const actualDate = this.getDate(date);
+        if (!actualDate){
+            return false;
+        }
         const index = this.dates.indexOf(actualDate);
         this.dates.splice(index,1);
     }
