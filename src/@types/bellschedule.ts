@@ -90,7 +90,7 @@ export default class BellSchedule {
             return false;
         }
         const index = this.dates.indexOf(actualDate);
-        this.dates.splice(index,1);
+        return this.dates.splice(index, 1)[0];
     }
 
     public getAllClasses() {
