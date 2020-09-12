@@ -49,7 +49,7 @@ const Calendar = (props: ICalendarProps) => {
 
     const getScheduleById = (schedules: BellSchedule[], id: string) => {
         //kinda duplicated from bellschedule defenition
-        if (!schedules) {
+        if (schedules === []) {
             return
         } else {
             return find(schedules, schedule => { return schedule.getIdentifier() === id; });
