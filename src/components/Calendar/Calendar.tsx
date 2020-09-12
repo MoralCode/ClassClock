@@ -12,7 +12,7 @@ import find from "lodash.find";
 export interface ICalendarProps {
     schedules: BellSchedule[];
     colors: string[];
-    onDateChange: (schedule: BellSchedule) => void;
+    onDateChange: (date: Date, from?: BellSchedule, to?: BellSchedule) => void;
     selectedScheduleId: string;
 }
 
