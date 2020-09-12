@@ -80,6 +80,10 @@ export default class BellSchedule {
         return;
     }
 
+    public addDate(date: Date) {
+        this.dates.push(date);
+    }
+    
     public removeDate(date: Date) {
         const actualDate = this.getDate(date);
         const index = this.dates.indexOf(actualDate);
