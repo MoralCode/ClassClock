@@ -2,7 +2,7 @@ import ClassPeriod from "./classperiod";
 import Time from "./time";
 import { TimeComparisons } from "../utils/enums";
 import { getValueIfKeyInList, sortClassesByStartTime } from "../utils/helpers";
-import { parse } from "date-fns";
+import { parse, isSameDay } from "date-fns";
 
 export default class BellSchedule {
     public static fromJson(json: any) {
@@ -26,6 +26,7 @@ export default class BellSchedule {
     private dates: Date[];
     private classes: ClassPeriod[];
     private lastUpdatedDate: Date;
+    private color?: string;
 
     constructor(
         id: string,
@@ -65,8 +66,44 @@ export default class BellSchedule {
         return this.dates;
     }
 
+    /**returns the actual date object from the schedule that has the same date as
+     * the provided object.
+     * used for checking if a schedule has a particular date as well as correcting 
+     * inaccuracies due to incorrect milliseconds .etc.
+     * 
+     */
+    public getDate(date: Date) {
+        for (const scheduleDate of this.getDates()) {
+            if (isSameDay(scheduleDate, date)) {
+                return scheduleDate;
+            }
+        }
+        return;
+    }
+
+    public addDate(date: Date) {
+        this.dates.push(date);
+    }
+    
+    public removeDate(date: Date) {
+        const actualDate = this.getDate(date);
+        if (!actualDate){
+            return false;
+        }
+        const index = this.dates.indexOf(actualDate);
+        return this.dates.splice(index, 1)[0];
+    }
+
     public getAllClasses() {
         return this.classes;
+    }
+
+    public getColor(){
+        return this.color;
+    }
+
+    public setColor(color: string) {
+        this.color = color;
     }
 
     public numberOfClasses() {

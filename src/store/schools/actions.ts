@@ -10,7 +10,6 @@ import { Dispatch } from "redux";
 import ClassClockService from "../../services/classclock";
 import School from "../../@types/school";
 import BellSchedule from "../../@types/bellschedule";
-import { deconstructJsonApiResource } from "../../utils/helpers";
 
 function requestSchool(): SchoolActionTypes {
     return {
@@ -65,33 +64,10 @@ export function selectSchool(schoolId: string) {
                 //result = [school() result, schedules() result]
                 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all#Using_Promise.all
 
-                const scheduleDataList: Array<Promise<any>> = [];
-
-                for (const schedule of scheduleResult.data) {
-                    const scheduleId = schedule.id;
-                    // const sched_uri = schedule.links.self;
-                    const scheduleRequest = ClassClockService.validateResponse(
-                        ClassClockService.getDetailedScheduleForSchool(
-                            schoolId,
-                            scheduleId
-                        ),
-                        onError
-                    );
-
-                    scheduleDataList.push(scheduleRequest);
-                }
-
-                Promise.all(scheduleDataList).then(
-                    (schedulesList: any) => {
-                        schoolResult.data.attributes.schedules = schedulesList.map(
-                            (schedule: any) => deconstructJsonApiResource(schedule.data)
-                        );
-                        dispatch(
-                            receiveSchool(deconstructJsonApiResource(schoolResult.data))
-                        );
-                    },
-                    (error: Error) => onError(error)
-                );
+                schoolResult.data.schedules = scheduleResult.data;
+                dispatch(
+                    receiveSchool(schoolResult.data)
+                );      
             },
             (error: Error) => onError(error)
         );

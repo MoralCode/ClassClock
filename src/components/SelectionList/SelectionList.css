@@ -1,7 +1,7 @@
-ul.schoolSelectionList {
+ul.selectionList {
     padding: 0; /* have no clue whats causing the random left padding of 20px on <ul>s */
 }
-ul.schoolSelectionList > li {
+ul.selectionList > li {
     list-style-type: none;
     padding: 5px;
     margin: 2px;
@@ -9,14 +9,14 @@ ul.schoolSelectionList > li {
     text-align: left;
 }
 
-ul.schoolSelectionList > li > .schoolAcronym {
+ul.selectionList > li > .schoolAcronym {
     font-size: 2em;
     opacity: 0.5;
 }
-ul.schoolSelectionList > li > .schoolName {
+ul.selectionList > li > .schoolName {
     font-size: 0.8em;
 }
-ul.schoolSelectionList li:hover {
+ul.selectionList li:hover {
     background-color: rgba(0, 0, 0, 0.2);
     margin: 5px 0;
     cursor: pointer;
