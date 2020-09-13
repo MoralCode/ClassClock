@@ -6,7 +6,7 @@ interface ILinkProps {
     style?: CSSProperties;
     title?: string;
     id?: string;
-    children?: ReactNode[];
+    children?: ReactNode | ReactNode[];
 }
 
 const Link = (props: ILinkProps) => {
