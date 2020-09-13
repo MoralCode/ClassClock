@@ -165,11 +165,12 @@ const Calendar = (props: ICalendarProps) => {
                             lastAction={() =>
                                 setSelectedMonth(dateFns.subMonths(selectedMonth, 1))
                             }
-                            content={dateFns.format(selectedMonth, "MMMM YYYY")}
                             nextAction={() =>
                                 setSelectedMonth(dateFns.addMonths(selectedMonth, 1))
                             }
-                        />
+                        >
+                            {dateFns.format(selectedMonth, "MMMM YYYY")}
+                        </SelectHeader>
                     </th>
                 </tr>
                 <tr>
