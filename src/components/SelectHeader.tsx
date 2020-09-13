@@ -6,7 +6,7 @@ import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons
 interface ISelectHeaderProps {
     lastAction?: () => void;
     nextAction?: () => void;
-    children?: ReactNode[];
+    children?: ReactNode | ReactNode[];
 }
 
 const SelectHeader = (props: ISelectHeaderProps) => {
