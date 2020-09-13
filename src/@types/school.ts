@@ -5,6 +5,7 @@ import {
 import Time from "./time";
 import { TimeComparisons } from "../utils/enums";
 import BellSchedule from "./bellschedule";
+import find from 'lodash.find'
 
 export default class School {
     public static fromJson(json: any) {
@@ -74,6 +75,14 @@ export default class School {
 
     public getSchedules() {
         return this.schedules;
+    }
+
+    public getSchedule(id: string) {
+        if (!this.schedules){
+            return
+        } else {
+            return find(this.schedules, schedule => { return schedule.getIdentifier() === id; });
+        }
     }
 
     public getName() {

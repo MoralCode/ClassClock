@@ -2,15 +2,12 @@ import React, { useState } from "react";
 import "./Calendar.css";
 import dateFns from "date-fns";
 import SelectHeader from "../SelectHeader";
-
-export interface IScheduleDates {
-    [key: string]: { name: string; color: string; dates?: number[] };
-}
+import BellSchedule from "../../@types/bellschedule";
+import find from "lodash.find";
 
 export interface ICalendarProps {
-    options: IScheduleDates;
-    onDateChange: (options: IScheduleDates) => void;
-    selectedSchedule: string;
+    schedules?: BellSchedule[];
+    selectedScheduleId: string;
 }
 
 const Calendar = (props: ICalendarProps) => {
@@ -31,16 +28,24 @@ const Calendar = (props: ICalendarProps) => {
     const startDate = dateFns.startOfWeek(dateFns.startOfMonth(selectedMonth), config);
     const endDate = dateFns.endOfWeek(dateFns.endOfMonth(selectedMonth), config);
 
+    // https://felixgerschau.com/react-rerender-components/#force-an-update-in-react-hooks
+    const [, updateState] = React.useState();
+    const forceUpdate = React.useCallback(() => updateState({}), []);
+
     const onDateClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
         const dateValue: Date = new Date(parseInt(event.currentTarget.dataset.date!, 10));
         if (isValidDate(dateValue)) {
-            // const next = getNextOptionForDate(dateValue);
-            if (props.selectedSchedule === "") {
-                alert("Please select a schedule to assign a date")
-            } else{
-                setOptionForDate(dateValue, props.selectedSchedule);
+            const currentSchedule = getScheduleForDate(dateValue);
+            const selectedSchedule = getScheduleById(props.selectedScheduleId);
+            let value = selectedSchedule;
 
+            if (!selectedSchedule) {
+                alert("Please select a schedule to assign a date")
+            } else if (currentSchedule && (selectedSchedule.getIdentifier() === currentSchedule.getIdentifier())) {
+                //if the date belongs to this schedule, remove it
+                value = undefined;
             }
+            setScheduleForDate(dateValue, value);
         } else {
             console.log("invalid date");
         }
@@ -48,58 +53,36 @@ const Calendar = (props: ICalendarProps) => {
         // event.currentTarget.value = props.options[(key + 1) % props.options.length];
     };
 
-    // const getNextOptionForDate = (date: Date) => {
-    //     const location = getGroupAndPositionForDate(date);
-    //     const currentOptionKey = location ? location[0] : undefined;
-    //     const optionKeys = Object.keys(props.options);
 
-    //     if (!location) {
-    //         return optionKeys[0];
-    //     } else if (
-    //         currentOptionKey &&
-    //         currentOptionKey === optionKeys[optionKeys.length - 1]
-    //     ) {
-    //         return;
-    //     } else if (currentOptionKey) {
-    //         return optionKeys[optionKeys.indexOf(currentOptionKey) + 1];
-    //     }
-    // };
-
-    const setOptionForDate = (date: Date, option?: string) => {
-        const location = getGroupAndPositionForDate(date);
-
-        if (location && option) {
-            const [optionKey, posInOption] = location;
-            //the date is in a different schedule than the one provided. move it
-            if (optionKey !== option) {
-                let updatedSelections = props.options;
-                //remove from the old schedule
-                updatedSelections = removeDateFromSelectionList(
-                    updatedSelections,
-                    optionKey,
-                    posInOption
-                );
-                //add to the new schedule
-                updatedSelections = addDateToSelectionList(
-                    updatedSelections,
-                    option,
-                    date
-                );
-                props.onDateChange(updatedSelections);
-            
-            } else {
-                props.onDateChange(
-                    removeDateFromSelectionList(props.options, optionKey, posInOption)
-                );
-            }
-        } else if (!location && option) {
-            props.onDateChange(addDateToSelectionList(props.options, option, date));
-        } else if (location && !option) {
-            const [optionKey, posInOption] = location;
-            props.onDateChange(
-                removeDateFromSelectionList(props.options, optionKey, posInOption)
-            );
+    const getScheduleById = (id: string) => {
+        //kinda duplicated from school defenition
+        if (!props.schedules || props.schedules === []) {
+            return
+        } else {
+            return find(props.schedules, schedule => { return schedule.getIdentifier() === id; });
         }
+    }
+
+    const setScheduleForDate = (date: Date, schedule?: BellSchedule) => {
+        const currentSchedule = getScheduleForDate(date);
+
+        if (currentSchedule && schedule) {
+            //the date is in a different schedule than the one provided. move it
+            //remove from the old schedule
+            currentSchedule.removeDate(date);
+            
+            //add to the new schedule
+            schedule.addDate(date);
+            
+        } else if (!currentSchedule && schedule) {
+            //date was not in a schedule previously
+            schedule.addDate(date)
+            
+        } else if (currentSchedule && !schedule) {
+            //date is in a schedule and is being removed
+            currentSchedule.removeDate(date)
+        }
+        forceUpdate();
     };
 
     //https://stackoverflow.com/a/1353711
@@ -107,60 +90,11 @@ const Calendar = (props: ICalendarProps) => {
         return d instanceof Date && !isNaN(d.getTime());
     };
 
-    const addDateToSelectionList = (
-        datesSelected: IScheduleDates,
-        option: string,
-        date: Date
-    ) => {
-        const selectedDates = datesSelected[option].dates;
-        const updatedOption: IScheduleDates = Object.assign({}, datesSelected);
-
-        if (selectedDates) {
-            updatedOption[option].dates = [...selectedDates, date.getTime()];
-        }
-
-        return updatedOption;
-    };
-
-
-    const removeDateFromSelectionList = (
-        datesSelected: IScheduleDates,
-        option: string,
-        index: number
-    ) => {
-        const selectedDates = datesSelected[option].dates;
-        const updatedOption: IScheduleDates = Object.assign({}, datesSelected);
-
-        if (selectedDates) {
-            updatedOption[option].dates = [
-                ...selectedDates.slice(0, index),
-                ...selectedDates.slice(index + 1)
-            ];
-        }
-
-        return updatedOption;
-    };
-
-    const getGroupAndPositionForDate = (date: Date): [string, number] | undefined => {
-        for (const key in props.options) {
-            if (props.options.hasOwnProperty(key)) {
-                // const possibleDates = dates.filter((value: number) => {
-                //     const selDate = new Date(value);
-                //     return (
-                //         selDate.getFullYear() === date.getFullYear() &&
-                //         selDate.getMonth() === date.getMonth() &&
-                //         selDate.getDate() === date.getDate()
-                //     );
-                // });
-                // console.log("poss: ", date.getTime(), possibleDates);
-
-                const dates = props.options[key].dates;
-
-                if (!dates) { return; }
-                
-                const indexInGroup = dates.indexOf(date.getTime());
-                if (indexInGroup !== -1) {
-                    return [key, indexInGroup];
+    const getScheduleForDate = (date: Date): BellSchedule | undefined => {
+        if (props.schedules) {        
+            for (const schedule of props.schedules) {
+                if (schedule.getDate(date)){
+                    return schedule;
                 }
             }
         }
@@ -192,16 +126,10 @@ const Calendar = (props: ICalendarProps) => {
                 config
             );
 
-            const location = getGroupAndPositionForDate(date);
-            const currentOptionKey = location ? location[0] : undefined;
-
-            const bgColor = currentOptionKey
-                ? { backgroundColor: props.options[currentOptionKey].color }
-                : undefined;
-
-            const name = currentOptionKey
-                ? props.options[currentOptionKey].name
-                : undefined;
+            const schedule = getScheduleForDate(date);
+            const color = schedule ? schedule.getColor() : undefined;
+            const bgColor = { backgroundColor: color };
+            const name = schedule ? schedule.getName() : undefined;
 
             tempRowData.push(
                 <td key={"date" + dateIndex}>
