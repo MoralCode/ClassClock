@@ -4,8 +4,8 @@ interface IIconProps {
     icon: string;
 }
 
-export default class Icon extends Component<IIconProps, {}> {
-    render() {
-        return <i className={"fas " + this.props.icon} />;
-    }
+const Icon = (props: IIconProps) => {
+    return <i className={"fas " + props.icon} />;
 }
+
+export default Icon;
