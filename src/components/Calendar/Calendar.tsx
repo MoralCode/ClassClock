@@ -57,9 +57,7 @@ const Calendar = (props: ICalendarProps) => {
     }
 
     const setScheduleForDate = (date: Date, schedule?: BellSchedule) => {
-        const currentScheduleandIndex = getScheduleAndIndexForDate(date);
-        const currentSchedule = currentScheduleandIndex ? currentScheduleandIndex[0] : undefined;
-
+        const currentSchedule = getScheduleForDate(date);
 
         if (currentSchedule && schedule) {
             //the date is in a different schedule than the one provided. move it
@@ -129,8 +127,7 @@ const Calendar = (props: ICalendarProps) => {
                 config
             );
 
-            const location = getScheduleAndIndexForDate(date);
-            const schedule = location ? location[0] : undefined;
+            const schedule = getScheduleForDate(date);
             const index = location ? location[1] : undefined;
 
             const bgColor = index
