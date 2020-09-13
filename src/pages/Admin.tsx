@@ -85,10 +85,11 @@ const Admin = (props: IAdminProps) => {
             const colors = generateHslaColors(80, 50, 1, bellschedules.length)
 
             bellschedules.forEach((schedule, index) => {
+                schedule.setColor(colors[index]);
                 keyItems.push(
                     <li
                         key={schedule.getIdentifier()}
-                        style={{ backgroundColor: colors[index], cursor: "pointer" }}
+                        style={{ backgroundColor: schedule.getColor(), cursor: "pointer" }}
                         className={schedule.getIdentifier() === selectedScheduleID ? "selected" : undefined}
                         onClick={() => { selectSchedule(schedule.getIdentifier()) }}>
                         {schedule.getName()}

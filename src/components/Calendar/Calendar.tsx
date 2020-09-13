@@ -7,7 +7,6 @@ import find from "lodash.find";
 
 export interface ICalendarProps {
     schedules?: BellSchedule[];
-    colors: string[];
     onDateChange: (date: Date, from?: BellSchedule, to?: BellSchedule) => void;
     selectedScheduleId: string;
 }
@@ -128,12 +127,8 @@ const Calendar = (props: ICalendarProps) => {
             );
 
             const schedule = getScheduleForDate(date);
-            const index = location ? location[1] : undefined;
-
-            const bgColor = index
-                ? { backgroundColor: props.colors[index] }
-                : undefined;
-
+            const color = schedule ? schedule.getColor() : undefined;
+            const bgColor = { backgroundColor: color };
             const name = schedule ? schedule.getName() : undefined;
 
             tempRowData.push(
