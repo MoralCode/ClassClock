@@ -35,12 +35,17 @@ const Calendar = (props: ICalendarProps) => {
     const onDateClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
         const dateValue: Date = new Date(parseInt(event.currentTarget.dataset.date!, 10));
         if (isValidDate(dateValue)) {
+            const currentSchedule = getScheduleForDate(dateValue);
             const selectedSchedule = getScheduleById(props.selectedScheduleId);
+            let value = selectedSchedule;
+
             if (!selectedSchedule) {
                 alert("Please select a schedule to assign a date")
-            } else {
-                setScheduleForDate(dateValue, selectedSchedule);
+            } else if (currentSchedule && (selectedSchedule.getIdentifier() === currentSchedule.getIdentifier())) {
+                //if the date belongs to this schedule, remove it
+                value = undefined;
             }
+            setScheduleForDate(dateValue, value);
         } else {
             console.log("invalid date");
         }
@@ -63,15 +68,12 @@ const Calendar = (props: ICalendarProps) => {
 
         if (currentSchedule && schedule) {
             //the date is in a different schedule than the one provided. move it
-            if (currentSchedule.getIdentifier() !== schedule.getIdentifier()) {
-                //remove from the old schedule
-                currentSchedule.removeDate(date);
-                
-                //add to the new schedule
-                schedule.addDate(date);
-            } else {
-                //theyre in the same schedule, no change
-            }
+            //remove from the old schedule
+            currentSchedule.removeDate(date);
+            
+            //add to the new schedule
+            schedule.addDate(date);
+            
         } else if (!currentSchedule && schedule) {
             //date was not in a schedule previously
             schedule.addDate(date)
