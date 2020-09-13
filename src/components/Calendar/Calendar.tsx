@@ -126,7 +126,9 @@ const Calendar = (props: ICalendarProps) => {
             );
 
             const schedule = getScheduleForDate(date);
-            const color = schedule ? schedule.getColor() : undefined;
+            //show the schedule's assigned color if it is selected
+            const backupColor = schedule ? "rgba(0, 0, 0, 0.1)" : undefined;
+            const color = schedule && schedule.getIdentifier() === props.selectedScheduleId ? schedule.getColor() : backupColor;
             const bgColor = { backgroundColor: color };
             const name = schedule ? schedule.getName() : undefined;
 
