@@ -43,6 +43,7 @@ const Admin = (props: IAdminProps) => {
 
     const [schoolClone, setSchoolClone] = useState(getCopyOfCurrentSchool);    
     const schedules = schoolClone.getSchedules()
+    const selectedSchedule = schoolClone.getSchedule(selectedScheduleID)
 
 
     // if (
@@ -172,7 +173,7 @@ const Admin = (props: IAdminProps) => {
                     destination={() => selectSchedule("")}
                 >
                     {/* This shoud be fine because its behind the selection screen */}
-                    {school.getSchedule(selectedScheduleID)?.getName()}
+                        {selectedSchedule? selectedSchedule.getName():""}
                 </Link>
             </p>
             <div className="horizontalFlex">
