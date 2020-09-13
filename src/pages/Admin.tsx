@@ -115,22 +115,8 @@ const Admin = (props: IAdminProps) => {
             if (schedules !== undefined) {
                 for (const schedule of schedules) {
 
-                    // props.selectedSchool.data
-
-                    let updatedUnixDates = selectedDates[schedule.getIdentifier()].dates;
-                    let updatedDates: Date[];
-
-                    if (updatedUnixDates) {
-                        updatedDates = updatedUnixDates.map((value: number) => new Date(value))
-                    } else {
-                        updatedDates = []
-                    }
-
-                    //set dates
-                    schedule.setDates(updatedDates)
-
                     if (token != '') {
-                        //send to API
+                        //send cloned schedule to API
                         ClassClockService.validateResponse(
                             ClassClockService.updateBellSchedule(schedule, token)
                         );
