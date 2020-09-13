@@ -21,7 +21,6 @@ const Calendar = (props: ICalendarProps) => {
     const [selectedMonth, setSelectedMonth] = useState(getSelectedMonth);
 
    useEffect(function persistForm() {
-        console.log("persistingmonth: ", selectedMonth.getMonth())
         sessionStorage.setItem('selectedMonth', selectedMonth.getTime().toString());
     });
 
