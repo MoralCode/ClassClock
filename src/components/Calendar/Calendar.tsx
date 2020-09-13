@@ -14,15 +14,7 @@ const Calendar = (props: ICalendarProps) => {
     const [selectedMonth, setSelectedMonth] = useState(new Date());
     // const initialOptions: { [key: string]: number[] } = {};
 
-    // Object.entries(props.options).forEach(value => {
-    //     const [id, options] = value;
-    //     if (options.dates) {
-    //         initialOptions[id] = options.dates;
-    //     }
-    // });
 
-    // //this probably needs to be moved up a level so that it can be sent to the API
-    // const [selectedDates, setSelectedDates] = useState(initialOptions);
 
     const config = { weekStartsOn: 1 };
     const startDate = dateFns.startOfWeek(dateFns.startOfMonth(selectedMonth), config);
@@ -49,8 +41,6 @@ const Calendar = (props: ICalendarProps) => {
         } else {
             console.log("invalid date");
         }
-
-        // event.currentTarget.value = props.options[(key + 1) % props.options.length];
     };
 
 
