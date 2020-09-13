@@ -68,15 +68,23 @@ const Admin = (props: IAdminProps) => {
         return colors
     }
     
-    
-    const getKey = (bellschedules?: BellSchedule[]) => {
-        const keyItems: JSX.Element[] = [];
+    const generateColors = (bellschedules?: BellSchedule[]) => {
 
         if (bellschedules) {
             const colors = generateHslaColors(80, 50, 1, bellschedules.length)
-
             bellschedules.forEach((schedule, index) => {
                 schedule.setColor(colors[index]);
+            });
+        }
+    }
+    
+    const getKey = (bellschedules?: BellSchedule[]) => {
+        generateColors(bellschedules);
+        const keyItems: JSX.Element[] = [];
+
+        if (bellschedules) {
+
+            bellschedules.forEach((schedule, index) => {
                 keyItems.push(
                     <li
                         key={schedule.getIdentifier()}
