@@ -163,10 +163,12 @@ const Admin = (props: IAdminProps) => {
                 <Link
                     // tslint:disable-next-line: jsx-no-lambda
                     destination={() => selectSchedule("")}
+                    title="Change Schedule"
                 >
                     {/* This shoud be fine because its behind the selection screen */}
                         {selectedSchedule? selectedSchedule.getName():""}
-                </Link>
+                </Link>{" "}
+                Schedule
             </p>
             <div className="horizontalFlex">
                     {getKey(schoolClone.getSchedules())}
