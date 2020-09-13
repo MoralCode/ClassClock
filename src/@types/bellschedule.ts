@@ -26,6 +26,7 @@ export default class BellSchedule {
     private dates: Date[];
     private classes: ClassPeriod[];
     private lastUpdatedDate: Date;
+    private color?: string;
 
     constructor(
         id: string,
@@ -95,6 +96,14 @@ export default class BellSchedule {
 
     public getAllClasses() {
         return this.classes;
+    }
+
+    public getColor(){
+        return this.color;
+    }
+
+    public setColor(color: string) {
+        this.color = color;
     }
 
     public numberOfClasses() {
