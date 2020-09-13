@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Calendar.css";
 import dateFns from "date-fns";
 import SelectHeader from "../SelectHeader";
@@ -11,10 +11,19 @@ export interface ICalendarProps {
 }
 
 const Calendar = (props: ICalendarProps) => {
-    const [selectedMonth, setSelectedMonth] = useState(new Date());
     // const initialOptions: { [key: string]: number[] } = {};
+    const getSelectedMonth = () => {
+        const persisted = sessionStorage.getItem('selectedMonth');
+        return persisted ? new Date(parseInt(persisted, 10)) : new Date();
+    };
 
+    
+    const [selectedMonth, setSelectedMonth] = useState(getSelectedMonth);
 
+   useEffect(function persistForm() {
+        console.log("persistingmonth: ", selectedMonth.getMonth())
+        sessionStorage.setItem('selectedMonth', selectedMonth.getTime().toString());
+    });
 
     const config = { weekStartsOn: 1 };
     const startDate = dateFns.startOfWeek(dateFns.startOfMonth(selectedMonth), config);
