@@ -93,11 +93,11 @@ const Calendar = (props: ICalendarProps) => {
         return d instanceof Date && !isNaN(d.getTime());
     };
 
-    const getScheduleAndIndexForDate = (date: Date): [BellSchedule, number] | undefined => {
-        if (props.schedules) {
+    const getScheduleForDate = (date: Date): BellSchedule | undefined => {
+        if (props.schedules) {        
             for (const schedule of props.schedules) {
                 if (schedule.getDate(date)){
-                    return [schedule, props.schedules.indexOf(schedule)];
+                    return schedule;
                 }
             }
         }
