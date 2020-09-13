@@ -163,8 +163,8 @@ const Admin = (props: IAdminProps) => {
                 </Link>
             </p>
             <div className="horizontalFlex">
-                {getKey(schedules)}
-                <Calendar options={selectedDates} onDateChange={(schedule: BellSchedule) => setSelectedDates(schedule.getIdentifier())} selectedSchedule={selectedScheduleID} />
+                    {getKey(schoolClone.getSchedules())}
+                    <Calendar schedules={schoolClone.getSchedules()} selectedScheduleId={selectedScheduleID} />
             </div>
             <button onClick={confirmUpdate}>Update Schedules</button>
             <button onClick={confirmClear}>Clear Changes</button>
