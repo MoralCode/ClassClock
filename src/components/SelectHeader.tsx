@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import Link from "./Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
@@ -6,7 +6,7 @@ import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons
 interface ISelectHeaderProps {
     lastAction?: () => void;
     nextAction?: () => void;
-    content: string;
+    children?: ReactNode[];
 }
 
 const SelectHeader = (props: ISelectHeaderProps) => {
@@ -20,7 +20,7 @@ const SelectHeader = (props: ISelectHeaderProps) => {
                 undefined
             )}
 
-            <span id="monthDisplay">{props.content}</span>
+            <span id="monthDisplay">{props.children}</span>
 
             {props.nextAction ? (
                 <Link destination={props.nextAction} className="smallIcon">
