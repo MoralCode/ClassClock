@@ -7,7 +7,6 @@ import find from "lodash.find";
 
 export interface ICalendarProps {
     schedules?: BellSchedule[];
-    onDateChange: (date: Date, from?: BellSchedule, to?: BellSchedule) => void;
     selectedScheduleId: string;
 }
 
@@ -66,22 +65,16 @@ const Calendar = (props: ICalendarProps) => {
                 
                 //add to the new schedule
                 schedule.addDate(date);
-
-                //callback
-                props.onDateChange(date, currentSchedule, schedule);
-            
             } else {
                 //theyre in the same schedule, no change
-                // props.onDateChange(date, schedule, schedule);
             }
         } else if (!currentSchedule && schedule) {
             //date was not in a schedule previously
             schedule.addDate(date)
-            props.onDateChange(date, undefined, schedule);
+            
         } else if (currentSchedule && !schedule) {
             //date is in a schedule and is being removed
             currentSchedule.removeDate(date)
-            props.onDateChange(date, currentSchedule, undefined);
         }
     };
 
