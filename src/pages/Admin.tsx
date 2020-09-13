@@ -35,9 +35,14 @@ const Admin = (props: IAdminProps) => {
     };
 
     const [selectedScheduleID, selectSchedule] = useState("");
-    const school = props.selectedSchool.data;
-    const schedules = props.selectedSchool.data.getSchedules();
+    
+    const getCopyOfCurrentSchool = () => {
+        //might want to use deltas later rather than storing a full copy
+        return cloneDeep(props.selectedSchool.data)
+    }
 
+    const [schoolClone, setSchoolClone] = useState(getCopyOfCurrentSchool);    
+    const schedules = schoolClone.getSchedules()
 
 
     // if (
@@ -61,14 +66,8 @@ const Admin = (props: IAdminProps) => {
 
         return colors
     }
-
-    const getCopyOfCurrentSchool = () => {
-        //might want to use deltas later rather than storing a full copy
-        return cloneDeep(props.selectedSchool.data)
-    }
-
-    const [selectedDates, setSelectedDates] = useState(scheduleOptions);
-
+    
+    
     const getKey = (bellschedules?: BellSchedule[]) => {
         const keyItems: JSX.Element[] = [];
 
