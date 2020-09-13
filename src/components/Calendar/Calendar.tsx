@@ -28,6 +28,10 @@ const Calendar = (props: ICalendarProps) => {
     const startDate = dateFns.startOfWeek(dateFns.startOfMonth(selectedMonth), config);
     const endDate = dateFns.endOfWeek(dateFns.endOfMonth(selectedMonth), config);
 
+    // https://felixgerschau.com/react-rerender-components/#force-an-update-in-react-hooks
+    const [, updateState] = React.useState();
+    const forceUpdate = React.useCallback(() => updateState({}), []);
+
     const onDateClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
         const dateValue: Date = new Date(parseInt(event.currentTarget.dataset.date!, 10));
         if (isValidDate(dateValue)) {
@@ -76,6 +80,7 @@ const Calendar = (props: ICalendarProps) => {
             //date is in a schedule and is being removed
             currentSchedule.removeDate(date)
         }
+        forceUpdate();
     };
 
     //https://stackoverflow.com/a/1353711
