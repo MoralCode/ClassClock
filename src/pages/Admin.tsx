@@ -48,15 +48,6 @@ const Admin = (props: IAdminProps) => {
     //     navigate(pages.main);
     // }
 
-    //https://stackoverflow.com/a/1484514
-    const getRandomHtmlColor = () => {
-        const letters = "0123456789ABCDEF";
-        let color = "#";
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    };
 
     //https://mika-s.github.io/javascript/colors/hsl/2017/12/05/generating-random-colors-in-javascript.html
     const generateHslaColors = (saturation: number, lightness: number, alpha: number, amount: number) => {
