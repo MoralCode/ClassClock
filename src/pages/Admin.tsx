@@ -104,7 +104,7 @@ const Admin = (props: IAdminProps) => {
 
     const confirmClear = () => {
         if (window.confirm("Are you sure you want to reset all of your changes?")) {
-            setSelectedDates(getScheduleOptions())
+            setSchoolClone(getCopyOfCurrentSchool())
         }
     }
 
