@@ -54,6 +54,14 @@ export default class BellSchedule {
         return this.name;
     }
 
+     public setName(name: string) {
+        this.name = name;
+    }
+
+    public setDisplayName(name: string) {
+        this.displayName = name;
+    }
+
     public getDisplayName() {
         if (this.displayName) {
             return this.displayName;
