@@ -4,7 +4,7 @@ import React, { Component } from "react";
 interface IEditableFieldProps {
 	label: React.ReactNode;
 	value: string | number | string[] | undefined;
-	onChange: () => any;
+	onChange: ((event: React.ChangeEvent<HTMLInputElement>) => void) | undefined;
 	disabled?: boolean | undefined;
 	readOnly?: boolean | undefined;
 	placeholder?: string | undefined;
