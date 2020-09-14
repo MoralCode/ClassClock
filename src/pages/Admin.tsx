@@ -156,6 +156,7 @@ const Admin = (props: IAdminProps) => {
 
 
     const ScheduleAdmin = () => {
+        generateColors(schoolClone.getSchedules());
         return (
             <>
             <p>
