@@ -123,6 +123,19 @@ export default class BellSchedule {
         return this.classes.length - 1;
     }
 
+    public addClass(classPeriod: ClassPeriod) {
+        this.classes.push(classPeriod);
+    }
+
+    public removeClass(classPeriod: ClassPeriod) {
+        const index = this.classes.indexOf(classPeriod);
+        if (!index) {
+            console.warn("attempt to remove nonexistent class period")
+            return;
+        }
+        return this.classes.splice(index, 1)[0];
+    }
+
     public getColor(){
         return this.color;
     }
