@@ -51,6 +51,10 @@ export default class BellSchedule {
     }
 
     public getName() {
+        return this.name;
+    }
+
+    public getDisplayName() {
         if (this.displayName) {
             return this.displayName;
         } else {
