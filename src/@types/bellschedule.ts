@@ -110,6 +110,19 @@ export default class BellSchedule {
         return this.classes;
     }
 
+    public getClassPeriodForTime(time: Time) {
+        for (const classPeriod of sortClassesByStartTime(this.classes)) {
+            if (classPeriod.stateForTime(time) === TimeComparisons.IS_DURING_OR_EXACTLY) {
+                return classPeriod;
+            }
+        }
+        return;
+    }
+
+    public numberOfClasses() {
+        return this.classes.length - 1;
+    }
+
     public getColor(){
         return this.color;
     }
@@ -118,24 +131,11 @@ export default class BellSchedule {
         this.color = color;
     }
 
-    public numberOfClasses() {
-        return this.classes.length - 1;
-    }
-
     public lastUpdated() {
         return this.lastUpdatedDate;
     }
 
     public hasChangedSince(date: Date) {
         return date.getTime() - this.lastUpdatedDate.getTime() > 0;
-    }
-
-    public getClassPeriodForTime(time: Time) {
-        for (const classPeriod of sortClassesByStartTime(this.classes)) {
-            if (classPeriod.stateForTime(time) === TimeComparisons.IS_DURING_OR_EXACTLY) {
-                return classPeriod;
-            }
-        }
-        return;
     }
 }
