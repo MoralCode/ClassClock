@@ -52,6 +52,10 @@ export default class ClassPeriod {
         return this.startTime.getTimeDeltaTo(this.endTime);
     }
 
+    public getCreationDate() {
+        return this.creationDate;
+    }
+
     //remove me
     public stateForTime(time: Time) {
         return checkTimeRange(time, this.startTime, this.endTime);
