@@ -2,6 +2,8 @@
 
 # ClassClock
 
+[![Join the chat at https://gitter.im/MoralCode/ClassClock](https://badges.gitter.im/MoralCode/ClassClock.svg)](https://gitter.im/MoralCode/ClassClock?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 
 ## What is ClassClock?
 ClassClock is a web app to give students and teachers easy access to:
