@@ -121,6 +121,8 @@ const Admin = (props: IAdminProps) => {
             if (schedules !== undefined) {
                 for (const schedule of schedules) {
 
+                    delete schedule['color'];
+
                     if (token != '') {
                         //send cloned schedule to API
                         ClassClockService.validateResponse(
