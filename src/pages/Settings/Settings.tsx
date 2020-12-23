@@ -175,8 +175,8 @@ const Settings = (props: ISettingProps) => {
                 </li>
             </ul>
             <p id="credits">
-                Created by: <a href="https://www.adriancedwards.com">Adrian Edwards</a>{" "}
-                and <a href="https://nbdeg.com/">Nick DeGroot</a>
+                Created by: <a href={process.env.REACT_APP_AUTHORURL}>Adrian Edwards</a>{" "}
+                and <a href="https://nickthegroot.com/">Nick DeGroot</a>
                 <br />
                 Idea by: <a href="https://twitter.com/MrKumprey">Dan Kumprey</a>
             </p>
