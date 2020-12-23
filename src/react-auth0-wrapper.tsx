@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import createAuth0Client from "@auth0/auth0-spa-js";
+import createAuth0Client, {PopupLoginOptions, RedirectLoginResult, GetTokenWithPopupOptions, LogoutOptions, GetTokenSilentlyOptions, GetUserOptions, getIdTokenClaimsOptions, RedirectLoginOptions, IdToken, Auth0ClientOptions, User} from "@auth0/auth0-spa-js";
 import Auth0Client from "@auth0/auth0-spa-js/dist/typings/Auth0Client";
 
 interface IAuth0Context {
@@ -31,7 +31,7 @@ export const Auth0Provider = ({
     ...initOptions
 }: IAuth0ProviderOptions & Auth0ClientOptions) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [user, setUser] = useState();
+    const [user, setUser] = useState<User>();
     const [auth0Client, setAuth0] = useState<Auth0Client>();
     const [loading, setLoading] = useState(true);
     const [popupOpen, setPopupOpen] = useState(false);
