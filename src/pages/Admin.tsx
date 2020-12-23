@@ -184,7 +184,7 @@ const Admin = (props: IAdminProps) => {
     }
 
     return (
-        <div>
+        <>
             <h1>Admin</h1>
             <div id="schoolOptions">
                 <EditableField label="School name:"
@@ -209,7 +209,7 @@ const Admin = (props: IAdminProps) => {
                 </SelectionList>
             )}
             
-        </div>
+        </>
     );
 };
 
