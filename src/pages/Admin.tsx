@@ -201,7 +201,7 @@ const Admin = (props: IAdminProps) => {
             {(selectedScheduleID !== "")? (
                 <ScheduleAdmin />
             ):(
-                <SelectionList title="Select a Schedule to Edit" loading={false} >
+                <SelectionList title="Select a Schedule to Edit" loading={false} className="centeredWidth" >
 
                         {getBellScheduleSelectionList(schedules)}
 

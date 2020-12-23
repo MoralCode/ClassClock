@@ -92,7 +92,7 @@ const Settings = (props: ISettingProps) => {
             )}
 
             <h1>Settings</h1>
-            <h2 className="settingsHeader">Selected School: </h2>
+            <h2 className="settingsHeader centeredWidth">Selected School: </h2>
             <div>
                 {props.selectedSchool.isFetching ? (
                     <span>Loading School...</span>
@@ -135,7 +135,7 @@ const Settings = (props: ISettingProps) => {
                 <br />
                 {getAdminButton()}
             </div>
-            <h2 className="settingsHeader">Time Display:</h2>
+            <h2 className="settingsHeader centeredWidth">Time Display:</h2>
             <label>
                 Use 24-hour Time?{" "}
                 <input

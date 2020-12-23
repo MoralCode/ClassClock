@@ -245,3 +245,27 @@ section#options > * {
 .footer__social li:last-child {
     margin-right: 0;
 }
+
+.centeredWidth {
+    margin: 0 auto;
+    width: 95vw;
+}
+
+@media (min-width: 768px) {
+    .centeredWidth {
+        width: 60vw;
+    }
+
+}
+
+@media (min-width: 992px) {
+    .centeredWidth {
+        width: 40vw;
+    }
+}
+
+@media (min-width: 1400px) {
+    .centeredWidth {
+        width: 30vw;
+    }
+}

@@ -5,6 +5,7 @@ import "./SelectionList.css";
 export interface ISelectProps {
     title: string;
     loading: boolean;
+    className?:string;
     children?: ReactElement[];
 }
 
@@ -34,7 +35,7 @@ const SelectionList = (props: ISelectProps) => {
             {props.loading? (
                 <span>Loading...</span>
             ) : (
-                    <ul className="selectionList">
+                    <ul className={"selectionList " +  props.className}>
                         {makeIntoListItems(props.children)}
                     </ul>
             )}

@@ -65,7 +65,7 @@ const SchoolSelect = (props: ISelectProps) => {
     ));
 
     return (
-        <SelectionList title="Please select a school" loading={schoolList.length === 0} >
+        <SelectionList title="Please select a school" loading={schoolList.length === 0} className="centeredWidth" >
             {list}
         </SelectionList>
     );
