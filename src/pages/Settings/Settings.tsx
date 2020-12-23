@@ -180,6 +180,7 @@ const Settings = (props: ISettingProps) => {
                 <br />
                 Idea by: <a href="https://twitter.com/MrKumprey">Dan Kumprey</a>
             </p>
+            <p style={{fontSize: "smaller"}}>ClassClock version {process.env.REACT_APP_VERSION}</p>
         </div>
     );
 };
