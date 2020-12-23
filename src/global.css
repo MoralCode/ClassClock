@@ -260,6 +260,11 @@ section#options > * {
     margin-right: 0;
 }
 
+.e-mail::after {
+    content: "\0061\0064\0072\0069\0061\006E\0040\0061\0064\0072\0069\0061\006E\0063\0065\0064\0077\0061\0072\0064\0073\002E\0063\006F\006D";
+}
+
+
 .centeredWidth {
     margin: 0 auto;
     width: 95vw;

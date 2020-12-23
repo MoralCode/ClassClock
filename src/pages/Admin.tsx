@@ -138,6 +138,16 @@ const Admin = (props: IAdminProps) => {
             }
         }
     }
+
+    const getNewScheduleWarning = (inline:boolean = true) => {
+        let style:React.CSSProperties = { maxWidth: "600px" }
+        if (inline) {
+            style = {...style, display: "inline"}
+        }
+
+        return <p style={style}>To add a new schedule, contact me at <span className="e-mail" title="To prevent automated spam, this email address cannot be copied"></span></p>
+    }
+
     const getBellScheduleSelectionList = (scheduleList?: BellSchedule[]) => {
         const selectionList: JSX.Element[] = [];
 
@@ -179,6 +189,7 @@ const Admin = (props: IAdminProps) => {
             </div>
             <button onClick={confirmUpdate}>Update Schedules</button>
             <button onClick={confirmClear}>Clear Changes</button>
+            {getNewScheduleWarning(false)}
             </>
         )
     }
@@ -201,12 +212,16 @@ const Admin = (props: IAdminProps) => {
             {(selectedScheduleID !== "")? (
                 <ScheduleAdmin />
             ):(
+                <>
                 <SelectionList title="Select a Schedule to Edit" loading={false} className="centeredWidth" >
 
                         {getBellScheduleSelectionList(schedules)}
 
 
                 </SelectionList>
+                {getNewScheduleWarning()}
+                </>
+
             )}
             
         </>
