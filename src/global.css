@@ -62,6 +62,20 @@ div#root > * {
     margin-right: auto;
 }
 
+/* from editableField Component */
+.editableField {
+    display: inline-flex;
+    justify-content: space-between;
+    /* width: 100%; */
+    flex-grow: 1;
+    text-align: left;
+    margin: 2px
+
+}
+.editableFieldLabel {
+    margin: 5px;
+}
+
 div#page {
     flex: 1;
     width: 100%;

@@ -12,14 +12,8 @@ interface IEditableFieldProps {
 
 export default class EditableField extends Component<IEditableFieldProps, {}> {
 	render() {
-		return (<label style={{
-			display: "inline-flex",
-			justifyContent: "space-between",
-			width: "100%",
-			textAlign: "left",
-			margin: "2px"
-		}}>
-			<span>{this.props.label}</span>
+		return (<label className="editableField">
+			<span className="editableFieldLabel">{this.props.label}</span>
 			<input
 				type="text"
 				value={this.props.value}
