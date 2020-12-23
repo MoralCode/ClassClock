@@ -62,6 +62,15 @@ div#root > * {
     margin-right: auto;
 }
 
+div#schoolOptions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    max-width: 500px;
+}
+
 /* from editableField Component */
 .editableField {
     display: inline-flex;
@@ -218,6 +227,7 @@ section#options > * {
 
 .horizontalFlex {
     display: flex;
+    justify-content: center;
 }
 
 .horizontalFlex > * {
