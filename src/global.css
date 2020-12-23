@@ -46,14 +46,20 @@ body {
     font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
     color: white;
     font-size: 20px;
-    display: flex;
-    flex-direction: column;
+    /* this doesnt do much */
+    /* display: flex;
+    flex-direction: column; */
 }
 
 div#root {
-    margin: 0 auto;
+    
     display: block;
     text-align: center;
+}
+
+div#root > * {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 div#page {
