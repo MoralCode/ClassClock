@@ -149,6 +149,6 @@ export default class BellSchedule {
     }
 
     public hasChangedSince(date: Date) {
-        return date.getTime() - this.lastUpdatedDate.getTime() > 0;
+        return date.getTime() < this.lastUpdatedDate.getTime();
     }
 }

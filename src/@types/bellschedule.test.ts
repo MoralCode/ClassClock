@@ -15,7 +15,7 @@ describe("BellSchedule", () => {
     });
 
     it("can get its name", () => {
-        expect(schedule.getName() in [bellScheduleName, bellScheduleDisplayName]).toBeTruthy();
+        expect(schedule.getName()).toEqual(bellScheduleName);
     });
 
     it("can return API endpoint", () => {
