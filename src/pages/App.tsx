@@ -17,13 +17,13 @@ import { faCog } from "@fortawesome/free-solid-svg-icons";
 export interface IAppProps {
     selectedSchool: {
         isFetching: boolean;
-        didInvalidate: false;
+        didInvalidate: boolean;
         data: School;
     };
     dispatch: any;
 }
 
-const App = (props: IAppProps) => {
+export const App = (props: IAppProps) => {
     const [currentDate, setDate] = useState(getCurrentDate());
 
     const navigate = (to: string) => {
