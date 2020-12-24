@@ -19,9 +19,9 @@
     "noEmit": true,
     "jsx": "preserve",
     "plugins": [
-        {
-            "name": "typescript-tslint-plugin"
-        }
+      {
+        "name": "typescript-tslint-plugin"
+      }
     ]
   },
   "include": [
