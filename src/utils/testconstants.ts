@@ -121,6 +121,7 @@ export const bellScheduleJSON = {
 
 export const school = new School(
     schoolId,
+    "1234567890",
     schoolName,
     schoolAcronym,
     schoolEndpoint,
