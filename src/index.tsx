@@ -10,6 +10,8 @@ import { PersistGate } from "redux-persist/integration/react";
 import { Auth0Provider } from "./react-auth0-wrapper";
 import { Auth0, pages } from "./utils/constants";
 import { routes } from "./utils/routes";
+import { PageNotFound } from "./pages/errors/PageNotFound";
+import { ServerError } from "./pages/errors/ServerError";
 
 // Create the history object
 const history = createBrowserHistory();
@@ -26,8 +28,8 @@ const options = {
         console.info(context)
         
         return error.status === 404
-            ? <h1>Page Not Fownd</h1>
-            : <h1>Oops! Something went wrong</h1>
+            ? <PageNotFound />
+            : <ServerError />
     }
 }
 
