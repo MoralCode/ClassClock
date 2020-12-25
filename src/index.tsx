@@ -20,8 +20,19 @@ const configuredStore = configureStore(history); //createStore(combineReducers(r
 // Start the history listener, which automatically dispatches actions to keep the store in sync with the history
 startListener(history, configuredStore.store);
 
+const options = {
+    errorHandler(error: { status?: number; }, context: Context) {
+        console.error(error)
+        console.info(context)
+        
+        return error.status === 404
+            ? <h1>Page Not Fownd</h1>
+            : <h1>Oops! Something went wrong</h1>
+    }
+}
+
 // Create the router
-const router = new UniversalRouter(routes);
+const router = new UniversalRouter(routes, options);
 
 // A function that routes the user to the right place
 // after login
