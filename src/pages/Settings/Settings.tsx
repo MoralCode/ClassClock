@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { push } from "redux-first-routing";
-import IPageInterface from "../../utils/IPageInterface";
 import "../../global.css";
 import "./settings.css";
 import { IState } from "../../store/schools/types";
@@ -9,7 +8,6 @@ import { IState as UserSettingsIState } from "../../store/usersettings/types";
 import School from "../../@types/school";
 import Link from "../../components/Link";
 import { pages } from "../../utils/constants";
-import Icon from "../../components/Icon";
 import { URLs } from "../../utils/constants";
 import { setTimeFormatPreference } from "../../store/usersettings/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

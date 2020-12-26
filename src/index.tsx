@@ -4,7 +4,7 @@ import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import { configureStore } from "./store/store";
 import { createBrowserHistory, startListener, push, replace } from "redux-first-routing";
-import UniversalRouter from "universal-router";
+import UniversalRouter, {Context} from "universal-router";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { Auth0Provider } from "./react-auth0-wrapper";
