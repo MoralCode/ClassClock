@@ -6,7 +6,7 @@ const thisTime = new Time(9, 31, 41);
 const preTime = new Time(5, 18, 43);
 const postTime = new Time(13, 44, 39);
 
-describe("Test", () => {
+describe("Time", () => {
     it("should get from milliseconds", () => {
         expect(Time.fromMilliseconds(34301000)).toEqual(thisTime);
     });
@@ -55,11 +55,11 @@ describe("Test", () => {
         expect(thisTime.getMillisecondsTo(preTime)).toBe(-15178000);
     });
 
-    // it("should get the number of milliseconds to the same time", () => {
-    //     expect(thisTime.getMillisecondsTo(thisTime)).toBe(0);
-    //     expect(preTime.getMillisecondsTo(preTime)).toBe(0);
-    //     expect(postTime.getMillisecondsTo(postTime)).toBe(0);
-    // });
+    it("should get the number of milliseconds to the same time", () => {
+        expect(thisTime.getMillisecondsTo(thisTime)).toBe(0);
+        expect(preTime.getMillisecondsTo(preTime)).toBe(0);
+        expect(postTime.getMillisecondsTo(postTime)).toBe(0);
+    });
 
     it("returns the correct time delta", () => {
         expect(thisTime.getTimeDeltaTo(preTime)).toEqual(Time.fromMilliseconds(15178000));

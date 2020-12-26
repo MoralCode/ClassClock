@@ -1,6 +1,7 @@
 import {
     checkTimeRange,
-    getValueIfKeyInList
+    getValueIfKeyInList,
+    sortClassesByStartTime
 } from "../utils/helpers";
 import Time from "./time";
 import { TimeComparisons } from "../utils/enums";
@@ -141,21 +142,23 @@ export default class School {
     }
 
     //change input to a time
-    public isInSession(date: Date) {
-        const currentTime = Time.fromDate(date);
+    //seems like te current schedule depends on this
+    public isInSession(date: Date, toLocalTime = false) {
+        const currentTime = Time.fromDate(date, toLocalTime);
         const currentSchedule = this.getScheduleForDate(date);
-
         if (!currentSchedule) {
             return false;
         }
+
+        const sortedClasses = sortClassesByStartTime(currentSchedule.getAllClasses())
+        const firstClass = sortedClasses[0]
+        const lastClass = sortedClasses[currentSchedule.numberOfClasses()]
         return (
             checkTimeRange(
                 currentTime,
-                currentSchedule.getAllClasses()[0].getStartTime(),
-                currentSchedule
-                    .getAllClasses()
-                    [currentSchedule.numberOfClasses()].getEndTime()
-            ) === TimeComparisons.IS_DURING_OR_EXACTLY
+                firstClass.getStartTime(),
+                lastClass.getEndTime()
+            ) == TimeComparisons.IS_DURING_OR_EXACTLY
         );
     }
 }

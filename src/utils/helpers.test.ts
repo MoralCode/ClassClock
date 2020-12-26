@@ -99,5 +99,9 @@ test("check time range", () => {
         TimeComparisons.IS_AFTER
     );
 
+    expect(checkTimeRange(afterClass, startTime, endTime2)).toBe(
+        TimeComparisons.IS_DURING_OR_EXACTLY
+    );
+
     
 });

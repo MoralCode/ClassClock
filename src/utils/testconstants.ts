@@ -42,7 +42,12 @@ export const endTimeString = "9:55";
 export const afterClass = new Time(10, 0);
 export const afterClassString = "10:00";
 
-export const classPeriod = new ClassPeriod(className, startTime, endTime, currentDate);
+export const classPeriod = new ClassPeriod(
+    className,
+    startTime,
+    endTime,
+    currentDate
+);
 
 export const classPeriodJSON = {
            name: className,

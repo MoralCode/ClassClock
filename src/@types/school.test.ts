@@ -1,5 +1,5 @@
 import School from "./school";
-import { school, bellSchedule, schoolJSON, schoolId, schoolEndpoint, schoolName, schoolAcronym, passingPeriodName, schoolTimezone, currentDate, inClass, afterSchoolHours, duringClass, schoolOwnerId } from '../utils/testconstants';
+import { school, bellSchedule, schoolJSON, schoolId, schoolEndpoint, schoolName, schoolAcronym, passingPeriodName, schoolTimezone, currentDate, inClass, afterSchoolHours, duringClass, schoolOwnerId, beforeSchoolHours, noSchool, betweenClass } from '../utils/testconstants';
 
 const schoolNoSchedules = new School(
     schoolId,
@@ -81,6 +81,9 @@ describe("School", () => {
 
     it("can check if school is in session", () => {
         expect(school.isInSession(inClass)).toBeTruthy();
+        expect(school.isInSession(beforeSchoolHours)).toBeFalsy();
+        expect(school.isInSession(noSchool)).toBeFalsy();
         expect(school.isInSession(afterSchoolHours)).toBeFalsy();
+        expect(school.isInSession(betweenClass)).toBeTruthy();
     });
 });
