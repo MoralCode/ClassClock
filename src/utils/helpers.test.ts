@@ -1,15 +1,14 @@
 
 import {
     getValueIfKeyInList,
-    deconstructJsonApiResource,
     sortClassesByStartTime,
     getTimeStateForDateAtSchool,
-    getNextImportantTime,
+    getNextImportantInfo,
     checkTimeRange
 } from "./helpers";
 import ClassPeriod from "../@types/classperiod";
 import Time from "../@types/time";
-import { classPeriod2, classPeriod, beforeSchoolHours, school, betweenClass, inClass, noSchool, afterSchoolHours, bellScheduleClasses, duringClass, startTime, endTime, startTime2, beforeClass, endTime2 } from "./testconstants";
+import { classPeriod2, classPeriod, beforeSchoolHours, school, betweenClass, inClass, noSchool, afterSchoolHours, bellScheduleClasses, duringClass, startTime, endTime, startTime2, beforeClass, endTime2, afterClass } from "./testconstants";
 import { TimeStates, TimeComparisons } from "./enums";
 
 test("get value if key in list", () => {
@@ -20,34 +19,6 @@ test("get value if key in list", () => {
     expect(getValueIfKeyInList(list, object1)).toBe("foo");
     expect(getValueIfKeyInList(list, object2)).toBe("foo");
     expect(getValueIfKeyInList(["doesNotExist"], object1)).toBeFalsy();
-});
-
-test("deconstruct JSON:API responses", () => {
-    const jsonapi_resource_object = {
-        type: "sample",
-        id: "1",
-        attributes: {
-            prop1: "foo",
-            prop2: "bar",
-            prop3: "baz"
-        },
-        links: {
-            self: "/the/path/to/the/thing"
-        }
-    };
-
-    const flattened_response = {
-        type: "sample",
-        id: "1",
-        prop1: "foo",
-        prop2: "bar",
-        prop3: "baz",
-        endpoint: "/the/path/to/the/thing"
-    };
-
-    expect(deconstructJsonApiResource(jsonapi_resource_object)).toEqual(
-        flattened_response
-    );
 });
 
 //ignoring getCurrentDate
@@ -82,24 +53,24 @@ test("get time states for given date and school", () => {
 
 
 test("get next important time", () => {
-    expect(getNextImportantTime(beforeSchoolHours, school)).toBe([
+    expect(getNextImportantInfo(beforeSchoolHours, school)).toStrictEqual([
         classPeriod,
         classPeriod.getStartTime()
     ]);
 
-    expect(getTimeStateForDateAtSchool(noSchool, school)).toBeFalsy();
+    expect(getNextImportantInfo(noSchool, school)).toBeFalsy();
     
-    expect(getTimeStateForDateAtSchool(betweenClass, school)).toBe([
+    expect(getNextImportantInfo(betweenClass, school)).toBe([
         classPeriod2,
-        classPeriod2.getStartTime()
+        startTime2
     ]);
 
-    expect(getTimeStateForDateAtSchool(inClass, school)).toBe([
+    expect(getNextImportantInfo(inClass, school)).toBe([
         classPeriod,
         classPeriod.getEndTime()
     ]);
 
-    expect(getTimeStateForDateAtSchool(afterSchoolHours, school)).toBeFalsy();
+    expect(getNextImportantInfo(afterSchoolHours, school)).toBeFalsy();
 });
 
 test("check time range", () => {
@@ -123,4 +94,10 @@ test("check time range", () => {
     expect(checkTimeRange(endTime, startTime, endTime)).toBe(
         TimeComparisons.IS_DURING_OR_EXACTLY
     );
+
+    expect(checkTimeRange(afterClass, startTime, endTime)).toBe(
+        TimeComparisons.IS_AFTER
+    );
+
+    
 });

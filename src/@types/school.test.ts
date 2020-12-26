@@ -1,8 +1,9 @@
 import School from "./school";
-import { school, bellSchedule, schoolJSON, schoolId, schoolEndpoint, schoolName, schoolAcronym, passingPeriodName, schoolTimezone, currentDate, inClass, afterSchoolHours } from '../utils/testconstants';
+import { school, bellSchedule, schoolJSON, schoolId, schoolEndpoint, schoolName, schoolAcronym, passingPeriodName, schoolTimezone, currentDate, inClass, afterSchoolHours, duringClass, schoolOwnerId } from '../utils/testconstants';
 
 const schoolNoSchedules = new School(
     schoolId,
+    schoolOwnerId,
     schoolName,
     schoolAcronym,
     schoolEndpoint,

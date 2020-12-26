@@ -8,6 +8,7 @@ import ClassClockService from "../services/classclock";
 
 
 export const schoolId = "cb93cef79e9d11e986f2181dea92ad79";
+export const schoolOwnerId = "1234567890"
 export const schoolName = "The High School";
 export const schoolAcronym = "THS";
 export const schoolEndpoint = ClassClockService.baseURL + "/school/" + schoolId + "/";
@@ -121,7 +122,7 @@ export const bellScheduleJSON = {
 
 export const school = new School(
     schoolId,
-    "1234567890",
+    schoolOwnerId,
     schoolName,
     schoolAcronym,
     schoolEndpoint,
@@ -133,16 +134,17 @@ export const school = new School(
 );
 
 export const schoolJSON = {
-           id: schoolId,
-           name: schoolName,
-           acronym: schoolAcronym,
-           endpoint: schoolEndpoint,
-           timezone: schoolTimezone,
-           schedules: [bellScheduleJSON],
-           passingPeriodName,
-           creationDate: currentDate,
-           lastModified: currentDate
-       };
+    id: schoolId,
+    owner_id: schoolOwnerId,
+    name: schoolName,
+    acronym: schoolAcronym,
+    endpoint: schoolEndpoint,
+    timezone: schoolTimezone,
+    schedules: [bellScheduleJSON],
+    passingPeriodName,
+    creationDate: currentDate,
+    lastModified: currentDate
+};
 
 
 

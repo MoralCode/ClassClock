@@ -2,7 +2,7 @@ import { selectedSchoolReducer } from "./reducer";
 import * as types from "./types";
 import { schoolJSON, school } from "../../utils/testconstants";
 
-describe("todos reducer", () => {
+describe("school reducer", () => {
 
     it("should return the initial state", () => {
         expect(selectedSchoolReducer(undefined, {})).toEqual({

@@ -16,7 +16,7 @@ export default class School {
             getValueIfKeyInList(["name", "fullName", "full_name"], json),
             getValueIfKeyInList(["acronym"], json),
             getValueIfKeyInList(["endpoint"], json),
-            "LA",
+            getValueIfKeyInList(["timezone"], json),
             schedules
                 ? schedules.map((schedule: any) => BellSchedule.fromJson(schedule))
                 : undefined,
@@ -106,12 +106,12 @@ export default class School {
     }
 
     public lastUpdated() {
-        return this.lastUpdated;
+        return this.lastUpdatedDate;
     }
 
     public hasChangedSince(date: Date) {
         if (this.lastUpdatedDate !== undefined) {
-            return date.getTime() - this.lastUpdatedDate.getTime() > 0;
+            return date.getTime() < this.lastUpdatedDate.getTime();
         } else {
             return undefined;
         }
@@ -137,7 +137,7 @@ export default class School {
 
     //remove
     public hasSchedules() {
-        return this.schedules !== undefined;
+        return this.schedules !== undefined && this.schedules.length > 0;
     }
 
     //change input to a time
