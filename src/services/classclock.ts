@@ -1,8 +1,10 @@
 import BellSchedule from "../@types/bellschedule";
 import { format } from 'date-fns'
 import { objectKeysToSnakeCase } from "../utils/helpers";
+import { DateTime } from "luxon";
+
 export default class ClassClockService {
-    public static baseURL: string = "https://api.classclock.app/v0";
+    public static baseURL: string = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? "http://localhost:8000/v0" : "https://api.classclock.app/v0";;
 
     static getSchoolsList = async (params?: any): Promise<Response> => {
         return await fetch(
@@ -101,8 +103,8 @@ export default class ClassClockService {
             // return format(value, 'yyyy-MM-dd');
         } else if (key == 'dates') {
 
-            return value.map((currentValue: Date) => {
-                return format(currentValue, 'YYYY-MM-DD');
+            return value.map((currentValue: DateTime) => {
+                return currentValue.toFormat('YYYY-MM-DD');
                 // Date-fns v2
                 // return format(value, 'yyyy-MM-dd');
             })

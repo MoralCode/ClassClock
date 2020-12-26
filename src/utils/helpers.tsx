@@ -1,5 +1,6 @@
-import Time from "../@types/time";
+import { DateTime, Interval } from "luxon";
 import School from "../@types/school";
+//todo, replace timeComparisons with luxon Interval
 import { TimeComparisons, TimeStates } from "./enums";
 import ClassPeriod from "../@types/classperiod";
 import BellSchedule from "../@types/bellschedule";
@@ -58,17 +59,17 @@ export function toSnakeCase(input: string) {
 
 
 export function getCurrentDate() {
-    return new Date();
+    return DateTime.local();
 }
 
 export function sortClassesByStartTime(classes: ClassPeriod[]) {
-    return classes.sort((a, b) => -a.getStartTime().getMillisecondsTo(b.getStartTime()));
+    return classes.sort((a, b) => -a.getStartTime().diff(b.getStartTime()).get("milliseconds"));
 }
 
 /**
  * @returns a flag that represents the current chunk of time categorically
  */
-export function getTimeStateForDateAtSchool(date: Date, school: School) {
+export function getTimeStateForDateAtSchool(date: DateTime, school: School) {
     const currentBellSchedule = school.getScheduleForDate(date);
 
     //there is no schedule that applies today
@@ -76,9 +77,7 @@ export function getTimeStateForDateAtSchool(date: Date, school: School) {
         return TimeStates.DAY_OFF;
     }
 
-    const currentClassPeriod = currentBellSchedule.getClassPeriodForTime(
-        Time.fromDate(date)
-    );
+    const currentClassPeriod = currentBellSchedule.getClassPeriodForTime(date);
 
     //it is a school day but it is not school hours
     if (!school.isInSession(date)) {
@@ -100,9 +99,9 @@ export function getTimeStateForDateAtSchool(date: Date, school: School) {
  * @returns the next relevent time to count down to
  */
 export function getNextImportantInfo(
-    date: Date,
+    date: DateTime,
     school: School
-): [ClassPeriod, Time] | undefined {
+): [ClassPeriod, DateTime] | undefined {
     const currentBellSchedule = school.getScheduleForDate(date);
 
     //there is no schedule that applies today
@@ -114,9 +113,9 @@ export function getNextImportantInfo(
     //loop through all classes in order until you get to the first time that has not passed
     for (let i = 0; i < classes.length; i++) {
         for (const time of [classes[i].getStartTime(), classes[i].getEndTime()]) {
-            if (Time.fromDate(date).getMillisecondsTo(time) >= 0) {
+            if (date.diff(time).get("milliseconds") >= 0) {
                 const nextClass =
-                    classes[i].stateForTime(Time.fromDate(date)) ===
+                    classes[i].stateForTime(date) ===
                     TimeComparisons.IS_DURING_OR_EXACTLY
                         ? classes[i + 1]
                         : classes[i];
@@ -136,16 +135,18 @@ export function getNextImportantInfo(
  *
  * @returns -1 if checkTime is before range, 0 if checkTime is within range, 1 if checkTime is after range
  */
-export function checkTimeRange(checkTime: Time, startTime: Time, endTime: Time) {
-    if (startTime.getMillisecondsTo(endTime) <= 0) {
-        //theres a problem
-    }
-    const startCheck = checkTime.getMillisecondsTo(startTime);
-    const endCheck = checkTime.getMillisecondsTo(endTime);
+export function checkTimeRange(checkTime: DateTime, startTime: DateTime, endTime: DateTime) {
+    const interval = Interval.fromDateTimes(startTime,endTime)
+   
+    // if (startTime.getMillisecondsTo(endTime) <= 0) {
+    //     //theres a problem
+    // }
+    // const startCheck = checkTime.getMillisecondsTo(startTime);
+    // const endCheck = checkTime.getMillisecondsTo(endTime);
 
-    if (startCheck > 0 && endCheck > 0) {
+    if (interval.isAfter(checkTime)) {
         return TimeComparisons.IS_BEFORE;
-    } else if (startCheck < 0 && endCheck < 0) {
+    } else if (interval.isBefore(checkTime)) {
         return TimeComparisons.IS_AFTER;
     } else {
         return TimeComparisons.IS_DURING_OR_EXACTLY;

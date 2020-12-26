@@ -1,4 +1,4 @@
-import Time from "./time";
+import { DateTime, Interval } from "luxon";
 import { checkTimeRange, getValueIfKeyInList } from "../utils/helpers";
 
 export default class ClassPeriod {
@@ -7,17 +7,17 @@ export default class ClassPeriod {
         const end = getValueIfKeyInList(["endTime", "end_time"], json);
         return new ClassPeriod(
             getValueIfKeyInList(["name", "classPeriodName", "class_period_name"], json),
-            start instanceof Time ? start : Time.fromString(start),
-            end instanceof Time ? end : Time.fromString(end),
-            new Date(getValueIfKeyInList(["creationDate", "creation_date"], json))
+            start instanceof DateTime ? start : DateTime.fromISO(start),
+            end instanceof DateTime ? end : DateTime.fromISO(end),
+            DateTime.fromISO(getValueIfKeyInList(["creationDate", "creation_date"], json))
         );
     }
     private name: string;
-    private startTime: Time;
-    private endTime: Time;
-    private creationDate: Date;
+    private startTime: DateTime;
+    private endTime: DateTime;
+    private creationDate: DateTime;
 
-    constructor(name: string, startTime: Time, endTime: Time, creationDate: Date) {
+    constructor(name: string, startTime: DateTime, endTime: DateTime, creationDate: DateTime) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -36,7 +36,7 @@ export default class ClassPeriod {
         return this.startTime;
     }
 
-    public setStartTime(time: Time) {
+    public setStartTime(time: DateTime) {
         this.startTime = time;
     }
 
@@ -44,12 +44,12 @@ export default class ClassPeriod {
         return this.endTime;
     }
 
-    public setEndTime(time: Time) {
+    public setEndTime(time: DateTime) {
         this.endTime = time;
     }
 
     public getDuration() {
-        return this.startTime.getTimeDeltaTo(this.endTime);
+        return Interval.fromDateTimes(this.startTime, this.endTime);
     }
 
     public getCreationDate() {
@@ -57,7 +57,7 @@ export default class ClassPeriod {
     }
 
     //remove me
-    public stateForTime(time: Time) {
+    public stateForTime(time: DateTime) {
         return checkTimeRange(time, this.startTime, this.endTime);
     }
 }

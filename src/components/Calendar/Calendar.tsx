@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./Calendar.css";
-import dateFns from "date-fns";
 import SelectHeader from "../SelectHeader";
 import BellSchedule from "../../@types/bellschedule";
 import find from "lodash.find";
+import { DateTime } from "luxon";
+
 
 export interface ICalendarProps {
     schedules?: BellSchedule[];
@@ -14,27 +15,26 @@ const Calendar = (props: ICalendarProps) => {
     // const initialOptions: { [key: string]: number[] } = {};
     const getSelectedMonth = () => {
         const persisted = sessionStorage.getItem('selectedMonth');
-        return persisted ? new Date(parseInt(persisted, 10)) : new Date();
+        return persisted ? DateTime.fromMillis(parseInt(persisted, 10)) : DateTime.local();
     };
 
     
     const [selectedMonth, setSelectedMonth] = useState(getSelectedMonth);
 
    useEffect(function persistForm() {
-        sessionStorage.setItem('selectedMonth', selectedMonth.getTime().toString());
+        sessionStorage.setItem('selectedMonth', selectedMonth.toMillis().toString());
     });
 
-    const config = { weekStartsOn: 1 };
-    const startDate = dateFns.startOfWeek(dateFns.startOfMonth(selectedMonth), config);
-    const endDate = dateFns.endOfWeek(dateFns.endOfMonth(selectedMonth), config);
+    const startDate = selectedMonth.startOf('month').startOf('week')
+    const endDate = selectedMonth.endOf('month').endOf('week')
 
     // https://felixgerschau.com/react-rerender-components/#force-an-update-in-react-hooks
-    const [, updateState] = React.useState();
+    const [, updateState] = React.useState({});
     const forceUpdate = React.useCallback(() => updateState({}), []);
 
     const onDateClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-        const dateValue: Date = new Date(parseInt(event.currentTarget.dataset.date!, 10));
-        if (isValidDate(dateValue)) {
+        const dateValue: DateTime = DateTime.fromMillis(parseInt(event.currentTarget.dataset.date!, 10));
+        if (dateValue.isValid) {
             const currentSchedule = getScheduleForDate(dateValue);
             const selectedSchedule = getScheduleById(props.selectedScheduleId);
             let value = selectedSchedule;
@@ -61,7 +61,7 @@ const Calendar = (props: ICalendarProps) => {
         }
     }
 
-    const setScheduleForDate = (date: Date, schedule?: BellSchedule) => {
+    const setScheduleForDate = (date: DateTime, schedule?: BellSchedule) => {
         const currentSchedule = getScheduleForDate(date);
 
         if (currentSchedule && schedule) {
@@ -83,12 +83,7 @@ const Calendar = (props: ICalendarProps) => {
         forceUpdate();
     };
 
-    //https://stackoverflow.com/a/1353711
-    const isValidDate = (d: Date) => {
-        return d instanceof Date && !isNaN(d.getTime());
-    };
-
-    const getScheduleForDate = (date: Date): BellSchedule | undefined => {
+    const getScheduleForDate = (date: DateTime): BellSchedule | undefined => {
         if (props.schedules) {        
             for (const schedule of props.schedules) {
                 if (schedule.getDate(date)){
@@ -103,7 +98,7 @@ const Calendar = (props: ICalendarProps) => {
         const dayNames = [];
 
         for (let i = 0; i < 7; i++) {
-            dayNames.push(dateFns.format(dateFns.addDays(startDate, i), "ddd"));
+            dayNames.push(startDate.plus({ days: i }).toFormat("ddd"));
         }
         return dayNames;
     };
@@ -114,15 +109,12 @@ const Calendar = (props: ICalendarProps) => {
 
         for (
             let dateIndex = 0;
-            dateIndex <= dateFns.differenceInDays(endDate, startDate);
+            dateIndex <= endDate.diff(startDate).days;
             dateIndex++
         ) {
-            const date = dateFns.addDays(startDate, dateIndex);
-            const firstDayOfWeek = dateFns.startOfWeek(date, config);
-            const firstDayOfWeekTomorrow = dateFns.startOfWeek(
-                dateFns.addDays(date, 1),
-                config
-            );
+            const date = startDate.plus({ days: dateIndex });
+            const firstDayOfWeek = date.startOf('week')
+            const firstDayOfWeekTomorrow = date.plus({ days: 1 }).startOf('week')
 
             const schedule = getScheduleForDate(date);
             //show the schedule's assigned color if it is selected
@@ -136,20 +128,20 @@ const Calendar = (props: ICalendarProps) => {
                     <div
                         onClick={event => onDateClick(event)}
                         className={
-                            dateFns.getMonth(date) !== dateFns.getMonth(selectedMonth)
+                            date.get('month') !== selectedMonth.get('month')
                                 ? "disabled"
                                 : undefined
                         }
-                        data-date={date.getTime()}
+                        data-date={date.toMillis()}
                         style={bgColor}
                         title={name}
                     >
-                        {date.getDate()}
+                        {date.get('day')}
                     </div>
                 </td>
             );
 
-            if (!dateFns.isEqual(firstDayOfWeek, firstDayOfWeekTomorrow)) {
+            if (!firstDayOfWeek.equals(firstDayOfWeekTomorrow)) {
                 monthGrid.push(<tr key={"weekBegin" + dateIndex}>{tempRowData}</tr>);
                 tempRowData = [];
             }
@@ -164,13 +156,13 @@ const Calendar = (props: ICalendarProps) => {
                     <th colSpan={7}>
                         <SelectHeader
                             lastAction={() =>
-                                setSelectedMonth(dateFns.subMonths(selectedMonth, 1))
+                                setSelectedMonth(selectedMonth.minus({ month: 1 }))
                             }
                             nextAction={() =>
-                                setSelectedMonth(dateFns.addMonths(selectedMonth, 1))
+                                setSelectedMonth(selectedMonth.plus({month: 1}))
                             }
                         >
-                            {dateFns.format(selectedMonth, "MMMM YYYY")}
+                            {selectedMonth.toFormat("MMMM YYYY")}
                         </SelectHeader>
                     </th>
                 </tr>

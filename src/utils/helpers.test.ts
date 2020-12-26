@@ -7,7 +7,6 @@ import {
     checkTimeRange
 } from "./helpers";
 import ClassPeriod from "../@types/classperiod";
-import Time from "../@types/time";
 import { classPeriod2, classPeriod, beforeSchoolHours, school, betweenClass, inClass, noSchool, afterSchoolHours, bellScheduleClasses, duringClass, startTime, endTime, startTime2, beforeClass, endTime2, afterClass } from "./testconstants";
 import { TimeStates, TimeComparisons } from "./enums";
 
