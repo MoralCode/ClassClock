@@ -11,8 +11,12 @@ describe("Time", () => {
         expect(Time.fromMilliseconds(34301000)).toEqual(thisTime);
     });
 
-    it("should get from date", () => {
-        expect(Time.fromDate(new Date(2019, 7, 27, 9, 31, 41))).toEqual(thisTime);
+    it("should get from UTC date as local time", () => {
+        expect(Time.fromDate(new Date(2019, 7, 27, 9, 31, 41), true)).toEqual(thisTime);
+    });
+
+    it("should get from UTC date as UTC time", () => {
+        expect(Time.fromDate(new Date(2019, 7, 27, 9, 31, 41), false)).toEqual(thisTime);
     });
 
     it("should get from string", () => {
