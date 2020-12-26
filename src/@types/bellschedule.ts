@@ -1,8 +1,7 @@
 import ClassPeriod from "./classperiod";
-import Time from "./time";
+import { DateTime } from "luxon";
 import { TimeComparisons } from "../utils/enums";
 import { getValueIfKeyInList, sortClassesByStartTime } from "../utils/helpers";
-import { parse, isSameDay } from "date-fns";
 
 export default class BellSchedule {
     public static fromJson(json: any) {
@@ -10,7 +9,7 @@ export default class BellSchedule {
             getValueIfKeyInList(["id", "identifier"], json),
             getValueIfKeyInList(["name", "full_name", "fullName"], json),
             getValueIfKeyInList(["endpoint"], json),
-            getValueIfKeyInList(["dates"], json).map((date: string) => parse(date)),
+            getValueIfKeyInList(["dates"], json).map((date: string) => DateTime.fromISO(date)),
             getValueIfKeyInList(["classes", "meeting_times"], json).map(
                 (meetingTime: any) => ClassPeriod.fromJson(meetingTime)
             ),
@@ -23,18 +22,18 @@ export default class BellSchedule {
     private name: string;
     private endpoint: string;
     private displayName?: string;
-    private dates: Date[];
+    private dates: DateTime[];
     private classes: ClassPeriod[];
-    private lastUpdatedDate: Date;
+    private lastUpdatedDate: DateTime;
     private color?: string;
 
     constructor(
         id: string,
         name: string,
         endpoint: string,
-        dates: Date[],
+        dates: DateTime[],
         classes: ClassPeriod[],
-        lastUpdatedDate: Date,
+        lastUpdatedDate: DateTime,
         displayName?: string
     ) {
         this.id = id;
@@ -84,20 +83,20 @@ export default class BellSchedule {
      * inaccuracies due to incorrect milliseconds .etc.
      * 
      */
-    public getDate(date: Date) {
+    public getDate(date: DateTime) {
         for (const scheduleDate of this.getDates()) {
-            if (isSameDay(scheduleDate, date)) {
+            if (scheduleDate.hasSame(date, "day")) {
                 return scheduleDate;
             }
         }
         return;
     }
 
-    public addDate(date: Date) {
+    public addDate(date: DateTime) {
         this.dates.push(date);
     }
     
-    public removeDate(date: Date) {
+    public removeDate(date: DateTime) {
         const actualDate = this.getDate(date);
         if (!actualDate){
             return false;
@@ -110,7 +109,7 @@ export default class BellSchedule {
         return this.classes;
     }
 
-    public getClassPeriodForTime(time: Time) {
+    public getClassPeriodForTime(time: DateTime) {
         for (const classPeriod of sortClassesByStartTime(this.classes)) {
             if (classPeriod.stateForTime(time) === TimeComparisons.IS_DURING_OR_EXACTLY) {
                 return classPeriod;
@@ -148,7 +147,7 @@ export default class BellSchedule {
         return this.lastUpdatedDate;
     }
 
-    public hasChangedSince(date: Date) {
-        return date.getTime() < this.lastUpdatedDate.getTime();
+    public hasChangedSince(date: DateTime) {
+        return date.toMillis() < this.lastUpdatedDate.toMillis();
     }
 }

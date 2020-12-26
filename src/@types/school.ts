@@ -3,7 +3,7 @@ import {
     getValueIfKeyInList,
     sortClassesByStartTime
 } from "../utils/helpers";
-import Time from "./time";
+import { DateTime } from "luxon";
 import { TimeComparisons } from "../utils/enums";
 import BellSchedule from "./bellschedule";
 import find from 'lodash.find'
@@ -35,8 +35,8 @@ export default class School {
     private timeZone?: string;
     private schedules?: BellSchedule[];
     private passingPeriodName?: string;
-    private creationDate?: Date;
-    private lastUpdatedDate?: Date;
+    private creationDate?: DateTime;
+    private lastUpdatedDate?: DateTime;
 
     constructor(
         id: string,
@@ -47,8 +47,8 @@ export default class School {
         timeZone?: string,
         schedules?: BellSchedule[],
         passingPeriodName?: string,
-        creationDate?: Date,
-        lastUpdatedDate?: Date
+        creationDate?: DateTime,
+        lastUpdatedDate?: DateTime
     ) {
         this.id = id;
         this.ownerId = ownerId;
@@ -110,23 +110,23 @@ export default class School {
         return this.lastUpdatedDate;
     }
 
-    public hasChangedSince(date: Date) {
+    public hasChangedSince(date: DateTime) {
         if (this.lastUpdatedDate !== undefined) {
-            return date.getTime() < this.lastUpdatedDate.getTime();
+            return date.toMillis() < this.lastUpdatedDate.toMillis();
         } else {
             return undefined;
         }
     }
 
     //can also be used as isNoSchoolDay() by checking for undefined
-    public getScheduleForDate(date: Date) {
+    public getScheduleForDate(date: DateTime) {
         if (this.schedules) {
             for (const schedule of this.schedules) {
                 if (
                     schedule
                         .getDates()
-                        .map((d: Date) => d.toDateString())
-                        .includes(date.toDateString())
+                        .includes(date)
+                        // .map((d: Date) => d.toDateString())
                 ) {
                     return schedule;
                 }
@@ -143,8 +143,7 @@ export default class School {
 
     //change input to a time
     //seems like te current schedule depends on this
-    public isInSession(date: Date, toLocalTime = false) {
-        const currentTime = Time.fromDate(date, toLocalTime);
+    public isInSession(date: DateTime) {
         const currentSchedule = this.getScheduleForDate(date);
         if (!currentSchedule) {
             return false;
@@ -155,7 +154,7 @@ export default class School {
         const lastClass = sortedClasses[currentSchedule.numberOfClasses()]
         return (
             checkTimeRange(
-                currentTime,
+                date,
                 firstClass.getStartTime(),
                 lastClass.getEndTime()
             ) == TimeComparisons.IS_DURING_OR_EXACTLY

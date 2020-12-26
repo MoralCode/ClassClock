@@ -1,5 +1,4 @@
 import BellSchedule from "./bellschedule";
-import Time from "./time";
 import { bellSchedule as schedule, bellScheduleJSON, classPeriod, bellScheduleEndpoint, bellScheduleName, bellScheduleDisplayName, bellScheduleId, startTime, beforeClass, duringClass, endTime, afterClass, bellScheduleClasses } from "../utils/testconstants";
 
 describe("BellSchedule", () => {

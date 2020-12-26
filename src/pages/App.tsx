@@ -5,7 +5,7 @@ import "../global.css";
 import Link from "../components/Link";
 import Icon from "../components/Icon";
 import Block from "../components/Block/Block";
-import Time from "../@types/time";
+import { DateTime } from "luxon";
 import School from "../@types/school";
 import { pages } from "../utils/constants";
 import BellSchedule from "../@types/bellschedule";
@@ -60,9 +60,7 @@ export const App = (props: IAppProps) => {
                 ? nextImportantInfo
                 : [undefined, undefined];
 
-            const currentClass = currentSchedule.getClassPeriodForTime(
-                Time.fromDate(currentDate)
-            );
+            const currentClass = currentSchedule.getClassPeriodForTime(currentDate);
 
             content = (
                 <>
@@ -94,9 +92,8 @@ export const App = (props: IAppProps) => {
                         <p className="timeFont" style={{ fontSize: "60px" }}>
                             <b>
                                 {nextImportantTime
-                                    ? Time.fromDate(currentDate)
-                                          .getTimeDeltaTo(nextImportantTime)
-                                          .getFormattedString()
+                                    ? currentDate.until(nextImportantTime)
+                                        .toFormat("H:mm")
                                     : "No Class"}
                             </b>
                         </p>
@@ -123,12 +120,12 @@ export const App = (props: IAppProps) => {
             <Block>
                 <p>It is currently: </p>
                 <p className="timeFont" style={{ fontSize: "40px" }}>
-                    {Time.fromDate(currentDate).getFormattedString()}
+                    {currentDate.toLocaleString(DateTime.TIME_SIMPLE)}
                 </p>
                 <p>
                     on{" "}
                     <b>
-                        {currentDate.toLocaleDateString("en-US", {
+                        {currentDate.toLocaleString({
                             weekday: "long",
                             year: "numeric",
                             month: "short",

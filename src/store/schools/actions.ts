@@ -10,6 +10,7 @@ import { Dispatch } from "redux";
 import ClassClockService from "../../services/classclock";
 import School from "../../@types/school";
 import BellSchedule from "../../@types/bellschedule";
+import { DateTime } from "luxon";
 
 function requestSchool(): SchoolActionTypes {
     return {
@@ -27,7 +28,7 @@ function receiveSchool(json: any): SchoolActionTypes {
     return {
         type: RECEIVE_SCHOOL,
         school: School.fromJson(json),
-        receivedAt: Date.now()
+        receivedAt: DateTime.local().toMillis()
     };
 }
 
