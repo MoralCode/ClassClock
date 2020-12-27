@@ -112,7 +112,7 @@ export const App = (props: IAppProps) => {
     return (
         <div className="App">
             <Link
-                className="cornerNavButton cornerNavLeft smallIcon"
+                className="cornerNavButton cornerNavTop cornerNavLeft smallIcon"
                 // tslint:disable-next-line: jsx-no-lambda
                 destination={() => navigate(pages.settings)}
             >

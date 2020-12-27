@@ -70,7 +70,7 @@ const Settings = (props: ISettingProps) => {
     return (
         <div>
             <Link
-                className="cornerNavButton cornerNavLeft smallIcon"
+                className="cornerNavButton cornerNavTop cornerNavLeft smallIcon"
                 // tslint:disable-next-line: jsx-no-lambda
                 destination={() => navigate(pages.main)}
             >
@@ -78,7 +78,7 @@ const Settings = (props: ISettingProps) => {
             </Link>
             {user && (
                 <Link
-                    className="cornerNavButton cornerNavRight smallIcon"
+                    className="cornerNavButton cornerNavTop cornerNavRight smallIcon"
                     // tslint:disable-next-line: jsx-no-lambda
                     destination={() => {
                         logout();

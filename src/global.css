@@ -113,7 +113,7 @@ div#page {
 .cornerNavButton {
     font-size: 32px; /*Default size */
     position: absolute;
-    top: 0;
+    
     padding-right: 0.15em;
     padding-left: 0.15em;
 }
@@ -122,14 +122,39 @@ div#page {
     background-color: grey;
 }
 
+
+.cornerNavTop {
+    top: 0;
+}
+
+.cornerNavBottom {
+    bottom: 0;
+}
+
 .cornerNavLeft {
     left: 0;
-    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 0;
 }
 
 .cornerNavRight {
     right: 0;
+    border-bottom-right-radius: 0;
+}
+
+.cornerNavTop.cornerNavLeft {
+    border-bottom-right-radius: 10px;
+}
+
+.cornerNavTop.cornerNavRight {
     border-bottom-left-radius: 10px;
+}
+
+.cornerNavBottom.cornerNavLeft {
+    border-top-right-radius: 10px;
+}
+
+.cornerNavBottom.cornerNavRight {
+    border-top-left-radius: 10px;
 }
 
 .smallerText {
