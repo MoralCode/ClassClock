@@ -13,6 +13,7 @@ import { ISchoolsState } from "../store/schools/types";
 import { getNextImportantInfo, getCurrentDate } from "../utils/helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
+import { ISettingsState, IUserSettings } from "../store/usersettings/types";
 
 export interface IAppProps {
     selectedSchool: {
@@ -20,6 +21,7 @@ export interface IAppProps {
         didInvalidate: boolean;
         data: School;
     };
+    userSettings: IUserSettings
     dispatch: any;
 }
 
@@ -140,10 +142,10 @@ export const App = (props: IAppProps) => {
     );
 };
 
-const mapStateToProps = (state: ISchoolsState) => {
-    const { selectedSchool } = state;
+const mapStateToProps = (state: ISchoolsState & ISettingsState) => {
+    const { selectedSchool, userSettings } = state;
     selectedSchool.data = School.fromJson(selectedSchool.data);
-    return { selectedSchool };
+    return { selectedSchool, userSettings };
 };
 
 export default connect(mapStateToProps)(App);
