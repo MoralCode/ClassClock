@@ -6,7 +6,7 @@ import { selectSchool } from "../store/schools/actions";
 import School from "../@types/school";
 import ClassClockService from "../services/classclock";
 import { pages } from "../utils/constants";
-import { IState } from "../store/schools/types";
+import { ISchoolsState } from "../store/schools/types";
 import SelectionList from "../components/SelectionList/SelectionList";
 
 export interface ISelectProps {
@@ -71,7 +71,7 @@ const SchoolSelect = (props: ISelectProps) => {
     );
 };
 
-const mapStateToProps = (state: IState) => {
+const mapStateToProps = (state: ISchoolsState) => {
     const { selectedSchool } = state;
     return { selectedSchool };
 };

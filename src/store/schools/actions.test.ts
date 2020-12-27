@@ -6,7 +6,7 @@ import fetchMock from "fetch-mock";
 import { fakeSchoolResponse, fakeBellScheduleListResponse, bellScheduleId, fakeBellScheduleFullResponse, school, schoolId, schoolEndpoint, scheduleListEndpoint, bellScheduleEndpoint } from "../../utils/testconstants";
 
 
-// import { IState } from "./types";
+// import { ISchoolsState } from "./types";
 import { AnyAction } from "redux";
 
 type DispatchExts = ThunkDispatch<void, void, AnyAction>;

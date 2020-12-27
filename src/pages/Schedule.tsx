@@ -5,7 +5,7 @@ import IPageInterface from "../utils/IPageInterface";
 
 import "../global.css";
 import School from "../@types/school";
-import { IState } from "../store/schools/types";
+import { ISchoolsState } from "../store/schools/types";
 import Link from "../components/Link";
 import { pages } from "../utils/constants";
 import Icon from "../components/Icon";
@@ -94,7 +94,7 @@ export const Schedule = (props: IAppProps) => {
     );
 };
 
-const mapStateToProps = (state: IState) => {
+const mapStateToProps = (state: ISchoolsState) => {
     const { selectedSchool } = state;
     selectedSchool.data = School.fromJson(selectedSchool.data);
     return { selectedSchool };

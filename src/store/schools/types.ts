@@ -10,7 +10,7 @@ export const FETCH_ERROR = "FETCH_ERROR";
 export const SELECT_SCHOOL = "SELECT_SCHOOL";
 export const INVALIDATE_SCHOOL = "INVALIDATE_SCHOOL";
 
-export interface IState {
+export interface ISchoolsState {
     selectedSchool: {
         isFetching: boolean;
         didInvalidate: false;

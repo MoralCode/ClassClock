@@ -9,7 +9,7 @@ import { DateTime } from "luxon";
 import School from "../@types/school";
 import { pages } from "../utils/constants";
 import BellSchedule from "../@types/bellschedule";
-import { IState } from "../store/schools/types";
+import { ISchoolsState } from "../store/schools/types";
 import { getNextImportantInfo, getCurrentDate } from "../utils/helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
@@ -140,7 +140,7 @@ export const App = (props: IAppProps) => {
     );
 };
 
-const mapStateToProps = (state: IState) => {
+const mapStateToProps = (state: ISchoolsState) => {
     const { selectedSchool } = state;
     selectedSchool.data = School.fromJson(selectedSchool.data);
     return { selectedSchool };

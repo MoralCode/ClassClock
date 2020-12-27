@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { push } from "redux-first-routing";
 import "../../global.css";
 import "./settings.css";
-import { IState } from "../../store/schools/types";
+import { ISchoolsState } from "../../store/schools/types";
 import { IState as UserSettingsIState } from "../../store/usersettings/types";
 import School from "../../@types/school";
 import Link from "../../components/Link";
@@ -183,7 +183,7 @@ const Settings = (props: ISettingProps) => {
     );
 };
 
-const mapStateToProps = (state: IState & UserSettingsIState) => {
+const mapStateToProps = (state: ISchoolsState & UserSettingsIState) => {
     const { selectedSchool, userSettings } = state;
     return {
         selectedSchool: Object.assign({}, selectedSchool, {

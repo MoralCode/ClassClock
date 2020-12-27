@@ -5,7 +5,7 @@ import "../global.css";
 import School from "../@types/school";
 import { pages } from "../utils/constants";
 import BellSchedule from "../@types/bellschedule";
-import { IState } from "../store/schools/types";
+import { ISchoolsState } from "../store/schools/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "../react-auth0-wrapper";
@@ -228,7 +228,7 @@ const Admin = (props: IAdminProps) => {
     );
 };
 
-const mapStateToProps = (state: IState) => {
+const mapStateToProps = (state: ISchoolsState) => {
     const { selectedSchool } = state;
     selectedSchool.data = School.fromJson(selectedSchool.data);
     return { selectedSchool };
