@@ -4,7 +4,7 @@ import { push } from "redux-first-routing";
 import "../../global.css";
 import "./settings.css";
 import { ISchoolsState } from "../../store/schools/types";
-import { IState as UserSettingsIState } from "../../store/usersettings/types";
+import { ISettingsState } from "../../store/usersettings/types";
 import School from "../../@types/school";
 import Link from "../../components/Link";
 import { pages } from "../../utils/constants";
@@ -183,7 +183,7 @@ const Settings = (props: ISettingProps) => {
     );
 };
 
-const mapStateToProps = (state: ISchoolsState & UserSettingsIState) => {
+const mapStateToProps = (state: ISchoolsState & ISettingsState) => {
     const { selectedSchool, userSettings } = state;
     return {
         selectedSchool: Object.assign({}, selectedSchool, {
