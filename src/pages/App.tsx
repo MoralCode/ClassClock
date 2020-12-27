@@ -14,6 +14,7 @@ import { getNextImportantInfo, getCurrentDate } from "../utils/helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { ISettingsState, IUserSettings } from "../store/usersettings/types";
+import StatusIndicator from "../components/StatusIndicator";
 
 export interface IAppProps {
     selectedSchool: {
@@ -110,6 +111,7 @@ export const App = (props: IAppProps) => {
     }
 
     return (
+        <>
         <div className="App">
             <Link
                 className="cornerNavButton cornerNavTop cornerNavLeft smallIcon"
@@ -139,6 +141,8 @@ export const App = (props: IAppProps) => {
 
             {content}
         </div>
+        <StatusIndicator color="red">hi</StatusIndicator>
+        </>
     );
 };
 

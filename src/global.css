@@ -118,6 +118,19 @@ div#page {
     padding-left: 0.15em;
 }
 
+.statusIndicator {
+    /* font-size: 32px; Default size */
+    position: absolute;
+    color: whitesmoke;
+    background-color: gray;
+    
+    padding-right: 0.15em;
+    padding-left: 0.15em;
+}
+.statusIndicator > * {
+    margin: .1em;
+}
+
 .cornerNavButton:hover {
     background-color: grey;
 }
