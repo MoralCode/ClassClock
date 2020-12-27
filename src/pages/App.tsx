@@ -43,30 +43,28 @@ export const App = (props: IAppProps) => {
 
     const currentSchedule = props.selectedSchool.data.getScheduleForDate(currentDate);
 
-    let content: JSX.Element = <></>;
+    const getContent = () => {
+        switch (currentSchedule) {
+            case undefined:
+                if (!props.selectedSchool.isFetching) {
+                    props.dispatch(push(pages.selectSchool));
+                }
+                return
+            case null:
+                return <p>No School Today</p>;
+            default:
+                const nextImportantInfo = getNextImportantInfo(
+                    currentDate,
+                    props.selectedSchool.data
+                );
+                const [nextClass, nextImportantTime] = nextImportantInfo
+                    ? nextImportantInfo
+                    : [undefined, undefined];
 
-    switch (currentSchedule) {
-        case undefined:
-            if (!props.selectedSchool.isFetching) {
-                props.dispatch(push(pages.selectSchool));
-            }
-            break;
-        case null:
-            content = <p>No School Today</p>;
-            break;
-        default:
-            const nextImportantInfo = getNextImportantInfo(
-                currentDate,
-                props.selectedSchool.data
-            );
-            const [nextClass, nextImportantTime] = nextImportantInfo
-                ? nextImportantInfo
-                : [undefined, undefined];
+                const currentClass = currentSchedule.getClassPeriodForTime(currentDate);
 
-            const currentClass = currentSchedule.getClassPeriodForTime(currentDate);
-
-            content = (
-                <>
+                return (
+                    <>
                     <Block>
                         <p>
                             Today is a{" "}
@@ -105,9 +103,9 @@ export const App = (props: IAppProps) => {
                             <b>{nextClass ? nextClass.getName() : "No Class"}</b>
                         </p>
                     </Block>
-                </>
-            );
-            break;
+                    </>
+                );
+        }
     }
 
     return (
@@ -139,7 +137,7 @@ export const App = (props: IAppProps) => {
                 </p>
             </Block>
 
-            {content}
+            {getContent()}
         </div>
         <StatusIndicator color="red">hi</StatusIndicator>
         </>
