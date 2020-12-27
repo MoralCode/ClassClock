@@ -122,7 +122,7 @@ export const App = (props: IAppProps) => {
             <Block>
                 <p>It is currently: </p>
                 <p className="timeFont" style={{ fontSize: "40px" }}>
-                    {props.userSettings.use24HourTime ? currentDate.toLocaleString({ hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }) : currentDate.toLocaleString({ hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }) }
+                    {currentDate.toLocaleString({ hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: !props.userSettings.use24HourTime }) }
                 </p>
                 <p>
                     on{" "}
