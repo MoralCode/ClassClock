@@ -39,7 +39,7 @@ export function selectedSchoolReducer(
     }
 }
 
-export function fetchErrorReducer(state = {}, action: SchoolActionTypes) {
+export function fetchErrorReducer(state = "", action: SchoolActionTypes) {
     if (action.type === FETCH_ERROR) {
         return action.message;
     } else {
