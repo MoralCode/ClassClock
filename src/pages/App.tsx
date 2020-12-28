@@ -113,6 +113,28 @@ export const App = (props: IAppProps) => {
         }
     }
 
+    const getStatus = () => {
+        let content: JSX.Element = <></>;
+        let color = "";
+
+        //connection check
+
+        if (props.selectedSchool.isFetching){
+            color = "yellow";
+            content = <>Refreshing...</>
+        } else if (props.error != "") {
+            color = "red";
+            content = <>Error</>
+        } else if (!online) {
+            color = "orange";
+            content = <>Not Online</>
+        } 
+        content = <>Online</>;
+        color = "green";
+
+        return <StatusIndicator color={color}>{content}</StatusIndicator>
+    }
+
     return (
         <>
         <div className="App">
@@ -144,7 +166,7 @@ export const App = (props: IAppProps) => {
 
             {getContent()}
         </div>
-        <StatusIndicator color="red">hi</StatusIndicator>
+        {getStatus()}
         </>
     );
 };
