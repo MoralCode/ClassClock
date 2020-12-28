@@ -22,7 +22,8 @@ export interface IAppProps {
         didInvalidate: boolean;
         data: School;
     };
-    userSettings: IUserSettings
+    userSettings: IUserSettings;
+    error: string;
     dispatch: any;
 }
 
@@ -148,10 +149,10 @@ export const App = (props: IAppProps) => {
     );
 };
 
-const mapStateToProps = (state: ISchoolsState & ISettingsState) => {
-    const { selectedSchool, userSettings } = state;
+const mapStateToProps = (state: ISchoolsState & ISettingsState & {error: string}) => {
+    const { selectedSchool, userSettings, error } = state;
     selectedSchool.data = School.fromJson(selectedSchool.data);
-    return { selectedSchool, userSettings };
+    return { selectedSchool, userSettings, error };
 };
 
 export default connect(mapStateToProps)(App);
