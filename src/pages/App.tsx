@@ -28,6 +28,7 @@ export interface IAppProps {
 
 export const App = (props: IAppProps) => {
     const [currentDate, setDate] = useState(getCurrentDate());
+    const [online, setOnline] = useState(true);
 
     const navigate = (to: string) => {
         props.dispatch(push(to));
@@ -40,6 +41,9 @@ export const App = (props: IAppProps) => {
 
         return () => clearInterval(interval);
     }, [currentDate]);
+
+    window.addEventListener('online', () => {setOnline(true)});
+    window.addEventListener('offline', () => { setOnline(false)});
 
     const currentSchedule = props.selectedSchool.data.getScheduleForDate(currentDate);
 
