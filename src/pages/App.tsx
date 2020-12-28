@@ -41,7 +41,7 @@ export const App = (props: IAppProps) => {
         }, 500);
 
         return () => clearInterval(interval);
-    }, [currentDate]);
+    }, []);
 
     window.addEventListener('online', () => {setOnline(true)});
     window.addEventListener('offline', () => { setOnline(false)});
