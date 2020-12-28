@@ -336,3 +336,7 @@ section#options > * {
         width: 30vw;
     }
 }
+.circle {
+    border-radius: 50%;
+    display: inline-block;
+}

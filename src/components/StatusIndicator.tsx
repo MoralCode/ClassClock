@@ -1,4 +1,5 @@
 import React, { Component, ReactNode } from "react";
+import StopLight from "./StopLight";
 
 interface IStatusIndicatorProps {
     color: string;
@@ -7,7 +8,8 @@ interface IStatusIndicatorProps {
 
 const StatusIndicator = (props: IStatusIndicatorProps) => {
     const size = "15px"
-    return <span className="statusIndicator cornerNavBottom cornerNavLeft" style={{backgroundColor: props.color}}>
+    return <span className="statusIndicator cornerNavBottom cornerNavLeft" >
+        <StopLight color={props.color} />
         {props.children}
     </span>;
 }
