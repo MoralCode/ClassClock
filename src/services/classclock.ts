@@ -37,7 +37,7 @@ export default class ClassClockService {
         return await call.then(
             (response: Response) => {
                 if (response.ok) {
-                    return response.json();
+                    return ClassClockService.handleBodyConversion(response)
                 }
             },
             // Do not use catch, because that will also catch
@@ -50,6 +50,9 @@ export default class ClassClockService {
             }
         );
     };
+
+    //this is mostly here to make the response handling more generic
+    private static handleBodyConversion = (response: Response) => response.json()
 
     static updateBellSchedule = async (
         schedule: BellSchedule,
