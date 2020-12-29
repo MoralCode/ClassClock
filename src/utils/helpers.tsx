@@ -153,6 +153,20 @@ export function checkTimeRange(checkTime: DateTime, startTime: DateTime, endTime
     }
 }
 
+
+/**
+ * Calculates the larger of either the exponential backoff or the given minimum delay
+ * 
+ * modified from https://medium.com/swlh/retrying-and-exponential-backoff-with-promises-1486d3c259
+ * @export
+ * @param {number} retryCount the number of times the request has already been re-tried
+ * @param {number} [minDelay=0] the minimum amount of delay
+ * @returns a number that can be used as the delay (units are arbitrary)
+ */
+export function calculateDelay(retryCount: number, minDelay:number = 0) {
+    //exponential backoff
+    return Math.max(10 ** retryCount, minDelay)
+}
 /**
  * Calculates how long to wait before sending retrying request when receiving 429 Too Many Requests
  *
