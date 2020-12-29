@@ -181,6 +181,8 @@ export const delay = async (duration:number) =>
 
 /**
  * Calculates how long to wait before sending retrying request when receiving 429 Too Many Requests
+ * 
+ * see: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Retry-After
  *
  * @export
  * @param {Response} response the 429 response to calculate the delay for 
