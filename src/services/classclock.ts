@@ -1,7 +1,8 @@
 import BellSchedule from "../@types/bellschedule";
 import { format } from 'date-fns'
-import { objectKeysToSnakeCase } from "../utils/helpers";
+import { delay, objectKeysToSnakeCase, parseRateLimitTime, promiseRetry } from "../utils/helpers";
 import { DateTime } from "luxon";
+import { RateLimitError } from "../utils/errors";
 
 export default class ClassClockService {
     public static baseURL: string = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? "http://localhost:8000/v0" : "https://api.classclock.app/v0";
@@ -30,25 +31,32 @@ export default class ClassClockService {
         );
     };
 
+    /**
+     * Validates responses to ClassClock Service API calls and applies things like request retrying, some error handling, and converting the response body to a usable format
+     *
+     * @static
+     * @memberof ClassClockService
+     */
     static validateResponse = async (
         call: Promise<Response>,
         onError?: (error: Error) => void
-    ) => {
-        return await call.then(
-            (response: Response) => {
-                if (response.ok) {
-                    return ClassClockService.handleBodyConversion(response)
-                }
-            },
-            // Do not use catch, because that will also catch
-            // any errors in the dispatch and resulting render,
-            // causing a loop of 'Unexpected batch number' errors.
-            // https://github.com/facebook/react/issues/6895
-            (error: Error) => {
-                console.log(onError);
-                onError ? onError(error) : console.log("An error occurred: ", error);
+    ): Promise<Response> => {
+
+        const promise = call.then((response: Response) => {
+            if (response.ok) {
+                return ClassClockService.handleBodyConversion(response)
             }
-        );
+            //response was successful, but received a less-than-desirable response code
+            else if (response.status == 429) { //rate-limited
+                const secondsToWait = parseRateLimitTime(response) || 1
+                throw new RateLimitError("A rate limit was reached", secondsToWait * 1000)
+            }
+        })
+        .catch(error => {
+            onError ? onError(error.message) : console.error(error);
+            return error
+        })
+        return promiseRetry(promise);
     };
 
     //this is mostly here to make the response handling more generic
