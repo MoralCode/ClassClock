@@ -5,6 +5,7 @@ import { TimeComparisons, TimeStates } from "./enums";
 import ClassPeriod from "../@types/classperiod";
 import BellSchedule from "../@types/bellschedule";
 import { useState } from "react";
+import { RateLimitError } from "./errors";
 
 //https://stackoverflow.com/a/55862077
 export const useForceUpdate = () => {
@@ -178,6 +179,28 @@ export function calculateDelay(retryCount: number, minDelay:number = 0) {
  */
 export const delay = async (duration:number) =>
     new Promise(resolve => setTimeout(resolve, duration));
+
+/**
+ * Retries a promise a given number of times if it rejects
+ *
+ * based on https://dev.to/ycmjason/javascript-fetch-retry-upon-failure-3p6g
+ * @export
+ * @param {Promise<any>} promise the promise to retry on rejection
+ * @param {number} [maxRetries=5] the maximum number of times to retry before giving up
+ * @param {number} [tryCount=1] the number of tries that have already been attempted
+ * @param {number} [minimumWait=100] the minimum amount of time to wait between requests in milleseconds
+ * @returns {Promise<any>} the given promise with the capability to retry in case it rejects
+ */
+export async function promiseRetry(promise: Promise<any>, maxRetries = 5, tryCount=1, minimumWait = 100): Promise<any> {
+    return promise.catch(async function (error) {
+        if (maxRetries === tryCount) throw error;
+        if (error instanceof RateLimitError) {
+            minimumWait = error.wait
+        }
+        await delay(calculateDelay(tryCount, minimumWait))
+        return promiseRetry(promise, maxRetries, tryCount + 1);
+    });
+}
 
 /**
  * Calculates how long to wait before sending retrying request when receiving 429 Too Many Requests
