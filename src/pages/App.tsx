@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { ISettingsState, IUserSettings } from "../store/usersettings/types";
 import StatusIndicator from "../components/StatusIndicator";
+import ClassClockService from "../services/classclock";
 
 export interface IAppProps {
     selectedSchool: {
@@ -30,21 +31,37 @@ export interface IAppProps {
 export const App = (props: IAppProps) => {
     const [currentDate, setDate] = useState(getCurrentDate());
     const [online, setOnline] = useState(true);
+    const [connected, setConnected] = useState(false);
 
     const navigate = (to: string) => {
         props.dispatch(push(to));
     };
 
     useEffect(() => {
-        const interval: NodeJS.Timeout = setInterval(() => {
+        const timingInterval: NodeJS.Timeout = setInterval(() => {
             setDate(getCurrentDate());
         }, 500);
 
-        return () => clearInterval(interval);
+        //set the connected state immediately on pageload
+        ClassClockService.isReachable().then((reachable) => {
+            setConnected(reachable)
+        })
+
+        // //then schedule the connection state to be updated every 2 min
+        // const connectivityInterval: NodeJS.Timeout = setInterval(() => {
+        //     ClassClockService.isReachable().then((reachable) => {
+        //         setConnected(reachable)
+        //     })
+        // }, 120000);
+
+        return () => {
+            clearInterval(timingInterval)
+            // clearInterval(connectivityInterval)
+        };
     }, []);
 
     window.addEventListener('online', () => {setOnline(true)});
-    window.addEventListener('offline', () => { setOnline(false)});
+    window.addEventListener('offline', () => {setOnline(false)});
 
     const currentSchedule = props.selectedSchool.data.getScheduleForDate(currentDate);
 
@@ -127,10 +144,11 @@ export const App = (props: IAppProps) => {
             content = <>Error</>
         } else if (!online) {
             color = "orange";
-            content = <>Not Online</>
-        } 
-        content = <>Online</>;
-        color = "green";
+            content = <>Offline</>
+        } else {
+            content =  connected? <>Connected</> : <>Online</>;
+            color = "green";
+        }
 
         return <StatusIndicator color={color}>{content}</StatusIndicator>
     }
