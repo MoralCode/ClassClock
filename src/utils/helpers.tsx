@@ -167,6 +167,18 @@ export function calculateDelay(retryCount: number, minDelay:number = 0) {
     //exponential backoff
     return Math.max(10 ** retryCount, minDelay)
 }
+
+/**
+ * Delays by the given number of milliseconds
+ * 
+ * modified from https://medium.com/swlh/retrying-and-exponential-backoff-with-promises-1486d3c259
+ * @export
+ * @param {number} duration the number of milliseconds to delay
+ * @returns
+ */
+export const delay = async (duration:number) =>
+    new Promise(resolve => setTimeout(resolve, duration));
+
 /**
  * Calculates how long to wait before sending retrying request when receiving 429 Too Many Requests
  *
