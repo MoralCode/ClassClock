@@ -138,4 +138,22 @@ export default class ClassClockService {
         return value;
     }
 
+
+    /**
+     * performs a HEAD request to the baseURL to confirm that the domain is reachable
+     * 
+     * based on https://stackoverflow.com/a/44766737
+     * @static
+     * @returns
+     * @memberof ClassClockService
+     */
+    public static async isReachable() {
+        const headers = ClassClockService.getHeaders("HEAD", undefined, {mode: 'no-cors'})
+        return await fetch(ClassClockService.baseURL, headers).then((resp) => {
+            return resp && (resp.ok || resp.type === 'opaque');
+        }).catch((err) => {
+            console.warn('[conn test failure]:', err);
+            return false
+        });
+    }
 }
