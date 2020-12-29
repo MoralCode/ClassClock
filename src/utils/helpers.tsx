@@ -152,3 +152,31 @@ export function checkTimeRange(checkTime: DateTime, startTime: DateTime, endTime
         return TimeComparisons.IS_DURING_OR_EXACTLY;
     }
 }
+
+/**
+ * Calculates how long to wait before sending retrying request when receiving 429 Too Many Requests
+ *
+ * @export
+ * @param {Response} response the 429 response to calculate the delay for 
+ * @returns the number of seconds to wait, or undefined if the Retry-After header is not present
+ */
+export function parseRateLimitTime(response: Response) {
+    const after = response.headers.get("Retry-After")
+
+    if (!after) return
+
+    //try to parse it as an integer
+    let secondsToWait = parseInt(after)
+    if (isNaN(secondsToWait)) {
+        //if number parsing failed, parse as date
+
+        const date = new Date(secondsToWait)
+
+        const now = new Date()
+        //round the time down by zeroing milliseconds
+        now.setMilliseconds(0)
+
+        secondsToWait = (date.getTime() - now.getTime())/1000
+    }
+    return secondsToWait
+}
