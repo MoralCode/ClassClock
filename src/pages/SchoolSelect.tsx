@@ -24,9 +24,8 @@ const SchoolSelect = (props: ISelectProps) => {
         const signal = controller.signal;
 
         if (
-            schoolList.length === 0 &&
-            // isFetching === false &&
-            Math.abs(new Date().getTime() - lastRefresh) > 120000 //120000 ms
+            isFetching() &&
+            Math.abs(new Date().getTime() - lastRefresh) > 120000 //120000 ms = 2 min
         ) {
             const fetchSchools = async (abortSignal: AbortSignal) => {
                 ClassClockService.validateResponse(
@@ -51,6 +50,11 @@ const SchoolSelect = (props: ISelectProps) => {
         };
     }, []);
 
+
+     //schoolList.length is used here because the app can potentially get stuck on isFetching = true if, for example, the page gets closed while a request is in progress. maybe mitigate this with a timestamp of when the requet started and add a timeout to change it back to false automatically?
+    const isFetching = () => schoolList.length === 0
+    // props.selectedSchool.isFetching === false
+
     const list = schoolList.map((school: School) => (
         <li
             key={school.getIdentifier()}
@@ -66,7 +70,7 @@ const SchoolSelect = (props: ISelectProps) => {
     ));
 
     return (
-        <SelectionList title="Please select a school" loading={schoolList.length === 0} className="centeredWidth" >
+        <SelectionList title="Please select a school" loading={isFetching()} className="centeredWidth" >
             {list}
         </SelectionList>
     );
