@@ -14,10 +14,15 @@ export interface ISchoolsState {
     selectedSchool: SelectedSchoolState;
 }
 
-export interface SelectedSchoolState {
+export type SelectedSchoolState =  SelectedSchoolData & SchoolMeta
+
+export interface SelectedSchoolData {
+    data: School;
+}
+
+export interface SchoolMeta {
     isFetching: boolean;
     didInvalidate: false;
-    data: School;
     lastUpdated: number
 }
 
