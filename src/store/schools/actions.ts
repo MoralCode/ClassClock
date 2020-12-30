@@ -107,6 +107,7 @@ export function getSchoolsList(abortSignal?: AbortSignal) {
         const onError = (error: Error) => {
             console.log("Caught an error: ", error.message);
             if (error.message) dispatch(fetchError(error.message));
+            dispatch(invalidateSchoolList());
         };
 
         const schoolList = ClassClockService.validateResponse(
