@@ -29,20 +29,26 @@ const SelectionList = (props: ISelectProps) => {
 
     };
 
+    const getState = () => {
+        if (props.loading) {
+            return <span>Loading...</span>
+        } else if (props.error) {
+            return <span>An Error Occurred</span>
+        } else {
+            return <ul className={"selectionList " + props.className}>
+                {makeIntoListItems(props.children)}
+            </ul>
+        }
+    
+    }
+
 
     return (
-        <div>
+        <>
             <h2>{props.title}</h2>
-            {props.loading? (
-                <span>Loading...</span>
-            ) : (
-                    <ul className={"selectionList " +  props.className}>
-                        {makeIntoListItems(props.children)}
-                    </ul>
-            )}
-
+            {getState()}
             {/* <a onClick={}>Refresh</a> */}
-        </div>
+        </>
     );
 };
 
