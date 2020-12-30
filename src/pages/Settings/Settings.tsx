@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { push } from "redux-first-routing";
 import "../../global.css";
 import "./settings.css";
-import { ISchoolsState } from "../../store/schools/types";
-import { ISettingsState } from "../../store/usersettings/types";
+import { ISchoolsState, SelectedSchoolState } from "../../store/schools/types";
+import { ISettingsState, IUserSettings } from "../../store/usersettings/types";
 import School from "../../@types/school";
 import Link from "../../components/Link";
 import { pages } from "../../utils/constants";
@@ -18,8 +18,8 @@ import distanceInWords from "date-fns/distance_in_words";
 import { selectSchool, invalidateSchool } from "../../store/schools/actions";
 
 export interface ISettingProps {
-    selectedSchool: any;
-    userSettings: { use24HourTime: boolean }; //this is duplicated. ugh
+    selectedSchool: SelectedSchoolState;
+    userSettings: IUserSettings;
     dispatch: any;
 }
 
