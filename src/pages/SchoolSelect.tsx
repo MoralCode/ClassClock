@@ -6,11 +6,11 @@ import { selectSchool } from "../store/schools/actions";
 import School from "../@types/school";
 import ClassClockService from "../services/classclock";
 import { pages } from "../utils/constants";
-import { ISchoolsState } from "../store/schools/types";
+import { ISchoolsState, SelectedSchoolState } from "../store/schools/types";
 import SelectionList from "../components/SelectionList/SelectionList";
 
 export interface ISelectProps {
-    selectedSchool: any;
+    selectedSchool: SelectedSchoolState;
     error: string;
     dispatch: any;
 }
