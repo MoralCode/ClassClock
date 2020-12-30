@@ -70,7 +70,7 @@ const SchoolSelect = (props: ISelectProps) => {
     ));
 
     return (
-        <SelectionList title="Please select a school" loading={isFetching()} className="centeredWidth" >
+        <SelectionList title="Please select a school" loading={isFetching()} error={props.error} className="centeredWidth" >
             {list}
         </SelectionList>
     );
