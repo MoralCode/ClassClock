@@ -24,7 +24,6 @@ export function getValueIfKeyInList(list: string[], object: any) {
     }
 }
 
-
 export function objectKeysToSnakeCase(object: object) {
     let copyObject: any = Object.assign({}, object);
 
@@ -57,7 +56,6 @@ export function toSnakeCase(input: string) {
         }
     }).join('');
 }
-
 
 export function getCurrentDate() {
     return DateTime.local();

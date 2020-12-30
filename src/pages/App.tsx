@@ -144,8 +144,6 @@ export const App = (props: IAppProps) => {
         let content: JSX.Element = <></>;
         let color = "";
 
-        //connection check
-
         if (props.selectedSchool.isFetching){
             color = "yellow";
             content = <>Refreshing...</>

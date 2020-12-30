@@ -33,6 +33,8 @@ export default class ClassClockService {
 
     /**
      * Validates responses to ClassClock Service API calls and applies things like request retrying, some error handling, and converting the response body to a usable format
+     * 
+     * in future it may be useful to move this to a more generic helper function (makeAPICall?) and use generic <T> types to indicate which class's static methods to reference
      *
      * @static
      * @memberof ClassClockService
@@ -143,7 +145,7 @@ export default class ClassClockService {
      * 
      * based on https://stackoverflow.com/a/44766737
      * @static
-     * @returns
+     * @returns true if the service is reachable, false otherwise
      * @memberof ClassClockService
      */
     public static async isReachable() {
