@@ -16,6 +16,7 @@ import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { ISettingsState, IUserSettings } from "../store/usersettings/types";
 import StatusIndicator from "../components/StatusIndicator";
 import ClassClockService from "../services/classclock";
+import { selectSchool } from "../store/schools/actions";
 
 export interface IAppProps {
     selectedSchool: SelectedSchoolState;
@@ -49,6 +50,14 @@ export const App = (props: IAppProps) => {
         //         setConnected(reachable)
         //     })
         // }, 120000);
+
+        //check when the schedule was last updated
+        const dataAge = DateTime.local().toMillis() - props.selectedSchool.lastUpdated
+                
+        // if data is > 12 hours old 43200000
+        if (dataAge > 43200000){
+            props.dispatch(selectSchool(props.selectedSchool.data.getIdentifier()))
+        }
 
         return () => {
             clearInterval(timingInterval)
