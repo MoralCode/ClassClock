@@ -44,12 +44,12 @@ export const App = (props: IAppProps) => {
             setConnected(reachable)
         })
 
-        // //then schedule the connection state to be updated every 2 min
-        // const connectivityInterval: NodeJS.Timeout = setInterval(() => {
-        //     ClassClockService.isReachable().then((reachable) => {
-        //         setConnected(reachable)
-        //     })
-        // }, 120000);
+        //then schedule the connection state to be updated every 2 min
+        const connectivityInterval: NodeJS.Timeout = setInterval(() => {
+            ClassClockService.isReachable().then((reachable) => {
+                setConnected(reachable)
+            })
+        }, 120000);
 
         //check when the schedule was last updated
         const dataAge = DateTime.local().toMillis() - props.selectedSchool.lastUpdated
