@@ -100,17 +100,19 @@ function receiveSchoolList(json: any): SchoolListActionTypes {
 }
 
 //TODO: Reduce duplication somehow
-export function getSchoolsList() {
+export function getSchoolsList(abortSignal?: AbortSignal) {
     return async (dispatch: Dispatch) => {
         dispatch(requestSchoolList());
 
         const onError = (error: Error) => {
             console.log("Caught an error: ", error.message);
-            dispatch(fetchError(error.message));
+            if (error.message) dispatch(fetchError(error.message));
         };
 
         const schoolList = ClassClockService.validateResponse(
-            ClassClockService.getSchoolsList(),
+            ClassClockService.getSchoolsList(
+                abortSignal ? {signal: abortSignal}: undefined
+                ),
             onError
         );
 
