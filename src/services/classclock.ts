@@ -51,12 +51,11 @@ export default class ClassClockService {
                 const secondsToWait = parseRateLimitTime(response) || 1
                 throw new RateLimitError("A rate limit was reached", secondsToWait * 1000)
             }
-        })
-        .catch(error => {
+        });
+        return promiseRetry(promise).catch(error => {
             onError ? onError(error.message) : console.error(error);
-            return error
-        })
-        return promiseRetry(promise);
+            throw error
+        });
     };
 
     //this is mostly here to make the response handling more generic
