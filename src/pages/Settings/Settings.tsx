@@ -20,6 +20,7 @@ import { selectSchool, invalidateSchool } from "../../store/schools/actions";
 export interface ISettingProps {
     selectedSchool: SelectedSchoolState;
     userSettings: IUserSettings;
+    error: string;
     dispatch: any;
 }
 
@@ -30,7 +31,7 @@ const Settings = (props: ISettingProps) => {
         props.dispatch(push(to));
     };
 
-    if (props.selectedSchool.data === {} && !props.selectedSchool.isFetching) {
+    if (!props.selectedSchool.data && !props.selectedSchool.isFetching) {
         navigate(pages.selectSchool);
     }
 
@@ -67,6 +68,48 @@ const Settings = (props: ISettingProps) => {
         );
     };
 
+    const selectedSchoolInfo = () => {
+        if (props.selectedSchool.isFetching) {
+            return <span>Loading School...</span>
+        } else if (props.error) {
+            return <span>An Error Occurred</span>
+        } else {
+            return <>
+                <Link
+                    // tslint:disable-next-line: jsx-no-lambda
+                    destination={() => navigate(pages.selectSchool)}
+                    title="Change School"
+                >
+                    {props.selectedSchool.data.getName() + " "}
+                </Link>
+                <br />
+                <em className="smallerText">
+                    Last updated{" "}
+                    {distanceInWords(
+                        new Date(),
+                        new Date(props.selectedSchool.lastUpdated)
+                    ) + " ago "}
+                </em>
+
+                <em className="smallerText">
+                    <Link
+                        // tslint:disable-next-line: jsx-no-lambda
+                        destination={() =>
+                            props.dispatch(
+                                selectSchool(
+                                    props.selectedSchool.data.getIdentifier()
+                                )
+                            )
+                        }
+                        title="Reload Schedule"
+                    >
+                        Refresh
+                        </Link>
+                </em>
+            </>
+        }
+    }
+
     return (
         <div>
             <Link
@@ -92,43 +135,7 @@ const Settings = (props: ISettingProps) => {
             <h1>Settings</h1>
             <h2 className="settingsHeader centeredWidth">Selected School: </h2>
             <div>
-                {props.selectedSchool.isFetching ? (
-                    <span>Loading School...</span>
-                ) : (
-                    <>
-                        <Link
-                            // tslint:disable-next-line: jsx-no-lambda
-                            destination={() => navigate(pages.selectSchool)}
-                            title="Change School"
-                        >
-                            {props.selectedSchool.data.getName() + " "}
-                        </Link>
-                        <br />
-                        <em className="smallerText">
-                            Last updated{" "}
-                            {distanceInWords(
-                                new Date(),
-                                new Date(props.selectedSchool.lastUpdated)
-                            ) + " ago "}
-                        </em>
-
-                        <em className="smallerText">
-                            <Link
-                                // tslint:disable-next-line: jsx-no-lambda
-                                destination={() =>
-                                    props.dispatch(
-                                        selectSchool(
-                                            props.selectedSchool.data.getIdentifier()
-                                        )
-                                    )
-                                }
-                                title="Reload Schedule"
-                            >
-                                Refresh
-                            </Link>
-                        </em>
-                    </>
-                )}
+                {selectedSchoolInfo()}
                 <br />
                 <br />
                 {getAdminButton()}
@@ -183,13 +190,14 @@ const Settings = (props: ISettingProps) => {
     );
 };
 
-const mapStateToProps = (state: ISchoolsState & ISettingsState) => {
-    const { selectedSchool, userSettings } = state;
+const mapStateToProps = (state: ISchoolsState & ISettingsState & {error: string}) => {
+    const { selectedSchool, userSettings, error } = state;
     return {
         selectedSchool: Object.assign({}, selectedSchool, {
             data: School.fromJson(selectedSchool.data)
         }),
-        userSettings
+        userSettings,
+        error
     };
 };
 
