@@ -4,7 +4,11 @@ import {
     FETCH_ERROR,
     RECEIVE_SCHOOL,
     REQUEST_SCHOOL,
-    INVALIDATE_SCHOOL
+    INVALIDATE_SCHOOL,
+    REQUEST_SCHOOL_LIST,
+    SchoolListActionTypes,
+    INVALIDATE_SCHOOL_LIST,
+    RECEIVE_SCHOOL_LIST
 } from "./types";
 import { Dispatch } from "redux";
 import ClassClockService from "../../services/classclock";
@@ -69,6 +73,52 @@ export function selectSchool(schoolId: string) {
                 dispatch(
                     receiveSchool(schoolResult.data)
                 );      
+            },
+            (error: Error) => onError(error)
+        );
+    };
+}
+
+function requestSchoolList(): SchoolListActionTypes {
+    return {
+        type: REQUEST_SCHOOL_LIST
+    };
+}
+
+export function invalidateSchoolList(): SchoolListActionTypes {
+    return {
+        type: INVALIDATE_SCHOOL_LIST
+    };
+}
+
+function receiveSchoolList(json: any): SchoolListActionTypes {
+    return {
+        type: RECEIVE_SCHOOL_LIST,
+        schools: json.map((sch: string) => School.fromJson(sch)),
+        receivedAt: DateTime.local().toMillis()
+    };
+}
+
+//TODO: Reduce duplication somehow
+export function getSchoolsList() {
+    return async (dispatch: Dispatch) => {
+        dispatch(requestSchoolList());
+
+        const onError = (error: Error) => {
+            console.log("Caught an error: ", error.message);
+            dispatch(fetchError(error.message));
+        };
+
+        const schoolList = ClassClockService.validateResponse(
+            ClassClockService.getSchoolsList(),
+            onError
+        );
+
+        schoolList.then(
+            (result: any) => {
+                dispatch(
+                    receiveSchoolList(result.data)
+                );
             },
             (error: Error) => onError(error)
         );
