@@ -5,6 +5,7 @@ import "./SelectionList.css";
 export interface ISelectProps {
     title: string;
     loading: boolean;
+    error?: string;
     className?:string;
     children?: ReactElement[];
 }
