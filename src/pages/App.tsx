@@ -40,15 +40,11 @@ export const App = (props: IAppProps) => {
         }, 500);
 
         //set the connected state immediately on pageload
-        ClassClockService.isReachable().then((reachable) => {
-            setConnected(reachable)
-        })
+        updateConnectionState()
 
         //then schedule the connection state to be updated every 2 min
         const connectivityInterval: NodeJS.Timeout = setInterval(() => {
-            ClassClockService.isReachable().then((reachable) => {
-                setConnected(reachable)
-            })
+            updateConnectionState()
         }, 120000);
 
         //check when the schedule was last updated
@@ -69,6 +65,12 @@ export const App = (props: IAppProps) => {
     window.addEventListener('offline', () => {setOnline(false)});
 
     const currentSchedule = props.selectedSchool.data.getScheduleForDate(currentDate);
+
+    const updateConnectionState = () => {
+        ClassClockService.isReachable().then((reachable) => {
+            setConnected(reachable)
+        })
+    }
 
     const getContent = () => {
         switch (currentSchedule) {
