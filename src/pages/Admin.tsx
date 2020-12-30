@@ -17,6 +17,7 @@ import SelectionList from "../components/SelectionList/SelectionList";
 import Link from "../components/Link";
 import EditableField from "../components/EditableField";
 import cloneDeep from 'lodash.clonedeep'
+import { selectSchool } from "../store/schools/actions";
 
 export interface IAdminProps {
     selectedSchool: {
@@ -128,6 +129,8 @@ const Admin = (props: IAdminProps) => {
                         ClassClockService.validateResponse(
                             ClassClockService.updateBellSchedule(schedule, token)
                         );
+                        //refresh schedules so future going into the admin panel shows new data
+                        props.dispatch(selectSchool(props.selectedSchool.data.getIdentifier()))
                     } else {
                         //this should never happen
                     }
