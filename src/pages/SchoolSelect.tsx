@@ -42,23 +42,32 @@ const SchoolSelect = (props: ISelectProps) => {
     const isFetching = () => props.schoolList.isFetching
     // props.selectedSchool.isFetching === false
 
-    const list = props.schoolList.data.map((school: School) => (
-        <li
-            key={school.getIdentifier()}
-            onClick={() => {
-                props.dispatch(selectSchool(school.getIdentifier()));
-                props.dispatch(push(pages.main));
-            }}
-        >
-            <span className="schoolAcronym">{school.getAcronym()}</span>
-            <br />
-            <span className="schoolName">{school.getName()}</span>
-        </li>
-    ));
+    const getScholsAsElementList = () => {
+        const list = []
+            
+        if (props.schoolList.data) {
+            for (const school of props.schoolList.data) {
+                const id = school.getIdentifier();
+
+                list.push(<li
+                    key={id}
+                    onClick={() => {
+                        props.dispatch(selectSchool(id));
+                        props.dispatch(push(pages.main));
+                    }}
+                >
+                    <span className="schoolAcronym">{school.getAcronym()}</span>
+                    <br />
+                    <span className="schoolName">{school.getName()}</span>
+                </li>)
+            }
+        }
+        return list
+    }
 
     return (
         <SelectionList title="Please select a school" loading={isFetching()} error={props.error} className="centeredWidth" >
-            {list}
+            {getScholsAsElementList()}
         </SelectionList>
     );
 };
