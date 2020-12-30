@@ -9,7 +9,7 @@ import { DateTime } from "luxon";
 import School from "../@types/school";
 import { pages } from "../utils/constants";
 import BellSchedule from "../@types/bellschedule";
-import { ISchoolsState } from "../store/schools/types";
+import { ISchoolsState, SelectedSchoolState } from "../store/schools/types";
 import { getNextImportantInfo, getCurrentDate } from "../utils/helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
@@ -18,11 +18,7 @@ import StatusIndicator from "../components/StatusIndicator";
 import ClassClockService from "../services/classclock";
 
 export interface IAppProps {
-    selectedSchool: {
-        isFetching: boolean;
-        didInvalidate: boolean;
-        data: School;
-    };
+    selectedSchool: SelectedSchoolState;
     userSettings: IUserSettings;
     error: string;
     dispatch: any;
