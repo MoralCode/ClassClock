@@ -61,7 +61,10 @@ export const App = (props: IAppProps) => {
         };
     }, []);
 
-    window.addEventListener('online', () => {setOnline(true)});
+    window.addEventListener('online', () => {
+        setOnline(true)
+        updateConnectionState()
+    });
     window.addEventListener('offline', () => {setOnline(false)});
 
     const currentSchedule = props.selectedSchool.data.getScheduleForDate(currentDate);
