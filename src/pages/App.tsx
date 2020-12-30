@@ -57,7 +57,7 @@ export const App = (props: IAppProps) => {
 
         return () => {
             clearInterval(timingInterval)
-            // clearInterval(connectivityInterval)
+            clearInterval(connectivityInterval)
         };
     }, []);
 
