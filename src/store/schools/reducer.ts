@@ -66,7 +66,7 @@ export function schoolListReducer(
         case INVALIDATE_SCHOOL_LIST:
             return Object.assign({}, state, {
                 isFetching: false,
-                data: {}
+                data: []
             });
 
         default:

@@ -85,7 +85,7 @@ interface IListSchoolsAction {
 
 interface IReceiveSchoolListAction {
     type: typeof RECEIVE_SCHOOL_LIST;
-    schools: [School];
+    schools: School[];
     receivedAt: number;
 }
 
