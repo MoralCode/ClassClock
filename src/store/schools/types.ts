@@ -76,7 +76,7 @@ export interface ISchoolListState {
 export type SchoolListState = SchoolListData & SchoolMeta
 
 export interface SchoolListData {
-    data: [School];
+    data: School[];
 }
 
 interface IListSchoolsAction {
