@@ -11,6 +11,7 @@ import SelectionList from "../components/SelectionList/SelectionList";
 
 export interface ISelectProps {
     selectedSchool: any;
+    error: string;
     dispatch: any;
 }
 
@@ -71,8 +72,8 @@ const SchoolSelect = (props: ISelectProps) => {
     );
 };
 
-const mapStateToProps = (state: ISchoolsState) => {
-    const { selectedSchool } = state;
-    return { selectedSchool };
+const mapStateToProps = (state: ISchoolsState & { error: string }) => {
+    const { selectedSchool, error } = state;
+    return { selectedSchool, error };
 };
 export default connect(mapStateToProps)(SchoolSelect);
