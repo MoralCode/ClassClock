@@ -11,11 +11,14 @@ export const SELECT_SCHOOL = "SELECT_SCHOOL";
 export const INVALIDATE_SCHOOL = "INVALIDATE_SCHOOL";
 
 export interface ISchoolsState {
-    selectedSchool: {
-        isFetching: boolean;
-        didInvalidate: false;
-        data: School;
-    };
+    selectedSchool: SelectedSchoolState;
+}
+
+export interface SelectedSchoolState {
+    isFetching: boolean;
+    didInvalidate: false;
+    data: School;
+    lastUpdated: number
 }
 
 interface ISelectSchoolAction {
