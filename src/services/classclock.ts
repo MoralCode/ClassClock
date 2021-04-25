@@ -149,8 +149,9 @@ export default class ClassClockService {
      * @memberof ClassClockService
      */
     public static async isReachable() {
+        // TODO: handle request redirects across this whole file
         const headers = ClassClockService.getHeaders("HEAD", undefined, {mode: 'no-cors'})
-        return await fetch(ClassClockService.baseURL + "/ping", headers).then((resp) => {
+        return await fetch(ClassClockService.baseURL + "/ping/", headers).then((resp) => {
             return resp && (resp.ok || resp.type === 'opaque');
         }).catch((err) => {
             console.warn('[conn test failure]:', err);
