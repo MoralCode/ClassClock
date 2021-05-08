@@ -45,8 +45,11 @@ const SchoolSelect = (props: ISelectProps) => {
     const getScholsAsElementList = () => {
         const list = []
             
-        if (props.schoolList.data) {
-            for (const school of props.schoolList.data) {
+        if (props.schoolList && props.schoolList.data) {
+            let school;
+            for ( school of props.schoolList.data) {
+                school = School.fromJson(school);
+                
                 const id = school.getIdentifier();
 
                 list.push(<li
