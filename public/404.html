@@ -22,8 +22,8 @@
       // https://username.github.io/repo-name/one/two?a=b&c=d#qwe becomes
       // https://username.github.io/repo-name/?/one/two&a=b~and~c=d#qwe
       // Otherwise, leave pathSegmentsToKeep as 0.
-      var pathSegmentsToKeep = 1;
-
+      var pathSegmentsToKeep = 0;
+      //TODO this is redirecting like crazy in prodtest environment (with jekyll serve) when pathsegmentstokeep is 1. think this may be bad design or user error on my part :/
       var l = window.location;
       l.replace(
         l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
