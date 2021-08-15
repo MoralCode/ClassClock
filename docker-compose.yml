@@ -1,0 +1,29 @@
+version: '2'
+services:
+  mariadb:
+    image: mariadb
+    volumes:
+      - 'classclock_db:/var/lib/mysql'
+  classclock-api:
+    image: classclock-api
+    ports:
+      - '8686:8000'
+    environment:
+      - DB_USERNAME=d 
+      - DB_PASSWORD=f
+      - DB_HOST=mariadb
+      - DB_NAME=classclock
+    depends_on:
+      - mariadb
+  classclock:
+    image: classclock-web
+    ports:
+      - '3030:3000'
+    environment:
+      - 
+    depends_on:
+      - classclock-api
+  
+volumes:
+  classclock_db:
+    driver: local
