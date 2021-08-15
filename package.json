@@ -39,6 +39,7 @@
     },
     "scripts": {
         "start": "react-scripts start",
+        "start:prod": "react-scripts build; serve -l tcp://0.0.0.0:3000 -s build",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
