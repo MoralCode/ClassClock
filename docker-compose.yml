@@ -2,6 +2,10 @@ version: '2'
 services:
   mariadb:
     image: mariadb
+    ports:
+      - 3307:3306
+    environment:
+     - MARIADB_ROOT_PASSWORD=[PASSWORD_HERE]
     volumes:
       - 'classclock_db:/var/lib/mysql'
   classclock-api:
