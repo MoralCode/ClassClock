@@ -69,6 +69,20 @@ const Settings = (props: ISettingProps) => {
         );
     };
 
+    const getVersionHTML = () => {
+        if (process.env.REACT_APP_VERCEL_GIT_COMMIT_SHA) {
+
+            
+            const version_sha = process.env.REACT_APP_VERCEL_GIT_COMMIT_SHA.substring(0, 6)
+
+            const githubURL = "https://" + packageJson.repository.replace(":", ".com/") + "/commit/"
+            
+            return <>(<a href={githubURL + version_sha}>{version_sha}</a>)</>
+        } else {
+            return <></>
+        }
+    }
+
     const selectedSchoolInfo = () => {
         if (props.selectedSchool.isFetching) {
             return <span>Loading School...</span>
@@ -110,8 +124,6 @@ const Settings = (props: ISettingProps) => {
             </>
         }
     }
-
-    const version_sha = process.env.REACT_APP_VERCEL_GIT_COMMIT_SHA ? "(" + process.env.REACT_APP_VERCEL_GIT_COMMIT_SHA.substring(0, 5) + ")" : ""
 
     return (
         <div>
@@ -188,11 +200,7 @@ const Settings = (props: ISettingProps) => {
                 <br />
                 Idea by: <a href="https://twitter.com/MrKumprey">Dan Kumprey</a>
             </p>
-            <p style={{ fontSize: "smaller" }}>ClassClock version {process.env.REACT_APP_VERSION} {version_sha}</p>
-            <p>{packageJson.version}</p>
-            {/* TODO: fixme. this only wokrks in react builds, not production builds 
-            REACT_APP_VERCEL_GIT_COMMIT_SHA
-            */}
+            <p style={{ fontSize: "smaller" }}>ClassClock version {packageJson.version} {getVersionHTML()}</p>
         </div>
     );
 };
