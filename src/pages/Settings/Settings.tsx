@@ -16,6 +16,7 @@ import { faHome, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "../../react-auth0-wrapper";
 import distanceInWords from "date-fns/distance_in_words";
 import { selectSchool, invalidateSchool } from "../../store/schools/actions";
+import packageJson from '../../package.alias.json';
 
 export interface ISettingProps {
     selectedSchool: SelectedSchoolState;
@@ -67,6 +68,20 @@ const Settings = (props: ISettingProps) => {
             </Link>
         );
     };
+
+    const getVersionHTML = () => {
+        if (process.env.REACT_APP_VERCEL_GIT_COMMIT_SHA) {
+
+            
+            const version_sha = process.env.REACT_APP_VERCEL_GIT_COMMIT_SHA.substring(0, 6)
+
+            const githubURL = "https://" + packageJson.repository.replace(":", ".com/") + "/commit/"
+            
+            return <>(<a href={githubURL + version_sha}>{version_sha}</a>)</>
+        } else {
+            return <></>
+        }
+    }
 
     const selectedSchoolInfo = () => {
         if (props.selectedSchool.isFetching) {
@@ -185,7 +200,7 @@ const Settings = (props: ISettingProps) => {
                 <br />
                 Idea by: <a href="https://twitter.com/MrKumprey">Dan Kumprey</a>
             </p>
-            <p style={{fontSize: "smaller"}}>ClassClock version {process.env.REACT_APP_VERSION}</p>
+            <p style={{ fontSize: "smaller" }}>ClassClock version {packageJson.version} {getVersionHTML()}</p>
         </div>
     );
 };
