@@ -16,6 +16,7 @@ import { faHome, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "../../react-auth0-wrapper";
 import distanceInWords from "date-fns/distance_in_words";
 import { selectSchool, invalidateSchool } from "../../store/schools/actions";
+import packageJson from '../../package.alias.json';
 
 export interface ISettingProps {
     selectedSchool: SelectedSchoolState;
@@ -110,6 +111,8 @@ const Settings = (props: ISettingProps) => {
         }
     }
 
+    const version_sha = process.env.REACT_APP_VERCEL_GIT_COMMIT_SHA ? "(" + process.env.REACT_APP_VERCEL_GIT_COMMIT_SHA.substring(0, 5) + ")" : ""
+
     return (
         <div>
             <Link
@@ -185,7 +188,11 @@ const Settings = (props: ISettingProps) => {
                 <br />
                 Idea by: <a href="https://twitter.com/MrKumprey">Dan Kumprey</a>
             </p>
-            <p style={{fontSize: "smaller"}}>ClassClock version {process.env.REACT_APP_VERSION}</p>
+            <p style={{ fontSize: "smaller" }}>ClassClock version {process.env.REACT_APP_VERSION} {version_sha}</p>
+            <p>{packageJson.version}</p>
+            {/* TODO: fixme. this only wokrks in react builds, not production builds 
+            REACT_APP_VERCEL_GIT_COMMIT_SHA
+            */}
         </div>
     );
 };
