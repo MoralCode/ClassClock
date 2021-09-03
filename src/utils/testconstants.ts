@@ -1,5 +1,5 @@
 // This is not actually a unit test, just a central place to hold frequently-used constants that are often reused across tests
-import { DateTime, Duration } from "luxon";
+import { DateTime, Duration, Interval } from "luxon";
 import School from "../@types/school";
 import BellSchedule from "../@types/bellschedule";
 import ClassPeriod from "../@types/classperiod";
@@ -34,13 +34,14 @@ export const beforeClassString = "8:00"
 export const beforeClass = DateTime.fromFormat(beforeClassString, timeStringFormat);
 export const startTimeString = "8:25";
 export const startTime = DateTime.fromFormat(startTimeString, timeStringFormat);
-export const classDuration = Duration.fromObject({hours:1, minutes:30});
 export const duringClassString = "9:00";
 export const duringClass = DateTime.fromFormat(duringClassString, timeStringFormat);
 export const endTimeString = "9:55";
 export const endTime = DateTime.fromFormat(endTimeString, timeStringFormat);
 export const afterClassString = "10:00";
 export const afterClass = DateTime.fromFormat(afterClassString, timeStringFormat);
+export const classDuration = Interval.fromDateTimes(startTime, endTime).toDuration(['hours', 'minutes']);
+
 
 
 export const classPeriod = new ClassPeriod(
