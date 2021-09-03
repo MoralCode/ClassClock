@@ -122,12 +122,7 @@ export default class School {
     public getScheduleForDate(date: DateTime) {
         if (this.schedules) {
             for (const schedule of this.schedules) {
-                if (
-                    schedule
-                        .getDates()
-                        .includes(date)
-                        // .map((d: Date) => d.toDateString())
-                ) {
+                if (schedule.getDate(date)) {
                     return schedule;
                 }
             }
