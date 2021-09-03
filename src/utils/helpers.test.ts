@@ -24,6 +24,8 @@ test("get value if key in list", () => {
 
 test("sort classes by start time", () => {
     expect(sortClassesByStartTime(bellScheduleClasses.reverse())).toEqual(bellScheduleClasses);
+
+    expect(sortClassesByStartTime(bellScheduleClasses.reverse())[0].getName()).toEqual("First Period");
 });
 
 

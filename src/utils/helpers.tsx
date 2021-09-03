@@ -62,7 +62,7 @@ export function getCurrentDate() {
 }
 
 export function sortClassesByStartTime(classes: ClassPeriod[]) {
-    return classes.sort((a, b) => -a.getStartTime().diff(b.getStartTime()).get("milliseconds"));
+    return classes.sort((a, b) => a.getStartTime().diff(b.getStartTime()).get("milliseconds"));
 }
 
 /**
