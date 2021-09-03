@@ -143,6 +143,10 @@ export function checkTimeRange(checkTime: DateTime, startTime: DateTime, endTime
     // const startCheck = checkTime.getMillisecondsTo(startTime);
     // const endCheck = checkTime.getMillisecondsTo(endTime);
 
+    if (checkTime == startTime || checkTime == endTime){
+        return TimeComparisons.IS_DURING_OR_EXACTLY;
+    }
+
     if (interval.isAfter(checkTime)) {
         return TimeComparisons.IS_BEFORE;
     } else if (interval.isBefore(checkTime)) {
