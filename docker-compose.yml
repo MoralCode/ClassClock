@@ -13,8 +13,8 @@ services:
     ports:
       - '8686:8000'
     environment:
-      - DB_USERNAME=d 
-      - DB_PASSWORD=f
+      - DB_USERNAME=username
+      - DB_PASSWORD=password
       - DB_HOST=mariadb
       - DB_NAME=classclock
     depends_on:
