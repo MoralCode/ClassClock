@@ -15,14 +15,14 @@ services:
       - DB_NAME=classclock
     depends_on:
       - mariadb
-  classclock:
-    image: classclock-web
-    ports:
-      - '3030:3000'
-    environment:
-      - 
-    depends_on:
-      - classclock-api
+  # classclock:
+  #   image: classclock-web
+  #   ports:
+  #     - '3030:3000'
+  #   environment:
+  #     - 
+  #   depends_on:
+  #     - classclock-api
   
 volumes:
   classclock_db:
