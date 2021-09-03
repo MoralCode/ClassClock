@@ -58,6 +58,13 @@ export const classPeriodJSON = {
            creationDate: currentDate
        };
 
+export const classPeriodJSONISO = {
+    name: className,
+    startTime: startTime.toISO(),
+    endTime: endTime.toISO(),
+    creationDate: currentDate
+};
+
 
 export const class2Name = "Second Period";
 
