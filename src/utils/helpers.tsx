@@ -143,7 +143,7 @@ export function checkTimeRange(checkTime: DateTime, startTime: DateTime, endTime
     // const startCheck = checkTime.getMillisecondsTo(startTime);
     // const endCheck = checkTime.getMillisecondsTo(endTime);
 
-    if (checkTime == startTime || checkTime == endTime){
+    if (checkTime.hasSame(startTime, 'second') || checkTime.hasSame(endTime, 'second')){
         return TimeComparisons.IS_DURING_OR_EXACTLY;
     }
 
