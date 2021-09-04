@@ -134,7 +134,18 @@ export function getNextImportantInfo(
  *
  * @returns -1 if checkTime is before range, 0 if checkTime is within range, 1 if checkTime is after range
  */
-export function checkTimeRange(checkTime: DateTime, startTime: DateTime, endTime: DateTime) {
+export function checkTimeRange(checkTime: DateTime, startTime: DateTime, endTime: DateTime, ignoreDate = false) {
+
+    if (ignoreDate){
+        const day = {
+            year: checkTime.get("year"),
+            month: checkTime.get("month"),
+            day: checkTime.get("day")
+        }
+        startTime = startTime.set(day)
+        endTime = endTime.set(day)
+    }
+
     const interval = Interval.fromDateTimes(startTime,endTime)
    
     // if (startTime.getMillisecondsTo(endTime) <= 0) {

@@ -106,3 +106,36 @@ test("check time range", () => {
 
     
 });
+
+test("check time range ignoring day", () => {
+
+    expect(checkTimeRange(duringClass.plus({ days: 1 }), startTime, endTime, true)).toBe(
+        TimeComparisons.IS_DURING_OR_EXACTLY
+    );
+
+    expect(checkTimeRange(duringClass.plus({ days: 1 }), endTime, startTime2, true)).toBe(
+        TimeComparisons.IS_BEFORE
+    );
+
+    expect(checkTimeRange(beforeClass.plus({ days: 1 }), startTime, endTime2, true)).toBe(
+        TimeComparisons.IS_BEFORE
+    );
+
+    expect(checkTimeRange(startTime.plus({ days: 1 }), startTime, endTime, true)).toBe(
+        TimeComparisons.IS_DURING_OR_EXACTLY
+    );
+
+    expect(checkTimeRange(endTime.plus({ days: 1 }), startTime, endTime, true)).toBe(
+        TimeComparisons.IS_DURING_OR_EXACTLY
+    );
+
+    expect(checkTimeRange(afterClass.plus({ days: 1 }), startTime, endTime, true)).toBe(
+        TimeComparisons.IS_AFTER
+    );
+
+    expect(checkTimeRange(afterClass.plus({ days: 1 }), startTime, endTime2, true)).toBe(
+        TimeComparisons.IS_DURING_OR_EXACTLY
+    );
+
+
+});
