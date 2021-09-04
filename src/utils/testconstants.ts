@@ -25,7 +25,7 @@ export const bellScheduleEndpoint =
 export const bellScheduleDisplayName = "Display Name";
 
 
-export const currentDate = DateTime.fromISO("2019-07-28T07:37:50.634Z");
+export const currentDate = DateTime.fromISO("2019-07-28T07:37:50.634").toUTC();
 
 export const className = "First Period";
 const timeStringFormat = "H:mm"
@@ -91,7 +91,7 @@ export const classPeriod2JSON = {
 };
 
 
-// export const schoolInSession = DateTime.fromISO("2019-07-28T07:37:50.634Z");
+// export const schoolInSession = DateTime.fromISO("2019-07-28T07:37:50.634").toUTC();
 export const noSchool = DateTime.fromISO("2019-07-27T07:37:50.634").toUTC();
 export const beforeSchoolHours = DateTime.fromISO("2019-07-28T0" + beforeClassString + ":00.000").toUTC();
 //start of class?
@@ -110,9 +110,9 @@ export const bellSchedule = new BellSchedule(
     bellScheduleName,
     bellScheduleEndpoint,
     [
-        DateTime.fromISO("2019-07-28T07:37:50.634Z"),
-        DateTime.fromISO("2019-07-29T07:38:10.979Z"),
-        DateTime.fromISO("2019-07-23T07:38:28.263Z")
+        DateTime.fromISO("2019-07-28T07:37:50.634").toUTC(),
+        DateTime.fromISO("2019-07-29T07:38:10.979").toUTC(),
+        DateTime.fromISO("2019-07-23T07:38:28.263").toUTC()
     ],
     bellScheduleClasses,
     currentDate
@@ -123,9 +123,9 @@ export const bellScheduleJSON = {
            name: bellScheduleName,
            endpoint: bellScheduleEndpoint,
            dates: [
-               "2019-07-28T07:37:50.634Z",
-               "2019-07-29T07:38:10.979Z",
-               "2019-07-23T07:38:28.263Z"
+               DateTime.fromISO("2019-07-28T07:37:50.634").toUTC().toString(),
+               DateTime.fromISO("2019-07-29T07:38:10.979").toUTC().toString(),
+               DateTime.fromISO("2019-07-23T07:38:28.263").toUTC().toString()
            ],
            classes: bellScheduleClassesJSON,
            lastModified: currentDate
