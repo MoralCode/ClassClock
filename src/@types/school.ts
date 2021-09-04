@@ -138,6 +138,11 @@ export default class School {
 
     //change input to a time
     //seems like te current schedule depends on this
+    /**
+     * Checks whether school is currently "in session", meaning that school is currently happening for the day (aka a time is between the start of the first class and the end of the last class)
+     * @param date the time to check
+     * @returns true if school is in session, false otherwise
+     */
     public isInSession(date: DateTime) {
         const currentSchedule = this.getScheduleForDate(date);
         if (!currentSchedule) {
