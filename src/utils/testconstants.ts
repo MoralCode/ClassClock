@@ -92,13 +92,13 @@ export const classPeriod2JSON = {
 
 
 // export const schoolInSession = DateTime.fromISO("2019-07-28T07:37:50.634Z");
-export const noSchool = DateTime.fromISO("2019-07-27T07:37:50.634Z");
-export const beforeSchoolHours = DateTime.fromISO("2019-07-28T0" + beforeClassString + ":00.000Z");
+export const noSchool = DateTime.fromISO("2019-07-27T07:37:50.634").toUTC();
+export const beforeSchoolHours = DateTime.fromISO("2019-07-28T0" + beforeClassString + ":00.000").toUTC();
 //start of class?
-export const betweenClass = DateTime.fromISO("2019-07-28T" + afterClassString + ":50.634Z");
-export const inClass = DateTime.fromISO("2019-07-28T0" + duringClassString + ":50.634Z");
+export const betweenClass = DateTime.fromISO("2019-07-28T" + afterClassString + ":50.634").toUTC();
+export const inClass = DateTime.fromISO("2019-07-28T0" + duringClassString + ":50.634").toUTC();
 //end of class?
-export const afterSchoolHours = DateTime.fromISO("2019-07-28T12:00:50.634Z");
+export const afterSchoolHours = DateTime.fromISO("2019-07-28T12:00:50.634").toUTC();
 
 
 export const bellScheduleClasses = [classPeriod, classPeriod2];
