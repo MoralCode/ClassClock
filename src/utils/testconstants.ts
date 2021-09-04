@@ -6,6 +6,20 @@ import ClassPeriod from "../@types/classperiod";
 import ClassClockService from "../services/classclock";
 
 
+const timeStringToDateTime = (str: string, timeStringFormat: string, dateFrom?: DateTime) => {
+    let timeDate = DateTime.fromFormat(str, timeStringFormat)
+    if (dateFrom) {
+        timeDate = timeDate.toUTC()
+        return dateFrom.set({
+            hour: timeDate.get("hour"),
+            minute: timeDate.get("minute"),
+            second: timeDate.get("second")
+        })
+    }
+    return timeDate;
+}
+
+
 export const schoolId = "cb93cef79e9d11e986f2181dea92ad79";
 export const schoolOwnerId = "1234567890"
 export const schoolName = "The High School";
@@ -31,15 +45,15 @@ export const className = "First Period";
 const timeStringFormat = "H:mm"
 
 export const beforeClassString = "8:00"
-export const beforeClass = DateTime.fromFormat(beforeClassString, timeStringFormat);
+export const beforeClass = timeStringToDateTime(beforeClassString, timeStringFormat, currentDate);
 export const startTimeString = "8:25";
-export const startTime = DateTime.fromFormat(startTimeString, timeStringFormat);
+export const startTime = timeStringToDateTime(startTimeString, timeStringFormat, currentDate);
 export const duringClassString = "9:00";
-export const duringClass = DateTime.fromFormat(duringClassString, timeStringFormat);
+export const duringClass = timeStringToDateTime(duringClassString, timeStringFormat, currentDate);
 export const endTimeString = "9:55";
-export const endTime = DateTime.fromFormat(endTimeString, timeStringFormat);
+export const endTime = timeStringToDateTime(endTimeString, timeStringFormat, currentDate);
 export const afterClassString = "10:00";
-export const afterClass = DateTime.fromFormat(afterClassString, timeStringFormat);
+export const afterClass = timeStringToDateTime(afterClassString, timeStringFormat, currentDate);
 export const classDuration = Interval.fromDateTimes(startTime, endTime).toDuration(['hours', 'minutes']);
 
 
@@ -69,11 +83,11 @@ export const classPeriodJSONISO = {
 export const class2Name = "Second Period";
 
 export const startTime2String = "10:05";
-export const startTime2 = DateTime.fromFormat(startTime2String, timeStringFormat);
+export const startTime2 = timeStringToDateTime(startTime2String, timeStringFormat, currentDate);
 export const class2Duration = classDuration
 export const duringClass2 = DateTime.fromObject({ hour: 11, minute: 0}) 
 export const endTime2String = "11:35";
-export const endTime2 = DateTime.fromFormat(endTime2String, timeStringFormat);
+export const endTime2 = timeStringToDateTime(endTime2String, timeStringFormat, currentDate);
 export const afterClass2 = DateTime.fromObject({ hour: 11, minute: 40}) 
 
 export const classPeriod2 = new ClassPeriod(
