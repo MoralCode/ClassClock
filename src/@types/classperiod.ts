@@ -70,9 +70,9 @@ const toDateTime = (time:any) => {
     const smalltime = DateTime.fromFormat(time, "H:mm")
     const bigtime = DateTime.fromISO(time)
     if (smalltime.isValid){
-        return smalltime
+        return smalltime.toUTC()
     } else if (bigtime.isValid) {
-        return bigtime
+        return bigtime.toUTC()
     }
-    return time
+    return time.toUTC()
 }
