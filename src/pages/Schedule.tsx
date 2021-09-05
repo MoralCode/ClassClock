@@ -61,8 +61,8 @@ export const Schedule = (props: IAppProps) => {
                                         <tr>
                                             <td>{value.getName()}</td>
                                             <td>
-                                                {value.getStartTime().toString()} -{" "}
-                                                {value.getEndTime().toString()}
+                                                {value.getStartTime().setZone(props.selectedSchool.data.getTimezone() ?? "local").toFormat("hh:mm:ss")} -{" "}
+                                                {value.getEndTime().setZone(props.selectedSchool.data.getTimezone() ?? "local").toFormat("hh:mm:ss")}
                                             </td>
                                         </tr>
                                     </>
