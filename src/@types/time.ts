@@ -59,12 +59,12 @@ export default class Time {
     public getTimeDeltaTo(otherTime: Time) {
         return Time.fromMilliseconds(Math.abs(this.getMillisecondsTo(otherTime)));
     }
+    public toString(excludeSeconds = false, use24HourTime = true) {
+        const hours = use24HourTime ? this.hours: this.hours % 12;
 
-    public toString(excludeSeconds = false, use24HourTime = false) {
-        const hours = use24HourTime ? this.hours % 12 : this.hours;
 
         let stringified =
-            this.hours.toString().padStart(2, "0") +
+            hours.toString().padStart(2, "0") +
             ":" +
             this.minutes.toString().padStart(2, "0");
 
@@ -81,7 +81,7 @@ export default class Time {
 
     public getFormattedString(excludeSeconds = false, use24HourTime = false) {
         const ending = this.isAM() ? " AM" : " PM";
-        return this.toString(excludeSeconds) + (use24HourTime ? ending : "");
+        return this.toString(excludeSeconds, use24HourTime) + (use24HourTime ? "" : ending);
     }
 
     //this overrides the automatic serialization of Time Objects and makes them return a string and not a plain object (which is more annoying to parse back in and rwould require an extra factory method)
