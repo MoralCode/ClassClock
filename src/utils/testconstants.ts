@@ -7,7 +7,7 @@ import ClassClockService from "../services/classclock";
 
 
 const timeStringToDateTime = (str: string, timeStringFormat: string, dateFrom?: DateTime) => {
-    let timeDate = DateTime.fromFormat(str, timeStringFormat)
+    let timeDate = DateTime.fromFormat(str, timeStringFormat, { zone: schoolTimezone })
     if (dateFrom) {
         timeDate = timeDate.toUTC()
         return dateFrom.set({
@@ -25,7 +25,7 @@ export const schoolOwnerId = "1234567890"
 export const schoolName = "The High School";
 export const schoolAcronym = "THS";
 export const schoolEndpoint = ClassClockService.baseURL + "/school/" + schoolId + "/";
-export const schoolTimezone = "America/Cupertino";
+export const schoolTimezone = "America/Los_Angeles";
 export const passingPeriodName = "Transition Time";
 
 export const bellScheduleId = "33d14ca5c91111e996ad181dea92ad79";
@@ -39,7 +39,7 @@ export const bellScheduleEndpoint =
 export const bellScheduleDisplayName = "Display Name";
 
 
-export const currentDate = DateTime.fromISO("2019-07-28T07:37:50.634").toUTC();
+export const currentDate = DateTime.fromISO("2019-07-28T07:37:50.634", { zone: schoolTimezone }).toUTC();
 
 export const className = "First Period";
 const timeStringFormat = "H:mm"
@@ -106,13 +106,13 @@ export const classPeriod2JSON = {
 
 
 // export const schoolInSession = DateTime.fromISO("2019-07-28T07:37:50.634").toUTC();
-export const noSchool = DateTime.fromISO("2019-07-27T07:37:50.634").toUTC();
-export const beforeSchoolHours = DateTime.fromISO("2019-07-28T0" + beforeClassString + ":00.000").toUTC();
+export const noSchool = DateTime.fromISO("2019-07-27T07:37:50.634", { zone: schoolTimezone }).toUTC();
+export const beforeSchoolHours = DateTime.fromISO("2019-07-28T0" + beforeClassString + ":00.000", { zone: schoolTimezone }).toUTC();
 //start of class?
-export const betweenClass = DateTime.fromISO("2019-07-28T" + afterClassString + ":50.634").toUTC();
-export const inClass = DateTime.fromISO("2019-07-28T0" + duringClassString + ":50.634").toUTC();
+export const betweenClass = DateTime.fromISO("2019-07-28T" + afterClassString + ":50.634", { zone: schoolTimezone }).toUTC();
+export const inClass = DateTime.fromISO("2019-07-28T0" + duringClassString + ":50.634", { zone: schoolTimezone }).toUTC();
 //end of class?
-export const afterSchoolHours = DateTime.fromISO("2019-07-28T12:00:50.634").toUTC();
+export const afterSchoolHours = DateTime.fromISO("2019-07-28T12:00:50.634", { zone: schoolTimezone }).toUTC();
 
 
 export const bellScheduleClasses = [classPeriod, classPeriod2];
