@@ -25,9 +25,9 @@ describe("BellSchedule", () => {
 
     it("can get its dates", () => {
         expect(schedule.getDates()).toEqual([
-            DateTime.fromISO("2019-07-28T07:37:50.634Z"),
-            DateTime.fromISO("2019-07-29T07:38:10.979Z"),
-            DateTime.fromISO("2019-07-23T07:38:28.263Z")
+            DateTime.fromISO("2019-07-28T07:37:50.634").toUTC(),
+            DateTime.fromISO("2019-07-29T07:38:10.979").toUTC(),
+            DateTime.fromISO("2019-07-23T07:38:28.263").toUTC()
         ]);
     });
 
@@ -40,12 +40,12 @@ describe("BellSchedule", () => {
     });
 
     it("can return date last updated", () => {
-        expect(schedule.lastUpdated()).toEqual(DateTime.fromISO("2019-07-28T07:37:50.634Z"));
+        expect(schedule.lastUpdated()).toEqual(DateTime.fromISO("2019-07-28T07:37:50.634").toUTC());
     });
 
     it("can test if it has changed since a given date", () => {
-        expect(schedule.hasChangedSince(DateTime.fromISO("2019-07-28T07:07:50.634Z"))).toBeTruthy();
-        expect(schedule.hasChangedSince(DateTime.fromISO("2019-07-28T08:07:50.634Z"))).toBeFalsy();
+        expect(schedule.hasChangedSince(DateTime.fromISO("2019-07-28T07:07:50.634").toUTC())).toBeTruthy();
+        expect(schedule.hasChangedSince(DateTime.fromISO("2019-07-28T08:07:50.634").toUTC())).toBeFalsy();
     });
 
     it("can get a class period for a given time", () => {
