@@ -19,6 +19,28 @@ const rawComponent =
     <App selectedSchool={mockState} dispatch={mockDispatch} userSettings={{ use24HourTime: true }} />
 
 
+// Returns a TestInstance#find() predicate that passes
+// all test instance children (including text nodes) through
+// the supplied predicate, and returns true if one of the
+// children passes the predicate.
+// Source: https://billgranfield.com/2018/03/28/react-test-renderer.html
+function findInChildren(predicate:any) {
+    return (testInstance: { children: any; }) => {
+        const children = testInstance.children
+        return Array.isArray(children)
+            ? children.some(predicate)
+            : predicate(children)
+    }
+}
+
+function findTextInChildren(text:string) {
+    return findInChildren((node: string) =>
+        typeof node === 'string' &&
+        node.toLowerCase() === text.toLowerCase()
+    )
+}
+
+
 
 describe("App", () => {
   it('renders without crashing', () => {
@@ -28,33 +50,35 @@ describe("App", () => {
   });
 
   it("shows the correct screen before school hours", () => {
-      MockDate.set(beforeSchoolHours);
-      const tree = renderer.create(rawComponent).toJSON();
-      expect(tree).toMatchSnapshot();
+      MockDate.set(beforeSchoolHours.toJSDate());
+      const root = renderer.create(rawComponent).root
+      expect(root.find(findTextInChildren("Transition Time"))).toBeTruthy();
   });
 
   it("shows the correct screen on no school days", () => {
-      MockDate.set(noSchool);
-      const tree = renderer.create(rawComponent).toJSON();
-      expect(tree).toMatchSnapshot();
+      MockDate.set(noSchool.toJSDate());
+      const root = renderer.create(rawComponent).root
+      expect(root.find(findTextInChildren("No School Today"))).toBeTruthy();
+
   });
 
   it("shows the correct screen when class is in session", () => {
-      MockDate.set(inClass);
-      const tree = renderer.create(rawComponent).toJSON();
-      expect(tree).toMatchSnapshot();
+      MockDate.set(inClass.toJSDate());
+      const root = renderer.create(rawComponent).root
+      expect(root.find(findTextInChildren("first period"))).toBeTruthy();
+      
   });
 
   it("shows the correct screen between class", () => {
-      MockDate.set(betweenClass);
-      const tree = renderer.create(rawComponent).toJSON();
-      expect(tree).toMatchSnapshot();
+      MockDate.set(betweenClass.toJSDate());
+      const root = renderer.create(rawComponent).root
+      expect(root.find(findTextInChildren("Transition Time"))).toBeTruthy();
   });
 
   it("shows the correct screen after school", () => {
-      MockDate.set(afterSchoolHours);
-      const tree = renderer.create(rawComponent).toJSON();
-      expect(tree).toMatchSnapshot();
+      MockDate.set(afterSchoolHours.toJSDate());
+      const root = renderer.create(rawComponent).root
+      expect(root.find(findTextInChildren("no class"))).toBeTruthy();
   });
 
 });
