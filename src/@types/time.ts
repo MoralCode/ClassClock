@@ -37,7 +37,7 @@ export default class Time {
     constructor(hours: number, minutes: number, seconds?: number) {
         this.hours = Math.abs(hours % 24);
         this.minutes = Math.abs(minutes % 60);
-        this.seconds = Math.abs(seconds || 0 % 60);
+        this.seconds = Math.abs((seconds || 0 )% 60);
     }
 
     public getHours() {
