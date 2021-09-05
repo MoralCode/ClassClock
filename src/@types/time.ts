@@ -10,7 +10,7 @@ export default class Time {
         return new Time(hours, minutes, seconds);
     }
 
-    public static fromDate(date: Date, toLocalTime=false) {
+    public static fromJSDate(date: Date, toLocalTime=false) {
         if (toLocalTime) {
             return new Time(date.getHours(), date.getMinutes(), date.getSeconds());
         } else {
