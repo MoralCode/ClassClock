@@ -78,12 +78,6 @@ describe("Time", () => {
         expect(postTime.toString()).toBe("13:44:39");
     });
 
-    it("can detect if it is AM or PM", () => {
-        expect(thisTime.isAM()).toBeTruthy();
-        expect(preTime.isAM()).toBeTruthy();
-        expect(postTime.isAM()).toBeFalsy();
-    });
-
     it("can get formatted strings in the morning", () => {
         expect(thisTime.getFormattedString(true, true)).toBe("09:31");
         expect(thisTime.getFormattedString(true, false)).toBe("09:31 AM");
