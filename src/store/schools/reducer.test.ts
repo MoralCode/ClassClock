@@ -7,7 +7,6 @@ describe("school reducer", () => {
     it("should return the initial state", () => {
         expect(selectedSchoolReducer(undefined, {})).toEqual({
             isFetching: false,
-            didInvalidate: false,
             data: {}
         });
     });
@@ -19,7 +18,6 @@ describe("school reducer", () => {
             })
         ).toEqual({
             isFetching: true,
-            didInvalidate: false,
             data: {}
         });
     });
@@ -34,7 +32,6 @@ describe("school reducer", () => {
             })
         ).toEqual({
             isFetching: false,
-            didInvalidate: false,
             data: school,
             lastUpdated: 1234
         });
