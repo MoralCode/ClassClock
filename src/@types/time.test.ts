@@ -12,11 +12,11 @@ describe("Time", () => {
     });
 
     it("should get from UTC date as local time", () => {
-        expect(Time.fromDate(new Date(2019, 7, 27, 9, 31, 41), true)).toEqual(thisTime);
+        expect(Time.fromJSDate(new Date(2019, 7, 27, 9, 31, 41), true)).toEqual(thisTime);
     });
 
     it("should get from UTC date as UTC time", () => {
-        expect(Time.fromDate(new Date(2019, 7, 27, 9, 31, 41), false)).toEqual(thisTime);
+        expect(Time.fromJSDate(new Date(2019, 7, 27, 9, 31, 41), false)).toEqual(thisTime);
     });
 
     it("should get from string", () => {
@@ -76,12 +76,6 @@ describe("Time", () => {
         expect(thisTime.toString()).toBe("09:31:41");
         expect(preTime.toString()).toBe("05:18:43");
         expect(postTime.toString()).toBe("13:44:39");
-    });
-
-    it("can detect if it is AM or PM", () => {
-        expect(thisTime.isAM()).toBeTruthy();
-        expect(preTime.isAM()).toBeTruthy();
-        expect(postTime.isAM()).toBeFalsy();
     });
 
     it("can get formatted strings in the morning", () => {
