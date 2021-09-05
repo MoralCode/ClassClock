@@ -11,18 +11,19 @@ const mockDispatch = jest.fn();
 const mockState = {
     isFetching: false,
     didInvalidate: false,
-    data: school
+    data: school,
+    lastUpdated: 1564299400 //Sun Jul 28 2019 00:36:40 UTC-0700 (Pacific Daylight Time)
 };
 
 const rawComponent = 
-    <App selectedSchool={mockState} dispatch={mockDispatch} />
+    <App selectedSchool={mockState} dispatch={mockDispatch} userSettings={{ use24HourTime: true }} />
 
 
 
 describe("App", () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<App />, div);
+    ReactDOM.render(rawComponent, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 
