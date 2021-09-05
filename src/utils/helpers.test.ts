@@ -4,7 +4,8 @@ import {
     sortClassesByStartTime,
     getTimeStateForDateAtSchool,
     getNextImportantInfo,
-    checkTimeRange
+    checkTimeRange,
+    matchDates
 } from "./helpers";
 import ClassPeriod from "../@types/classperiod";
 import { classPeriod2, classPeriod, beforeSchoolHours, school, betweenClass, inClass, noSchool, afterSchoolHours, bellScheduleClasses, duringClass, startTime, endTime, startTime2, beforeClass, endTime2, afterClass } from "./testconstants";
@@ -138,4 +139,8 @@ test("check time range ignoring day", () => {
     );
 
 
+});
+
+test("matches dates between two datetimes", () => {
+    expect(matchDates(duringClass, afterClass.plus({ days: 1 }))).toEqual(afterClass);
 });
