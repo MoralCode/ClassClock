@@ -22,8 +22,8 @@ export default class School {
                 ? schedules.map((schedule: any) => BellSchedule.fromJson(schedule))
                 : undefined,
             getValueIfKeyInList(["alternate_freeperiod_name", "passingPeriodName"], json),
-            getValueIfKeyInList(["creation_date", "creationDate"], json),
-            getValueIfKeyInList(["last_modified", "lastModified"], json)
+            DateTime.fromISO(getValueIfKeyInList(["creation_date", "creationDate"], json), { zone: 'utc' }),
+            DateTime.fromISO(getValueIfKeyInList(["last_modified", "lastModified"], json), { zone: 'utc' })
         );
     }
 

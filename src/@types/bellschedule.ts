@@ -13,7 +13,7 @@ export default class BellSchedule {
             getValueIfKeyInList(["classes", "meeting_times"], json).map(
                 (meetingTime: any) => ClassPeriod.fromJson(meetingTime)
             ),
-            getValueIfKeyInList(["lastModified", "last_modified"], json)
+            DateTime.fromISO(getValueIfKeyInList(["last_modified", "lastModified"], json), { zone: 'utc' })
             //display name
         );
     }

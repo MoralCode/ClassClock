@@ -9,7 +9,7 @@ export default class ClassPeriod {
             getValueIfKeyInList(["name", "classPeriodName", "class_period_name"], json),
             toDateTime(start),
             toDateTime(end),
-            DateTime.fromISO(getValueIfKeyInList(["creationDate", "creation_date"], json))
+            DateTime.fromISO(getValueIfKeyInList(["creationDate", "creation_date"], json), {zone: 'utc'})
         );
     }
     private name: string;
