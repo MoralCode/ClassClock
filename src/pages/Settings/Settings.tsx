@@ -11,7 +11,7 @@ import { pages } from "../../utils/constants";
 import { URLs } from "../../utils/constants";
 import { setTimeFormatPreference } from "../../store/usersettings/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGithub, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { faGithub, faTwitter, faInstagram, faDiscord } from "@fortawesome/free-brands-svg-icons";
 import { faHome, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "../../react-auth0-wrapper";
 import distanceInWords from "date-fns/distance_in_words";
@@ -191,6 +191,11 @@ const Settings = (props: ISettingProps) => {
                 <li>
                     <Link destination={URLs.instagram}>
                         <FontAwesomeIcon icon={faInstagram} />
+                    </Link>
+                </li>
+                <li>
+                    <Link destination={URLs.discord}>
+                        <FontAwesomeIcon icon={faDiscord} />
                     </Link>
                 </li>
             </ul>
