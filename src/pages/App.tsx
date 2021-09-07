@@ -125,8 +125,7 @@ export const App = (props: IAppProps) => {
                         <p className="timeFont" style={{ fontSize: "60px" }}>
                             <b>
                                 {nextImportantTime
-                                    ? currentDate.until(nextImportantTime)
-                                        .toFormat("H:mm")
+                                        ? nextImportantTime.diff(currentDate).toFormat("hh:mm:ss")
                                     : "No Class"}
                             </b>
                         </p>
