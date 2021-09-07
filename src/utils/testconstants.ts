@@ -1,9 +1,23 @@
 // This is not actually a unit test, just a central place to hold frequently-used constants that are often reused across tests
-import { DateTime, Duration } from "luxon";
+import { DateTime, Duration, Interval } from "luxon";
 import School from "../@types/school";
 import BellSchedule from "../@types/bellschedule";
 import ClassPeriod from "../@types/classperiod";
 import ClassClockService from "../services/classclock";
+
+
+const timeStringToDateTime = (str: string, timeStringFormat: string, dateFrom?: DateTime) => {
+    let timeDate = DateTime.fromFormat(str, timeStringFormat, { zone: schoolTimezone })
+    if (dateFrom) {
+        timeDate = timeDate.toUTC()
+        return dateFrom.set({
+            hour: timeDate.get("hour"),
+            minute: timeDate.get("minute"),
+            second: timeDate.get("second")
+        })
+    }
+    return timeDate;
+}
 
 
 export const schoolId = "cb93cef79e9d11e986f2181dea92ad79";
@@ -11,7 +25,7 @@ export const schoolOwnerId = "1234567890"
 export const schoolName = "The High School";
 export const schoolAcronym = "THS";
 export const schoolEndpoint = ClassClockService.baseURL + "/school/" + schoolId + "/";
-export const schoolTimezone = "America/Cupertino";
+export const schoolTimezone = "America/Los_Angeles";
 export const passingPeriodName = "Transition Time";
 
 export const bellScheduleId = "33d14ca5c91111e996ad181dea92ad79";
@@ -25,22 +39,23 @@ export const bellScheduleEndpoint =
 export const bellScheduleDisplayName = "Display Name";
 
 
-export const currentDate = DateTime.fromISO("2019-07-28T07:37:50.634Z");
+export const currentDate = DateTime.fromISO("2019-07-28T07:37:50.634", { zone: schoolTimezone }).toUTC();
 
 export const className = "First Period";
 const timeStringFormat = "H:mm"
 
 export const beforeClassString = "8:00"
-export const beforeClass = DateTime.fromFormat(beforeClassString, timeStringFormat);
+export const beforeClass = timeStringToDateTime(beforeClassString, timeStringFormat, currentDate);
 export const startTimeString = "8:25";
-export const startTime = DateTime.fromFormat(startTimeString, timeStringFormat);
-export const classDuration = Duration.fromObject({hours:1, minutes:30});
+export const startTime = timeStringToDateTime(startTimeString, timeStringFormat, currentDate);
 export const duringClassString = "9:00";
-export const duringClass = DateTime.fromFormat(duringClassString, timeStringFormat);
+export const duringClass = timeStringToDateTime(duringClassString, timeStringFormat, currentDate);
 export const endTimeString = "9:55";
-export const endTime = DateTime.fromFormat(endTimeString, timeStringFormat);
+export const endTime = timeStringToDateTime(endTimeString, timeStringFormat, currentDate);
 export const afterClassString = "10:00";
-export const afterClass = DateTime.fromFormat(afterClassString, timeStringFormat);
+export const afterClass = timeStringToDateTime(afterClassString, timeStringFormat, currentDate);
+export const classDuration = Interval.fromDateTimes(startTime, endTime).toDuration(['hours', 'minutes']);
+
 
 
 export const classPeriod = new ClassPeriod(
@@ -57,15 +72,22 @@ export const classPeriodJSON = {
            creationDate: currentDate
        };
 
+export const classPeriodJSONISO = {
+    name: className,
+    startTime: startTime.toISO(),
+    endTime: endTime.toISO(),
+    creationDate: currentDate
+};
+
 
 export const class2Name = "Second Period";
 
 export const startTime2String = "10:05";
-export const startTime2 = DateTime.fromFormat(startTime2String, timeStringFormat);
+export const startTime2 = timeStringToDateTime(startTime2String, timeStringFormat, currentDate);
 export const class2Duration = classDuration
 export const duringClass2 = DateTime.fromObject({ hour: 11, minute: 0}) 
 export const endTime2String = "11:35";
-export const endTime2 = DateTime.fromFormat(endTime2String, timeStringFormat);
+export const endTime2 = timeStringToDateTime(endTime2String, timeStringFormat, currentDate);
 export const afterClass2 = DateTime.fromObject({ hour: 11, minute: 40}) 
 
 export const classPeriod2 = new ClassPeriod(
@@ -83,14 +105,14 @@ export const classPeriod2JSON = {
 };
 
 
-// export const schoolInSession = DateTime.fromISO("2019-07-28T07:37:50.634Z");
-export const noSchool = DateTime.fromISO("2019-07-27T07:37:50.634Z");
-export const beforeSchoolHours = DateTime.fromISO("2019-07-28T0" + beforeClassString + ":00.000Z");
+// export const schoolInSession = DateTime.fromISO("2019-07-28T07:37:50.634").toUTC();
+export const noSchool = DateTime.fromISO("2019-07-27T07:37:50.634", { zone: schoolTimezone }).toUTC();
+export const beforeSchoolHours = DateTime.fromISO("2019-07-28T0" + beforeClassString + ":00.000", { zone: schoolTimezone }).toUTC();
 //start of class?
-export const betweenClass = DateTime.fromISO("2019-07-28T" + afterClassString + ":50.634Z");
-export const inClass = DateTime.fromISO("2019-07-28T0" + duringClassString + ":50.634Z");
+export const betweenClass = DateTime.fromISO("2019-07-28T" + afterClassString + ":50.634", { zone: schoolTimezone }).toUTC();
+export const inClass = DateTime.fromISO("2019-07-28T0" + duringClassString + ":50.634", { zone: schoolTimezone }).toUTC();
 //end of class?
-export const afterSchoolHours = DateTime.fromISO("2019-07-28T12:00:50.634Z");
+export const afterSchoolHours = DateTime.fromISO("2019-07-28T12:00:50.634", { zone: schoolTimezone }).toUTC();
 
 
 export const bellScheduleClasses = [classPeriod, classPeriod2];
@@ -102,9 +124,9 @@ export const bellSchedule = new BellSchedule(
     bellScheduleName,
     bellScheduleEndpoint,
     [
-        DateTime.fromISO("2019-07-28T07:37:50.634Z"),
-        DateTime.fromISO("2019-07-29T07:38:10.979Z"),
-        DateTime.fromISO("2019-07-23T07:38:28.263Z")
+        DateTime.fromISO("2019-07-28T07:37:50.634").toUTC(),
+        DateTime.fromISO("2019-07-29T07:38:10.979").toUTC(),
+        DateTime.fromISO("2019-07-23T07:38:28.263").toUTC()
     ],
     bellScheduleClasses,
     currentDate
@@ -115,9 +137,9 @@ export const bellScheduleJSON = {
            name: bellScheduleName,
            endpoint: bellScheduleEndpoint,
            dates: [
-               "2019-07-28T07:37:50.634Z",
-               "2019-07-29T07:38:10.979Z",
-               "2019-07-23T07:38:28.263Z"
+               DateTime.fromISO("2019-07-28T07:37:50.634").toUTC().toString(),
+               DateTime.fromISO("2019-07-29T07:38:10.979").toUTC().toString(),
+               DateTime.fromISO("2019-07-23T07:38:28.263").toUTC().toString()
            ],
            classes: bellScheduleClassesJSON,
            lastModified: currentDate

@@ -3,11 +3,21 @@
 exports[`Link Component renders correctly with a function 1`] = `
 <a
   onClick={[Function]}
+  style={
+    Object {
+      "cursor": "pointer",
+    }
+  }
 />
 `;
 
 exports[`Link Component renders correctly with a static link 1`] = `
 <a
   href="https://classclock.app"
+  style={
+    Object {
+      "cursor": "pointer",
+    }
+  }
 />
 `;

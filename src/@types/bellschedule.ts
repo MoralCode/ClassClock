@@ -9,11 +9,11 @@ export default class BellSchedule {
             getValueIfKeyInList(["id", "identifier"], json),
             getValueIfKeyInList(["name", "full_name", "fullName"], json),
             getValueIfKeyInList(["endpoint"], json),
-            getValueIfKeyInList(["dates"], json).map((date: string) => DateTime.fromISO(date)),
+            getValueIfKeyInList(["dates"], json).map((date: string) => DateTime.fromISO(date).toUTC()),
             getValueIfKeyInList(["classes", "meeting_times"], json).map(
                 (meetingTime: any) => ClassPeriod.fromJson(meetingTime)
             ),
-            getValueIfKeyInList(["lastModified", "last_modified"], json)
+            DateTime.fromISO(getValueIfKeyInList(["last_modified", "lastModified"], json), { zone: 'utc' })
             //display name
         );
     }

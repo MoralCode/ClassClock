@@ -7,9 +7,9 @@ export default class ClassPeriod {
         const end = getValueIfKeyInList(["endTime", "end_time"], json);
         return new ClassPeriod(
             getValueIfKeyInList(["name", "classPeriodName", "class_period_name"], json),
-            start instanceof DateTime ? start : DateTime.fromISO(start),
-            end instanceof DateTime ? end : DateTime.fromISO(end),
-            DateTime.fromISO(getValueIfKeyInList(["creationDate", "creation_date"], json))
+            toDateTime(start),
+            toDateTime(end),
+            DateTime.fromISO(getValueIfKeyInList(["creationDate", "creation_date"], json), {zone: 'utc'})
         );
     }
     private name: string;
@@ -49,7 +49,7 @@ export default class ClassPeriod {
     }
 
     public getDuration() {
-        return Interval.fromDateTimes(this.startTime, this.endTime);
+        return Interval.fromDateTimes(this.startTime, this.endTime).toDuration(['hours', 'minutes']);
     }
 
     public getCreationDate() {
@@ -60,4 +60,19 @@ export default class ClassPeriod {
     public stateForTime(time: DateTime) {
         return checkTimeRange(time, this.startTime, this.endTime);
     }
+}
+
+
+const toDateTime = (time:any) => {
+    if (time instanceof DateTime) {
+        return time
+    }
+    const smalltime = DateTime.fromFormat(time, "H:mm")
+    const bigtime = DateTime.fromISO(time)
+    if (smalltime.isValid){
+        return smalltime.toUTC()
+    } else if (bigtime.isValid) {
+        return bigtime.toUTC()
+    }
+    return time.toUTC()
 }

@@ -62,7 +62,7 @@ export function getCurrentDate() {
 }
 
 export function sortClassesByStartTime(classes: ClassPeriod[]) {
-    return classes.sort((a, b) => -a.getStartTime().diff(b.getStartTime()).get("milliseconds"));
+    return classes.sort((a, b) => a.getStartTime().diff(b.getStartTime()).get("milliseconds"));
 }
 
 /**
@@ -134,7 +134,18 @@ export function getNextImportantInfo(
  *
  * @returns -1 if checkTime is before range, 0 if checkTime is within range, 1 if checkTime is after range
  */
-export function checkTimeRange(checkTime: DateTime, startTime: DateTime, endTime: DateTime) {
+export function checkTimeRange(checkTime: DateTime, startTime: DateTime, endTime: DateTime, ignoreDate = false) {
+
+    if (ignoreDate){
+        const day = {
+            year: checkTime.get("year"),
+            month: checkTime.get("month"),
+            day: checkTime.get("day")
+        }
+        startTime = startTime.set(day)
+        endTime = endTime.set(day)
+    }
+
     const interval = Interval.fromDateTimes(startTime,endTime)
    
     // if (startTime.getMillisecondsTo(endTime) <= 0) {
@@ -142,6 +153,10 @@ export function checkTimeRange(checkTime: DateTime, startTime: DateTime, endTime
     // }
     // const startCheck = checkTime.getMillisecondsTo(startTime);
     // const endCheck = checkTime.getMillisecondsTo(endTime);
+
+    if (checkTime.hasSame(startTime, 'second') || checkTime.hasSame(endTime, 'second')){
+        return TimeComparisons.IS_DURING_OR_EXACTLY;
+    }
 
     if (interval.isAfter(checkTime)) {
         return TimeComparisons.IS_BEFORE;
@@ -228,4 +243,18 @@ export function parseRateLimitTime(response: Response) {
         secondsToWait = (date.getTime() - now.getTime())/1000
     }
     return secondsToWait
+}
+
+/**
+ * returns dt2 with its day, month, and year values updated to match dt1
+ * @param dt1 the datetime to match the dates to
+ * @param dt2 the datetime to set the date of
+ * @returns An array of two datetimes [dt1, dt2] with dates matching each other and times matching the parameters they are based on
+ */
+export const matchDates = (dt1: DateTime, dt2: DateTime): DateTime => {
+    return dt2.set({
+        year: dt1.get("year"),
+        month: dt1.get("month"),
+        day: dt1.get("day")
+    })
 }

@@ -22,8 +22,8 @@ export default class School {
                 ? schedules.map((schedule: any) => BellSchedule.fromJson(schedule))
                 : undefined,
             getValueIfKeyInList(["alternate_freeperiod_name", "passingPeriodName"], json),
-            getValueIfKeyInList(["creation_date", "creationDate"], json),
-            getValueIfKeyInList(["last_modified", "lastModified"], json)
+            DateTime.fromISO(getValueIfKeyInList(["creation_date", "creationDate"], json), { zone: 'utc' }),
+            DateTime.fromISO(getValueIfKeyInList(["last_modified", "lastModified"], json), { zone: 'utc' })
         );
     }
 
@@ -122,12 +122,7 @@ export default class School {
     public getScheduleForDate(date: DateTime) {
         if (this.schedules) {
             for (const schedule of this.schedules) {
-                if (
-                    schedule
-                        .getDates()
-                        .includes(date)
-                        // .map((d: Date) => d.toDateString())
-                ) {
+                if (schedule.getDate(date)) {
                     return schedule;
                 }
             }
@@ -143,6 +138,11 @@ export default class School {
 
     //change input to a time
     //seems like te current schedule depends on this
+    /**
+     * Checks whether school is currently "in session", meaning that school is currently happening for the day (aka a time is between the start of the first class and the end of the last class)
+     * @param date the time to check
+     * @returns true if school is in session, false otherwise
+     */
     public isInSession(date: DateTime) {
         const currentSchedule = this.getScheduleForDate(date);
         if (!currentSchedule) {

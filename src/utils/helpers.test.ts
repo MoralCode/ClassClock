@@ -4,7 +4,8 @@ import {
     sortClassesByStartTime,
     getTimeStateForDateAtSchool,
     getNextImportantInfo,
-    checkTimeRange
+    checkTimeRange,
+    matchDates
 } from "./helpers";
 import ClassPeriod from "../@types/classperiod";
 import { classPeriod2, classPeriod, beforeSchoolHours, school, betweenClass, inClass, noSchool, afterSchoolHours, bellScheduleClasses, duringClass, startTime, endTime, startTime2, beforeClass, endTime2, afterClass } from "./testconstants";
@@ -24,6 +25,8 @@ test("get value if key in list", () => {
 
 test("sort classes by start time", () => {
     expect(sortClassesByStartTime(bellScheduleClasses.reverse())).toEqual(bellScheduleClasses);
+
+    expect(sortClassesByStartTime(bellScheduleClasses.reverse())[0].getName()).toEqual("First Period");
 });
 
 
@@ -103,4 +106,41 @@ test("check time range", () => {
     );
 
     
+});
+
+test("check time range ignoring day", () => {
+
+    expect(checkTimeRange(duringClass.plus({ days: 1 }), startTime, endTime, true)).toBe(
+        TimeComparisons.IS_DURING_OR_EXACTLY
+    );
+
+    expect(checkTimeRange(duringClass.plus({ days: 1 }), endTime, startTime2, true)).toBe(
+        TimeComparisons.IS_BEFORE
+    );
+
+    expect(checkTimeRange(beforeClass.plus({ days: 1 }), startTime, endTime2, true)).toBe(
+        TimeComparisons.IS_BEFORE
+    );
+
+    expect(checkTimeRange(startTime.plus({ days: 1 }), startTime, endTime, true)).toBe(
+        TimeComparisons.IS_DURING_OR_EXACTLY
+    );
+
+    expect(checkTimeRange(endTime.plus({ days: 1 }), startTime, endTime, true)).toBe(
+        TimeComparisons.IS_DURING_OR_EXACTLY
+    );
+
+    expect(checkTimeRange(afterClass.plus({ days: 1 }), startTime, endTime, true)).toBe(
+        TimeComparisons.IS_AFTER
+    );
+
+    expect(checkTimeRange(afterClass.plus({ days: 1 }), startTime, endTime2, true)).toBe(
+        TimeComparisons.IS_DURING_OR_EXACTLY
+    );
+
+
+});
+
+test("matches dates between two datetimes", () => {
+    expect(matchDates(duringClass, afterClass.plus({ days: 1 }))).toEqual(afterClass);
 });

@@ -1,3 +1,6 @@
+import { DateTime, Zone } from "luxon";
+import { matchDates } from "../utils/helpers"
+
 export default class Time {
     public static fromMilliseconds(milliseconds: number): Time {
         const hours = Math.floor(milliseconds / 1000 / 60 / 60);
@@ -10,12 +13,17 @@ export default class Time {
         return new Time(hours, minutes, seconds);
     }
 
-    public static fromDate(date: Date, toLocalTime=false) {
+    public static fromJSDate(date: Date, toLocalTime=false) {
         if (toLocalTime) {
-            return new Time(date.getHours(), date.getMinutes(), date.getSeconds());
+            return new Time(date.getHours(), date.getMinutes(), date.getSeconds(), 'local');
         } else {
-            return new Time(date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+            return new Time(date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), 'utc');
         }
+    }
+
+    public static fromISO(time: string) {
+        const datetime = DateTime.fromISO(time)//, { zone: inTimeZone }
+        return new Time(datetime.get("hour"), datetime.get("minute"), datetime.get("second") )
     }
 
     public static fromString(time: string) {
@@ -30,62 +38,59 @@ export default class Time {
         );
     }
 
-    private hours: number;
-    private minutes: number;
-    private seconds: number;
+    private time:DateTime;
 
-    constructor(hours: number, minutes: number, seconds?: number) {
-        this.hours = Math.abs(hours % 24);
-        this.minutes = Math.abs(minutes % 60);
-        this.seconds = Math.abs(seconds || 0 % 60);
+    constructor(hours: number, minutes: number, seconds?: number, zone?: Zone | string) {
+        let timeObj = {
+            hour: Math.abs(hours % 24),
+            minute: Math.abs(minutes % 60),
+            second: Math.abs((seconds || 0) % 60)
+        }
+        if (zone) {
+            this.time = DateTime.fromObject({ ...timeObj, zone })
+        } else {
+            this.time = DateTime.fromObject(timeObj)
+        }
     }
 
     public getHours() {
-        return this.hours;
+        return this.time.get('hour');
     }
     public getMinutes() {
-        return this.minutes;
+        return this.time.get('minute');
     }
     public getSeconds() {
-        return this.seconds;
+        return this.time.get('second');
     }
     public getMillisecondsTo(otherTime: Time) {
-        const hoursDiff = otherTime.getHours() - this.hours;
-        const minutesDiff = otherTime.getMinutes() - this.minutes;
-        const secondsDiff = otherTime.getSeconds() - this.seconds;
-
-        return hoursDiff * 60 * 60 * 1000 + minutesDiff * 60 * 1000 + secondsDiff * 1000;
+        const oTime = matchDates(this.time, otherTime.asDateTime())
+        return oTime.diff(this.time).toObject()['milliseconds']
     }
     public getTimeDeltaTo(otherTime: Time) {
-        return Time.fromMilliseconds(Math.abs(this.getMillisecondsTo(otherTime)));
+        return Time.fromMilliseconds(Math.abs(this.getMillisecondsTo(otherTime)??0));
     }
-
-    public toString(excludeSeconds = false, use24HourTime = false) {
-        const hours = use24HourTime ? this.hours % 12 : this.hours;
-
-        let stringified =
-            this.hours.toString().padStart(2, "0") +
-            ":" +
-            this.minutes.toString().padStart(2, "0");
-
-        if (!excludeSeconds) {
-            stringified += ":" + this.seconds.toString().padStart(2, "0");
-        }
-
-        return stringified;
+    public asDateTime() {
+        return this.time
     }
+    //TODO: maybe make this into an options object to preserve the names
+    public toString(excludeSeconds = false, use24HourTime = true) {
 
-    public isAM() {
-        return this.hours < 12 && this.minutes < 60 && this.seconds < 60;
+        const hrsformat = use24HourTime ? "HH" : "hh"
+        const seconds = excludeSeconds? "": ":ss"
+        const meridiem = use24HourTime? "": " a"
+
+        const format = hrsformat + ":mm" + seconds + meridiem
+
+        return this.time.toFormat(format)
     }
 
     public getFormattedString(excludeSeconds = false, use24HourTime = false) {
-        const ending = this.isAM() ? " AM" : " PM";
-        return this.toString(excludeSeconds) + (use24HourTime ? ending : "");
+        return this.toString(excludeSeconds, use24HourTime)
     }
 
     //this overrides the automatic serialization of Time Objects and makes them return a string and not a plain object (which is more annoying to parse back in and rwould require an extra factory method)
     public toJSON() {
-        return this.toString();
+        return this.time.toFormat("HH:mm:ss");
     }
+
 }
