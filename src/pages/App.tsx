@@ -17,6 +17,7 @@ import { ISettingsState, IUserSettings } from "../store/usersettings/types";
 import StatusIndicator from "../components/StatusIndicator";
 import ClassClockService from "../services/classclock";
 import { selectSchool } from "../store/schools/actions";
+import ClassPeriod from "../@types/classperiod";
 
 export interface IAppProps {
     selectedSchool: SelectedSchoolState;
