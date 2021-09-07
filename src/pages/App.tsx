@@ -85,15 +85,19 @@ export const App = (props: IAppProps) => {
             case null:
                 return <p>No School Today</p>;
             default:
-                const nextImportantInfo = getNextImportantInfo(
-                    currentDate,
-                    props.selectedSchool.data
-                );
-                const [nextClass, nextImportantTime] = nextImportantInfo
-                    ? nextImportantInfo
-                    : [undefined, undefined];
+
+                let nextClass: ClassPeriod | undefined = currentSchedule.getClassStartingAfter(currentDate);
+                let nextImportantTime: DateTime | undefined;
 
                 const currentClass = currentSchedule.getClassPeriodForTime(currentDate);
+
+                if (currentClass){
+                    nextImportantTime = currentClass.getEndTime()
+                } else if (nextClass) {
+                    nextImportantTime = nextClass.getStartTime()
+                } else {
+                    return <p>School's Out!</p>;
+                }
 
                 return (
                     <>
