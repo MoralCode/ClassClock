@@ -10,7 +10,7 @@ import School from "../@types/school";
 import { pages } from "../utils/constants";
 import BellSchedule from "../@types/bellschedule";
 import { ISchoolsState, SelectedSchoolState } from "../store/schools/types";
-import { getNextImportantInfo, getCurrentDate } from "../utils/helpers";
+import { getCurrentDate } from "../utils/helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { ISettingsState, IUserSettings } from "../store/usersettings/types";

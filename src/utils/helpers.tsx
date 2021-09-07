@@ -95,36 +95,6 @@ export function getTimeStateForDateAtSchool(date: DateTime, school: School) {
 }
 
 /**
- * @returns the next relevent time to count down to
- */
-export function getNextImportantInfo(
-    date: DateTime,
-    school: School
-): [ClassPeriod, DateTime] | undefined {
-    const currentBellSchedule = school.getScheduleForDate(date);
-
-    //there is no schedule that applies today
-    if (!currentBellSchedule) {
-        return;
-    }
-
-    const classes = sortClassesByStartTime(currentBellSchedule.getAllClasses());
-    //loop through all classes in order until you get to the first time that has not passed
-    for (let i = 0; i < classes.length; i++) {
-        for (const time of [classes[i].getStartTime(), classes[i].getEndTime()]) {
-            if (date.diff(time).get("milliseconds") >= 0) {
-                const nextClass =
-                    classes[i].stateForTime(date) ===
-                    TimeComparisons.IS_DURING_OR_EXACTLY
-                        ? classes[i + 1]
-                        : classes[i];
-                return [nextClass, time];
-            }
-        }
-    }
-}
-
-/**
  * This export function checks if the current time is between the two given times
  * This is useful for checking which class period you are currently in or for checking if school is in session.
  *

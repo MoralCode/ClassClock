@@ -3,7 +3,6 @@ import {
     getValueIfKeyInList,
     sortClassesByStartTime,
     getTimeStateForDateAtSchool,
-    getNextImportantInfo,
     checkTimeRange,
     matchDates
 } from "./helpers";
@@ -51,28 +50,6 @@ test("get time states for given date and school", () => {
         TimeStates.OUTSIDE_SCHOOL_HOURS
     );
     
-});
-
-
-test("get next important time", () => {
-    expect(getNextImportantInfo(beforeSchoolHours, school)).toStrictEqual([
-        classPeriod,
-        classPeriod.getStartTime()
-    ]);
-
-    expect(getNextImportantInfo(noSchool, school)).toBeFalsy();
-    
-    expect(getNextImportantInfo(betweenClass, school)).toBe([
-        classPeriod2,
-        startTime2
-    ]);
-
-    expect(getNextImportantInfo(inClass, school)).toBe([
-        classPeriod,
-        classPeriod.getEndTime()
-    ]);
-
-    expect(getNextImportantInfo(afterSchoolHours, school)).toBeFalsy();
 });
 
 test("check time range", () => {
