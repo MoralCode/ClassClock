@@ -31,10 +31,8 @@ export const passingPeriodName = "Transition Time";
 export const bellScheduleId = "33d14ca5c91111e996ad181dea92ad79";
 export const bellScheduleName = "Regular Schedule";
 export const bellScheduleEndpoint =
-    ClassClockService.baseURL + "/school/" +
+    ClassClockService.baseURL + "/bellschedules/" +
     schoolId +
-    "/bellschedule/" +
-    bellScheduleId +
     "/";
 export const bellScheduleDisplayName = "Display Name";
 
@@ -181,7 +179,6 @@ export const schoolJSON = {
  * 
  */
 
- export const scheduleListEndpoint = ClassClockService.baseURL + "/school/" + schoolId + "/bellschedules/";
 
 export const fakeSchoolResponse = {
            jsonapi: {

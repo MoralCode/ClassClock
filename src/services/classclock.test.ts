@@ -1,6 +1,8 @@
 import fetchMock from "fetch-mock";
-import { fakeSchoolResponse, fakeBellScheduleListResponse, bellScheduleId, fakeBellScheduleFullResponse, school, schoolId, schoolEndpoint, scheduleListEndpoint, bellScheduleEndpoint, schoolListEndpoint, fakeSchoolListResponse } from "../utils/testconstants";
+import { fakeSchoolResponse, fakeBellScheduleListResponse, schoolId, schoolEndpoint, bellScheduleEndpoint, schoolListEndpoint, fakeSchoolListResponse } from "../utils/testconstants";
 import ClassClockService from "./classclock";
+
+const headers = { "Content-Type": "application/json" }
 
 describe("ClassClock API service", () => {
 	afterEach(() => {
@@ -11,7 +13,7 @@ describe("ClassClock API service", () => {
 		fetchMock
 			.getOnce(schoolListEndpoint, {
 				body: fakeSchoolListResponse,
-				headers: { "Content-Type": "application/vnd.api+json" }
+				headers
 			});
 		
 		ClassClockService.getSchoolsList("1234");
@@ -22,32 +24,21 @@ describe("ClassClock API service", () => {
 		fetchMock
 			.getOnce(schoolEndpoint, {
 				body: fakeSchoolResponse,
-				headers: { "Content-Type": "application/vnd.api+json" }
+				headers
 			});
 
-		ClassClockService.getSchool("1234", schoolId);
+		ClassClockService.getSchool(schoolId);
 		expect(fetchMock.done()).toBeTruthy();
 	});
 
 	it("can request a list of schedules for a particular school", () => {
 		fetchMock
-			.getOnce(scheduleListEndpoint, {
-				body: fakeBellScheduleListResponse,
-				headers: { "Content-Type": "application/vnd.api+json" }
-			});
-
-		ClassClockService.getSchedulesListForSchool("1234", schoolId);
-		expect(fetchMock.done()).toBeTruthy();
-	});
-
-	it("can request detailed info for a particular school's schedule", () => {
-		fetchMock
 			.getOnce(bellScheduleEndpoint, {
-				body: fakeBellScheduleFullResponse,
-				headers: { "Content-Type": "application/vnd.api+json" }
+				body: fakeBellScheduleListResponse,
+				headers
 			});
 
-		ClassClockService.getDetailedScheduleForSchool("1234", schoolId, bellScheduleId);
+		ClassClockService.getSchedulesListForSchool(schoolId);
 		expect(fetchMock.done()).toBeTruthy();
 	});
 
@@ -55,10 +46,10 @@ describe("ClassClock API service", () => {
 		fetchMock
 			.getOnce(schoolEndpoint, {
 				body: fakeSchoolResponse,
-				headers: { "Content-Type": "application/vnd.api+json" }
+				headers
 			});
 
-		const validatedResponse = await ClassClockService.validateResponse(ClassClockService.getSchool("1234", schoolId));
+		const validatedResponse = await ClassClockService.validateResponse(ClassClockService.getSchool(schoolId));
 		expect(validatedResponse).toEqual(fakeSchoolResponse);
 	});
 
