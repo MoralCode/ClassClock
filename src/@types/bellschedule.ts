@@ -118,6 +118,15 @@ export default class BellSchedule {
         return;
     }
 
+    public getClassStartingAfter(time: DateTime) {
+        for (const classPeriod of sortClassesByStartTime(this.classes)) {
+            if (classPeriod.stateForTime(time) === TimeComparisons.IS_BEFORE) {
+                return classPeriod;
+            }
+        }
+        return;
+    }
+
     //it would be better to call this last class index or drop the -1
     public numberOfClasses() {
         return this.classes.length - 1;
