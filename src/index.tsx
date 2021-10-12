@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
-import { configureStore } from "./store/store";
-import { createBrowserHistory, startListener, push, replace } from "redux-first-routing";
+import { startListener, push, replace } from "redux-first-routing";
 import UniversalRouter, {Context} from "universal-router";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -12,12 +11,8 @@ import { Auth0, pages } from "./utils/constants";
 import { routes } from "./utils/routes";
 import { PageNotFound } from "./pages/errors/PageNotFound";
 import { ServerError } from "./pages/errors/ServerError";
+import {history, configuredStore} from "./store/store";
 
-// Create the history object
-const history = createBrowserHistory();
-
-// Create the store, passing it the history object
-const configuredStore = configureStore(history); //createStore(combineReducers(reducers), applyMiddleware(thunk));
 
 // Start the history listener, which automatically dispatches actions to keep the store in sync with the history
 startListener(history, configuredStore.store);
