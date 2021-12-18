@@ -1,11 +1,12 @@
 import {
     checkTimeRange,
-    deconstructJsonApiResource,
-    getValueIfKeyInList
+    getValueIfKeyInList,
+    sortClassesByStartTime
 } from "../utils/helpers";
-import Time from "./time";
+import { DateTime } from "luxon";
 import { TimeComparisons } from "../utils/enums";
 import BellSchedule from "./bellschedule";
+import find from 'lodash.find'
 
 export default class School {
     public static fromJson(json: any) {
@@ -16,13 +17,13 @@ export default class School {
             getValueIfKeyInList(["name", "fullName", "full_name"], json),
             getValueIfKeyInList(["acronym"], json),
             getValueIfKeyInList(["endpoint"], json),
-            "LA",
+            getValueIfKeyInList(["timezone"], json),
             schedules
                 ? schedules.map((schedule: any) => BellSchedule.fromJson(schedule))
                 : undefined,
             getValueIfKeyInList(["alternate_freeperiod_name", "passingPeriodName"], json),
-            getValueIfKeyInList(["creation_date", "creationDate"], json),
-            getValueIfKeyInList(["last_modified", "lastModified"], json)
+            DateTime.fromISO(getValueIfKeyInList(["creation_date", "creationDate"], json), { zone: 'utc' }),
+            DateTime.fromISO(getValueIfKeyInList(["last_modified", "lastModified"], json), { zone: 'utc' })
         );
     }
 
@@ -34,8 +35,8 @@ export default class School {
     private timeZone?: string;
     private schedules?: BellSchedule[];
     private passingPeriodName?: string;
-    private creationDate?: Date;
-    private lastUpdatedDate?: Date;
+    private creationDate?: DateTime;
+    private lastUpdatedDate?: DateTime;
 
     constructor(
         id: string,
@@ -46,8 +47,8 @@ export default class School {
         timeZone?: string,
         schedules?: BellSchedule[],
         passingPeriodName?: string,
-        creationDate?: Date,
-        lastUpdatedDate?: Date
+        creationDate?: DateTime,
+        lastUpdatedDate?: DateTime
     ) {
         this.id = id;
         this.ownerId = ownerId;
@@ -77,6 +78,14 @@ export default class School {
         return this.schedules;
     }
 
+    public getSchedule(id: string) {
+        if (!this.schedules){
+            return
+        } else {
+            return find(this.schedules, schedule => { return schedule.getIdentifier() === id; });
+        }
+    }
+
     public getName() {
         return this.fullName;
     }
@@ -98,27 +107,22 @@ export default class School {
     }
 
     public lastUpdated() {
-        return this.lastUpdated;
+        return this.lastUpdatedDate;
     }
 
-    public hasChangedSince(date: Date) {
+    public hasChangedSince(date: DateTime) {
         if (this.lastUpdatedDate !== undefined) {
-            return date.getTime() - this.lastUpdatedDate.getTime() > 0;
+            return date.toMillis() < this.lastUpdatedDate.toMillis();
         } else {
             return undefined;
         }
     }
 
     //can also be used as isNoSchoolDay() by checking for undefined
-    public getScheduleForDate(date: Date) {
+    public getScheduleForDate(date: DateTime) {
         if (this.schedules) {
             for (const schedule of this.schedules) {
-                if (
-                    schedule
-                        .getDates()
-                        .map((d: Date) => d.toDateString())
-                        .includes(date.toDateString())
-                ) {
+                if (schedule.getDate(date)) {
                     return schedule;
                 }
             }
@@ -129,25 +133,31 @@ export default class School {
 
     //remove
     public hasSchedules() {
-        return this.schedules !== undefined;
+        return this.schedules !== undefined && this.schedules.length > 0;
     }
 
     //change input to a time
-    public isInSession(date: Date) {
-        const currentTime = Time.fromDate(date);
+    //seems like te current schedule depends on this
+    /**
+     * Checks whether school is currently "in session", meaning that school is currently happening for the day (aka a time is between the start of the first class and the end of the last class)
+     * @param date the time to check
+     * @returns true if school is in session, false otherwise
+     */
+    public isInSession(date: DateTime) {
         const currentSchedule = this.getScheduleForDate(date);
-
         if (!currentSchedule) {
             return false;
         }
+
+        const sortedClasses = sortClassesByStartTime(currentSchedule.getAllClasses())
+        const firstClass = sortedClasses[0]
+        const lastClass = sortedClasses[currentSchedule.numberOfClasses()]
         return (
             checkTimeRange(
-                currentTime,
-                currentSchedule.getAllClasses()[0].getStartTime(),
-                currentSchedule
-                    .getAllClasses()
-                    [currentSchedule.numberOfClasses()].getEndTime()
-            ) === TimeComparisons.IS_DURING_OR_EXACTLY
+                date,
+                firstClass.getStartTime(),
+                lastClass.getEndTime()
+            ) == TimeComparisons.IS_DURING_OR_EXACTLY
         );
     }
 }

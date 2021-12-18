@@ -1,8 +1,20 @@
-import Time from "../@types/time";
+import { DateTime, Interval } from "luxon";
 import School from "../@types/school";
+//todo, replace timeComparisons with luxon Interval
 import { TimeComparisons, TimeStates } from "./enums";
 import ClassPeriod from "../@types/classperiod";
 import BellSchedule from "../@types/bellschedule";
+import { useState } from "react";
+import { RateLimitError } from "./errors";
+
+//https://stackoverflow.com/a/55862077
+export const useForceUpdate = () => {
+    const [, setTick] = useState(0);
+    const update = () => {
+        setTick((tick: number) => tick + 1);
+    };
+    return update;
+};
 
 export function getValueIfKeyInList(list: string[], object: any) {
     for (const key of list) {
@@ -12,30 +24,51 @@ export function getValueIfKeyInList(list: string[], object: any) {
     }
 }
 
-//resource object
-export function deconstructJsonApiResource(json: any) {
-    const data = {
-        type: json.type,
-        id: json.id,
-        ...(json.links !== undefined && {
-            endpoint: json.links.self
-        })
-    };
-    return Object.assign({}, data, json.attributes);
+export function objectKeysToSnakeCase(object: object) {
+    let copyObject: any = Object.assign({}, object);
+
+    //iterate over object
+    for (const [objKey, objValue] of Object.entries(copyObject)) {
+        // if (value.hasOwnProperty(objKey))
+        const snake = toSnakeCase(objKey);
+        if (objKey !== snake) {
+            copyObject[snake] = objValue;
+            delete copyObject[objKey];
+        }
+    }
+    return copyObject;
+}
+
+// https://stackoverflow.com/a/54246525/
+export function toSnakeCase(input: string) {
+    // https://stackoverflow.com/a/55521416/
+    const ALPHA = new Set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+    function isAlpha(char: string) {
+        return ALPHA.has(char);
+    }
+    
+    return input.split('').map((character, index) => {
+        if (character == character.toUpperCase() && isAlpha(character)) {
+            return (index != 0 ? '_': '') + character.toLowerCase();
+        } else {
+            return character;
+        }
+    }).join('');
 }
 
 export function getCurrentDate() {
-    return new Date();
+    return DateTime.local();
 }
 
 export function sortClassesByStartTime(classes: ClassPeriod[]) {
-    return classes.sort((a, b) => -a.getStartTime().getMillisecondsTo(b.getStartTime()));
+    return classes.sort((a, b) => a.getStartTime().diff(b.getStartTime()).get("milliseconds"));
 }
 
 /**
  * @returns a flag that represents the current chunk of time categorically
  */
-export function getTimeStateForDateAtSchool(date: Date, school: School) {
+export function getTimeStateForDateAtSchool(date: DateTime, school: School) {
     const currentBellSchedule = school.getScheduleForDate(date);
 
     //there is no schedule that applies today
@@ -43,9 +76,7 @@ export function getTimeStateForDateAtSchool(date: Date, school: School) {
         return TimeStates.DAY_OFF;
     }
 
-    const currentClassPeriod = currentBellSchedule.getClassPeriodForTime(
-        Time.fromDate(date)
-    );
+    const currentClassPeriod = currentBellSchedule.getClassPeriodForTime(date);
 
     //it is a school day but it is not school hours
     if (!school.isInSession(date)) {
@@ -64,36 +95,6 @@ export function getTimeStateForDateAtSchool(date: Date, school: School) {
 }
 
 /**
- * @returns the next relevent time to count down to
- */
-export function getNextImportantInfo(
-    date: Date,
-    school: School
-): [ClassPeriod, Time] | undefined {
-    const currentBellSchedule = school.getScheduleForDate(date);
-
-    //there is no schedule that applies today
-    if (!currentBellSchedule) {
-        return;
-    }
-
-    const classes = sortClassesByStartTime(currentBellSchedule.getAllClasses());
-    //loop through all classes in order until you get to the first time that has not passed
-    for (let i = 0; i < classes.length; i++) {
-        for (const time of [classes[i].getStartTime(), classes[i].getEndTime()]) {
-            if (Time.fromDate(date).getMillisecondsTo(time) >= 0) {
-                const nextClass =
-                    classes[i].stateForTime(Time.fromDate(date)) ===
-                    TimeComparisons.IS_DURING_OR_EXACTLY
-                        ? classes[i + 1]
-                        : classes[i];
-                return [nextClass, time];
-            }
-        }
-    }
-}
-
-/**
  * This export function checks if the current time is between the two given times
  * This is useful for checking which class period you are currently in or for checking if school is in session.
  *
@@ -103,18 +104,127 @@ export function getNextImportantInfo(
  *
  * @returns -1 if checkTime is before range, 0 if checkTime is within range, 1 if checkTime is after range
  */
-export function checkTimeRange(checkTime: Time, startTime: Time, endTime: Time) {
-    if (startTime.getMillisecondsTo(endTime) <= 0) {
-        //theres a problem
-    }
-    const startCheck = checkTime.getMillisecondsTo(startTime);
-    const endCheck = checkTime.getMillisecondsTo(endTime);
+export function checkTimeRange(checkTime: DateTime, startTime: DateTime, endTime: DateTime, ignoreDate = false) {
 
-    if (startCheck > 0 && endCheck > 0) {
+    if (ignoreDate){
+        const day = {
+            year: checkTime.get("year"),
+            month: checkTime.get("month"),
+            day: checkTime.get("day")
+        }
+        startTime = startTime.set(day)
+        endTime = endTime.set(day)
+    }
+
+    const interval = Interval.fromDateTimes(startTime,endTime)
+   
+    // if (startTime.getMillisecondsTo(endTime) <= 0) {
+    //     //theres a problem
+    // }
+    // const startCheck = checkTime.getMillisecondsTo(startTime);
+    // const endCheck = checkTime.getMillisecondsTo(endTime);
+
+    if (checkTime.hasSame(startTime, 'second') || checkTime.hasSame(endTime, 'second')){
+        return TimeComparisons.IS_DURING_OR_EXACTLY;
+    }
+
+    if (interval.isAfter(checkTime)) {
         return TimeComparisons.IS_BEFORE;
-    } else if (endCheck < 0 && endCheck < 0) {
+    } else if (interval.isBefore(checkTime)) {
         return TimeComparisons.IS_AFTER;
     } else {
         return TimeComparisons.IS_DURING_OR_EXACTLY;
     }
+}
+
+
+/**
+ * Calculates the larger of either the exponential backoff or the given minimum delay
+ * 
+ * modified from https://medium.com/swlh/retrying-and-exponential-backoff-with-promises-1486d3c259
+ * @export
+ * @param {number} retryCount the number of times the request has already been re-tried
+ * @param {number} [minDelay=0] the minimum amount of delay
+ * @returns a number that can be used as the delay (units are arbitrary)
+ */
+export function calculateDelay(retryCount: number, minDelay:number = 0) {
+    //exponential backoff
+    return Math.max(10 ** retryCount, minDelay)
+}
+
+/**
+ * Delays by the given number of milliseconds
+ * 
+ * modified from https://medium.com/swlh/retrying-and-exponential-backoff-with-promises-1486d3c259
+ * @export
+ * @param {number} duration the number of milliseconds to delay
+ * @returns
+ */
+export const delay = async (duration:number) =>
+    new Promise(resolve => setTimeout(resolve, duration));
+
+/**
+ * Retries a promise a given number of times if it rejects
+ *
+ * based on https://dev.to/ycmjason/javascript-fetch-retry-upon-failure-3p6g
+ * @export
+ * @param {Promise<any>} promise the promise to retry on rejection
+ * @param {number} [maxRetries=5] the maximum number of times to retry before giving up
+ * @param {number} [tryCount=1] the number of tries that have already been attempted
+ * @param {number} [minimumWait=100] the minimum amount of time to wait between requests in milleseconds
+ * @returns {Promise<any>} the given promise with the capability to retry in case it rejects
+ */
+export async function promiseRetry(promise: Promise<any>, maxRetries = 5, tryCount=1, minimumWait = 100): Promise<any> {
+    return promise.catch(async function (error) {
+        if (maxRetries === tryCount) throw error;
+        if (error instanceof RateLimitError) {
+            minimumWait = error.wait
+        }
+        await delay(calculateDelay(tryCount, minimumWait))
+        return promiseRetry(promise, maxRetries, tryCount + 1);
+    });
+}
+
+/**
+ * Calculates how long to wait before sending retrying request when receiving 429 Too Many Requests
+ * 
+ * see: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Retry-After
+ *
+ * @export
+ * @param {Response} response the 429 response to calculate the delay for 
+ * @returns the number of seconds to wait, or undefined if the Retry-After header is not present
+ */
+export function parseRateLimitTime(response: Response) {
+    const after = response.headers.get("Retry-After")
+
+    if (!after) return
+
+    //try to parse it as an integer
+    let secondsToWait = parseInt(after)
+    if (isNaN(secondsToWait)) {
+        //if number parsing failed, parse as date
+
+        const date = new Date(secondsToWait)
+
+        const now = new Date()
+        //round the time down by zeroing milliseconds
+        now.setMilliseconds(0)
+
+        secondsToWait = (date.getTime() - now.getTime())/1000
+    }
+    return secondsToWait
+}
+
+/**
+ * returns dt2 with its day, month, and year values updated to match dt1
+ * @param dt1 the datetime to match the dates to
+ * @param dt2 the datetime to set the date of
+ * @returns An array of two datetimes [dt1, dt2] with dates matching each other and times matching the parameters they are based on
+ */
+export const matchDates = (dt1: DateTime, dt2: DateTime): DateTime => {
+    return dt2.set({
+        year: dt1.get("year"),
+        month: dt1.get("month"),
+        day: dt1.get("day")
+    })
 }

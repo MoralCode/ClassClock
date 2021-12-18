@@ -4,12 +4,14 @@ import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import { configureStore } from "./store/store";
 import { createBrowserHistory, startListener, push, replace } from "redux-first-routing";
-import UniversalRouter from "universal-router";
+import UniversalRouter, {Context} from "universal-router";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { Auth0Provider } from "./react-auth0-wrapper";
 import { Auth0, pages } from "./utils/constants";
 import { routes } from "./utils/routes";
+import { PageNotFound } from "./pages/errors/PageNotFound";
+import { ServerError } from "./pages/errors/ServerError";
 
 // Create the history object
 const history = createBrowserHistory();
@@ -20,8 +22,19 @@ const configuredStore = configureStore(history); //createStore(combineReducers(r
 // Start the history listener, which automatically dispatches actions to keep the store in sync with the history
 startListener(history, configuredStore.store);
 
+const options = {
+    errorHandler(error: { status?: number; }, context: Context) {
+        console.error(error)
+        console.info(context)
+        
+        return error.status === 404
+            ? <PageNotFound />
+            : <ServerError />
+    }
+}
+
 // Create the router
-const router = new UniversalRouter(routes);
+const router = new UniversalRouter(routes, options);
 
 // A function that routes the user to the right place
 // after login
@@ -48,7 +61,7 @@ function render(pathname: string) {
                         domain={Auth0.domain}
                         client_id={Auth0.clientId}
                         audience={Auth0.audience}
-                        redirect_uri={pages.loginCallback}
+                        redirect_uri={"http://localhost:3000" + pages.loginCallback}
                         onRedirectCallback={onRedirectCallback}
                     >
                         {component}

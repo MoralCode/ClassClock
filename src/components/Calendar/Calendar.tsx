@@ -1,143 +1,104 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Calendar.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import dateFns from "date-fns";
-import Link from "../Link";
+import SelectHeader from "../SelectHeader";
+import BellSchedule from "../../@types/bellschedule";
+import find from "lodash.find";
+import { DateTime } from "luxon";
 
-export interface IScheduleDates {
-    [key: string]: { name: string; color: string; dates?: number[] };
-}
 
 export interface ICalendarProps {
-    options: IScheduleDates;
+    schedules?: BellSchedule[];
+    selectedScheduleId: string;
 }
 
 const Calendar = (props: ICalendarProps) => {
-    const [currentMonth, setCurrentMonth] = useState(new Date());
-    const initialOptions: { [key: string]: number[] } = {};
-    for (const option of Object.keys(props.options)) {
-        initialOptions[option] = [];
-    }
-    const [selectedDates, setSelectedDates] = useState(initialOptions);
+    // const initialOptions: { [key: string]: number[] } = {};
+    const getSelectedMonth = () => {
+        const persisted = sessionStorage.getItem('selectedMonth');
+        return persisted ? DateTime.fromMillis(parseInt(persisted, 10)) : DateTime.local();
+    };
 
-    const config = { weekStartsOn: 1 };
-    const startDate = dateFns.startOfWeek(dateFns.startOfMonth(currentMonth), config);
-    const endDate = dateFns.endOfWeek(dateFns.endOfMonth(currentMonth), config);
+    
+    const [selectedMonth, setSelectedMonth] = useState(getSelectedMonth);
+
+   useEffect(function persistForm() {
+        sessionStorage.setItem('selectedMonth', selectedMonth.toMillis().toString());
+    });
+
+    const startDate = selectedMonth.startOf('month').startOf('week')
+    const endDate = selectedMonth.endOf('month').endOf('week')
+
+    // https://felixgerschau.com/react-rerender-components/#force-an-update-in-react-hooks
+    const [, updateState] = React.useState({});
+    const forceUpdate = React.useCallback(() => updateState({}), []);
 
     const onDateClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-        const dateValue: Date = new Date(parseInt(event.currentTarget.dataset.date!, 10));
-        if (isValidDate(dateValue)) {
-            const next = getNextOptionForDate(dateValue);
-            setOptionForDate(dateValue, next);
+        const dateValue: DateTime = DateTime.fromMillis(parseInt(event.currentTarget.dataset.date!, 10));
+        if (dateValue.isValid) {
+            const currentSchedule = getScheduleForDate(dateValue);
+            const selectedSchedule = getScheduleById(props.selectedScheduleId);
+            let value = selectedSchedule;
+
+            if (!selectedSchedule) {
+                alert("Please select a schedule to assign a date")
+            } else if (currentSchedule && (selectedSchedule.getIdentifier() === currentSchedule.getIdentifier())) {
+                //if the date belongs to this schedule, remove it
+                value = undefined;
+            }
+            setScheduleForDate(dateValue, value);
         } else {
             console.log("invalid date");
         }
-
-        // event.currentTarget.value = props.options[(key + 1) % props.options.length];
     };
 
-    const getNextOptionForDate = (date: Date) => {
-        const location = getGroupAndPositionForDate(date);
-        const currentOptionKey = location ? location[0] : undefined;
-        const optionKeys = Object.keys(props.options);
 
-        if (!location) {
-            return optionKeys[0];
-        } else if (
-            currentOptionKey &&
-            currentOptionKey === optionKeys[optionKeys.length - 1]
-        ) {
-            return;
-        } else if (currentOptionKey) {
-            return optionKeys[optionKeys.indexOf(currentOptionKey) + 1];
+    const getScheduleById = (id: string) => {
+        //kinda duplicated from school defenition
+        if (!props.schedules || props.schedules === []) {
+            return
+        } else {
+            return find(props.schedules, schedule => { return schedule.getIdentifier() === id; });
         }
-    };
+    }
 
-    const setOptionForDate = (date: Date, option?: string) => {
-        const location = getGroupAndPositionForDate(date);
+    const setScheduleForDate = (date: DateTime, schedule?: BellSchedule) => {
+        const currentSchedule = getScheduleForDate(date);
 
-        if (location && option) {
-            const [optionKey, posInOption] = location;
-
-            if (optionKey !== option) {
-                let updatedSelections = selectedDates;
-                updatedSelections = removeDateFromSelectionList(
-                    updatedSelections,
-                    optionKey,
-                    posInOption
-                );
-                updatedSelections = addDateToSelectionList(
-                    updatedSelections,
-                    option,
-                    date
-                );
-                setSelectedDates(updatedSelections);
-            }
-        } else if (!location && option) {
-            setSelectedDates(addDateToSelectionList(selectedDates, option, date));
-        } else if (location && !option) {
-            const [optionKey, posInOption] = location;
-            setSelectedDates(
-                removeDateFromSelectionList(selectedDates, optionKey, posInOption)
-            );
+        if (currentSchedule && schedule) {
+            //the date is in a different schedule than the one provided. move it
+            //remove from the old schedule
+            currentSchedule.removeDate(date);
+            
+            //add to the new schedule
+            schedule.addDate(date);
+            
+        } else if (!currentSchedule && schedule) {
+            //date was not in a schedule previously
+            schedule.addDate(date)
+            
+        } else if (currentSchedule && !schedule) {
+            //date is in a schedule and is being removed
+            currentSchedule.removeDate(date)
         }
+        forceUpdate();
     };
 
-    //https://stackoverflow.com/a/1353711
-    const isValidDate = (d: Date) => {
-        return d instanceof Date && !isNaN(d.getTime());
-    };
-
-    const addDateToSelectionList = (
-        datesSelected: { [key: string]: number[] },
-        option: string,
-        date: Date
-    ) => {
-        const updatedGroup: { [key: string]: number[] } = {};
-        updatedGroup[option] = [...datesSelected[option], date.getTime()];
-        const result = Object.assign({}, datesSelected, updatedGroup);
-
-        return result;
-    };
-
-    const removeDateFromSelectionList = (
-        datesSelected: { [key: string]: number[] },
-        option: string,
-        index: number
-    ) => {
-        const updatedGroup: { [key: string]: number[] } = {};
-        updatedGroup[option] = [
-            ...datesSelected[option].slice(0, index),
-            ...datesSelected[option].slice(index + 1)
-        ];
-
-        const result = Object.assign({}, datesSelected, updatedGroup);
-
-        return result;
-    };
-
-    const getGroupAndPositionForDate = (date: Date): [string, number] | undefined => {
-        // const groups: Array<[string, number]> = [];
-        for (const key in selectedDates) {
-            if (selectedDates.hasOwnProperty(key)) {
-                const indexInGroup = selectedDates[key].indexOf(date.getTime());
-                if (indexInGroup !== -1) {
-                    return [key, indexInGroup];
+    const getScheduleForDate = (date: DateTime): BellSchedule | undefined => {
+        if (props.schedules) {        
+            for (const schedule of props.schedules) {
+                if (schedule.getDate(date)){
+                    return schedule;
                 }
             }
         }
-
         return;
-        // const dateInUnixTime = date.getTime();
-        // const index = selectedDates[key].indexOf(dateInUnixTime);
     };
 
     const getWeekdayNameHeaders = () => {
         const dayNames = [];
 
         for (let i = 0; i < 7; i++) {
-            dayNames.push(dateFns.format(dateFns.addDays(startDate, i), "ddd"));
+            dayNames.push(startDate.plus({ days: i }).toFormat("ddd"));
         }
         return dayNames;
     };
@@ -148,41 +109,39 @@ const Calendar = (props: ICalendarProps) => {
 
         for (
             let dateIndex = 0;
-            dateIndex <= dateFns.differenceInDays(endDate, startDate);
+            dateIndex <= endDate.diff(startDate).days;
             dateIndex++
         ) {
-            const date = dateFns.addDays(startDate, dateIndex);
-            const firstDayOfWeek = dateFns.startOfWeek(date, config);
-            const firstDayOfWeekTomorrow = dateFns.startOfWeek(
-                dateFns.addDays(date, 1),
-                config
-            );
+            const date = startDate.plus({ days: dateIndex });
+            const firstDayOfWeek = date.startOf('week')
+            const firstDayOfWeekTomorrow = date.plus({ days: 1 }).startOf('week')
 
-            const location = getGroupAndPositionForDate(date);
-            const currentOptionKey = location ? location[0] : undefined;
-
-            const color = currentOptionKey
-                ? { backgroundColor: props.options[currentOptionKey].color }
-                : undefined;
+            const schedule = getScheduleForDate(date);
+            //show the schedule's assigned color if it is selected
+            const backupColor = schedule ? "rgba(0, 0, 0, 0.1)" : undefined;
+            const color = schedule && schedule.getIdentifier() === props.selectedScheduleId ? schedule.getColor() : backupColor;
+            const bgColor = { backgroundColor: color };
+            const name = schedule ? schedule.getName() : undefined;
 
             tempRowData.push(
                 <td key={"date" + dateIndex}>
-                    <span
+                    <div
                         onClick={event => onDateClick(event)}
                         className={
-                            dateFns.getMonth(date) !== dateFns.getMonth(currentMonth)
+                            date.get('month') !== selectedMonth.get('month')
                                 ? "disabled"
                                 : undefined
                         }
-                        data-date={date.getTime()}
-                        style={color}
+                        data-date={date.toMillis()}
+                        style={bgColor}
+                        title={name}
                     >
-                        {date.getDate()}
-                    </span>
+                        {date.get('day')}
+                    </div>
                 </td>
             );
 
-            if (!dateFns.isEqual(firstDayOfWeek, firstDayOfWeekTomorrow)) {
+            if (!firstDayOfWeek.equals(firstDayOfWeekTomorrow)) {
                 monthGrid.push(<tr key={"weekBegin" + dateIndex}>{tempRowData}</tr>);
                 tempRowData = [];
             }
@@ -195,25 +154,16 @@ const Calendar = (props: ICalendarProps) => {
             <thead>
                 <tr>
                     <th colSpan={7}>
-                        <Link
-                            destination={() =>
-                                setCurrentMonth(dateFns.subMonths(currentMonth, 1))
+                        <SelectHeader
+                            lastAction={() =>
+                                setSelectedMonth(selectedMonth.minus({ month: 1 }))
                             }
-                            className="smallIcon"
-                        >
-                            <FontAwesomeIcon icon={faChevronLeft} />
-                        </Link>
-                        <span id="monthDisplay">
-                            {dateFns.format(currentMonth, "MMMM YYYY")}
-                        </span>
-                        <Link
-                            destination={() =>
-                                setCurrentMonth(dateFns.addMonths(currentMonth, 1))
+                            nextAction={() =>
+                                setSelectedMonth(selectedMonth.plus({month: 1}))
                             }
-                            className="smallIcon"
                         >
-                            <FontAwesomeIcon icon={faChevronRight} />
-                        </Link>
+                            {selectedMonth.toFormat("MMMM YYYY")}
+                        </SelectHeader>
                     </th>
                 </tr>
                 <tr>

@@ -4,13 +4,17 @@ import {
     FETCH_ERROR,
     RECEIVE_SCHOOL,
     REQUEST_SCHOOL,
-    INVALIDATE_SCHOOL
+    INVALIDATE_SCHOOL,
+    REQUEST_SCHOOL_LIST,
+    SchoolListActionTypes,
+    INVALIDATE_SCHOOL_LIST,
+    RECEIVE_SCHOOL_LIST
 } from "./types";
 import { Dispatch } from "redux";
 import ClassClockService from "../../services/classclock";
 import School from "../../@types/school";
 import BellSchedule from "../../@types/bellschedule";
-import { deconstructJsonApiResource } from "../../utils/helpers";
+import { DateTime } from "luxon";
 
 function requestSchool(): SchoolActionTypes {
     return {
@@ -28,7 +32,7 @@ function receiveSchool(json: any): SchoolActionTypes {
     return {
         type: RECEIVE_SCHOOL,
         school: School.fromJson(json),
-        receivedAt: Date.now()
+        receivedAt: DateTime.local().toMillis()
     };
 }
 
@@ -65,32 +69,58 @@ export function selectSchool(schoolId: string) {
                 //result = [school() result, schedules() result]
                 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all#Using_Promise.all
 
-                const scheduleDataList: Array<Promise<any>> = [];
+                schoolResult.data.schedules = scheduleResult.data;
+                dispatch(
+                    receiveSchool(schoolResult.data)
+                );      
+            },
+            (error: Error) => onError(error)
+        );
+    };
+}
 
-                for (const schedule of scheduleResult.data) {
-                    const scheduleId = schedule.id;
-                    // const sched_uri = schedule.links.self;
-                    const scheduleRequest = ClassClockService.validateResponse(
-                        ClassClockService.getDetailedScheduleForSchool(
-                            schoolId,
-                            scheduleId
-                        ),
-                        onError
-                    );
+function requestSchoolList(): SchoolListActionTypes {
+    return {
+        type: REQUEST_SCHOOL_LIST
+    };
+}
 
-                    scheduleDataList.push(scheduleRequest);
-                }
+export function invalidateSchoolList(): SchoolListActionTypes {
+    return {
+        type: INVALIDATE_SCHOOL_LIST
+    };
+}
 
-                Promise.all(scheduleDataList).then(
-                    (schedulesList: any) => {
-                        schoolResult.data.attributes.schedules = schedulesList.map(
-                            (schedule: any) => deconstructJsonApiResource(schedule.data)
-                        );
-                        dispatch(
-                            receiveSchool(deconstructJsonApiResource(schoolResult.data))
-                        );
-                    },
-                    (error: Error) => onError(error)
+function receiveSchoolList(json: any): SchoolListActionTypes {
+    return {
+        type: RECEIVE_SCHOOL_LIST,
+        schools: json.map((sch: string) => School.fromJson(sch)),
+        receivedAt: DateTime.local().toMillis()
+    };
+}
+
+//TODO: Reduce duplication somehow
+export function getSchoolsList(abortSignal?: AbortSignal) {
+    return async (dispatch: Dispatch) => {
+        dispatch(requestSchoolList());
+
+        const onError = (error: Error) => {
+            console.log("Caught an error: ", error.message);
+            if (error.message) dispatch(fetchError(error.message));
+            dispatch(invalidateSchoolList());
+        };
+
+        const schoolList = ClassClockService.validateResponse(
+            ClassClockService.getSchoolsList(
+                abortSignal ? {signal: abortSignal}: undefined
+                ),
+            onError
+        );
+
+        schoolList.then(
+            (result: any) => {
+                dispatch(
+                    receiveSchoolList(result.data)
                 );
             },
             (error: Error) => onError(error)

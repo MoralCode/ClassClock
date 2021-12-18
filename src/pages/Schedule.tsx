@@ -5,7 +5,7 @@ import IPageInterface from "../utils/IPageInterface";
 
 import "../global.css";
 import School from "../@types/school";
-import { IState } from "../store/schools/types";
+import { ISchoolsState } from "../store/schools/types";
 import Link from "../components/Link";
 import { pages } from "../utils/constants";
 import Icon from "../components/Icon";
@@ -19,13 +19,13 @@ import { faHome } from "@fortawesome/free-solid-svg-icons";
 export interface IAppProps {
     selectedSchool: {
         isFetching: boolean;
-        didInvalidate: false;
+        didInvalidate: boolean;
         data: School;
     };
     dispatch: any;
 }
 
-const Schedule = (props: IAppProps) => {
+export const Schedule = (props: IAppProps) => {
     let content: JSX.Element = <></>;
     const currentSchedule = props.selectedSchool.data.getScheduleForDate(
         getCurrentDate()
@@ -61,8 +61,8 @@ const Schedule = (props: IAppProps) => {
                                         <tr>
                                             <td>{value.getName()}</td>
                                             <td>
-                                                {value.getStartTime().toString()} -{" "}
-                                                {value.getEndTime().toString()}
+                                                {value.getStartTime().setZone(props.selectedSchool.data.getTimezone() ?? "local").toFormat("hh:mm:ss")} -{" "}
+                                                {value.getEndTime().setZone(props.selectedSchool.data.getTimezone() ?? "local").toFormat("hh:mm:ss")}
                                             </td>
                                         </tr>
                                     </>
@@ -78,7 +78,7 @@ const Schedule = (props: IAppProps) => {
     return (
         <div>
             <Link
-                className="cornerNavButton smallIcon"
+                className="cornerNavButton cornerNavTop cornerNavLeft smallIcon"
                 // tslint:disable-next-line: jsx-no-lambda
                 destination={() => props.dispatch(push(pages.main))}
             >
@@ -94,7 +94,7 @@ const Schedule = (props: IAppProps) => {
     );
 };
 
-const mapStateToProps = (state: IState) => {
+const mapStateToProps = (state: ISchoolsState) => {
     const { selectedSchool } = state;
     selectedSchool.data = School.fromJson(selectedSchool.data);
     return { selectedSchool };

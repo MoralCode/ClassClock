@@ -2,10 +2,12 @@ import React, { Component } from "react";
 
 interface IIconProps {
     icon: string;
+    regularStyle?:boolean
 }
 
-export default class Icon extends Component<IIconProps, {}> {
-    render() {
-        return <i className={"fas " + this.props.icon} />;
-    }
+const Icon = (props: IIconProps) => {
+    const style = props.regularStyle? "far ": "fas ";
+    return <i className={style + props.icon} />;
 }
+
+export default Icon;

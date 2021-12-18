@@ -1,10 +1,10 @@
 import { createTransform } from "redux-persist";
-import { IState } from "../store/schools/types";
+import { ISchoolsState } from "../store/schools/types";
 import School from "../@types/school";
 
 const SchoolTransform = createTransform(
     // transform state on its way to being serialized and persisted.
-    (inboundState: IState, key: any) => {
+    (inboundState: ISchoolsState, key: any) => {
         // convert mySet to an Array.
         return {
             ...inboundState,

@@ -46,14 +46,43 @@ body {
     font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
     color: white;
     font-size: 20px;
-    display: flex;
-    flex-direction: column;
+    /* this doesnt do much */
+    /* display: flex;
+    flex-direction: column; */
 }
 
 div#root {
-    margin: 0 auto;
+    
     display: block;
     text-align: center;
+}
+
+div#root > * {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div#schoolOptions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    max-width: 500px;
+}
+
+/* from editableField Component */
+.editableField {
+    display: inline-flex;
+    justify-content: space-between;
+    /* width: 100%; */
+    flex-grow: 1;
+    text-align: left;
+    margin: 2px
+
+}
+.editableFieldLabel {
+    margin: 5px;
 }
 
 div#page {
@@ -84,19 +113,65 @@ div#page {
 .cornerNavButton {
     font-size: 32px; /*Default size */
     position: absolute;
-    top: 0;
-    left: 0;
+    
     padding-right: 0.15em;
     padding-left: 0.15em;
-    border-bottom-right-radius: 10px;
+}
+
+.statusIndicator {
+    /* font-size: 32px; Default size */
+    position: absolute;
+    color: whitesmoke;
+    background-color: gray;
+    
+    padding-right: 0.15em;
+    padding-left: 0.15em;
+}
+.statusIndicator > * {
+    margin: .1em;
 }
 
 .cornerNavButton:hover {
     background-color: grey;
 }
 
-.smallText {
-    font-size: 10px;
+
+.cornerNavTop {
+    top: 0;
+}
+
+.cornerNavBottom {
+    bottom: 0;
+}
+
+.cornerNavLeft {
+    left: 0;
+    border-bottom-left-radius: 0;
+}
+
+.cornerNavRight {
+    right: 0;
+    border-bottom-right-radius: 0;
+}
+
+.cornerNavTop.cornerNavLeft {
+    border-bottom-right-radius: 10px;
+}
+
+.cornerNavTop.cornerNavRight {
+    border-bottom-left-radius: 10px;
+}
+
+.cornerNavBottom.cornerNavLeft {
+    border-top-right-radius: 10px;
+}
+
+.cornerNavBottom.cornerNavRight {
+    border-top-left-radius: 10px;
+}
+
+.smallerText {
+    font-size: 0.85em;
 }
 
 .smallIcon {
@@ -188,6 +263,16 @@ section#options > * {
     flex-direction: column;
 }
 
+.horizontalFlex {
+    display: flex;
+    justify-content: center;
+}
+
+.horizontalFlex > * {
+    /* Important is used to override inline styles for the table and key */
+    margin: .5em !important;
+}
+
 .footer__social {
     list-style: none;
     margin: 0;
@@ -221,4 +306,37 @@ section#options > * {
 
 .footer__social li:last-child {
     margin-right: 0;
+}
+
+.e-mail::after {
+    content: "\0061\0064\0072\0069\0061\006E\0040\0061\0064\0072\0069\0061\006E\0063\0065\0064\0077\0061\0072\0064\0073\002E\0063\006F\006D";
+}
+
+
+.centeredWidth {
+    margin: 0 auto;
+    width: 95vw;
+}
+
+@media (min-width: 768px) {
+    .centeredWidth {
+        width: 60vw;
+    }
+
+}
+
+@media (min-width: 992px) {
+    .centeredWidth {
+        width: 40vw;
+    }
+}
+
+@media (min-width: 1400px) {
+    .centeredWidth {
+        width: 30vw;
+    }
+}
+.circle {
+    border-radius: 50%;
+    display: inline-block;
 }

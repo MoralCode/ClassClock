@@ -11,6 +11,11 @@
             "src": "/icons/classclockicon-512.png",
             "type": "image/png",
             "sizes": "512x512"
+        },
+        {
+            "src": "/icons/favicon.ico",
+            "type": "image/x-icon",
+            "sizes": "64x64 48x48 32x32 16x16"
         }
     ],
     "start_url": "/",

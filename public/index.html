@@ -11,6 +11,21 @@
             g.type = 'text/javascript'; g.async = true; g.defer = true; g.src = 'https://analytics.adriancedwards.com/js/container_b9i4lGUG.js'; s.parentNode.insertBefore(g, s);
         </script>
         <!-- End Matomo Tag Manager -->
+        <!-- Raygun Error Monitoring -->
+        <script type="text/javascript">
+            !function (a, b, c, d, e, f, g, h) {
+                a.RaygunObject = e, a[e] = a[e] || function () {
+                    (a[e].o = a[e].o || []).push(arguments)
+                }, f = b.createElement(c), g = b.getElementsByTagName(c)[0],
+                f.async = 1, f.src = d, g.parentNode.insertBefore(f, g), h = a.onerror, a.onerror = function (b, c, d, f, g) {
+                    h && h(b, c, d, f, g), g || (g = new Error(b)), a[e].q = a[e].q || [], a[e].q.push({
+                        e: g
+                    })
+                }
+            }(window, document, "script", "//cdn.raygun.io/raygun4js/raygun.min.js", "rg4js");
+        </script>
+        <!-- End Raygun Error Monitoring -->
+
 
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         
@@ -21,12 +36,43 @@
         <meta name="apple-mobile-web-app-title" content="ClassClock">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="translucent">
-        <link rel="apple-touch-icon" sizes="512x512" href="icons/classclockicon-512.png">
-        <link rel="apple-touch-icon" sizes="192x192" href="icons/classclockicon-192.png">
+        <meta name="robots" content="noindex nofollow">
+
+        <link rel="apple-touch-icon" sizes="512x512" href="/icons/classclockicon-512.png">
+        <link rel="apple-touch-icon" sizes="192x192" href="/icons/classclockicon-192.png">
         <link rel="shortcut icon" type="image/png" href="/icons/classclockicon-512.png" />
+        <link rel="shortcut icon" sizes="16x16 24x24 32x32 48x48 64x64" href="%PUBLIC_URL%/icons/favicon.ico">
         <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
         <link href="https://fonts.googleapis.com/css?family=Play|Source+Sans+Pro" rel="stylesheet">
-
+        <!-- Start Single Page Apps for GitHub Pages -->
+        <script type="text/javascript">
+            // Single Page Apps for GitHub Pages
+            // MIT License
+            // https://github.com/rafgraph/spa-github-pages
+            // This script checks to see if a redirect is present in the query string,
+            // converts it back into the correct url and adds it to the
+            // browser's history using window.history.replaceState(...),
+            // which won't cause the browser to attempt to load the new url.
+            // When the single page app is loaded further down in this file,
+            // the correct url will be waiting in the browser's history for
+            // the single page app to route accordingly.
+            (function (l) {
+                if (l.search[1] === '/') {
+                    var decoded = l.search.slice(1).split('&').map(function (s) {
+                        return s.replace(/~and~/g, '&')
+                    }).join('?');
+                    window.history.replaceState(null, null,
+                        l.pathname.slice(0, -1) + decoded + l.hash
+                    );
+                }
+            }(window.location))
+        </script>
+        <!-- End Single Page Apps for GitHub Pages -->
+        <!-- Initialize raygun monitoring -->
+        <script type="text/javascript">
+            rg4js('apiKey', 'jH0jJtcJFbPWjbjev4YCRQ');
+            rg4js('enableCrashReporting', true);
+        </script>
     </head>
     <body>
         <noscript>You need to enable JavaScript to run this app.</noscript>

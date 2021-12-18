@@ -1,11 +1,12 @@
 // UI actions
 export const SET_TIME_FORMAT = "SET_TIME_FORMAT";
 
-export interface IState {
-    userSettings: {
-        use24HourTime: boolean;
-    };
+export interface ISettingsState {
+    userSettings: IUserSettings
 }
+export interface IUserSettings {
+    use24HourTime: boolean;
+};
 
 interface ISetTimeFormatAction {
     type: typeof SET_TIME_FORMAT;

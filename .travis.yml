@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - 8
+  - 10
+  - 13
+
+matrix:
+    allow_failures:
+        - node_js: 10
+        - node_js: 13

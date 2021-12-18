@@ -5,7 +5,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import logger from "redux-logger";
 
-import { selectedSchoolReducer, fetchErrorReducer } from "./schools/reducer";
+import { selectedSchoolReducer, fetchErrorReducer, schoolListReducer } from "./schools/reducer";
 import SchoolTransform from "../utils/typetransform";
 import { userSettingsReducer } from "./usersettings/reducer";
 
@@ -19,7 +19,16 @@ const persistConfig = {
 export const configureStore = (hist: any, initialState = {}) => {
     // Add the reducer, which adds location state to the store
     const rootReducer = combineReducers({
-        selectedSchool: selectedSchoolReducer,
+        selectedSchool: persistReducer({
+            key: "selectedSchool",
+            storage,
+            blacklist: ["isFetching"]
+        }, selectedSchoolReducer),
+        schoolList: persistReducer({
+            key: "schoolList",
+            storage,
+            blacklist: ["isFetching"]
+        },schoolListReducer),
         userSettings: userSettingsReducer,
         error: fetchErrorReducer,
         router: routerReducer // Convention is to use the "router" property
