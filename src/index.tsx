@@ -49,7 +49,7 @@ function render(pathname: string) {
     router.resolve(pathname).then((component: any) => {
         // console.log(component);
         //react-admin detects if its in a provider, so those pages cane be shown with the existing provider
-        if (pathname != pages.admin) {
+        if (!pathname.includes(pages.admin)) {
 
             ReactDOM.render(
                 <Provider store={configuredStore.store}>
