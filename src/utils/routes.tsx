@@ -6,6 +6,8 @@ import PrivateRoute from "../components/PrivateRoute";
 import SchoolSelect from "../pages/SchoolSelect";
 import { pages } from "./constants";
 import Admin from "../pages/Admin";
+import {Admin as RAdmin, Resource, ListGuesser} from "react-admin";
+import {dataProvider, authProvider, history} from "../store/store";
 
 export const routes = [
     {
@@ -26,7 +28,9 @@ export const routes = [
     },
     {
         path: pages.admin,
-        action: () => <PrivateRoute component={Admin} path={pages.admin} />
+        action: () => <RAdmin dataProvider={dataProvider} history={history} title="ClassClock Admin">
+            <Resource name="users" list={ListGuesser} />
+            </RAdmin>
     },
     {
         path: pages.loginCallback,
