@@ -48,23 +48,30 @@ const onRedirectCallback = (appState: any) => {
 function render(pathname: string) {
     router.resolve(pathname).then((component: any) => {
         // console.log(component);
+        //react-admin detects if its in a provider, so those pages cane be shown with the existing provider
+        if (pathname != pages.admin) {
 
-        ReactDOM.render(
-            <Provider store={configuredStore.store}>
-                <PersistGate loading={null} persistor={configuredStore.persistor}>
-                    <Auth0Provider
-                        domain={Auth0.domain}
-                        client_id={Auth0.clientId}
-                        audience={Auth0.audience}
-                        redirect_uri={"http://localhost:3000" + pages.loginCallback}
-                        onRedirectCallback={onRedirectCallback}
-                    >
-                        {component}
-                    </Auth0Provider>
-                </PersistGate>
-            </Provider>,
-            document.getElementById("root")
-        );
+            ReactDOM.render(
+                <Provider store={configuredStore.store}>
+                    <PersistGate loading={null} persistor={configuredStore.persistor}>
+                        <Auth0Provider
+                            domain={Auth0.domain}
+                            client_id={Auth0.clientId}
+                            audience={Auth0.audience}
+                            redirect_uri={"http://localhost:3000" + pages.loginCallback}
+                            onRedirectCallback={onRedirectCallback}
+                        >
+                            {component}
+                        </Auth0Provider>
+                    </PersistGate>
+                </Provider>,
+                document.getElementById("root")
+            );
+        } else {
+            ReactDOM.render(<>{component}</>,
+                document.getElementById("root")
+            );
+        }
     });
 }
 
