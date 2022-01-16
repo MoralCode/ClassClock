@@ -9,6 +9,11 @@ import Admin from "../pages/Admin";
 import {Admin as RAdmin, Resource, ListGuesser} from "react-admin";
 import {dataProvider, authProvider, history} from "../store/store";
 
+const AdminPage = <RAdmin dataProvider={dataProvider} history={history} title="ClassClock Admin">
+    <Resource name="admin/users" list={ListGuesser} />
+    <Resource name="classes" list={ListGuesser} />
+</RAdmin>
+
 export const routes = [
     {
         path: pages.main,
@@ -28,9 +33,8 @@ export const routes = [
     },
     {
         path: pages.admin,
-        action: () => <RAdmin dataProvider={dataProvider} history={history} title="ClassClock Admin">
-            <Resource name="users" list={ListGuesser} />
-            </RAdmin>
+        children: [],
+        action: () => AdminPage
     },
     {
         path: pages.loginCallback,
