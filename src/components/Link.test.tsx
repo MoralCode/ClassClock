@@ -27,7 +27,7 @@ describe("Link Component", () => {
 
         if (tree != null) {
             // manually trigger the callback
-            tree.props.onClick();
+            component.root.findByType('a').props.onClick();
         }
         
 
