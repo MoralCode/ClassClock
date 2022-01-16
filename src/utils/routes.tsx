@@ -15,7 +15,7 @@ const adminHistory = createBrowserHistory({
 });
 
 const AdminPage = <RAdmin disableTelemetry dataProvider={dataProvider} history={adminHistory} title="ClassClock Admin">
-    <Resource name="admin/users" list={ListGuesser} />
+    <Resource name="users" list={ListGuesser} />
     <Resource name="classes" list={ListGuesser} />
 </RAdmin>
 
