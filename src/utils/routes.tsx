@@ -8,8 +8,13 @@ import { pages } from "./constants";
 import Admin from "../pages/Admin";
 import {Admin as RAdmin, Resource, ListGuesser} from "react-admin";
 import {dataProvider, authProvider, history} from "../store/store";
+import { createBrowserHistory } from "history";
 
-const AdminPage = <RAdmin disableTelemetry dataProvider={dataProvider} history={history} title="ClassClock Admin">
+const adminHistory = createBrowserHistory({
+    basename: "/admin"
+});
+
+const AdminPage = <RAdmin disableTelemetry dataProvider={dataProvider} history={adminHistory} title="ClassClock Admin">
     <Resource name="admin/users" list={ListGuesser} />
     <Resource name="classes" list={ListGuesser} />
 </RAdmin>
