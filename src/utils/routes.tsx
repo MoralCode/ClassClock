@@ -9,7 +9,7 @@ import Admin from "../pages/Admin";
 import {Admin as RAdmin, Resource, ListGuesser} from "react-admin";
 import {dataProvider, authProvider, history} from "../store/store";
 
-const AdminPage = <RAdmin dataProvider={dataProvider} history={history} title="ClassClock Admin">
+const AdminPage = <RAdmin disableTelemetry dataProvider={dataProvider} history={history} title="ClassClock Admin">
     <Resource name="admin/users" list={ListGuesser} />
     <Resource name="classes" list={ListGuesser} />
 </RAdmin>
