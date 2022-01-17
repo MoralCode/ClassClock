@@ -14,9 +14,9 @@ const adminHistory = createBrowserHistory({
     basename: "/admin"
 });
 
-const AdminPage = <RAdmin disableTelemetry dataProvider={dataProvider} history={adminHistory} title="ClassClock Admin">
-    <Resource name="users" list={ListGuesser} />
-    <Resource name="classes" list={ListGuesser} />
+const AdminPage = <RAdmin disableTelemetry dataProvider={dataProvider} history={adminHistory} authProvider={authProvider} title="ClassClock Admin">
+    <Resource name="schools" list={ListGuesser} />
+    <Resource name="bellschedules" list={ListGuesser} />
 </RAdmin>
 
 export const routes = [
