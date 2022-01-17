@@ -26,7 +26,7 @@ export interface SelectedSchoolData {
 
 export interface SchoolMeta {
     isFetching: boolean;
-    didInvalidate: false;
+    didInvalidate: boolean;
     lastUpdated: number
 }
 
