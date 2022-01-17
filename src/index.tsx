@@ -47,28 +47,29 @@ const onRedirectCallback = (appState: any) => {
 // Create the reactive render function
 function render(pathname: string) {
     router.resolve(pathname).then((component: any) => {
-        // console.log(component);
+        const Core = <Auth0Provider
+            domain={Auth0.domain}
+            client_id={Auth0.clientId}
+            audience={Auth0.audience}
+            redirect_uri={(!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? "http://localhost:3000" : "https://web.classclock.app" + pages.loginCallback}
+            onRedirectCallback={onRedirectCallback}
+        >
+            {component}
+        </Auth0Provider>
+
         //react-admin detects if its in a provider, so those pages cane be shown with the existing provider
         if (!pathname.includes(pages.admin)) {
 
             ReactDOM.render(
                 <Provider store={configuredStore.store}>
                     <PersistGate loading={null} persistor={configuredStore.persistor}>
-                        <Auth0Provider
-                            domain={Auth0.domain}
-                            client_id={Auth0.clientId}
-                            audience={Auth0.audience}
-                            redirect_uri={"http://localhost:3000" + pages.loginCallback}
-                            onRedirectCallback={onRedirectCallback}
-                        >
-                            {component}
-                        </Auth0Provider>
+                        {Core}
                     </PersistGate>
                 </Provider>,
                 document.getElementById("root")
             );
         } else {
-            ReactDOM.render(<>{component}</>,
+            ReactDOM.render(Core,
                 document.getElementById("root")
             );
         }
