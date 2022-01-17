@@ -9,13 +9,14 @@ import { selectedSchoolReducer, fetchErrorReducer, schoolListReducer } from "./s
 import SchoolTransform from "../utils/typetransform";
 import { userSettingsReducer } from "./usersettings/reducer";
 import jsonServerProvider from 'ra-data-json-server';
+import ClassClockService from "../services/classclock";
 
 
 // Create the history object
 export const history = createBrowserHistory();
 
 //connect the data provider to the REST endpoint
-export const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
+export const dataProvider = jsonServerProvider(ClassClockService.baseURL);
 export const authProvider = () => Promise.resolve();
 
 const persistConfig = {
