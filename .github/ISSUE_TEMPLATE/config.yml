@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Feature Request
+    url: https://github.com/MoralCode/ClassClock/discussions
+    about: Please create feature and support requests in the Discussions tab.
