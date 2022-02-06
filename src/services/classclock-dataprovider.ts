@@ -36,19 +36,19 @@ import { fetchUtils, DataProvider } from 'ra-core';
  */
 export default (apiUrl, httpClient = fetchUtils.fetchJson): DataProvider => ({
 	getList: (resource, params) => {
-		const { page, perPage } = params.pagination;
-		const { field, order } = params.sort;
-		const query = {
-			...fetchUtils.flattenObject(params.filter),
-			_sort: field,
-			_order: order,
-			_start: (page - 1) * perPage,
-			_end: page * perPage,
-		};
-		const url = `${apiUrl}/${resource}?${stringify(query)}`;
+		// const { page, perPage } = params.pagination;
+		// const { field, order } = params.sort;
+		// const query = {
+		// 	...fetchUtils.flattenObject(params.filter),
+		// 	_sort: field,
+		// 	_order: order,
+		// 	_start: (page - 1) * perPage,
+		// 	_end: page * perPage,
+		// };
+		const url = `${apiUrl}/${resource}`;
 
 		return httpClient(url).then(({ headers, json }) => {
-			if (!headers.has('x-total-count')) {
+			if (!headers.has('X-Total-Count')) {
 				throw new Error(
 					'The X-Total-Count header is missing in the HTTP Response. The jsonServer Data Provider expects responses for lists of resources to contain this header with the total number of results to build the pagination. If you are using CORS, did you declare X-Total-Count in the Access-Control-Expose-Headers header?'
 				);
@@ -56,7 +56,7 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson): DataProvider => ({
 			return {
 				data: json,
 				total: parseInt(
-					headers.get('x-total-count').split('/').pop(),
+					(headers.get('x-total-count')?? "1").split('/').pop()?? "1",
 					10
 				),
 			};
