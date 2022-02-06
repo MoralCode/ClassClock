@@ -22,19 +22,11 @@ const AdminPage = () => {
     const {
         isAuthenticated,
         logout,
-        loginWithRedirect,
         loading,
-        error,
         user,
     } = useAuth0();
 
-    const customAuthProvider = authProvider({
-        isAuthenticated,
-        loginWithRedirect,
-        loading,
-        logout,
-        user,
-    });
+    const customAuthProvider = authProvider(isAuthenticated, loading, logout, user);
 
     return (<RAdmin disableTelemetry dataProvider={dataProvider} history={adminHistory} authProvider={customAuthProvider} loginPage={MyLoginPage} title="ClassClock Admin">
         <Resource name="schools" list={ListGuesser} />
