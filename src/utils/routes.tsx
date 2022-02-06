@@ -7,7 +7,8 @@ import SchoolSelect from "../pages/SchoolSelect";
 import { pages } from "./constants";
 import Admin from "../pages/Admin";
 import {Admin as RAdmin, Resource, ListGuesser} from "react-admin";
-import {dataProvider, authProvider, history} from "../store/store";
+import {dataProvider, history} from "../store/store";
+import authProvider from "../pages/Admin/authProvider";
 import { createBrowserHistory } from "history";
 
 const adminHistory = createBrowserHistory({
