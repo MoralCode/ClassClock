@@ -13,22 +13,30 @@ const authProvider = (
 		console.log("login")
 		return (isAuthenticated && loading == false ? Promise.resolve() : Promise.reject())
 	},
+	// TODO: maybe use login: () => Promise.resolve(),//unused because login is handled by auth0
 	logout: () => {
 		console.log("logout")
-		logout()
+		logout(
+			// TODO: is this needed?
+			//federated: true // have to be enabled to invalidate refresh token
+		)
 		return (isAuthenticated && loading == false ? Promise.resolve() : Promise.reject())
 	},
-	checkError: () => {
+	checkError: ({ status }: {status:number}) => {
 		console.log("checkError")
-		return Promise.resolve()
+		if (status === 401 || status === 403) {
+			return Promise.reject();
+		}
+		return Promise.resolve();
 	},
 	checkAuth: () => {
 		console.log("checkAuth: " + isAuthenticated)
 		return ((isAuthenticated || loading) ? Promise.resolve() : Promise.reject())
+		// TODO: is this a good idea/necessary? return Promise.reject({ redirectTo: '/nologin' })
 	},
 	getPermissions: () => {
 		console.log("getPermissions")
-		return Promise.reject('Unknown method')
+		return ((isAuthenticated || loading) ? Promise.resolve() : Promise.reject())
 	},
 	getIdentity: () =>
 		Promise.resolve({
