@@ -34,7 +34,7 @@ import { fetchUtils, DataProvider } from 'ra-core';
  *
  * export default App;
  */
-export default (apiUrl, httpClient = fetchUtils.fetchJson): DataProvider => ({
+export default (apiUrl:string, httpClient = fetchUtils.fetchJson): DataProvider => ({
 	getList: (resource, params) => {
 		// const { page, perPage } = params.pagination;
 		// const { field, order } = params.sort;
