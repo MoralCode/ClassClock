@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { useLogin, useNotify, Notification, defaultTheme } from 'react-admin';
 import { ThemeProvider } from '@material-ui/styles';
 import { createTheme } from '@material-ui/core/styles';
+import { useAuth0 } from '../../react-auth0-wrapper';
+import {pages} from "../../utils/constants";
 
 const MyLoginPage = (props: any) => {
 	const [email, setEmail] = useState('');
@@ -16,9 +18,10 @@ const MyLoginPage = (props: any) => {
 		);
 	};
 
+	const { isAuthenticated, loginWithRedirect, handleRedirectCallback } = useAuth0();
 	return (
 		<ThemeProvider theme={createTheme(defaultTheme)}>
-			<form onSubmit={submit}>
+			{/* <form onSubmit={submit}>
 				<input
 					name="email"
 					type="email"
@@ -31,7 +34,10 @@ const MyLoginPage = (props: any) => {
 					value={password}
 					onChange={e => setPassword(e.target.value)}
 				/>
-			</form>
+			</form> */}
+			<button onClick={() => loginWithRedirect({
+				appState: { targetUrl: pages.admin }
+			})}>Login with Auth0</button>
 			<Notification />
 		</ThemeProvider>
 	);
