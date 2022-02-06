@@ -108,7 +108,7 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson): DataProvider => ({
 
 	update: (resource, params) =>
 		httpClient(`${apiUrl}/${resource}/${params.id}`, {
-			method: 'PUT',
+			method: 'PATCH',
 			body: JSON.stringify(params.data),
 		}).then(({ json }) => ({ data: json })),
 
@@ -117,7 +117,7 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson): DataProvider => ({
 		Promise.all(
 			params.ids.map(id =>
 				httpClient(`${apiUrl}/${resource}/${id}`, {
-					method: 'PUT',
+					method: 'PATCH',
 					body: JSON.stringify(params.data),
 				})
 			)
