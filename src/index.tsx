@@ -47,7 +47,7 @@ const onRedirectCallback = (appState: any) => {
 // Create the reactive render function
 function render(pathname: string) {
     router.resolve(pathname).then((component: any) => {
-        const Core = <Auth0Provider
+        const core = <Auth0Provider
             domain={Auth0.domain}
             client_id={Auth0.clientId}
             audience={Auth0.audience}
@@ -63,13 +63,13 @@ function render(pathname: string) {
             ReactDOM.render(
                 <Provider store={configuredStore.store}>
                     <PersistGate loading={null} persistor={configuredStore.persistor}>
-                        {Core}
+                        {core}
                     </PersistGate>
                 </Provider>,
                 document.getElementById("root")
             );
         } else {
-            ReactDOM.render(Core,
+            ReactDOM.render(core,
                 document.getElementById("root")
             );
         }
