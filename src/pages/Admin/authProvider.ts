@@ -13,29 +13,29 @@ const authProvider = (
 		console.log("login")
 		return (isAuthenticated && loading == false ? Promise.resolve() : Promise.reject())
 	},
-  logout: () => {
-	console.log("logout")
-	logout()
-	return (isAuthenticated && loading == false ? Promise.resolve() : Promise.reject())
+	logout: () => {
+		console.log("logout")
+		logout()
+		return (isAuthenticated && loading == false ? Promise.resolve() : Promise.reject())
 	},
-  checkError: () => {
-	console.log("checkError")
-	return Promise.resolve()
+	checkError: () => {
+		console.log("checkError")
+		return Promise.resolve()
 	},
-  checkAuth: () => {
-	console.log("checkAuth: " + isAuthenticated)
-	  return ((isAuthenticated || loading) ? Promise.resolve() : Promise.reject())
+	checkAuth: () => {
+		console.log("checkAuth: " + isAuthenticated)
+		return ((isAuthenticated || loading) ? Promise.resolve() : Promise.reject())
 	},
-  getPermissions: () => {
-	console.log("getPermissions")
-	return Promise.reject('Unknown method')
+	getPermissions: () => {
+		console.log("getPermissions")
+		return Promise.reject('Unknown method')
 	},
-  getIdentity: () =>
-    Promise.resolve({
-      id: user.id,
-      fullName: user.name,
-      avatar: user.picture,
-    }),
+	getIdentity: () =>
+		Promise.resolve({
+			id: user.id,
+			fullName: user.name,
+			avatar: user.picture,
+		}),
 });
 
 export default authProvider;
