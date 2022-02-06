@@ -1,10 +1,11 @@
-import authConfig from "./authConfig";
+
 import { Auth0Client } from '@auth0/auth0-spa-js';
+import {Auth0} from '../../utils/constants'
 
 const auth0 = new Auth0Client({
-	domain: authConfig.domain,
-	client_id: authConfig.clientID,
-	redirect_uri: authConfig.redirectURI,
+	domain: Auth0.domain,
+	client_id: Auth0.clientID,
+	redirect_uri: process.env.REACT_APP_AUTH0_REDIRECT_URI,
 	cacheLocation: 'localstorage',
 	useRefreshTokens: true
 });
