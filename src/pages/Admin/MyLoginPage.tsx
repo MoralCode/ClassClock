@@ -6,7 +6,7 @@ import { createTheme } from '@material-ui/core/styles';
 import { useAuth0 } from '../../react-auth0-wrapper';
 import {pages} from "../../utils/constants";
 
-const MyLoginPage = (props: any) => {
+const MyLoginPage = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const login = useLogin();
