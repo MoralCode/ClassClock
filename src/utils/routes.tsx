@@ -10,12 +10,13 @@ import {Admin as RAdmin, Resource, ListGuesser} from "react-admin";
 import {dataProvider, history} from "../store/store";
 import authProvider from "../pages/Admin/authProvider";
 import { createBrowserHistory } from "history";
+import MyLoginPage from "../pages/Admin/MyLoginPage";
 
 const adminHistory = createBrowserHistory({
     basename: "/admin"
 });
 
-const AdminPage = <RAdmin disableTelemetry dataProvider={dataProvider} history={adminHistory} authProvider={authProvider} title="ClassClock Admin">
+const AdminPage = <RAdmin disableTelemetry dataProvider={dataProvider} history={adminHistory} authProvider={authProvider} loginPage={MyLoginPage} title="ClassClock Admin">
     <Resource name="schools" list={ListGuesser} />
     <Resource name="bellschedules" list={ListGuesser} />
 </RAdmin>
