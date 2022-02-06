@@ -10,7 +10,7 @@ import {Admin as RAdmin, Resource, ListGuesser} from "react-admin";
 import {dataProvider, history} from "../store/store";
 import authProvider from "../pages/Admin/authProvider";
 import { createBrowserHistory } from "history";
-import MyLoginPage from "../pages/Admin/MyLoginPage";
+import LoginRedirect from "../pages/Admin/LoginRedirect";
 import { useAuth0 } from "../react-auth0-wrapper";
 
 const adminHistory = createBrowserHistory({
@@ -28,7 +28,7 @@ const AdminPage = () => {
 
     const customAuthProvider = authProvider(isAuthenticated, loading, logout, user);
 
-    return (<RAdmin disableTelemetry dataProvider={dataProvider} history={adminHistory} authProvider={customAuthProvider} loginPage={MyLoginPage} title="ClassClock Admin">
+    return (<RAdmin disableTelemetry dataProvider={dataProvider} history={adminHistory} authProvider={customAuthProvider} loginPage={LoginRedirect} title="ClassClock Admin">
         <Resource name="schools" list={ListGuesser} />
         <Resource name="bellschedules" list={ListGuesser} />
     </RAdmin>)
