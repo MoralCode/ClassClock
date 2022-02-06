@@ -11,15 +11,36 @@ import {dataProvider, history} from "../store/store";
 import authProvider from "../pages/Admin/authProvider";
 import { createBrowserHistory } from "history";
 import MyLoginPage from "../pages/Admin/MyLoginPage";
+import { useAuth0 } from "../react-auth0-wrapper";
 
 const adminHistory = createBrowserHistory({
     basename: "/admin"
 });
 
-const AdminPage = <RAdmin disableTelemetry dataProvider={dataProvider} history={adminHistory} authProvider={authProvider} loginPage={MyLoginPage} title="ClassClock Admin">
-    <Resource name="schools" list={ListGuesser} />
-    <Resource name="bellschedules" list={ListGuesser} />
-</RAdmin>
+const AdminPage = () => {
+
+    const {
+        isAuthenticated,
+        logout,
+        loginWithRedirect,
+        loading,
+        error,
+        user,
+    } = useAuth0();
+
+    const customAuthProvider = authProvider({
+        isAuthenticated,
+        loginWithRedirect,
+        loading,
+        logout,
+        user,
+    });
+
+    return (<RAdmin disableTelemetry dataProvider={dataProvider} history={adminHistory} authProvider={customAuthProvider} loginPage={MyLoginPage} title="ClassClock Admin">
+        <Resource name="schools" list={ListGuesser} />
+        <Resource name="bellschedules" list={ListGuesser} />
+    </RAdmin>)
+}
 
 export const routes = [
     {
@@ -41,7 +62,7 @@ export const routes = [
     {
         path: pages.admin,
         children: [],
-        action: () => AdminPage
+        action: () => <AdminPage/>
     },
     {
         path: pages.loginCallback,
