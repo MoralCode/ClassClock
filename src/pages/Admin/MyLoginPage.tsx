@@ -25,26 +25,7 @@ const MyLoginPage = () => {
 		})
 	}
 	return (
-		<ThemeProvider theme={createTheme(defaultTheme)}>
-			{/* <form onSubmit={submit}>
-				<input
-					name="email"
-					type="email"
-					value={email}
-					onChange={e => setEmail(e.target.value)}
-				/>
-				<input
-					name="password"
-					type="password"
-					value={password}
-					onChange={e => setPassword(e.target.value)}
-				/>
-			</form> */}
-			<button onClick={() => loginWithRedirect({
-				appState: { targetUrl: pages.admin }
-			})}>Login with Auth0</button>
-			<Notification />
-		</ThemeProvider>
+		<p>Redirecting you to the login page...</p>
 	);
 };
 
