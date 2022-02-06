@@ -23,7 +23,8 @@ const authProvider = ({
 	},
   logout: () => {
 	console.log("logout")
-	return logout({ returnTo: window.location.origin })
+	logout()
+	return (isAuthenticated && loading == false ? Promise.resolve() : Promise.reject())
 	},
   checkError: () => {
 	console.log("checkError")
