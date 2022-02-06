@@ -43,7 +43,8 @@ export default {
 			if (isAuthenticated) {
 				return Promise.resolve();
 			}
-			return auth0.getTokenSilently().then(() => Promise.resolve()).catch(() => Promise.reject())
+			// return auth0.getTokenSilently().then(() => Promise.resolve()).catch(() => Promise.reject())
+			return Promise.reject();
 		})
 	},
 	// called when the user navigates to a new location, to check for permissions / roles
