@@ -17,7 +17,6 @@ export const history = createBrowserHistory();
 
 //connect the data provider to the REST endpoint
 export const dataProvider = jsonServerProvider(ClassClockService.baseURL);
-export const authProvider = () => Promise.resolve();
 
 const persistConfig = {
     key: "root",
