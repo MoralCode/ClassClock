@@ -19,6 +19,11 @@ const MyLoginPage = () => {
 	};
 
 	const { isAuthenticated, loginWithRedirect, loading } = useAuth0();
+	if (!isAuthenticated && loading == false) {
+		loginWithRedirect({
+			appState: { targetUrl: pages.admin }
+		})
+	}
 	return (
 		<ThemeProvider theme={createTheme(defaultTheme)}>
 			{/* <form onSubmit={submit}>
