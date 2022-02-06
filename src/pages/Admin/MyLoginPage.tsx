@@ -18,7 +18,7 @@ const MyLoginPage = () => {
 		);
 	};
 
-	const { isAuthenticated, loginWithRedirect, handleRedirectCallback } = useAuth0();
+	const { isAuthenticated, loginWithRedirect, loading } = useAuth0();
 	return (
 		<ThemeProvider theme={createTheme(defaultTheme)}>
 			{/* <form onSubmit={submit}>
