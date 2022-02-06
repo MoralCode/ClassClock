@@ -67,14 +67,15 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson): DataProvider => ({
 		httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => ({
 			data: json,
 		})),
-
-	getMany: (resource, params) => {
-		const query = {
-			id: params.ids,
-		};
-		const url = `${apiUrl}/${resource}?${stringify(query)}`;
-		return httpClient(url).then(({ json }) => ({ data: json }));
-	},
+	//make separate queries for each item because the classclock API doesnt support getting a specific set at once
+	getMany: (resource, params) => 		
+		Promise.all(
+			params.ids.map(id =>
+				httpClient(`${apiUrl}/${resource}/${id}`, {
+					method: 'GET'
+				})
+			)
+		).then(responses => ({ data: responses.map(({ json }) => json.id) })),
 
 	getManyReference: (resource, params) => {
 		const { page, perPage } = params.pagination;
