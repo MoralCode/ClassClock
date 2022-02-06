@@ -54,7 +54,7 @@ export default (apiUrl:string, httpClient = fetchUtils.fetchJson): DataProvider 
 			// 	);
 			// }
 			return {
-				data: json,
+				data: json.data,
 				total: parseInt(
 					(headers.get('x-total-count')?? "1").split('/').pop()?? "1",
 					10
