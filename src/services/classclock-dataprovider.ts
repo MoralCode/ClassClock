@@ -1,6 +1,7 @@
 
 import { GetTokenSilentlyOptions } from '@auth0/auth0-spa-js';
 import { fetchUtils, DataProvider } from 'ra-core';
+import ClassClockService from './classclock';
 
 /**
  * Maps react-admin queries to the ClassClock API
@@ -46,7 +47,7 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 		// };
 		const url = `${apiUrl}/${resource}`;
 
-		return httpClient(url).then(({ headers, json }) => {
+		return ClassClockService.makeAPICall("GET", url, token).then(async response => {
 			// if (!headers.has('X-Total-Count')) {
 			// 	throw new Error(
 			// 		'The X-Total-Count header is missing in the HTTP Response. The jsonServer Data Provider expects responses for lists of resources to contain this header with the total number of results to build the pagination. If you are using CORS, did you declare X-Total-Count in the Access-Control-Expose-Headers header?'
