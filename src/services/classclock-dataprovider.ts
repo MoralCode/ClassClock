@@ -1,5 +1,5 @@
 
-import { stringify } from 'query-string';
+import { GetTokenSilentlyOptions } from '@auth0/auth0-spa-js';
 import { fetchUtils, DataProvider } from 'ra-core';
 
 /**
@@ -33,8 +33,8 @@ import { fetchUtils, DataProvider } from 'ra-core';
  *
  * export default App;
  */
-export default (apiUrl:string, httpClient = fetchUtils.fetchJson): DataProvider => ({
-	getList: (resource, params) => {
+export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) => Promise<string>, httpClient = fetchUtils.fetchJson): DataProvider => ({
+	getList: async (resource, params) => {
 		// const { page, perPage } = params.pagination;
 		// const { field, order } = params.sort;
 		// const query = {
