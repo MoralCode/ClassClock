@@ -3,9 +3,8 @@ import { stringify } from 'query-string';
 import { fetchUtils, DataProvider } from 'ra-core';
 
 /**
- * Maps react-admin queries to a json-server powered REST API
+ * Maps react-admin queries to the ClassClock API
  *
- * @see https://github.com/typicode/json-server
  *
  * @example
  *
