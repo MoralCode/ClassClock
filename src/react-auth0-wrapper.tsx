@@ -11,7 +11,7 @@ interface IAuth0Context {
     handleRedirectCallback(): Promise<RedirectLoginResult>;
     getIdTokenClaims(o?: getIdTokenClaimsOptions): Promise<IdToken>;
     loginWithRedirect(o: RedirectLoginOptions): Promise<void>;
-    getTokenSilently(o?: GetTokenSilentlyOptions): Promise<string | undefined>;
+    getTokenSilently(o?: GetTokenSilentlyOptions): Promise<string>;
     getTokenWithPopup(o?: GetTokenWithPopupOptions): Promise<string | undefined>;
     logout(o?: LogoutOptions): void;
 }
