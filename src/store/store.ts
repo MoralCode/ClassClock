@@ -8,7 +8,6 @@ import logger from "redux-logger";
 import { selectedSchoolReducer, fetchErrorReducer, schoolListReducer } from "./schools/reducer";
 import SchoolTransform from "../utils/typetransform";
 import { userSettingsReducer } from "./usersettings/reducer";
-import jsonServerProvider from 'ra-data-json-server';
 import ClassClockService from "../services/classclock";
 
 
@@ -16,7 +15,6 @@ import ClassClockService from "../services/classclock";
 export const history = createBrowserHistory();
 
 //connect the data provider to the REST endpoint
-export const dataProvider = jsonServerProvider(ClassClockService.baseURL);
 
 const persistConfig = {
     key: "root",
