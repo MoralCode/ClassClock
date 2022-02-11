@@ -7,11 +7,13 @@ import SchoolSelect from "../pages/SchoolSelect";
 import { pages } from "./constants";
 import Admin from "../pages/Admin";
 import {Admin as RAdmin, Resource, ListGuesser} from "react-admin";
-import {dataProvider, history} from "../store/store";
+import {history} from "../store/store";
+import ccDataProvider from "../services/classclock-dataprovider"
 import authProvider from "../pages/Admin/authProvider";
 import { createBrowserHistory } from "history";
 import LoginRedirect from "../pages/Admin/LoginRedirect";
 import { useAuth0 } from "@auth0/auth0-react";
+import ClassClockService from "../services/classclock";
 
 const adminHistory = createBrowserHistory({
     basename: "/admin"
@@ -29,7 +31,7 @@ const AdminPage = () => {
 
     const customAuthProvider = authProvider(isAuthenticated, loading, logout, user);
 
-    return (<RAdmin disableTelemetry dataProvider={dataProvider} history={adminHistory} authProvider={customAuthProvider} loginPage={LoginRedirect} title="ClassClock Admin">
+    return (<RAdmin disableTelemetry dataProvider={ccDataProvider(ClassClockService.baseURL, undefined, getAccessTokenSilently)} history={adminHistory} authProvider={customAuthProvider} loginPage={LoginRedirect} title="ClassClock Admin">
         <Resource name="schools" list={ListGuesser} />
         <Resource name="bellschedules" list={ListGuesser} />
     </RAdmin>)
