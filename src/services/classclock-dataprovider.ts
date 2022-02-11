@@ -45,6 +45,7 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 		// 	_start: (page - 1) * perPage,
 		// 	_end: page * perPage,
 		// };
+		const token: string = await getTokenSilently()
 		const url = `${apiUrl}/${resource}`;
 
 		return ClassClockService.makeAPICall("GET", url, token).then(async response => {
@@ -53,13 +54,16 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 			// 		'The X-Total-Count header is missing in the HTTP Response. The jsonServer Data Provider expects responses for lists of resources to contain this header with the total number of results to build the pagination. If you are using CORS, did you declare X-Total-Count in the Access-Control-Expose-Headers header?'
 			// 	);
 			// }
-			return {
-				data: json.data,
-				total: parseInt(
-					(headers.get('x-total-count')?? "1").split('/').pop()?? "1",
-					10
-				),
-			};
+			var data = await response.json()//.data
+			return Object.assign({},
+				data,
+				{
+					total: parseInt(
+						(response.headers.get('X-Total-Count')?? "1").split('/').pop()?? "1",
+						10
+					),
+				}
+			);
 		});
 	},
 
