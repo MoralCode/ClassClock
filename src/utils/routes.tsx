@@ -6,7 +6,7 @@ import PrivateRoute from "../components/PrivateRoute";
 import SchoolSelect from "../pages/SchoolSelect";
 import { pages } from "./constants";
 import Admin from "../pages/Admin";
-import {Admin as RAdmin, Resource, ListGuesser} from "react-admin";
+import {Admin as RAdmin, Resource, ListGuesser, Datagrid, DateField, List, TextField} from "react-admin";
 import {history} from "../store/store";
 import ccDataProvider from "../services/classclock-dataprovider"
 import authProvider from "../pages/Admin/authProvider";
@@ -18,6 +18,20 @@ import ClassClockService from "../services/classclock";
 const adminHistory = createBrowserHistory({
     basename: "/admin"
 });
+
+export const SchoolList = (props:any) => (
+    <List {...props}>
+        <Datagrid rowClick="edit">
+            <TextField source="full_name" />
+            <TextField source="id" />
+            <DateField source="creation_date" />
+            <TextField source="acronym" />
+            <TextField source="alternate_freeperiod_name" />
+            <DateField source="last_modified" />
+            {/* <ReferenceField source="owner_id" reference="owners"><TextField source="id" /></ReferenceField> */}
+        </Datagrid>
+    </List>
+);
 
 const AdminPage = () => {
 
@@ -32,7 +46,7 @@ const AdminPage = () => {
     const customAuthProvider = authProvider(isAuthenticated, isLoading, logout, user);
 
     return (<RAdmin disableTelemetry dataProvider={ccDataProvider(ClassClockService.baseURL, undefined, getAccessTokenSilently)} history={adminHistory} authProvider={customAuthProvider} loginPage={LoginRedirect} title="ClassClock Admin">
-        <Resource name="schools" list={ListGuesser} />
+        <Resource name="schools" list={SchoolList} />
         <Resource name="bellschedules" list={ListGuesser} />
     </RAdmin>)
 }
