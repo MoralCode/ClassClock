@@ -1,5 +1,5 @@
 
-import { GetTokenSilentlyOptions } from '@auth0/auth0-spa-js';
+import { GetTokenSilentlyOptions } from '@auth0/auth0-react';
 import { fetchUtils, DataProvider } from 'ra-core';
 import ClassClockService from './classclock';
 

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useLogin, useNotify, Notification, defaultTheme } from 'react-admin';
 import { ThemeProvider } from '@material-ui/styles';
 import { createTheme } from '@material-ui/core/styles';
-import { useAuth0 } from '../../react-auth0-wrapper';
+import { useAuth0 } from '@auth0/auth0-react';
 import {pages} from "../../utils/constants";
 
 const LoginRedirect = () => {
@@ -18,8 +18,8 @@ const LoginRedirect = () => {
 		);
 	};
 
-	const { isAuthenticated, loginWithRedirect, loading } = useAuth0();
-	if (!isAuthenticated && loading == false) {
+	const { isAuthenticated, loginWithRedirect, isLoading } = useAuth0();
+	if (!isAuthenticated && isLoading == false) {
 		loginWithRedirect({
 			appState: { targetUrl: pages.admin }
 		})
