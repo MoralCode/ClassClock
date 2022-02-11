@@ -28,7 +28,8 @@ const Auth0ProviderWithHistory = ({ children }: {children: React.ReactElement}) 
 		<Auth0Provider
 			domain= { Auth0.domain }
 			clientId = { Auth0.clientId }
-			redirectUri = {(!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? "http://localhost:3000" : "https://web.classclock.app" + pages.loginCallback}
+			audience = { Auth0.audience }
+			redirectUri = {(!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? "http://localhost:3000" + pages.loginCallback : "https://web.classclock.app/admin" + pages.loginCallback}
 			onRedirectCallback = { onRedirectCallback }
 
 		>
