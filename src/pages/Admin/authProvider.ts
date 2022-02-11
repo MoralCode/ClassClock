@@ -20,7 +20,7 @@ const authProvider = (
 			// TODO: is this needed?
 			//federated: true // have to be enabled to invalidate refresh token
 		)
-		return (isAuthenticated && loading == false ? Promise.resolve() : Promise.reject())
+		return (isAuthenticated && loading == false ? Promise.reject() : Promise.resolve())
 	},
 	checkError: ({ status }: {status:number}) => {
 		console.log("checkError")
