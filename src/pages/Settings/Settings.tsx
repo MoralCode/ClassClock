@@ -13,7 +13,7 @@ import { setTimeFormatPreference } from "../../store/usersettings/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTwitter, faInstagram, faDiscord } from "@fortawesome/free-brands-svg-icons";
 import { faHome, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import { useAuth0 } from "../../react-auth0-wrapper";
+import { useAuth0 } from "@auth0/auth0-react";
 import distanceInWords from "date-fns/distance_in_words";
 import { selectSchool, invalidateSchool } from "../../store/schools/actions";
 import packageJson from '../../package.alias.json';

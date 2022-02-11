@@ -11,7 +11,7 @@ import {dataProvider, history} from "../store/store";
 import authProvider from "../pages/Admin/authProvider";
 import { createBrowserHistory } from "history";
 import LoginRedirect from "../pages/Admin/LoginRedirect";
-import { useAuth0 } from "../react-auth0-wrapper";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const adminHistory = createBrowserHistory({
     basename: "/admin"
@@ -22,8 +22,9 @@ const AdminPage = () => {
     const {
         isAuthenticated,
         logout,
-        loading,
+        isLoading,
         user,
+        getAccessTokenSilently
     } = useAuth0();
 
     const customAuthProvider = authProvider(isAuthenticated, loading, logout, user);

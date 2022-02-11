@@ -1,5 +1,5 @@
 
-import { LogoutOptions, RedirectLoginOptions } from '@auth0/auth0-spa-js';
+import { LogoutOptions } from '@auth0/auth0-react';
 import { AuthProvider } from 'react-admin';
 import {Auth0, pages} from '../../utils/constants'
 

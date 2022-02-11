@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useAuth0 } from "../react-auth0-wrapper";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const PrivateRoute = ({ component: Component, path, ...rest }: any) => {
     const { isAuthenticated, loginWithRedirect } = useAuth0();
