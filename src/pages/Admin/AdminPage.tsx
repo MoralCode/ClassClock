@@ -6,7 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import ClassClockService from "../../services/classclock";
 import { createBrowserHistory } from "history";
 import LoginRedirect from "./LoginRedirect";
-import { SchoolList } from "./resources";
+import { BellScheduleList, SchoolList } from "./resources";
 
 
 const adminHistory = createBrowserHistory({
@@ -27,7 +27,7 @@ const AdminPage = () => {
 
     return (<RAdmin disableTelemetry dataProvider={ccDataProvider(ClassClockService.baseURL, getAccessTokenSilently)} history={adminHistory} authProvider={customAuthProvider} loginPage={LoginRedirect} title="ClassClock Admin">
         <Resource name="schools" list={SchoolList} />
-		<Resource name="bellschedules" list={ListGuesser} edit={EditGuesser} />
+		<Resource name="bellschedules" list={BellScheduleList} edit={EditGuesser} />
     </RAdmin>)
 }
 
