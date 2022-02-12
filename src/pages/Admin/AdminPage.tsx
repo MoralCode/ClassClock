@@ -1,5 +1,5 @@
 import React from "react";
-import { Admin as RAdmin, Resource, ListGuesser} from "react-admin";
+import { Admin as RAdmin, Resource, ListGuesser, EditGuesser} from "react-admin";
 import ccDataProvider from "../../services/classclock-dataprovider"
 import authProvider from "../../pages/Admin/authProvider";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -27,7 +27,7 @@ const AdminPage = () => {
 
     return (<RAdmin disableTelemetry dataProvider={ccDataProvider(ClassClockService.baseURL, getAccessTokenSilently)} history={adminHistory} authProvider={customAuthProvider} loginPage={LoginRedirect} title="ClassClock Admin">
         <Resource name="schools" list={SchoolList} />
-        <Resource name="bellschedules" list={ListGuesser} />
+		<Resource name="bellschedules" list={ListGuesser} edit={EditGuesser} />
     </RAdmin>)
 }
 
