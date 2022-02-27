@@ -19,14 +19,18 @@ export const SchoolList = (props: any) => (
 export const BellScheduleList = (props: any) => (
 	<List {...props}>
 		<Datagrid rowClick="edit">
-			<DateField source="last_modified" />
-			<TextField source="school" />
-			<ArrayField source="meeting_times"><SingleFieldList><ChipField source="bell_schedule_id" /></SingleFieldList></ArrayField>
-			<DateField source="creation_date" />
-			<TextField source="display_name" />
+			{/* <TextField source="school" /> */}
 			<TextField source="name" />
-			<TextField source="dates" />
-			<TextField source="id" />
+			<TextField source="display_name" />
+			<ArrayField source="meeting_times" label="Class Periods"><SingleFieldList><ChipField source="name" /></SingleFieldList></ArrayField>
+			
+		
+			{/* <ArrayField source="dates"></ArrayField> */}
+			{/* <TextField source="dates" /> */}
+			{/* <TextField source="id" /> */}
+			<DateField source="creation_date" />
+			{/* <DateField source="last_modified" /> */}
+
 		</Datagrid>
 	</List>
 );
