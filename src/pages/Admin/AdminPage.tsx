@@ -26,7 +26,7 @@ const AdminPage = () => {
     const customAuthProvider = authProvider(isAuthenticated, isLoading, logout, user);
 
     return (<RAdmin disableTelemetry dataProvider={ccDataProvider(ClassClockService.baseURL, getAccessTokenSilently)} history={adminHistory} authProvider={customAuthProvider} loginPage={LoginRedirect} title="ClassClock Admin">
-        <Resource name="schools" list={SchoolList} />
+		<Resource name="schools" />
 		<Resource name="bellschedules" list={BellScheduleList} edit={EditGuesser} />
     </RAdmin>)
 }
