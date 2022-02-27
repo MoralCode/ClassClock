@@ -1,12 +1,12 @@
 import React from "react";
-import { Admin as RAdmin, Resource, ListGuesser, EditGuesser} from "react-admin";
+import { Admin as RAdmin, Resource, ListGuesser, EditGuesser, EditButton, DeleteButton} from "react-admin";
 import ccDataProvider from "../../services/classclock-dataprovider"
 import authProvider from "../../pages/Admin/authProvider";
 import { useAuth0 } from "@auth0/auth0-react";
 import ClassClockService from "../../services/classclock";
 import { createBrowserHistory } from "history";
 import LoginRedirect from "./LoginRedirect";
-import { BellScheduleList, SchoolList } from "./resources";
+import { BellscheduleEdit, BellScheduleList, SchoolList } from "./resources";
 
 
 const adminHistory = createBrowserHistory({
@@ -27,7 +27,7 @@ const AdminPage = () => {
 
     return (<RAdmin disableTelemetry dataProvider={ccDataProvider(ClassClockService.baseURL, getAccessTokenSilently)} history={adminHistory} authProvider={customAuthProvider} loginPage={LoginRedirect} title="ClassClock Admin">
 		<Resource name="schools" />
-		<Resource name="bellschedules" list={BellScheduleList} edit={EditGuesser} />
+		<Resource name="bellschedules" list={BellScheduleList} edit={BellscheduleEdit} />
     </RAdmin>)
 }
 

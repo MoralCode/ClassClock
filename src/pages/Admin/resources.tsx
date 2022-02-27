@@ -1,5 +1,5 @@
 import React from "react";
-import {ArrayField, ChipField, Datagrid, DateField, List, SingleFieldList, TextField } from "react-admin";
+import {ArrayField, ArrayInput, ChipField, Datagrid, DateField, DateInput, Edit, List, ReferenceInput, SelectInput, SimpleForm, SimpleFormIterator, SingleFieldList, TextField, TextInput } from "react-admin";
 
 
 export const SchoolList = (props: any) => (
@@ -34,3 +34,22 @@ export const BellScheduleList = (props: any) => (
 		</Datagrid>
 	</List>
 );
+
+export const BellscheduleEdit = props => (
+	<Edit {...props}>
+		<SimpleForm>
+			<TextInput source="name" />
+			<TextInput source="id" />
+			<TextInput source="display_name" />
+			<DateInput source="last_modified" />
+			<TextInput source="dates" />
+			<ArrayInput source="meeting_times"><SimpleFormIterator><ReferenceInput source="bell_schedule_id" reference="bell_schedules"><SelectInput optionText="id" /></ReferenceInput>
+				<TextInput source="name" />
+				<TextInput source="start_time" />
+				<TextInput source="end_time" /></SimpleFormIterator></ArrayInput>
+			<TextInput source="school" />
+			<DateInput source="creation_date" />
+		</SimpleForm>
+	</Edit>
+);
+
