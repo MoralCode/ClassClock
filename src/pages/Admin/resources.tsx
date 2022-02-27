@@ -39,16 +39,16 @@ export const BellscheduleEdit = props => (
 	<Edit {...props}>
 		<SimpleForm>
 			<TextInput source="name" />
-			<TextInput source="id" />
+			{/* <TextField source="id" /> */}
 			<TextInput source="display_name" />
-			<DateInput source="last_modified" />
-			<TextInput source="dates" />
+			{/* <DateField source="last_modified" /> */}
+			{/* <TextInput source="dates" /> */}
 			<ArrayInput source="meeting_times"><SimpleFormIterator><ReferenceInput source="bell_schedule_id" reference="bell_schedules"><SelectInput optionText="id" /></ReferenceInput>
 				<TextInput source="name" />
 				<TextInput source="start_time" />
 				<TextInput source="end_time" /></SimpleFormIterator></ArrayInput>
-			<TextInput source="school" />
-			<DateInput source="creation_date" />
+			{/* <TextInput source="school" /> */}
+			<DateField source="creation_date" />
 		</SimpleForm>
 	</Edit>
 );
