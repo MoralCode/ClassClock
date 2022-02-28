@@ -67,7 +67,7 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 		});
 	},
 
-	getOne: (resource, params) =>{
+	getOne: async (resource, params) =>{
 		const token: string = await getTokenSilently()
 		return httpClient("GET", `${apiUrl}/${resource}/${params.id}`, token).then(async response => {
 			let json = await response.json();
@@ -77,7 +77,7 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 		});
 	}
 	//make separate queries for each item because the classclock API doesnt support getting a specific set at once
-	getMany: (resource, params) => {
+	getMany: async (resource, params) => {
 		const token: string = await getTokenSilently();
 		return Promise.all(
 			params.ids.map(id => {
@@ -115,14 +115,14 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 		});
 	},
 
-	update: (resource, params) =>
+	update: async (resource, params) =>
 		httpClient(`${apiUrl}/${resource}/${params.id}`, {
 			method: 'PATCH',
 			body: JSON.stringify(params.data),
 		}).then(({ json }) => ({ data: json })),
 
 	// json-server doesn't handle filters on UPDATE route, so we fallback to calling UPDATE n times instead
-	updateMany: (resource, params) =>
+	updateMany: async (resource, params) =>
 		Promise.all(
 			params.ids.map(id =>
 				httpClient(`${apiUrl}/${resource}/${id}`, {
@@ -132,7 +132,7 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 			)
 		).then(responses => ({ data: responses.map(({ json }) => json.id) })),
 
-	create: (resource, params) =>
+	create: async (resource, params) =>
 		httpClient(`${apiUrl}/${resource}`, {
 			method: 'POST',
 			body: JSON.stringify(params.data),
@@ -140,13 +140,13 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 			data: { ...params.data, id: json.id },
 		})),
 
-	delete: (resource, params) =>
+	delete: async (resource, params) =>
 		httpClient(`${apiUrl}/${resource}/${params.id}`, {
 			method: 'DELETE',
 		}).then(({ json }) => ({ data: json })),
 
 	// json-server doesn't handle filters on DELETE route, so we fallback to calling DELETE n times instead
-	deleteMany: (resource, params) =>
+	deleteMany: async (resource, params) =>
 		Promise.all(
 			params.ids.map(id =>
 				httpClient(`${apiUrl}/${resource}/${id}`, {
