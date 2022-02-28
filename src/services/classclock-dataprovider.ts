@@ -112,43 +112,50 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 		});
 	},
 
-	update: async (resource, params) =>
-		httpClient(`${apiUrl}/${resource}/${params.id}`, {
-			method: 'PATCH',
+	update: async (resource, params) => {
+		const token: string = await getTokenSilently();
+
+		return httpClient("PATCH", `${apiUrl}/${resource}/${params.id}`, token, {
 			body: JSON.stringify(params.data),
-		}).then(({ json }) => ({ data: json })),
+		}).then(({ json }) => ({ data: json }))
+	},
 
 	// json-server doesn't handle filters on UPDATE route, so we fallback to calling UPDATE n times instead
-	updateMany: async (resource, params) =>
+	updateMany: async (resource, params) =>{
+		const token: string = await getTokenSilently();
 		Promise.all(
 			params.ids.map(id =>
-				httpClient(`${apiUrl}/${resource}/${id}`, {
-					method: 'PATCH',
+				httpClient("PATCH", `${apiUrl}/${resource}/${id}`, token, {
 					body: JSON.stringify(params.data),
 				})
 			)
-		).then(responses => ({ data: responses.map(({ json }) => json.id) })),
+		).then(responses => ({ data: responses.map(response => response.json().id) }))
+	},
 
-	create: async (resource, params) =>
-		httpClient(`${apiUrl}/${resource}`, {
-			method: 'POST',
+	create: async (resource, params) =>{
+		const token: string = await getTokenSilently();
+
+		return httpClient("POST", `${apiUrl}/${resource}`, token, {
 			body: JSON.stringify(params.data),
-		}).then(({ json }) => ({
-			data: { ...params.data, id: json.id },
-		})),
+		}).then( response => ({
+			data: { ...params.data, id: response.json().id },
+		}))
+	},
 
-	delete: async (resource, params) =>
-		httpClient(`${apiUrl}/${resource}/${params.id}`, {
-			method: 'DELETE',
-		}).then(({ json }) => ({ data: json })),
+	delete: async (resource, params) =>{
+		const token: string = await getTokenSilently();
+
+		return httpClient("DELETE", `${apiUrl}/${resource}/${params.id}`, token).then(({ json }) => ({ data: json }))
+	},
 
 	// json-server doesn't handle filters on DELETE route, so we fallback to calling DELETE n times instead
-	deleteMany: async (resource, params) =>
+	deleteMany: async (resource, params) =>{
+		const token: string = await getTokenSilently();
+
 		Promise.all(
 			params.ids.map(id =>
-				httpClient(`${apiUrl}/${resource}/${id}`, {
-					method: 'DELETE',
-				})
+				httpClient("DELETE", `${apiUrl}/${resource}/${id}`, token)
 			)
-		).then(responses => ({ data: responses.map(({ json }) => json.id) })),
+		).then(responses => ({ data: responses.map(({ json }) => json.id) }))
+	},
 });
