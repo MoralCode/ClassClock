@@ -34,7 +34,7 @@ import ClassClockService from './classclock';
  *
  * export default App;
  */
-export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) => Promise<string>, httpClient = fetchUtils.fetchJson): DataProvider => ({
+export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) => Promise<string>, httpClient = ClassClockService.makeAPICall): DataProvider => ({
 	getList: async (resource, params) => {
 		// const { page, perPage } = params.pagination;
 		// const { field, order } = params.sort;
@@ -48,7 +48,7 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 		const token: string = await getTokenSilently()
 		const url = `${apiUrl}/${resource}`;
 
-		return ClassClockService.makeAPICall("GET", url, token).then(async response => {
+		return httpClient("GET", url, token).then(async response => 
 			// if (!headers.has('X-Total-Count')) {
 			// 	throw new Error(
 			// 		'The X-Total-Count header is missing in the HTTP Response. The jsonServer Data Provider expects responses for lists of resources to contain this header with the total number of results to build the pagination. If you are using CORS, did you declare X-Total-Count in the Access-Control-Expose-Headers header?'
@@ -69,7 +69,7 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 
 	getOne: (resource, params) =>{
 		const token: string = await getTokenSilently()
-		return ClassClockService.makeAPICall("GET", `${apiUrl}/${resource}/${params.id}`, token).then(async response => {
+		return httpClient("GET", `${apiUrl}/${resource}/${params.id}`, token).then(async response => {
 			let json = await response.json();
 			return {
 				data: json,
