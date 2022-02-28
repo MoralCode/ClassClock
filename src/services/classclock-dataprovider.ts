@@ -67,19 +67,24 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 		});
 	},
 
-	getOne: (resource, params) =>
-		httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => ({
-			data: json,
-		})),
+	getOne: (resource, params) =>{
+		const token: string = await getTokenSilently()
+		return ClassClockService.makeAPICall("GET", `${apiUrl}/${resource}/${params.id}`, token).then(async response => {
+			let json = await response.json();
+			return {
+				data: json,
+			}
+		});
+	}
 	//make separate queries for each item because the classclock API doesnt support getting a specific set at once
-	getMany: (resource, params) => 		
-		Promise.all(
-			params.ids.map(id =>
-				httpClient(`${apiUrl}/${resource}/${id}`, {
-					method: 'GET'
-				})
-			)
-		).then(responses => ({ data: responses.map(({ json }) => json.id) })),
+	getMany: (resource, params) => {
+		const token: string = await getTokenSilently();
+		return Promise.all(
+			params.ids.map(id => {
+				return ClassClockService.makeAPICall("GET", `${apiUrl}/${resource}/${id}`, token).then(async response => response.json());
+			})
+		).then(responses => ({ data: responses.map(({ json }) => json.id) }))
+	},
 
 	getManyReference: (resource, params) => {
 		const { page, perPage } = params.pagination;
