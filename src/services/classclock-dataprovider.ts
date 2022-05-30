@@ -3,6 +3,7 @@ import { GetTokenSilentlyOptions } from '@auth0/auth0-react';
 import { fetchUtils, DataProvider } from 'ra-core';
 import ClassClockService from './classclock';
 
+import {DateTime, Interval} from 'luxon';
 /**
  * Maps react-admin queries to the ClassClock API
  *
@@ -69,9 +70,27 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 
 	getOne: async (resource, params) =>{
 		const token: string = await getTokenSilently()
-		return httpClient("GET", `${apiUrl}/${resource}/${params.id}`, token).then(async response => ({
-			data: await response.json(),
-		}));
+		return httpClient("GET", `${apiUrl}/${resource}/${params.id}`, token)
+			.then(async response => response.json())
+			.then(async response => {
+				// sort meeting times so they appear int he right order. this is a workaround while waiting for https://github.com/marmelab/react-admin/issues/6601 to be fixed
+				console.log(Object.keys(response))
+				if (response.data.hasOwnProperty("meeting_times")) {
+					response.data.meeting_times = response.data.meeting_times.sort(function (a: { start_time: string }, b: { start_time: string }) {
+						var end = DateTime.fromFormat(a.start_time, "hh:mm:ss");
+						var start = DateTime.fromFormat(b.start_time, "hh:mm:ss");
+						var i = Interval.fromDateTimes(start, end);
+						return i.length('seconds');
+					})
+					console.log(response.data.meeting_times)
+				}
+				else {
+					console.log("no meeting times")
+
+				}
+
+				return response
+			});
 	},
 	//make separate queries for each item because the classclock API doesnt support getting a specific set at once
 	getMany: async (resource, params) => {
