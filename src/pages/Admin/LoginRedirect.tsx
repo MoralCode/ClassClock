@@ -21,7 +21,7 @@ const LoginRedirect = () => {
 	const { isAuthenticated, loginWithRedirect, isLoading } = useAuth0();
 	if (!isAuthenticated && isLoading == false) {
 		loginWithRedirect({
-			appState: { targetUrl: pages.admin }
+			appState: { targetUrl: pages.adminBellSchedule }
 		})
 	}
 	return (
