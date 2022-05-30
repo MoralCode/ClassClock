@@ -74,7 +74,6 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 			.then(async response => response.json())
 			.then(async response => {
 				// sort meeting times so they appear int he right order. this is a workaround while waiting for https://github.com/marmelab/react-admin/issues/6601 to be fixed
-				console.log(Object.keys(response))
 				if (response.data.hasOwnProperty("meeting_times")) {
 					response.data.meeting_times = response.data.meeting_times.sort(function (a: { start_time: string }, b: { start_time: string }) {
 						var end = DateTime.fromFormat(a.start_time, "hh:mm:ss");
@@ -82,13 +81,7 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 						var i = Interval.fromDateTimes(start, end);
 						return i.length('seconds');
 					})
-					console.log(response.data.meeting_times)
 				}
-				else {
-					console.log("no meeting times")
-
-				}
-
 				return response
 			});
 	},
