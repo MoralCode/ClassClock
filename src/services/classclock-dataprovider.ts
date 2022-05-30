@@ -47,7 +47,7 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 		// 	_end: page * perPage,
 		// };
 		const token: string = await getTokenSilently()
-		const url = `${apiUrl}/${resource}`;
+		const url = `${apiUrl}/${resource}s`;
 
 		return httpClient("GET", url, token).then(async response => 
 			// if (!headers.has('X-Total-Count')) {
@@ -113,7 +113,7 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 			_start: (page - 1) * perPage,
 			_end: page * perPage,
 		};
-		const url = `${apiUrl}/${resource}?${stringify(query)}`;
+		const url = `${apiUrl}/${resource}s?${stringify(query)}`;
 
 		return httpClient(url).then(({ headers, json }) => {
 			if (!headers.has('x-total-count')) {
