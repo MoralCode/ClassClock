@@ -127,6 +127,11 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 	update: async (resource, params) => {
 		const token: string = await getTokenSilently();
 
+		if (resource === 'bellschedule') {
+			delete params.data.last_modified;
+			delete params.data.creation_date;
+		}
+
 		return httpClient("PATCH", `${apiUrl}/${resource}/${params.id}`, token, {
 			body: JSON.stringify(params.data),
 		}).then(({ json }) => ({ data: json }))
