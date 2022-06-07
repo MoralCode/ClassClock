@@ -1,5 +1,5 @@
 import React from "react";
-import {ArrayField, ArrayInput, ChipField, Datagrid, DateField, DateInput, Edit, List, ReferenceInput, SelectInput, SimpleForm, SimpleFormIterator, SingleFieldList, TextField, TextInput } from "react-admin";
+import {ArrayField, ArrayInput, ChipField, Create, Datagrid, DateField, DateInput, Edit, List, ReferenceInput, SelectInput, SimpleForm, SimpleFormIterator, SingleFieldList, TextField, TextInput } from "react-admin";
 
 
 export const SchoolList = (props: any) => (
@@ -59,3 +59,32 @@ export const BellscheduleEdit = props => (
 	</Edit>
 );
 
+
+export const BellScheduleCreate = (props: any) => (
+	<Create {...props}>
+		<SimpleForm>
+			<TextInput source="name" />
+			{/* <TextField source="id" /> */}
+			<TextInput source="display_name" />
+			<ReferenceInput label="School" source="id" reference="school">
+				<SelectInput optionText="full_name" />
+				{/*  create={<CreateCategory />} */}
+			</ReferenceInput>
+			{/* <DateField source="last_modified" /> */}
+			{/* <TextInput source="dates" /> */}
+			<ArrayInput source="meeting_times">
+				<SimpleFormIterator>
+					{/* <ReferenceInput source="bell_schedule_id" reference="bellschedule">
+						<SelectInput optionText="id" />
+					</ReferenceInput> */}
+					<TextInput source="name" label="Name" />
+					<TextInput source="start_time" label="Start Time" />
+					<TextInput source="end_time" label="End Time" />
+				</SimpleFormIterator>
+			</ArrayInput>
+			
+			{/* <TextInput source="school" /> */}
+			{/* <DateField source="creation_date" label="Date Created" /> */}
+		</SimpleForm>
+	</Create>
+)
