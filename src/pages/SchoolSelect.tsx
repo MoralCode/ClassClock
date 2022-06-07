@@ -42,35 +42,36 @@ const SchoolSelect = (props: ISelectProps) => {
     const isFetching = () => props.schoolList.isFetching
     // props.selectedSchool.isFetching === false
 
-    const getScholsAsElementList = () => {
-        const list = []
-            
-        if (props.schoolList && props.schoolList.data) {
-            let school;
-            for ( school of props.schoolList.data) {
-                school = School.fromJson(school);
-                
-                const id = school.getIdentifier();
 
-                list.push(<li
-                    key={id}
-                    onClick={() => {
-                        props.dispatch(selectSchool(id));
-                        props.dispatch(push(pages.main));
-                    }}
-                >
-                    <span className="schoolAcronym">{school.getAcronym()}</span>
-                    <br />
-                    <span className="schoolName">{school.getName()}</span>
-                </li>)
-            }
-        }
-        return list
+    const makeSchoolElement = (school:School, dispatch: any) => {
+        const id = school.getIdentifier();
+
+        return (<li
+            key={id}
+            onClick={() => {
+                dispatch(selectSchool(id));
+                dispatch(push(pages.main));
+            }}
+        >
+            <span className="schoolAcronym">{school.getAcronym()}</span>
+            <br />
+            <span className="schoolName">{school.getName()}</span>
+        </li>)
+    }
+
+    let schoolList: JSX.Element[] = [];
+
+    if (props.schoolList && props.schoolList.data) {
+        schoolList = props.schoolList.data.map((school) => {
+            school = School.fromJson(school);
+
+            return makeSchoolElement(school, props.dispatch)
+        })
     }
 
     return (
         <SelectionList title="Please select a school" loading={isFetching()} error={props.error} className="centeredWidth" >
-            {getScholsAsElementList()}
+            {schoolList}    
         </SelectionList>
     );
 };
