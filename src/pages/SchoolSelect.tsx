@@ -69,6 +69,20 @@ const SchoolSelect = (props: ISelectProps) => {
         })
     }
 
+    schoolList?.push(
+        <li key={"nominate"}
+        style={{marginTop: "2em", textAlign: "center"}}
+        onClick={() => {
+            window.open("https://form.jotform.com/200374910475049")
+        }}
+        >
+            <span className="schoolAcronym"><i className="fas fa-vote-yea"></i></span>
+            <br />
+            <span className="schoolName">Nominate your school</span>
+
+        </li>
+    )
+
     return (
         <SelectionList title="Please select a school" loading={isFetching()} error={props.error} className="centeredWidth" >
             {schoolList}    
