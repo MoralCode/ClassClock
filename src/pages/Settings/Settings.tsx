@@ -36,39 +36,6 @@ const Settings = (props: ISettingProps) => {
         navigate(pages.selectSchool);
     }
 
-    const getAdminButton = () => {
-        let isOwner = false;
-
-        let destination;
-        let buttonText = isOwner ? "Edit Schedules" : "Log in to edit schedules";
-        let hover = "Edit Schedules";
-
-        if (user) {
-            isOwner = props.selectedSchool.data.getOwnerIdentifier() === user.sub;
-            destination = () => (isOwner ? navigate(pages.admin) : undefined);
-            if (!isOwner) {
-                hover = "You are not the owner of this class";
-            }
-        } else {
-            destination = () =>
-                loginWithRedirect({
-                    appState: { targetUrl: pages.admin }
-                });
-
-            //TODO: maybe have it automatically find the school you ARE an admin of
-        }
-
-        return (
-            <Link
-                // tslint:disable-next-line: jsx-no-lambda
-                destination={destination}
-                title={hover}
-            >
-                <button disabled={undefined}>{buttonText}</button>
-            </Link>
-        );
-    };
-
     const getVersionHTML = () => {
         if (process.env.REACT_APP_VERCEL_GIT_COMMIT_SHA) {
 
@@ -134,18 +101,6 @@ const Settings = (props: ISettingProps) => {
             >
                 <FontAwesomeIcon icon={faHome} />
             </Link>
-            {user && (
-                <Link
-                    className="cornerNavButton cornerNavTop cornerNavRight smallIcon"
-                    // tslint:disable-next-line: jsx-no-lambda
-                    destination={() => {
-                        logout();
-                    }}
-                    title="Log Out"
-                >
-                    <FontAwesomeIcon icon={faSignOutAlt} />
-                </Link>
-            )}
 
             <h1>Settings</h1>
             <h2 className="settingsHeader centeredWidth">Selected School: </h2>
@@ -153,7 +108,6 @@ const Settings = (props: ISettingProps) => {
                 {selectedSchoolInfo()}
                 <br />
                 <br />
-                {getAdminButton()}
             </div>
             <h2 className="settingsHeader centeredWidth">Time Display:</h2>
             <label>
