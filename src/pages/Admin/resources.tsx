@@ -54,6 +54,9 @@ export const BellscheduleEdit = props => (
 				</SimpleFormIterator>
 			</ArrayInput>
 			{/* <TextInput source="school" /> */}
+			<ReferenceInput label="School" source="school" reference="school">
+				<SelectInput optionText="full_name" />
+			</ReferenceInput>
 			<DateField source="creation_date" label="Date Created" />
 		</SimpleForm>
 	</Edit>
@@ -66,7 +69,7 @@ export const BellScheduleCreate = (props: any) => (
 			<TextInput source="name" />
 			{/* <TextField source="id" /> */}
 			<TextInput source="display_name" />
-			<ReferenceInput label="School" source="id" reference="school">
+			<ReferenceInput label="School" source="school_id" reference="school">
 				<SelectInput optionText="full_name" />
 				{/*  create={<CreateCategory />} */}
 			</ReferenceInput>
