@@ -1,5 +1,5 @@
 import React from "react";
-import {ArrayField, ArrayInput, ChipField, Create, Datagrid, DateField, DateInput, Edit, List, ReferenceInput, SelectInput, SimpleForm, SimpleFormIterator, SingleFieldList, TextField, TextInput } from "react-admin";
+import {ArrayField, ArrayInput, ChipField, Create, Datagrid, DateField, DateInput, Edit, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleFormIterator, SingleFieldList, TextField, TextInput } from "react-admin";
 
 
 export const SchoolList = (props: any) => (
@@ -22,6 +22,9 @@ export const BellScheduleList = (props: any) => (
 			{/* <TextField source="school" /> */}
 			<TextField source="name" />
 			<TextField source="display_name" />
+			<ReferenceField source="school" reference="school" link={false}>
+				<TextField source="full_name" />
+			</ReferenceField>
 			<ArrayField source="meeting_times" label="Class Periods"><SingleFieldList><ChipField source="name" /></SingleFieldList></ArrayField>
 			
 		
