@@ -90,9 +90,12 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 		const token: string = await getTokenSilently();
 		return Promise.all(
 			params.ids.map(id => {
-				return ClassClockService.makeAPICall("GET", `${apiUrl}/${resource}/${id}`, token).then(async response => response.json());
+				return ClassClockService.makeAPICall("GET", `${apiUrl}/${resource}/${id}`, token)
+				.then(async response => response.json());
 			})
-		).then(responses => ({ data: responses.map(({ json }) => json.id) }))
+		).then(responses => 
+			// responses is an array of all the promise responses
+			({ data: responses.map((item) => item.data) }))
 	},
 
 	getManyReference: (resource, params) => {
