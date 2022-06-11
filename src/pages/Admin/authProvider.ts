@@ -1,6 +1,6 @@
 
 import { LogoutOptions } from '@auth0/auth0-react';
-import { AuthProvider } from 'react-admin';
+import { AuthProvider, UserIdentity } from 'react-admin';
 import {Auth0, pages} from '../../utils/constants'
 
 const authProvider = (
@@ -38,7 +38,7 @@ const authProvider = (
 		console.log("getPermissions")
 		return ((isAuthenticated || loading) ? Promise.resolve() : Promise.reject())
 	},
-	getIdentity: () =>
+	getIdentity: (): Promise<UserIdentity> =>
 		Promise.resolve({
 			id: user.id,
 			fullName: user.name,
