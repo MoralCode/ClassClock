@@ -39,14 +39,15 @@ describe("BellSchedule", () => {
         expect(schedule.numberOfClasses()).toEqual([classPeriod].length);
     });
 
-    it("can return date last updated", () => {
-        expect(schedule.lastUpdated()).toEqual(DateTime.fromISO("2019-07-28T07:37:50.634", {zone: schoolTimezone}).toUTC());
-    });
+    //these cases already covered by tests for a class they extend
+    // it("can return date last updated", () => {
+    //     expect(schedule.lastUpdated()).toEqual(DateTime.fromISO("2019-07-28T07:37:50.634", {zone: schoolTimezone}).toUTC());
+    // });
 
-    it("can test if it has changed since a given date", () => {
-        expect(schedule.hasChangedSince(DateTime.fromISO("2019-07-28T07:07:50.634", {zone: schoolTimezone}).toUTC())).toBe(true);
-        expect(schedule.hasChangedSince(DateTime.fromISO("2019-07-28T08:07:50.634", {zone: schoolTimezone}).toUTC())).toBe(false);
-    });
+    // it("can test if it has changed since a given date", () => {
+    //     expect(schedule.hasChangedSince(DateTime.fromISO("2019-07-28T07:07:50.634", {zone: schoolTimezone}).toUTC())).toBe(true);
+    //     expect(schedule.hasChangedSince(DateTime.fromISO("2019-07-28T08:07:50.634", {zone: schoolTimezone}).toUTC())).toBe(false);
+    // });
 
     it("can get a class period for a given time", () => {
         //before

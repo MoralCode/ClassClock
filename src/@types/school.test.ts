@@ -58,15 +58,20 @@ describe("School", () => {
         expect(school.getCreationDate()).toEqual(currentDate);
     });
 
-    it("can return date last updated", () => {
-        expect(school.lastUpdated()).toEqual(currentDate);
-    });
+    //these cases already covered by tests for a class they extend
+    // it("can return date last updated", () => {
+    //     expect(school.lastUpdated()).toEqual(currentDate);
+    // });
 
-    it("can Test if it has changed since a given date", () => {
-        //school was last updated on currentDate
-        expect(school.hasChangedSince(currentDate.minus({ hours: 1 }))).toBe(true);
-        expect(school.hasChangedSince(currentDate.plus({ hours: 1 }))).toBe(false);
-    });
+    // it("can Test if it has changed since a given date", () => {
+    //     //school was last updated on currentDate
+    //     expect(school.hasChangedSince(currentDate.minus({ hours: 1 }))).toBe(true);
+    //     expect(school.hasChangedSince(currentDate.plus({ hours: 1 }))).toBe(false);
+
+    //     expect(school.hasChangedSince(DateTime.fromISO("2019-07-28T07:07:50.634", { zone: schoolTimezone }))).toBe(true);
+    //     // "2019-07-28T07:37:50.634"
+    //     expect(school.hasChangedSince(DateTime.fromISO("2019-07-28T08:07:50.635", { zone: schoolTimezone }))).toBe(false);
+    // });
 
     it("can get schedule for date", () => {
         expect(school.getScheduleForDate(currentDate)).toEqual(
