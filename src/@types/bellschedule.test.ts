@@ -5,6 +5,8 @@ import { DateTime } from "luxon";
 describe("BellSchedule", () => {
 
     it("should get from JSON", () => {
+        //TODO: the start and end times should be plain HH:MM, not full datetimes
+
         expect(
             BellSchedule.fromJson(bellScheduleJSON)
         ).toEqual(schedule);

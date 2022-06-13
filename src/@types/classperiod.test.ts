@@ -16,6 +16,8 @@ export const classPeriodJSONObjectTime = {
 describe("ClassPeriod", () => {
 
     it("gets from json with string times", () => {
+        //TODO: the start and end times should be plain HH:MM, not full datetimes
+
         expect(
             ClassPeriod.fromJson(classPeriodJSON)
         ).toEqual(classPeriod);

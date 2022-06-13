@@ -19,6 +19,7 @@ const schoolNoSchedules = new School(
 describe("School", () => {
 
     it("should get from JSON", () => {
+        //TODO: the start and end times should be plain HH:MM, not full datetimes
         expect(
             School.fromJson(schoolJSON)
         ).toEqual(school);

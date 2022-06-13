@@ -17,6 +17,7 @@ describe("Time", () => {
 
     it("should get from UTC date as UTC time", () => {
         let newTime = Time.fromJSDate(new Date(2019, 7, 27, 9, 31, 41), false);
+        // note, this will fail if timezone is included in the comparison because thisTime doesnt specify timezone
         expect(newTime.getHours() === thisTime.getHours());
         expect(newTime.getMinutes() === thisTime.getMinutes());
         expect(newTime.getSeconds() === thisTime.getSeconds());
