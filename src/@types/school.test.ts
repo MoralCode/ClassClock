@@ -1,6 +1,6 @@
 import School from "./school";
 import { school, bellSchedule, schoolJSON, schoolId, schoolEndpoint, schoolName, schoolAcronym, passingPeriodName, schoolTimezone, currentDate, inClass, afterSchoolHours, duringClass, schoolOwnerId, beforeSchoolHours, noSchool, betweenClass } from '../utils/testconstants';
-import { DateTime } from "luxon";
+import { DateTime, Duration } from "luxon";
 
 const schoolNoSchedules = new School(
     schoolId,
@@ -63,8 +63,9 @@ describe("School", () => {
     });
 
     it("can Test if it has changed since a given date", () => {
-        expect(school.hasChangedSince(DateTime.fromISO("2019-07-28T07:07:50.634Z"))).toBeTruthy();
-        expect(school.hasChangedSince(DateTime.fromISO("2019-07-28T08:07:50.634Z"))).toBeFalsy();
+        //school was last updated on currentDate
+        expect(school.hasChangedSince(currentDate.minus({ hours: 1 }))).toBe(true);
+        expect(school.hasChangedSince(currentDate.plus({ hours: 1 }))).toBe(false);
     });
 
     it("can get schedule for date", () => {
