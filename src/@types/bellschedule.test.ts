@@ -1,5 +1,5 @@
 import BellSchedule from "./bellschedule";
-import { bellSchedule as schedule, bellScheduleJSON, classPeriod, bellScheduleEndpoint, bellScheduleName, bellScheduleDisplayName, bellScheduleId, startTime, beforeClass, duringClass, endTime, afterClass, bellScheduleClasses } from "../utils/testconstants";
+import { bellSchedule as schedule, bellScheduleJSON, classPeriod, bellScheduleEndpoint, bellScheduleName, bellScheduleDisplayName, bellScheduleId, startTime, beforeClass, duringClass, endTime, afterClass, bellScheduleClasses, schoolTimezone } from "../utils/testconstants";
 import { DateTime } from "luxon";
 
 describe("BellSchedule", () => {
@@ -40,12 +40,12 @@ describe("BellSchedule", () => {
     });
 
     it("can return date last updated", () => {
-        expect(schedule.lastUpdated()).toEqual(DateTime.fromISO("2019-07-28T07:37:50.634").toUTC());
+        expect(schedule.lastUpdated()).toEqual(DateTime.fromISO("2019-07-28T07:37:50.634", {zone: schoolTimezone}).toUTC());
     });
 
     it("can test if it has changed since a given date", () => {
-        expect(schedule.hasChangedSince(DateTime.fromISO("2019-07-28T07:07:50.634").toUTC())).toBeTruthy();
-        expect(schedule.hasChangedSince(DateTime.fromISO("2019-07-28T08:07:50.634").toUTC())).toBeFalsy();
+        expect(schedule.hasChangedSince(DateTime.fromISO("2019-07-28T07:07:50.634", {zone: schoolTimezone}).toUTC())).toBe(true);
+        expect(schedule.hasChangedSince(DateTime.fromISO("2019-07-28T08:07:50.634", {zone: schoolTimezone}).toUTC())).toBe(false);
     });
 
     it("can get a class period for a given time", () => {
