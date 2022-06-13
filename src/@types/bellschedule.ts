@@ -2,8 +2,9 @@ import ClassPeriod from "./classperiod";
 import { DateTime } from "luxon";
 import { TimeComparisons } from "../utils/enums";
 import { getValueIfKeyInList, sortClassesByStartTime } from "../utils/helpers";
+import UpdateTimestampedObject from "./updateTimestampedObject";
 
-export default class BellSchedule {
+export default class BellSchedule extends UpdateTimestampedObject {
     public static fromJson(json: any) {
         return new BellSchedule(
             getValueIfKeyInList(["id", "identifier"], json),
@@ -24,7 +25,6 @@ export default class BellSchedule {
     private displayName?: string;
     private dates: DateTime[];
     private classes: ClassPeriod[];
-    private lastUpdatedDate: DateTime;
     private color?: string;
 
     constructor(
@@ -36,13 +36,14 @@ export default class BellSchedule {
         lastUpdatedDate: DateTime,
         displayName?: string
     ) {
+        super(lastUpdatedDate)
         this.id = id;
         this.name = name;
         this.endpoint = endpoint;
         this.displayName = displayName;
         this.dates = dates;
         this.classes = classes;
-        this.lastUpdatedDate = lastUpdatedDate;
+    
     }
 
     public getIdentifier() {
@@ -153,11 +154,4 @@ export default class BellSchedule {
         this.color = color;
     }
 
-    public lastUpdated() {
-        return this.lastUpdatedDate;
-    }
-
-    public hasChangedSince(date: DateTime) {
-        return date.toMillis() < this.lastUpdatedDate.toMillis();
-    }
 }

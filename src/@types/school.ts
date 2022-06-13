@@ -7,8 +7,9 @@ import { DateTime } from "luxon";
 import { TimeComparisons } from "../utils/enums";
 import BellSchedule from "./bellschedule";
 import find from 'lodash.find'
+import UpdateTimestampedObject from "./updateTimestampedObject";
 
-export default class School {
+export default class School extends UpdateTimestampedObject {
     public static fromJson(json: any) {
         const schedules = getValueIfKeyInList(["schedules"], json);
         return new School(
@@ -36,7 +37,6 @@ export default class School {
     private schedules?: BellSchedule[];
     private passingPeriodName?: string;
     private creationDate?: DateTime;
-    private lastUpdatedDate?: DateTime;
 
     constructor(
         id: string,
@@ -50,6 +50,7 @@ export default class School {
         creationDate?: DateTime,
         lastUpdatedDate?: DateTime
     ) {
+        super(lastUpdatedDate)
         this.id = id;
         this.ownerId = ownerId;
         this.endpoint = endpoint;
@@ -59,7 +60,7 @@ export default class School {
         this.schedules = schedules;
         this.passingPeriodName = passingPeriodName;
         this.creationDate = creationDate;
-        this.lastUpdatedDate = lastUpdatedDate;
+        
     }
 
     public getIdentifier(): string {
@@ -104,18 +105,6 @@ export default class School {
 
     public getCreationDate() {
         return this.creationDate;
-    }
-
-    public lastUpdated() {
-        return this.lastUpdatedDate;
-    }
-
-    public hasChangedSince(date: DateTime) {
-        if (this.lastUpdatedDate !== undefined) {
-            return date.toMillis() < this.lastUpdatedDate.toMillis();
-        } else {
-            return undefined;
-        }
     }
 
     //can also be used as isNoSchoolDay() by checking for undefined
