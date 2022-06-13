@@ -16,7 +16,11 @@ describe("Time", () => {
     });
 
     it("should get from UTC date as UTC time", () => {
-        expect(Time.fromJSDate(new Date(2019, 7, 27, 9, 31, 41), false)).toEqual(thisTime);
+        let newTime = Time.fromJSDate(new Date(2019, 7, 27, 9, 31, 41), false);
+        expect(newTime.getHours() === thisTime.getHours());
+        expect(newTime.getMinutes() === thisTime.getMinutes());
+        expect(newTime.getSeconds() === thisTime.getSeconds());
+        expect(newTime.toString(false,true) === thisTime.toString(false, true))
     });
 
     it("should get from string", () => {
