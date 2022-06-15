@@ -1,5 +1,6 @@
 import { DateTime, Interval } from "luxon";
 import { checkTimeRange, getValueIfKeyInList } from "../utils/helpers";
+import Time from "./time";
 
 export default class ClassPeriod {
     public static fromJson(json: any) {
@@ -13,11 +14,11 @@ export default class ClassPeriod {
         );
     }
     private name: string;
-    private startTime: DateTime;
-    private endTime: DateTime;
+    private startTime: Time;
+    private endTime: Time;
     private creationDate: DateTime;
 
-    constructor(name: string, startTime: DateTime, endTime: DateTime, creationDate: DateTime) {
+    constructor(name: string, startTime: Time, endTime: Time, creationDate: DateTime) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -36,7 +37,7 @@ export default class ClassPeriod {
         return this.startTime;
     }
 
-    public setStartTime(time: DateTime) {
+    public setStartTime(time: Time) {
         this.startTime = time;
     }
 
@@ -44,12 +45,12 @@ export default class ClassPeriod {
         return this.endTime;
     }
 
-    public setEndTime(time: DateTime) {
+    public setEndTime(time: Time) {
         this.endTime = time;
     }
 
     public getDuration() {
-        return Interval.fromDateTimes(this.startTime, this.endTime).toDuration(['hours', 'minutes']);
+        return Interval.fromDateTimes(this.startTime.asDateTime(), this.endTime.asDateTime()).toDuration(['hours', 'minutes']);
     }
 
     public getCreationDate() {
@@ -58,7 +59,7 @@ export default class ClassPeriod {
 
     //remove me
     public stateForTime(time: DateTime) {
-        return checkTimeRange(time, this.startTime, this.endTime);
+        return checkTimeRange(time, this.startTime.asDateTime(), this.endTime.asDateTime());
     }
 }
 
