@@ -1,7 +1,29 @@
 import { DateTime, Zone } from "luxon";
 import { matchDates } from "../utils/helpers"
 
+/**
+ * A representation of a Time without an assocuated date.
+ * This is used in cases where the same times may apply to multiple days, 
+ * such as for the start and end times of ClassPeriod's within a BellSchedule.
+ * 
+ * A time can be thought of as a Duration since the beginning of a given day.
+ * The "standard" way to represent it in serialized/JSON form is as a series of
+ * three, colon-separated, two-digit numbers representing a 24-hour time.
+ * examples: 09:35:00, 13:30:00
+ *
+ * @export
+ * @class Time
+ */
 export default class Time {
+
+    /**
+     * Create a time instance from the number of milliseconds since the beginning of the day.
+     *
+     * @static
+     * @param {number} milliseconds the number of milliseconds since the beginning of the day
+     * @returns {Time}
+     * @memberof Time
+     */
     public static fromMilliseconds(milliseconds: number): Time {
         const hours = Math.floor(milliseconds / 1000 / 60 / 60);
         milliseconds -= hours * 1000 * 60 * 60;
@@ -88,7 +110,11 @@ export default class Time {
         return this.toString(excludeSeconds, use24HourTime)
     }
 
-    //this overrides the automatic serialization of Time Objects and makes them return a string and not a plain object (which is more annoying to parse back in and rwould require an extra factory method)
+    /** 
+     * Returns the standard HH:mm:ss representation of a time object as a string for serializing.
+     * 
+     * this overrides the automatic serialization of Time Objects and makes them return a string and not a plain object (which is more annoying to parse back in and would require an extra factory method)
+     */
     public toJSON() {
         return this.time.toFormat("HH:mm:ss");
     }
