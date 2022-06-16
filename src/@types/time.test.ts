@@ -12,16 +12,13 @@ describe("Time", () => {
     });
 
     it("can instantiate from DateTime", () => {
-        expect(Time.fromJSDate(new Date(2019, 7, 27, 9, 31, 41), true)).toEqual(thisTime);
-    });
+        let testTime1 = Time.fromDateTime(DateTime.fromISO("2022-06-16T09:31:41"))
+        let testTime2 = Time.fromDateTime(DateTime.fromISO("2022-07-16T09:31:41"))
+        expect(testTime1).toEqual(thisTime);
+        //ensure dates are correctly stripped out so two different timestamps
+        //can represent the same date
+        expect(testTime1).toEqual(testTime2);
 
-    it("can instantiate from UTC date as UTC time", () => {
-        let newTime = Time.fromJSDate(new Date(2019, 7, 27, 9, 31, 41), false);
-        // note, this will fail if timezone is included in the comparison because thisTime doesnt specify timezone
-        expect(newTime.getHours() === thisTime.getHours());
-        expect(newTime.getMinutes() === thisTime.getMinutes());
-        expect(newTime.getSeconds() === thisTime.getSeconds());
-        expect(newTime.toString(false,true) === thisTime.toString(false, true))
     });
 
     it("should get from string", () => {
