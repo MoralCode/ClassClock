@@ -84,14 +84,14 @@ export default class Time {
     public getSeconds() {
         return this.time.get('second');
     }
-    public getMillisecondsTo(otherTime: Time) {
+    public getMillisecondsTo(otherTime: Time): number | undefined {
         const oTime = matchDates(this.time, otherTime.asDateTime())
         return oTime.diff(this.time).toObject()['milliseconds']
     }
-    public getTimeDeltaTo(otherTime: Time) {
+    public getTimeDeltaTo(otherTime: Time): Time {
         return Time.fromMilliseconds(Math.abs(this.getMillisecondsTo(otherTime)??0));
     }
-    public asDateTime() {
+    public asDateTime(): DateTime {
         return this.time
     }
     //TODO: maybe make this into an options object to preserve the names
