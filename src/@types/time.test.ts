@@ -7,15 +7,15 @@ const preTime = new Time(5, 18, 43);
 const postTime = new Time(13, 44, 39);
 
 describe("Time", () => {
-    it("should get from milliseconds", () => {
+    it("can instantiate from milliseconds", () => {
         expect(Time.fromMilliseconds(34301000)).toEqual(thisTime);
     });
 
-    it("should get from UTC date as local time", () => {
+    it("can instantiate from DateTime", () => {
         expect(Time.fromJSDate(new Date(2019, 7, 27, 9, 31, 41), true)).toEqual(thisTime);
     });
 
-    it("should get from UTC date as UTC time", () => {
+    it("can instantiate from UTC date as UTC time", () => {
         let newTime = Time.fromJSDate(new Date(2019, 7, 27, 9, 31, 41), false);
         // note, this will fail if timezone is included in the comparison because thisTime doesnt specify timezone
         expect(newTime.getHours() === thisTime.getHours());
