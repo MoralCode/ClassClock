@@ -35,13 +35,14 @@ export default class Time {
         return new Time(hours, minutes, seconds);
     }
 
-    public static fromJSDate(date: Date, toLocalTime=false) {
-        if (toLocalTime) {
-            return new Time(date.getHours(), date.getMinutes(), date.getSeconds(), 'local');
-        } else {
-            return new Time(date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), 'utc');
-        }
-    }
+    //Deprecated
+    // public static fromJSDate(date: Date, toLocalTime=false) {
+    //     if (toLocalTime) {
+    //         return new Time(date.getHours(), date.getMinutes(), date.getSeconds(), 'local');
+    //     } else {
+    //         return new Time(date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), 'utc');
+    //     }
+    // }
 
     public static fromISO(time: string) {
         const datetime = DateTime.fromISO(time)//, { zone: inTimeZone }
