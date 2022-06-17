@@ -6,6 +6,7 @@ import ClassPeriod from "../@types/classperiod";
 import BellSchedule from "../@types/bellschedule";
 import { useState } from "react";
 import { RateLimitError } from "./errors";
+import Time from "../@types/time";
 
 //https://stackoverflow.com/a/55862077
 export const useForceUpdate = () => {
@@ -100,23 +101,22 @@ export function getTimeStateForDateAtSchool(date: DateTime, school: School) {
  *
  * @param {*} checkTime the time that the check results are returned for
  * @param {*} startTime the start time of the range to check
- * @param {*} endTimethe the end time of the range to check
+ * @param {*} endTime the end time of the range to check
  *
  * @returns -1 if checkTime is before range, 0 if checkTime is within range, 1 if checkTime is after range
  */
-export function checkTimeRange(checkTime: DateTime, startTime: DateTime, endTime: DateTime, ignoreDate = false) {
+export function checkTimeRange(checkTime: DateTime, startTime: Time, endTime: Time): TimeComparisons {
 
-    if (ignoreDate){
-        const day = {
-            year: checkTime.get("year"),
-            month: checkTime.get("month"),
-            day: checkTime.get("day")
-        }
-        startTime = startTime.set(day)
-        endTime = endTime.set(day)
-    }
+   
+    const day = DateTime.fromObject({
+        year: checkTime.get("year"),
+        month: checkTime.get("month"),
+        day: checkTime.get("day")
+    })
+    const startTimeDay = day.plus(startTime)
+    const endTimeDay = day.plus(endTime)
 
-    const interval = Interval.fromDateTimes(startTime,endTime)
+    const interval = Interval.fromDateTimes(startTimeDay, endTimeDay)
    
     // if (startTime.getMillisecondsTo(endTime) <= 0) {
     //     //theres a problem
@@ -124,16 +124,18 @@ export function checkTimeRange(checkTime: DateTime, startTime: DateTime, endTime
     // const startCheck = checkTime.getMillisecondsTo(startTime);
     // const endCheck = checkTime.getMillisecondsTo(endTime);
 
-    if (checkTime.hasSame(startTime, 'second') || checkTime.hasSame(endTime, 'second')){
+    if (checkTime.hasSame(startTimeDay, 'second') || checkTime.hasSame(endTimeDay, 'second')){
         return TimeComparisons.IS_DURING_OR_EXACTLY;
     }
 
-    if (interval.isAfter(checkTime)) {
+    const startsAfter = interval.isAfter(checkTime)
+    const endsBefore = interval.isBefore(checkTime)
+    if (startsAfter) {
         return TimeComparisons.IS_BEFORE;
-    } else if (interval.isBefore(checkTime)) {
+    } else if (endsBefore) {
         return TimeComparisons.IS_AFTER;
     } else {
-        return TimeComparisons.IS_DURING_OR_EXACTLY;
+        return TimeComparisons.IS_DURING_OR_EXACTLY
     }
 }
 
