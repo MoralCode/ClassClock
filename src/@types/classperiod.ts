@@ -50,7 +50,7 @@ export default class ClassPeriod {
     }
 
     public getDuration() {
-        return Interval.fromDateTimes(this.startTime.asDateTime(), this.endTime.asDateTime()).toDuration(['hours', 'minutes']);
+        return this.endTime.minus(this.startTime);
     }
 
     public getCreationDate() {
