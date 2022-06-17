@@ -1,4 +1,4 @@
-import { DateTime, Zone } from "luxon";
+import { DateTime, Duration } from "luxon";
 import { matchDates } from "../utils/helpers"
 
 /**
@@ -61,19 +61,16 @@ export default class Time {
         );
     }
 
-    private time:DateTime;
 
-    constructor(hours: number, minutes: number, seconds?: number, zone?: Zone | string) {
+    private time: Duration;
+
+    constructor(hours: number, minutes: number, seconds?: number) {
         let timeObj = {
             hour: Math.abs(hours % 24),
             minute: Math.abs(minutes % 60),
             second: Math.abs((seconds || 0) % 60)
         }
-        if (zone) {
-            this.time = DateTime.fromObject({ ...timeObj, zone })
-        } else {
-            this.time = DateTime.fromObject(timeObj)
-        }
+        this.time = Duration.fromObject(timeObj)
     }
 
     public getHours() {
