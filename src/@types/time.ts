@@ -2,19 +2,24 @@ import { DateTime, Duration } from "luxon";
 import { matchDates } from "../utils/helpers"
 
 /**
- * A representation of a Time without an assocuated date.
+ * A representation of a Time without an associated date.
  * This is used in cases where the same times may apply to multiple days, 
  * such as for the start and end times of ClassPeriod's within a BellSchedule.
  * 
- * A time can be thought of as a Duration since the beginning of a given day.
+ * A time can be thought of, and are in fact implemented internally as a Duration.
+ * This Duration is considered to start at the beginning of the current day.
+ * 
  * The "standard" way to represent it in serialized/JSON form is as a series of
- * three, colon-separated, two-digit numbers representing a 24-hour time.
- * examples: 09:35:00, 13:30:00
+ * Two or three, colon-separated, two-digit numbers representing a 24-hour time.
+ * examples: 09:35:00, 13:30:00, 09:35, 13:30
+ * 
+ * Times in this standard format should be considered to be in the timezone of
+ * the school that they are part of.
  *
  * @export
  * @class Time
  */
-export default class Time {
+export default class Time extends Duration {
 
     /**
      * Create a time instance from the number of milliseconds since the beginning of the day.
@@ -25,14 +30,7 @@ export default class Time {
      * @memberof Time
      */
     public static fromMilliseconds(milliseconds: number): Time {
-        const hours = Math.floor(milliseconds / 1000 / 60 / 60);
-        milliseconds -= hours * 1000 * 60 * 60;
-        const minutes = Math.floor(milliseconds / 1000 / 60);
-        milliseconds -= minutes * 1000 * 60;
-        const seconds = Math.floor(milliseconds / 1000);
-        milliseconds -= seconds * 1000;
-
-        return new Time(hours, minutes, seconds);
+        return Duration.fromMillis(milliseconds).shiftTo("hours", "minutes", "seconds") as Time;
     }
 
     //Deprecated
@@ -44,56 +42,104 @@ export default class Time {
     //     }
     // }
 
-    public static fromISO(time: string) {
-        const datetime = DateTime.fromISO(time)//, { zone: inTimeZone }
-        return new Time(datetime.get("hour"), datetime.get("minute"), datetime.get("second") )
-    }
+    //Duplicate name and compatible signature in Duration
+    // public static fromISO(time: string) {
+    //     const datetime = Time.fromISO(time)//, { zone: inTimeZone }
+    //     return new Time(datetime.get("hour"), datetime.get("minute"), datetime.get("second") )
+    // }
 
-    public static fromString(time: string) {
+    /**
+     * Create a time instance from the JSON-serialized data produced by `toJSON()`
+     * @param time a time value represented as a string in standard format to deserialize to a Time Object 
+     * @returns a n instance of Time representing the same time
+     */
+    public static fromJson(time: string) {
         const parts = time.split(":");
         if (parts.length < 2 || parts.length > 3) {
-            //error
+            //TODO: error here
         }
-        return new Time(
+        return Time.fromTime(
             parseInt(parts[0], 10),
             parseInt(parts[1], 10),
             parts.length === 3 ? parseInt(parts[2], 10) : undefined
         );
     }
 
+    public static fromString(time: string) {
+        // const smalltime = DateTime.fromFormat(time, "H:mm")
+        // const bigtime = DateTime.fromISO(time)
+        // if (smalltime.isValid) {
+        //     return Time.fromDateTime(smalltime)// .toUTC()
+        // } else if (bigtime.isValid) {
+        //     return Time.fromDateTime(bigtime)// .toUTC()
+        // }
 
-    private time: Duration;
+        const parts = time.split(":");
+        if (parts.length < 2 || parts.length > 3) {
+            //TODO: error here
+        }
+        return Time.fromTime(
+            parseInt(parts[0], 10),
+            parseInt(parts[1], 10),
+            parts.length === 3 ? parseInt(parts[2], 10) : undefined
+        );
+    }
 
-    constructor(hours: number, minutes: number, seconds?: number) {
+    public static fromDateTime(time: DateTime) {
+        return time.diff(time.startOf('day')).shiftTo("hours", "minutes", "seconds") as Time
+    }
+
+    // const toDateTime = (time: any) => {
+    //     if (time instanceof DateTime) {
+    //         return time
+    //     }
+    //     
+    //     return time.toUTC()
+    // }
+
+    // private time: Duration;
+
+    public static fromTime(hours: number, minutes: number, seconds?: number) {
+        // super()
+        // why do we need timezone,
+        //is storing the time as a DateTime internally just super overkill?
+        // probably to allow conversion later?
         let timeObj = {
             hour: Math.abs(hours % 24),
             minute: Math.abs(minutes % 60),
             second: Math.abs((seconds || 0) % 60)
         }
-        this.time = Duration.fromObject(timeObj)
+        return Duration.fromObject(timeObj).shiftTo("hours", "minutes", "seconds") as Time
     }
 
     public getHours() {
-        return this.time.get('hour');
+        return this.get('hour');
     }
     public getMinutes() {
-        return this.time.get('minute');
+        return this.get('minute');
     }
     public getSeconds() {
-        return this.time.get('second');
+        return this.get('second');
     }
     public getMillisecondsTo(otherTime: Time): number | undefined {
-        const oTime = matchDates(this.time, otherTime.asDateTime())
-        return oTime.diff(this.time).toObject()['milliseconds']
+        return otherTime.minus(this).toObject()['milliseconds']
     }
     public getTimeDeltaTo(otherTime: Time): Time {
         return Time.fromMilliseconds(Math.abs(this.getMillisecondsTo(otherTime)??0));
     }
-    public asDateTime(): DateTime {
-        return this.time
-    }
-    //TODO: maybe make this into an options object to preserve the names
+
     public toString(excludeSeconds = false, use24HourTime = true) {
+        return this.toFormat(this.getTimeFormat(excludeSeconds, use24HourTime))
+    }
+
+    /**
+     * generate a format string for formatting the time value
+     * @param excludeSeconds whether to exclude the seconds values, default false.
+     * @param use24HourTime whether to use 24 hour time or 12 hour time. Default true.
+     * @returns a string representing the format for the requested time.
+     */
+    protected getTimeFormat(excludeSeconds = false, use24HourTime = true) {
+        //TODO: maybe make these parameters into an options object to preserve the names?
 
         const hrsformat = use24HourTime ? "HH" : "hh"
         const seconds = excludeSeconds? "": ":ss"
@@ -101,9 +147,17 @@ export default class Time {
 
         const format = hrsformat + ":mm" + seconds + meridiem
 
-        return this.time.toFormat(format)
+        return format
     }
 
+    /**
+     * Convert this datetime into a formatted string.
+     * Leaving values at the defaults should generate a "standard" string with
+     * three parts
+     * @param excludeSeconds whether to exclude the seconds values, default false.
+     * @param use24HourTime whether to use 24 hour time or 12 hour time. Default true.
+     * @returns a string representing the current time
+     */
     public getFormattedString(excludeSeconds = false, use24HourTime = false) {
         return this.toString(excludeSeconds, use24HourTime)
     }
@@ -114,7 +168,7 @@ export default class Time {
      * this overrides the automatic serialization of Time Objects and makes them return a string and not a plain object (which is more annoying to parse back in and would require an extra factory method)
      */
     public toJSON() {
-        return this.time.toFormat("HH:mm:ss");
+        return this.toFormat("HH:mm:ss");
     }
 
 }

@@ -7,8 +7,14 @@ import {
     matchDates
 } from "./helpers";
 import ClassPeriod from "../@types/classperiod";
-import { classPeriod2, classPeriod, beforeSchoolHours, school, betweenClass, inClass, noSchool, afterSchoolHours, bellScheduleClasses, duringClass, startTime, endTime, startTime2, beforeClass, endTime2, afterClass } from "./testconstants";
+import { classPeriod2, classPeriod, beforeSchoolHours, school, betweenClass, inClass, noSchool, afterSchoolHours, bellScheduleClasses, duringClass, startTime as startTimeDate, endTime as endTimeDate, startTime2 as startTime2Date, beforeClass, endTime2 as endTime2Date, afterClass } from "./testconstants";
 import { TimeStates, TimeComparisons } from "./enums";
+import Time from "../@types/time";
+
+const startTime = Time.fromDateTime(startTimeDate)
+const endTime = Time.fromDateTime(endTimeDate)
+const startTime2 = Time.fromDateTime(startTime2Date)
+const endTime2 = Time.fromDateTime(endTime2Date)
 
 test("get value if key in list", () => {
     const object1 = { value1: "foo" };
@@ -66,11 +72,11 @@ test("check time range", () => {
         TimeComparisons.IS_BEFORE
     );
 
-    expect(checkTimeRange(startTime, startTime, endTime)).toBe(
+    expect(checkTimeRange(startTimeDate, startTime, endTime)).toBe(
         TimeComparisons.IS_DURING_OR_EXACTLY
     );
 
-    expect(checkTimeRange(endTime, startTime, endTime)).toBe(
+    expect(checkTimeRange(endTimeDate, startTime, endTime)).toBe(
         TimeComparisons.IS_DURING_OR_EXACTLY
     );
 
