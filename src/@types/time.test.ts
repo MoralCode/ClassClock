@@ -42,15 +42,18 @@ describe("Time", () => {
     });
 
     it("should return hours", () => {
-        expect(thisTime.getHours()).toBe(9);
+        expect(thisTime.hours).toBe(9);
+        // expect(thisTime.getHours()).toBe(9);
     });
 
     it("should return minutes", () => {
-        expect(thisTime.getMinutes()).toBe(31);
+        expect(thisTime.minutes).toBe(31);
+        // expect(thisTime.getMinutes()).toBe(31);
     });
 
     it("should return seconds", () => {
-        expect(thisTime.getSeconds()).toBe(41);
+        expect(thisTime.seconds).toBe(41);
+        // expect(thisTime.getSeconds()).toBe(41);
     });
 
     it("should get the number of milliseconds to a future time", () => {

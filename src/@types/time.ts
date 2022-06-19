@@ -111,16 +111,6 @@ export default class Time extends Duration {
         }
         return Duration.fromObject(timeObj).shiftTo("hours", "minutes", "seconds") as Time
     }
-
-    public getHours() {
-        return this.get('hour');
-    }
-    public getMinutes() {
-        return this.get('minute');
-    }
-    public getSeconds() {
-        return this.get('second');
-    }
     public getMillisecondsTo(otherTime: Time): number | undefined {
         return otherTime.minus(this).toObject()['milliseconds']
     }
