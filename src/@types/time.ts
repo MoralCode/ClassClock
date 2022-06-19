@@ -42,11 +42,9 @@ export default class Time extends Duration {
     //     }
     // }
 
-    //Duplicate name and compatible signature in Duration
-    // public static fromISO(time: string) {
-    //     const datetime = Time.fromISO(time)//, { zone: inTimeZone }
-    //     return new Time(datetime.get("hour"), datetime.get("minute"), datetime.get("second") )
-    // }
+    public static fromISO(time: string) {
+        return super.fromISO(time) as Time
+    }
 
     /**
      * Create a time instance from the JSON-serialized data produced by `toJSON()`
