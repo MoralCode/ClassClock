@@ -5,6 +5,10 @@ interface ITextProps {
     className?: string;
     style?: CSSProperties;
 }
+
+/**
+ * A block represents a single piece of information in the main classclock app interface, such as the time left in this class, what the next class is, what the current class is .etc
+ */
 export default class Block extends Component<ITextProps, {}> {
     render() {
         return (
