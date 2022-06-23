@@ -18,11 +18,11 @@ const Welcome = (props: IWelcomeProps) => {
     return (
         <div className="centeredWidth">
             <h2>Welcome to ClassClock!</h2>
-            <p>The open school scheduling assistant.</p>
+            <p>An open source school scheduling assistant built by students.</p>
             <div className="mediumVerticalSpacer"></div>
-            <BlockLink destination={() => props.dispatch(push(pages.selectSchool))} title={"Get Started"}>Get Started</BlockLink>
+            <BlockLink destination={() => props.dispatch(push(pages.selectSchool))} title={"Find your Schedules"}>Find your Schedules</BlockLink>
             <br/>
-            <BlockLink destination={"https://classclock.app"} title={"Learn more about ClassClock"} >Learn More</BlockLink>
+            <BlockLink destination={"https://classclock.app"} title={"Learn more about ClassClock"}>Learn more about ClassClock</BlockLink>
         </div>
     );
 };
