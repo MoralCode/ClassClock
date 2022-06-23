@@ -20,7 +20,7 @@ const SelectionList = (props: ISelectProps) => {
             if (node.type !== "li") {
                 // When you don’t have stable IDs for rendered items, you may use the item index as a key as a last resort
                 // https://reactjs.org/docs/lists-and-keys.html#keys
-                return <li key={index}>{node}</li>
+                return <li key={node.key || index}>{node}</li>
             } else {
                 return node
             }
