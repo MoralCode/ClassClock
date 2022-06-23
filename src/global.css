@@ -258,6 +258,14 @@ section#options > * {
     font-weight: 700;
 }*/
 
+
+.blockButton {
+    padding: 5px;
+    margin: 2px;
+    background-color: rgba(0, 0, 0, 0.1);
+    display: block;
+}
+
 .verticalFlex {
     display: flex;
     flex-direction: column;
@@ -310,6 +318,23 @@ section#options > * {
 
 .e-mail::after {
     content: "\0061\0064\0072\0069\0061\006E\0040\0061\0064\0072\0069\0061\006E\0063\0065\0064\0077\0061\0072\0064\0073\002E\0063\006F\006D";
+}
+
+
+.mediumVerticalSpacer {
+    height:10vh;
+}
+
+@media (min-height: 350px) {
+    .mediumVerticalSpacer {
+        height: 25vh;
+    }
+}
+
+@media (min-height: 500px) {
+    .mediumVerticalSpacer {
+        height: 50vh;
+    }
 }
 
 

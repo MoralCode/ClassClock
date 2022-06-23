@@ -10,6 +10,7 @@ export const pages = {
     settings: "/settings.html",
     selectSchool: "/select",
     loginCallback: "/callback",
+    welcome: "/welcome",
     admin: "/admin"
 };
 

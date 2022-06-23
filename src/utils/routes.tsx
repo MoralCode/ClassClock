@@ -6,6 +6,7 @@ import PrivateRoute from "../components/PrivateRoute";
 import SchoolSelect from "../pages/SchoolSelect";
 import { pages } from "./constants";
 import Admin from "../pages/Admin";
+import Welcome from "../pages/Welcome";
 
 export const routes = [
     {
@@ -23,6 +24,10 @@ export const routes = [
     {
         path: pages.selectSchool,
         action: () => <SchoolSelect />
+    },
+    {
+        path: pages.welcome,
+        action: () => <Welcome />
     },
     {
         path: pages.admin,

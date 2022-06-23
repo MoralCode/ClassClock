@@ -1,6 +1,6 @@
 import React, { Component, CSSProperties, ReactNode } from "react";
 
-interface ILinkProps {
+export interface ILinkProps {
     destination: any;
     className?: string;
     style?: CSSProperties;

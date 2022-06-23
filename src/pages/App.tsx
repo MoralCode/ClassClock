@@ -80,7 +80,7 @@ export const App = (props: IAppProps) => {
         switch (currentSchedule) {
             case undefined:
                 if (!props.selectedSchool.isFetching) {
-                    props.dispatch(push(pages.selectSchool));
+                    props.dispatch(push(pages.welcome));
                 }
                 return
             case null:
