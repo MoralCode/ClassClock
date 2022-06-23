@@ -258,6 +258,14 @@ section#options > * {
     font-weight: 700;
 }*/
 
+
+.blockButton {
+    padding: 5px;
+    margin: 2px;
+    background-color: rgba(0, 0, 0, 0.1);
+    display: block;
+}
+
 .verticalFlex {
     display: flex;
     flex-direction: column;
