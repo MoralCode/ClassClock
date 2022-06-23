@@ -321,6 +321,23 @@ section#options > * {
 }
 
 
+.mediumVerticalSpacer {
+    height:10vh;
+}
+
+@media (min-height: 350px) {
+    .mediumVerticalSpacer {
+        height: 25vh;
+    }
+}
+
+@media (min-height: 500px) {
+    .mediumVerticalSpacer {
+        height: 50vh;
+    }
+}
+
+
 .centeredWidth {
     margin: 0 auto;
     width: 95vw;
