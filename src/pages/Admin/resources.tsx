@@ -1,5 +1,7 @@
+import { InferProps, Requireable, ReactElementLike, ReactNodeLike, Validator } from "prop-types";
 import React from "react";
-import {ArrayField, ArrayInput, ChipField, Create, Datagrid, DateField, DateInput, Edit, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleFormIterator, SingleFieldList, TextField, TextInput } from "react-admin";
+import {ArrayField, ArrayInput, ChipField, Create, Datagrid, DateField, DateInput, Edit, EditProps, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleFormIterator, SingleFieldList, TextField, TextInput } from "react-admin";
+import CalendarDates from "./CalendarDates";
 
 
 export const SchoolList = (props: any) => (
@@ -38,7 +40,29 @@ export const BellScheduleList = (props: any) => (
 	</List>
 );
 
-export const BellscheduleEdit = props => (
+export const DateList = (props: any) => (
+	<CalendarDates {...props}>
+		<Datagrid rowClick="edit">
+			{/* <TextField source="school" /> */}
+			<TextField source="name" />
+			<TextField source="display_name" />
+			<ReferenceField source="school" reference="school" link={false}>
+				<TextField source="full_name" />
+			</ReferenceField>
+			<ArrayField source="meeting_times" label="Class Periods"><SingleFieldList><ChipField source="name" /></SingleFieldList></ArrayField>
+
+
+			{/* <ArrayField source="dates"></ArrayField> */}
+			{/* <TextField source="dates" /> */}
+			{/* <TextField source="id" /> */}
+			<DateField source="creation_date" />
+			{/* <DateField source="last_modified" /> */}
+
+		</Datagrid>
+	</CalendarDates>
+);
+
+export const BellscheduleEdit = (props: any) => (
 	<Edit {...props}>
 		<SimpleForm>
 			<TextInput source="name" />
