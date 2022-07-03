@@ -10,12 +10,30 @@ import { Card } from '@mui/material';
 import BellSchedule from '../../@types/bellschedule';
 import { DateTime, Duration } from 'luxon';
 
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+// import timeGridPlugin from '@fullcalendar/timegrid';
+// import listPlugin from '@fullcalendar/list';
+
 interface CalendarDatesProps { 
 	children: JSX.Element, 
 	// actions, 
 	// filters, 
 	title: string
 }
+
+// ...e
+// let calendar = new Calendar(calendarEl, {
+// 	plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
+// 	initialView: 'dayGridMonth',
+// 	headerToolbar: {
+// 		left: 'prev,next today',
+// 		center: 'title',
+// 		right: 'dayGridMonth,timeGridWeek,listWeek'
+// 	}
+// });
+
+
 
 export const Dates = () => {
 	const { data, loading } = useListContext();
@@ -80,19 +98,24 @@ export const Dates = () => {
 
 
 	return (
-		<ul>
-			{dates.map((date) => {
+		<>
+			<ul>
+				{dates.map((date) => {
 
-				let strdate = date.toFormat("yyyy-MM-dd");
-				return (
-					<li key={strdate}>
-						{strdate}: {listSchedulesForDate(strdate)}
-					</li>
-				)
-			}
-		)}
-		{/* <li>hiiiii</li> */}
-		</ul>
+					let strdate = date.toFormat("yyyy-MM-dd");
+					return (
+						<li key={strdate}>
+							{strdate}: {listSchedulesForDate(strdate)}
+						</li>
+					)
+				}
+			)}
+			</ul>
+			<FullCalendar
+				plugins={[dayGridPlugin]}
+				initialView="dayGridMonth"
+			/>
+		</>
 	);
 }
 
