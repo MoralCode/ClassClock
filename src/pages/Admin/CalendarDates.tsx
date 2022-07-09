@@ -62,14 +62,13 @@ export const Dates = () => {
 		// }
 	}
 
-	let iterateDate = DateTime.now().startOf('month')
-
+	let fromDate = DateTime.now().minus(Duration.fromObject({ month: 1})).startOf('month')
+	let toDate = DateTime.now().plus(Duration.fromObject({ month: 2 })).endOf('month')
 	let dates: DateTime[] = []
-
-	for (let index = 7; index < 10; index++) {
-		dates.push(iterateDate.plus(Duration.fromObject({ days: index })))
-		// iterateDate
-		
+	let theDate = fromDate;
+	while (theDate <= toDate ) {
+		theDate = theDate.plus(Duration.fromObject({ days: 1 }))
+		dates.push(theDate)		
 	}
 	// while (iterateDate < iterateDate.endOf('month')) {
 		// dates.push(iterateDate)
