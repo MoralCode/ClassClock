@@ -114,6 +114,7 @@ export const Dates = () => {
 			plugins={[dayGridPlugin]}
 			initialView="dayGridMonth"
 			events={dates.map((date) => schedulesForDate(date.toFormat("yyyy-MM-dd"))).reduce((prev, curr) => prev.concat(curr) )}
+			nowIndicator={true}
 		/>
 	);
 }
