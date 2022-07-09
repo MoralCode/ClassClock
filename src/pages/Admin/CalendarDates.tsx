@@ -110,25 +110,11 @@ export const Dates = () => {
 
 
 	return (
-		<>
-			<ul>
-				{dates.map((date) => {
-
-					let strdate = date.toFormat("yyyy-MM-dd");
-					return (
-						<li key={strdate}>
-							{strdate}: {listSchedulesForDate(strdate)}
-						</li>
-					)
-				}
-			)}
-			</ul>
-			<FullCalendar
-				plugins={[dayGridPlugin]}
-				initialView="dayGridMonth"
-				events={dates.map((date) => schedulesForDate(date.toFormat("yyyy-MM-dd"))).reduce((prev, curr) => prev.concat(curr) )}
-			/>
-		</>
+		<FullCalendar
+			plugins={[dayGridPlugin]}
+			initialView="dayGridMonth"
+			events={dates.map((date) => schedulesForDate(date.toFormat("yyyy-MM-dd"))).reduce((prev, curr) => prev.concat(curr) )}
+		/>
 	);
 }
 
