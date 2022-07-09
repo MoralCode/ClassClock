@@ -77,10 +77,6 @@ export const Dates = () => {
 	// }
 	console.log(dates)
 
-	// const scheduleHasDate = (scheduleID: string, strdate:string) => {
-	// 	scheduelsByDate[scheduleID].map((date: DateTime) => date.toFormat("yyyy-MM-dd")).contains(strdate)
-	// }
-
 	const schedulesForDate = (date: string) => {
 		let schedulesToday = []
 		for (let entry of Object.entries(schedulesByDate)) {
@@ -92,23 +88,6 @@ export const Dates = () => {
 		}
 		return schedulesToday
 	}
-
-	const listSchedulesForDate = (date:string) => {
-		let scheduelsToday = ""
-		for (let entry of Object.entries(schedulesByDate)) {
-			let [id, scheduledates] = entry;
-			// let datesmap = scheduledates.map((value) => (value).toFormat("yyyy-MM-dd"));
-			if (scheduledates.find((value, index, obj) => value == date)) {
-				scheduelsToday += id + " "
-			}
-		}
-		return scheduelsToday
-	}
-
-
-
-
-
 	return (
 		<FullCalendar
 			plugins={[dayGridPlugin]}
