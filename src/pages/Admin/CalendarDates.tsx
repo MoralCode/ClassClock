@@ -94,6 +94,10 @@ export const Dates = () => {
 			initialView="dayGridMonth"
 			events={dates.map((date) => schedulesForDate(date.toFormat(dateFormat))).reduce((prev, curr) => prev.concat(curr) )}
 			nowIndicator={true}
+			validRange={{
+				start: fromDate.toFormat(dateFormat),
+				end: toDate.toFormat(dateFormat)
+			}}
 		/>
 	);
 }
