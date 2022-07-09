@@ -65,6 +65,7 @@ export const Dates = () => {
 	let fromDate = DateTime.now().minus(Duration.fromObject({ month: 1})).startOf('month')
 	let toDate = DateTime.now().plus(Duration.fromObject({ month: 2 })).endOf('month')
 	let dates: DateTime[] = []
+	let dateFormat = "yyyy-MM-dd";
 	let theDate = fromDate;
 	while (theDate <= toDate ) {
 		theDate = theDate.plus(Duration.fromObject({ days: 1 }))
@@ -91,7 +92,7 @@ export const Dates = () => {
 		<FullCalendar
 			plugins={[dayGridPlugin]}
 			initialView="dayGridMonth"
-			events={dates.map((date) => schedulesForDate(date.toFormat("yyyy-MM-dd"))).reduce((prev, curr) => prev.concat(curr) )}
+			events={dates.map((date) => schedulesForDate(date.toFormat(dateFormat))).reduce((prev, curr) => prev.concat(curr) )}
 			nowIndicator={true}
 		/>
 	);
