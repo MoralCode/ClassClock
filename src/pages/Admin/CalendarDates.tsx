@@ -16,7 +16,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 // import listPlugin from '@fullcalendar/list';
 
 interface CalendarDatesProps { 
-	children: JSX.Element, 
+	children?: JSX.Element, 
 	// actions, 
 	// filters, 
 	title: string
