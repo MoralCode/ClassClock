@@ -95,7 +95,6 @@ const CalendarDates = (props:CalendarDatesProps) => {
 		{/* <Card> */}
 		{props.children}
 		<Dates />
-		<p>hi</p>
 		{/* </Card> */}
 		{/* <Pagination /> */}
 	</ListBase>;
