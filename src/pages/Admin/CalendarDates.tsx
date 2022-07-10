@@ -16,6 +16,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 // import listPlugin from '@fullcalendar/list';
 
 interface CalendarDatesProps { 
+	[key: string]: any; //https://bobbyhadz.com/blog/react-typescript-pass-object-as-props, this probably allows other props to be passed down
 	children?: JSX.Element, 
 	// actions, 
 	// filters, 
