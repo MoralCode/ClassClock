@@ -37,7 +37,7 @@ interface CalendarDatesProps {
 // https://marmelab.com/react-admin/ListBase.html
 const CalendarDates = (props:CalendarDatesProps) => {
 	const { data, loading } = useListContext();
-	let schedulesByDate: { [key: string]: string[]} = {};
+	let schedulesByDate: { [key: string]: string[] } = {};
 	if (!loading && data != {}) {
 		for (let entry of Object.entries(data)) {
 			let [key, schedule] = entry
@@ -47,14 +47,14 @@ const CalendarDates = (props:CalendarDatesProps) => {
 		}
 	}
 
-	let fromDate = DateTime.now().minus(Duration.fromObject({ month: 1})).startOf('month')
+	let fromDate = DateTime.now().minus(Duration.fromObject({ month: 1 })).startOf('month')
 	let toDate = DateTime.now().plus(Duration.fromObject({ month: 2 })).endOf('month')
 	let dates: DateTime[] = []
 	let dateFormat = "yyyy-MM-dd";
 	let theDate = fromDate;
-	while (theDate <= toDate ) {
+	while (theDate <= toDate) {
 		theDate = theDate.plus(Duration.fromObject({ days: 1 }))
-		dates.push(theDate)		
+		dates.push(theDate)
 	}
 	console.log(dates)
 
@@ -64,7 +64,7 @@ const CalendarDates = (props:CalendarDatesProps) => {
 			let [id, scheduledates] = entry;
 			// let datesmap = scheduledates.map((value) => (value).toFormat("yyyy-MM-dd"));
 			if (scheduledates.find((value, index, obj) => value == date)) {
-				schedulesToday.push({ title: data[id]["name"], date: date})
+				schedulesToday.push({ title: data[id]["name"], date: date })
 			}
 		}
 		return schedulesToday
@@ -80,7 +80,7 @@ const CalendarDates = (props:CalendarDatesProps) => {
 		<FullCalendar
 			plugins={[dayGridPlugin]}
 			initialView="dayGridMonth"
-			events={dates.map((date) => schedulesForDate(date.toFormat(dateFormat))).reduce((prev, curr) => prev.concat(curr) )}
+			events={dates.map((date) => schedulesForDate(date.toFormat(dateFormat))).reduce((prev, curr) => prev.concat(curr))}
 			nowIndicator={true}
 			validRange={{
 				start: fromDate.toFormat(dateFormat),
