@@ -34,8 +34,8 @@ interface CalendarDatesProps {
 // });
 
 
-
-export const Dates = () => {
+// https://marmelab.com/react-admin/ListBase.html
+const CalendarDates = (props:CalendarDatesProps) => {
 	const { data, loading } = useListContext();
 	let schedulesByDate: { [key: string]: string[]} = {};
 	if (!loading && data != {}) {
@@ -69,7 +69,14 @@ export const Dates = () => {
 		}
 		return schedulesToday
 	}
-	return (
+	return <ListBase {...props}>
+		<Title title={props.title} />
+		{/* <ListToolbar
+			filters={filters}
+			actions={actions}
+		/> */}
+		{/* <Card> */}
+		{/* {props.children} */}
 		<FullCalendar
 			plugins={[dayGridPlugin]}
 			initialView="dayGridMonth"
@@ -80,21 +87,6 @@ export const Dates = () => {
 				end: toDate.toFormat(dateFormat)
 			}}
 		/>
-	);
-}
-
-// https://marmelab.com/react-admin/ListBase.html
-const CalendarDates = (props:CalendarDatesProps) => {
-
-	return <ListBase {...props}>
-		<Title title={props.title} />
-		{/* <ListToolbar
-			filters={filters}
-			actions={actions}
-		/> */}
-		{/* <Card> */}
-		{props.children}
-		<Dates />
 		{/* </Card> */}
 		{/* <Pagination /> */}
 	</ListBase>;
