@@ -42,39 +42,10 @@ interface CalendarDatesProps {
 const CalendarDates = (props:CalendarDatesProps) => {
 	const { data, loading } = useListContext();
 	const {title, recordTransformer, ...rest } = props; 
-	let schedulesByDate: { [key: string]: string[] } = {};
 	let events: EventSourceInput[] = []
 	if (!loading && data != {}) {
 		events = recordTransformer(data)
-		for (let entry of Object.entries(data)) {
-			let [key, schedule] = entry
-			console.log(schedule['dates'])
-			console.log(typeof (schedule['dates']))
-			schedulesByDate[key] = schedule['dates']//.map((value:DateTime) => (value).toFormat("yyyy-MM-dd"))
-		}
-	}
 
-	let fromDate = DateTime.now().minus(Duration.fromObject({ month: 1 })).startOf('month')
-	let toDate = DateTime.now().plus(Duration.fromObject({ month: 2 })).endOf('month')
-	let dates: DateTime[] = []
-	let dateFormat = "yyyy-MM-dd";
-	let theDate = fromDate;
-	while (theDate <= toDate) {
-		theDate = theDate.plus(Duration.fromObject({ days: 1 }))
-		dates.push(theDate)
-	}
-	console.log(dates)
-
-	const schedulesForDate = (date: string) => {
-		let schedulesToday = []
-		for (let entry of Object.entries(schedulesByDate)) {
-			let [id, scheduledates] = entry;
-			// let datesmap = scheduledates.map((value) => (value).toFormat("yyyy-MM-dd"));
-			if (scheduledates.find((value, index, obj) => value == date)) {
-				schedulesToday.push({ title: data[id]["name"], date: date })
-			}
-		}
-		return schedulesToday
 	}
 	return <ListBase {...props}>
 		<Title title={title} />
@@ -87,7 +58,7 @@ const CalendarDates = (props:CalendarDatesProps) => {
 		<FullCalendar
 			plugins={[dayGridPlugin]}
 			initialView="dayGridMonth"
-			events={dates.map((date) => schedulesForDate(date.toFormat(dateFormat))).reduce((prev, curr) => prev.concat(curr))}
+			events={events}
 			nowIndicator={true}
 			validRange={{
 				start: fromDate.toFormat(dateFormat),

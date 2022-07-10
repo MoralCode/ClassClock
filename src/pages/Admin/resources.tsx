@@ -1,7 +1,9 @@
 import { InferProps, Requireable, ReactElementLike, ReactNodeLike, Validator } from "prop-types";
 import React from "react";
-import {ArrayField, ArrayInput, ChipField, Create, Datagrid, DateField, DateInput, Edit, EditProps, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleFormIterator, SingleFieldList, TextField, TextInput } from "react-admin";
+import {ArrayField, ArrayInput, ChipField, Create, Datagrid, DateField, DateInput, Edit, EditProps, List, RecordMap, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleFormIterator, SingleFieldList, TextField, TextInput, Record } from "react-admin";
 import CalendarDates from "./CalendarDates";
+import { DateTime, Duration } from 'luxon';
+import { EventSourceInput, EventInput } from '@fullcalendar/react';
 
 
 export const SchoolList = (props: any) => (
@@ -17,6 +19,29 @@ export const SchoolList = (props: any) => (
 		</Datagrid>
 	</List>
 );
+
+const recordsToEvents = (data: RecordMap<Record>) => {
+	if (data == null) {
+		// console.log("null")
+		return []
+	}
+
+	let events: EventInput[]  = []
+
+	for (let entry of Object.entries(data)) {
+		let [key, schedule] = entry
+		// console.log(schedule['dates'])
+		// console.log(typeof (schedule['dates']))
+		let scheduleTemplateEvent = {
+			title: schedule["name"]
+		}
+		schedule['dates'].forEach((datestr: string) => {
+			events.push(Object.assign({}, scheduleTemplateEvent, {date: datestr}))
+		});
+		
+	}
+	return events;
+};
 
 export const BellScheduleList = (props: any) => (
 	<>
