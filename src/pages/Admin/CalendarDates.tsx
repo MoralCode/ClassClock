@@ -88,6 +88,7 @@ const CalendarDates = (props:CalendarDatesProps) => {
 				start: fromDate.toFormat(dateFormat),
 				end: toDate.toFormat(dateFormat)
 			}}
+			{...rest}
 		/>
 		{/* </Card> */}
 		{/* <Pagination /> */}
