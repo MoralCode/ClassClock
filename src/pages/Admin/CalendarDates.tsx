@@ -37,9 +37,6 @@ interface CalendarDatesProps {
 
 export const Dates = () => {
 	const { data, loading } = useListContext();
-	// let scheduelsByDate = { [key:string]: string};
-	// console.log(data)
-	// console.log(typeof(data))
 	let schedulesByDate: { [key: string]: string[]} = {};
 	if (!loading && data != {}) {
 		for (let entry of Object.entries(data)) {
@@ -48,18 +45,6 @@ export const Dates = () => {
 			console.log(typeof (schedule['dates']))
 			schedulesByDate[key] = schedule['dates']//.map((value:DateTime) => (value).toFormat("yyyy-MM-dd"))
 		}
-
-		// schedulesByDate = data();
-		// {
-		// 	for (let date of schedule.getDates()) {
-		// 		if (schedulesByDate[date.toFormat("YYYY-MM-DD")] != undefined ) {
-
-		// 		} else {
-		// 			schedulesByDate[date.toFormat("YYYY-MM-DD")] = [schedule.getIdentifier()]
-		// 		}
-		// 	}
-			
-		// }
 	}
 
 	let fromDate = DateTime.now().minus(Duration.fromObject({ month: 1})).startOf('month')
@@ -71,10 +56,6 @@ export const Dates = () => {
 		theDate = theDate.plus(Duration.fromObject({ days: 1 }))
 		dates.push(theDate)		
 	}
-	// while (iterateDate < iterateDate.endOf('month')) {
-		// dates.push(iterateDate)
-		// iterateDate = iterateDate.plus(Duration.fromObject({days: 1}))
-	// }
 	console.log(dates)
 
 	const schedulesForDate = (date: string) => {
