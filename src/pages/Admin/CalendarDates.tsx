@@ -8,9 +8,8 @@ import {
 	RecordMap,
 	Record
 } from 'react-admin';
-import { Card } from '@mui/material';
-import BellSchedule from '../../@types/bellschedule';
-import { DateTime, Duration } from 'luxon';
+// import { Card } from '@mui/material';
+import { DateTime } from 'luxon';
 
 import FullCalendar, { EventSourceInput } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -24,6 +23,9 @@ interface CalendarDatesProps {
 	// filters, 
 	title: string
 	recordTransformer: (data:RecordMap<Record>) => EventSourceInput,
+	fromDate: DateTime,
+	toDate: DateTime
+
 }
 
 // ...e
@@ -39,13 +41,15 @@ interface CalendarDatesProps {
 
 
 // https://marmelab.com/react-admin/ListBase.html
-const CalendarDates = (props:CalendarDatesProps) => {
-	const { data, loading } = useListContext();
-	const {title, recordTransformer, ...rest } = props; 
-	let events: EventSourceInput[] = []
-	if (!loading && data != {}) {
+const CalendarDates = (props:any) => {
+	const { data, loaded } = useListContext(props);
+	const {title, recordTransformer, fromDate, toDate, children, ...rest } = props; 
+	
+	let events: EventSourceInput = {};
+	if (loaded) {
 		events = recordTransformer(data)
-
+	} else {
+		return <>Loading...</>;
 	}
 	
 	// return <ListBase {...rest}>
@@ -62,8 +66,8 @@ const CalendarDates = (props:CalendarDatesProps) => {
 			events={events}
 			nowIndicator={true}
 			validRange={{
-				start: fromDate.toFormat(dateFormat),
-				end: toDate.toFormat(dateFormat)
+				start: fromDate.toFormat("yyyy-MM-dd"),
+				end: toDate.toFormat("yyyy-MM-dd")
 			}}
 			{...rest}
 		/>;

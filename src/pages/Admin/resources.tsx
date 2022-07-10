@@ -49,6 +49,9 @@ export const BellScheduleList = (props: any) => (
 			<>
 			<CalendarDates
 				// title={"Calendar"}
+				recordTransformer={recordsToEvents}
+				fromDate={DateTime.now().minus(Duration.fromObject({month: 1 })).startOf('month')}
+				toDate={DateTime.now().plus(Duration.fromObject({month: 2 })).endOf('month')}
 				{...props} />
 		
 			<Datagrid rowClick="edit">
