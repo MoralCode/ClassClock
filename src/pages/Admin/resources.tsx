@@ -45,8 +45,12 @@ const recordsToEvents = (data: RecordMap<Record>) => {
 
 export const BellScheduleList = (props: any) => (
 	<>
-		<CalendarDates title={"Calendar"} {...props} />
 		<List {...props}>
+			<>
+			<CalendarDates
+				// title={"Calendar"}
+				{...props} />
+		
 			<Datagrid rowClick="edit">
 				{/* <TextField source="school" /> */}
 				<TextField source="name" />
@@ -64,6 +68,7 @@ export const BellScheduleList = (props: any) => (
 				{/* <DateField source="last_modified" /> */}
 
 			</Datagrid>
+			</>
 		</List>
 	</>
 );

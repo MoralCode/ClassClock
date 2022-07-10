@@ -47,15 +47,16 @@ const CalendarDates = (props:CalendarDatesProps) => {
 		events = recordTransformer(data)
 
 	}
-	return <ListBase {...props}>
-		<Title title={title} />
+	
+	// return <ListBase {...rest}>
+		// <Title title={title} />
 		{/* <ListToolbar
 			filters={filters}
 			actions={actions}
 		/> */}
 		{/* <Card> */}
 		{/* {props.children} */}
-		<FullCalendar
+	return <FullCalendar
 			plugins={[dayGridPlugin]}
 			initialView="dayGridMonth"
 			events={events}
@@ -65,9 +66,9 @@ const CalendarDates = (props:CalendarDatesProps) => {
 				end: toDate.toFormat(dateFormat)
 			}}
 			{...rest}
-		/>
+		/>;
 		{/* </Card> */}
 		{/* <Pagination /> */}
-	</ListBase>;
+	// </ListBase>;
 }
 export default CalendarDates;
