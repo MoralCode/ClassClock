@@ -5,12 +5,14 @@ import {
 	Pagination,
 	Datagrid,
 	useListContext,
+	RecordMap,
+	Record
 } from 'react-admin';
 import { Card } from '@mui/material';
 import BellSchedule from '../../@types/bellschedule';
 import { DateTime, Duration } from 'luxon';
 
-import FullCalendar from '@fullcalendar/react';
+import FullCalendar, { EventSourceInput } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 // import timeGridPlugin from '@fullcalendar/timegrid';
 // import listPlugin from '@fullcalendar/list';
@@ -21,6 +23,7 @@ interface CalendarDatesProps {
 	// actions, 
 	// filters, 
 	title: string
+	recordTransformer: (data:RecordMap<Record>) => EventSourceInput,
 }
 
 // ...e
@@ -38,9 +41,11 @@ interface CalendarDatesProps {
 // https://marmelab.com/react-admin/ListBase.html
 const CalendarDates = (props:CalendarDatesProps) => {
 	const { data, loading } = useListContext();
-	const {title, ...rest } = props; 
+	const {title, recordTransformer, ...rest } = props; 
 	let schedulesByDate: { [key: string]: string[] } = {};
+	let events: EventSourceInput[] = []
 	if (!loading && data != {}) {
+		events = recordTransformer(data)
 		for (let entry of Object.entries(data)) {
 			let [key, schedule] = entry
 			console.log(schedule['dates'])
