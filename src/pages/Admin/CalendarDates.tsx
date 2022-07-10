@@ -37,6 +37,7 @@ interface CalendarDatesProps {
 // https://marmelab.com/react-admin/ListBase.html
 const CalendarDates = (props:CalendarDatesProps) => {
 	const { data, loading } = useListContext();
+	const {title, ...rest } = props; 
 	let schedulesByDate: { [key: string]: string[] } = {};
 	if (!loading && data != {}) {
 		for (let entry of Object.entries(data)) {
@@ -70,7 +71,7 @@ const CalendarDates = (props:CalendarDatesProps) => {
 		return schedulesToday
 	}
 	return <ListBase {...props}>
-		<Title title={props.title} />
+		<Title title={title} />
 		{/* <ListToolbar
 			filters={filters}
 			actions={actions}
