@@ -84,8 +84,9 @@ export const Dates = () => {
 }
 
 // https://marmelab.com/react-admin/ListBase.html
-const CalendarDates = (props:CalendarDatesProps) => (
-	<ListBase {...props}>
+const CalendarDates = (props:CalendarDatesProps) => {
+
+	return <ListBase {...props}>
 		<Title title={props.title} />
 		{/* <ListToolbar
 			filters={filters}
@@ -97,6 +98,6 @@ const CalendarDates = (props:CalendarDatesProps) => (
 		<p>hi</p>
 		{/* </Card> */}
 		{/* <Pagination /> */}
-	</ListBase>
-);
+	</ListBase>;
+}
 export default CalendarDates;
