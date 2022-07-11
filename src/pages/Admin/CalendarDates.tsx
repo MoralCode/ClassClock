@@ -4,9 +4,7 @@ import {
 	ListToolbar,
 	Pagination,
 	Datagrid,
-	useListContext,
-	RecordMap,
-	Record
+	useListContext
 } from 'react-admin';
 // import { Card } from '@mui/material';
 import { DateTime } from 'luxon';
@@ -22,7 +20,7 @@ interface CalendarDatesProps {
 	// actions, 
 	// filters, 
 	title: string
-	recordTransformer: (data:RecordMap<Record>) => EventSourceInput,
+	recordTransformer: (data:any[]) => EventSourceInput,
 	fromDate: DateTime,
 	toDate: DateTime
 
