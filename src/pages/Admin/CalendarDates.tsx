@@ -5,8 +5,7 @@ import {
 	Pagination,
 	Datagrid,
 	useListContext,
-	RecordMap,
-	Record
+	RaRecord
 } from 'react-admin';
 // import { Card } from '@mui/material';
 import { DateTime } from 'luxon';
@@ -22,7 +21,7 @@ interface CalendarDatesProps {
 	// actions, 
 	// filters, 
 	title: string
-	recordTransformer: (data:RecordMap<Record>) => EventSourceInput,
+	recordTransformer: (data: RaRecord[]) => EventSourceInput,
 	fromDate: DateTime,
 	toDate: DateTime
 
@@ -42,11 +41,11 @@ interface CalendarDatesProps {
 
 // https://marmelab.com/react-admin/ListBase.html
 const CalendarDates = (props:any) => {
-	const { data, loaded } = useListContext(props);
+	const { data, isLoading } = useListContext(props);
 	const {title, recordTransformer, fromDate, toDate, children, ...rest } = props; 
 	
 	let events: EventSourceInput = {};
-	if (loaded) {
+	if (!isLoading) {
 		events = recordTransformer(data)
 	} else {
 		return <>Loading...</>;

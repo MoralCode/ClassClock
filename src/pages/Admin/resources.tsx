@@ -1,6 +1,6 @@
 import { InferProps, Requireable, ReactElementLike, ReactNodeLike, Validator } from "prop-types";
 import React from "react";
-import {ArrayField, ArrayInput, ChipField, Create, Datagrid, DateField, DateInput, Edit, EditProps, List, RecordMap, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleFormIterator, SingleFieldList, TextField, TextInput, Record } from "react-admin";
+import {ArrayField, ArrayInput, ChipField, Create, Datagrid, DateField, DateInput, Edit, EditProps, List, RaRecord, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleFormIterator, SingleFieldList, TextField, TextInput } from "react-admin";
 import CalendarDates from "./CalendarDates";
 import { DateTime, Duration } from 'luxon';
 import { EventSourceInput, EventInput } from '@fullcalendar/react';
@@ -20,7 +20,14 @@ export const SchoolList = (props: any) => (
 	</List>
 );
 
-const recordsToEvents = (data: RecordMap<Record>) => {
+
+interface Schedule extends RaRecord {
+	id: string;
+	name: string;
+	dates: string[];
+}
+
+const recordsToEvents = (data: Schedule[]) => {
 	if (data == null) {
 		// console.log("null")
 		return []
@@ -28,8 +35,7 @@ const recordsToEvents = (data: RecordMap<Record>) => {
 
 	let events: EventInput[]  = []
 
-	for (let entry of Object.entries(data)) {
-		let [key, schedule] = entry
+	for (let schedule of data) {
 		// console.log(schedule['dates'])
 		// console.log(typeof (schedule['dates']))
 		let scheduleTemplateEvent = {
