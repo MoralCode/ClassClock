@@ -40,7 +40,7 @@ interface CalendarDatesProps {
 
 
 // https://marmelab.com/react-admin/ListBase.html
-const CalendarDates = (props:any) => {
+const CalendarDates = (props:CalendarDatesProps) => {
 	const { data, isLoading } = useListContext(props);
 	const {title, recordTransformer, fromDate, toDate, children, ...rest } = props; 
 	
