@@ -20,14 +20,7 @@ export const SchoolList = (props: any) => (
 	</List>
 );
 
-
-interface Schedule extends RaRecord {
-	id: string;
-	name: string;
-	dates: string[];
-}
-
-const recordsToEvents = (data: Schedule[]) => {
+const recordsToEvents = (data: RaRecord[]) => {
 	if (data == null) {
 		// console.log("null")
 		return []
