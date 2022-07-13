@@ -43,6 +43,7 @@ const CalendarDates = (props:CalendarDatesProps) => {
 		plugins={[interactionPlugin, dayGridPlugin]}
 			initialView="dayGridMonth"
 			events={events}
+			contentHeight={600}
 			nowIndicator={true}
 			validRange={{
 				start: fromDate.toFormat("yyyy-MM-dd"),
