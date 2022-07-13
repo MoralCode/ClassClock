@@ -22,15 +22,12 @@ export const SchoolList = (props: any) => (
 
 const recordsToEvents = (data: RaRecord[]) => {
 	if (data == null) {
-		// console.log("null")
 		return []
 	}
 
 	let events: EventInput[]  = []
 
 	for (let schedule of data) {
-		// console.log(schedule['dates'])
-		// console.log(typeof (schedule['dates']))
 		let scheduleTemplateEvent = {
 			title: schedule["name"]
 		}
@@ -47,7 +44,6 @@ export const BellScheduleList = (props: any) => (
 		<List {...props}>
 			<>
 			<CalendarDates
-				// title={"Calendar"}
 				recordTransformer={recordsToEvents}
 				fromDate={DateTime.now().minus(Duration.fromObject({month: 1 })).startOf('month')}
 				toDate={DateTime.now().plus(Duration.fromObject({month: 2 })).endOf('month')}

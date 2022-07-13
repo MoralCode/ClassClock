@@ -12,8 +12,6 @@ import { DateTime } from 'luxon';
 
 import FullCalendar, { EventSourceInput } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-// import timeGridPlugin from '@fullcalendar/timegrid';
-// import listPlugin from '@fullcalendar/list';
 
 interface CalendarDatesProps { 
 	[key: string]: any; //https://bobbyhadz.com/blog/react-typescript-pass-object-as-props, this probably allows other props to be passed down
@@ -26,17 +24,6 @@ interface CalendarDatesProps {
 	toDate: DateTime
 
 }
-
-// ...e
-// let calendar = new Calendar(calendarEl, {
-// 	plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
-// 	initialView: 'dayGridMonth',
-// 	headerToolbar: {
-// 		left: 'prev,next today',
-// 		center: 'title',
-// 		right: 'dayGridMonth,timeGridWeek,listWeek'
-// 	}
-// });
 
 
 // https://marmelab.com/react-admin/ListBase.html
@@ -51,14 +38,6 @@ const CalendarDates = (props:CalendarDatesProps) => {
 		return <>Loading...</>;
 	}
 	
-	// return <ListBase {...rest}>
-		// <Title title={title} />
-		{/* <ListToolbar
-			filters={filters}
-			actions={actions}
-		/> */}
-		{/* <Card> */}
-		{/* {props.children} */}
 	return <FullCalendar
 			plugins={[dayGridPlugin]}
 			initialView="dayGridMonth"
@@ -70,8 +49,5 @@ const CalendarDates = (props:CalendarDatesProps) => {
 			}}
 			{...rest}
 		/>;
-		{/* </Card> */}
-		{/* <Pagination /> */}
-	// </ListBase>;
 }
 export default CalendarDates;
