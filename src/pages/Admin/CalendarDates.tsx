@@ -10,8 +10,9 @@ import {
 // import { Card } from '@mui/material';
 import { DateTime } from 'luxon';
 
-import FullCalendar, { EventSourceInput } from '@fullcalendar/react';
+import FullCalendar, { EventClickArg, EventSourceInput } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction'; // for selectable
 
 interface CalendarDatesProps { 
 	[key: string]: any; //https://bobbyhadz.com/blog/react-typescript-pass-object-as-props, this probably allows other props to be passed down
@@ -39,7 +40,7 @@ const CalendarDates = (props:CalendarDatesProps) => {
 	}
 	
 	return <FullCalendar
-			plugins={[dayGridPlugin]}
+		plugins={[interactionPlugin, dayGridPlugin]}
 			initialView="dayGridMonth"
 			events={events}
 			nowIndicator={true}
