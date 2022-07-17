@@ -1,9 +1,8 @@
-import { InferProps, Requireable, ReactElementLike, ReactNodeLike, Validator } from "prop-types";
 import React from "react";
-import {ArrayField, ArrayInput, ChipField, Create, Datagrid, DateField, DateInput, Edit, EditProps, List, RaRecord, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleFormIterator, SingleFieldList, TextField, TextInput } from "react-admin";
+import {ArrayField, ArrayInput, ChipField, Create, Datagrid, DateField, Edit, List, RaRecord, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleFormIterator, SingleFieldList, TextField, TextInput, useRecordContext } from "react-admin";
 import CalendarDates from "./CalendarDates";
 import { DateTime, Duration } from 'luxon';
-import { EventSourceInput, EventInput } from '@fullcalendar/react';
+import { EventInput } from '@fullcalendar/react';
 
 export const SchoolList = (props: any) => (
 	<List {...props}>
