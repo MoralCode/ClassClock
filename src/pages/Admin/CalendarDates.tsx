@@ -113,12 +113,7 @@ const CalendarDates = (props:CalendarDatesProps) => {
 			eventOverlap={false}
 			contentHeight={600}
 			eventReceive={(info) => {
-				console.log("received event: ")
-				console.log(info.event)
-				console.log(info.event.id)
-				console.log(info.event.title)
-				console.log(info.event.startStr)
-				console.log(info.event.endStr)
+				// this is called when an external (i.e. new) event is dropped onto the calendar
 				moveDate(info.event.extendedProps.schedule_id, undefined, info.event.startStr)
 			}}
 			eventClick={(arg:EventClickArg) => {console.log(arg.event.title)}}
