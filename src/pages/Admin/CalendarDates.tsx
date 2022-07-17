@@ -64,15 +64,14 @@ const CalendarDates = (props:CalendarDatesProps) => {
 		let schedule = data.find((value) => value.id == schedule_id)
 		console.log(schedule)
 		console.log(schedule.dates)
-		if (fromDate != null && toDate != null){
-			console.log("filtered");
+		// if (fromDate != null && toDate != null){
+		// 	console.log("filtered");
 			
-			console.log(schedule.dates.filter((value:string) => {
-				let date = DateTime.fromFormat(value, "yyyy-MM-dd")
-				return date <= toDate && date >= fromDate
-			} ))
-		}
-		console.log("has date");
+		// 	console.log(schedule.dates.filter((value:string) => {
+		// 		let date = DateTime.fromFormat(value, "yyyy-MM-dd")
+		// 		return date <= toDate && date >= fromDate
+		// 	} ))
+		// }
 
 		if (schedule.dates.find((value:string) => value == date_str) == undefined) {
 			// modify,
