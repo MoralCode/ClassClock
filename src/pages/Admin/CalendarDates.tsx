@@ -5,7 +5,7 @@ import {
 	useResourceContext
 } from 'react-admin';
 import { DateTime } from 'luxon';
-import FullCalendar, { EventClickArg, EventSourceInput } from '@fullcalendar/react';
+import FullCalendar, { EventAddArg, EventChangeArg, EventClickArg, EventSourceInput } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
 import { useEffect, useState } from 'react';
@@ -111,7 +111,13 @@ const CalendarDates = (props:CalendarDatesProps) => {
 				// this is called when an external (i.e. new) event is dropped onto the calendar
 				moveDate(info.event.extendedProps.schedule_id, undefined, info.event.startStr)
 			}}
-			eventClick={(arg:EventClickArg) => {console.log(arg.event.title)}}
+			eventClick={(arg:EventClickArg) => {
+				moveDate(arg.event.extendedProps.schedule_id, arg.event.startStr, undefined)
+				arg.event.remove()
+			}}
+			eventChange={(arg: EventChangeArg) => {
+				moveDate(arg.event.extendedProps.schedule_id, arg.oldEvent.startStr, arg.event.startStr)
+			}}
 			nowIndicator={true}
 			validRange={{
 				start: fromDate.toFormat("yyyy-MM-dd"),
