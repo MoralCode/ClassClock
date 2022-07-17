@@ -29,7 +29,10 @@ const recordsToEvents = (data: RaRecord[]) => {
 
 	for (let schedule of data) {
 		let scheduleTemplateEvent = {
-			title: schedule["name"]
+			title: schedule["name"],
+			extendedProps: {
+				schedule_id: schedule["id"]
+			}
 		}
 		schedule['dates'].forEach((datestr: string) => {
 			events.push(Object.assign({}, scheduleTemplateEvent, {date: datestr}))

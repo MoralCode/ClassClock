@@ -49,7 +49,7 @@ const CalendarDates = (props:CalendarDatesProps) => {
 					eventData: function (eventEl) {
 						return {
 							title: eventEl.innerText,
-							id: eventEl.getAttribute('data-record-id')
+							schedule_id: eventEl.getAttribute('data-record-id')
 						}
 					}
 				});
@@ -119,7 +119,7 @@ const CalendarDates = (props:CalendarDatesProps) => {
 				console.log(info.event.title)
 				console.log(info.event.startStr)
 				console.log(info.event.endStr)
-				moveDate(info.event.id, undefined, info.event.startStr)
+				moveDate(info.event.extendedProps.schedule_id, undefined, info.event.startStr)
 			}}
 			eventClick={(arg:EventClickArg) => {console.log(arg.event.title)}}
 			nowIndicator={true}
