@@ -75,12 +75,12 @@ const CalendarDates = (props:CalendarDatesProps) => {
 			selectOverlap={false}
 			contentHeight={600}
 			eventReceive={(info) => {
-				console.log("received info event: ")
+				console.log("received event: ")
 				console.log(info.event)
-				console.log(info.event._def.publicId)
-				console.log(info.event._def.title)
-				console.log(info.event._instance?.range.start)
-				console.log(info.event._instance?.range.end)
+				console.log(info.event.id)
+				console.log(info.event.title)
+				console.log(info.event.startStr)
+				console.log(info.event.endStr)
 			}}
 			eventClick={(arg:EventClickArg) => {console.log(arg.event.title)}}
 			nowIndicator={true}
