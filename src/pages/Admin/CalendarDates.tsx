@@ -117,6 +117,16 @@ const CalendarDates = (props:CalendarDatesProps) => {
 			eventChange={(arg: EventChangeArg) => {
 				moveDate(arg.event.extendedProps.schedule_id, arg.oldEvent.startStr, arg.event.startStr)
 			}}
+			//see https://stackoverflow.com/a/73015507, this may not be the best solution
+			eventsSet={(arg: EventApi[]) => {
+				for (const event of arg) {
+					let argsThisDay = arg.filter((value) => value.startStr == event.startStr)
+					let argsThisDaycount = argsThisDay? argsThisDay.length: undefined;
+					if (argsThisDaycount == 2 && event.id == "") {
+						event.remove()
+					}
+				}
+			}}
 			nowIndicator={true}
 			validRange={{
 				start: fromDate.toFormat("yyyy-MM-dd"),
