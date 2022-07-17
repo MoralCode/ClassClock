@@ -5,7 +5,8 @@ import {
 	Pagination,
 	Datagrid,
 	useListContext,
-	RaRecord
+	RaRecord,
+	useDataProvider
 } from 'react-admin';
 // import { Card } from '@mui/material';
 import { DateTime } from 'luxon';
@@ -31,6 +32,7 @@ interface CalendarDatesProps {
 // https://marmelab.com/react-admin/ListBase.html
 const CalendarDates = (props:CalendarDatesProps) => {
 	const { data, isLoading } = useListContext(props);
+	const dataProvider = useDataProvider();
 	const {title, recordTransformer, fromDate, toDate, children, ...rest } = props; 
 	const [draggableInitialized, setDraggableInitialized] = useState(false)
 
