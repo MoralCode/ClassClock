@@ -62,31 +62,39 @@ const CalendarDates = (props:CalendarDatesProps) => {
 
 
 
-	const addDate = (date_str: string, schedule_id: string, fromDate?: DateTime, toDate?: DateTime) => {
+	/// This is effectively a remove followed by an add.
+	/// it's combined into one for efficiency when things get moved.
+	/// if both source_date_str and destination_date_str are provided, this function will remove the source and add the destination.
+	/// if either is undefined, then it will simply be an add or remove depending on which one is undefined/null
+	const moveDate = (schedule_id: string, source_date_str?: string, destination_date_str?: string) => {
 		let schedule = data.find((value) => value.id == schedule_id)
 		console.log(schedule)
 		console.log(schedule.dates)
-		// if (fromDate != null && toDate != null){
-		// 	console.log("filtered");
-			
-		// 	console.log(schedule.dates.filter((value:string) => {
-		// 		let date = DateTime.fromFormat(value, "yyyy-MM-dd")
-		// 		return date <= toDate && date >= fromDate
-		// 	} ))
-		// }
-
-		if (schedule.dates.find((value:string) => value == date_str) == undefined) {
-			// modify,
-			schedule.dates.push(date_str)
-			console.log(schedule.dates)
-
-			// send to dataprovider
-			dataProvider.update('bellschedule', {
-				id: schedule.id,
-				data: schedule,
-				previousData: undefined
-			})
+		if (source_date_str != null) {
+			let sourceDatePresent = schedule.dates.find((value: string) => value == source_date_str) != undefined
+			if (sourceDatePresent) {
+				schedule.dates.remove(destination_date_str)
+			}
 		}
+
+		if (destination_date_str != null) {
+			let destinationDatePresent = schedule.dates.find((value: string) => value == destination_date_str) != undefined
+
+			if (!destinationDatePresent) {
+				schedule.dates.push(destination_date_str)
+			}
+		}
+
+		if (source_date_str == null && destination_date_str == null){
+			return
+		}
+		console.log(schedule.dates)
+		dataProvider.update('bellschedule', {
+			id: schedule.id,
+			data: schedule,
+			previousData: undefined
+		})
+		
 	}
 
 	let events: EventSourceInput = {};
@@ -111,7 +119,7 @@ const CalendarDates = (props:CalendarDatesProps) => {
 				console.log(info.event.title)
 				console.log(info.event.startStr)
 				console.log(info.event.endStr)
-				addDate(info.event.startStr, info.event.id)
+				moveDate(info.event.id, undefined, info.event.startStr)
 			}}
 			eventClick={(arg:EventClickArg) => {console.log(arg.event.title)}}
 			nowIndicator={true}
