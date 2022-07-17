@@ -110,7 +110,7 @@ const CalendarDates = (props:CalendarDatesProps) => {
 			events={events}
 			editable={true}
 			droppable={true}
-			selectOverlap={false}
+			eventOverlap={false}
 			contentHeight={600}
 			eventReceive={(info) => {
 				console.log("received event: ")
