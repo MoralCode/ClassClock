@@ -74,18 +74,18 @@ const CalendarDates = (props:CalendarDatesProps) => {
 		}
 		console.log("has date");
 
-		console.log(schedule.dates.find((value:string) => value == date_str) != undefined)
+		if (schedule.dates.find((value:string) => value == date_str) == undefined) {
+			// modify,
+			schedule.dates.push(date_str)
+			console.log(schedule.dates)
 
-		// modify,
-		schedule.dates.push(date_str)
-		console.log(schedule.dates)
-
-		// send to dataprovider
-		dataProvider.update('bellschedule', {
-			id: schedule.id,
-			data: schedule,
-			previousData: undefined
-		})
+			// send to dataprovider
+			dataProvider.update('bellschedule', {
+				id: schedule.id,
+				data: schedule,
+				previousData: undefined
+			})
+		}
 	}
 
 	let events: EventSourceInput = {};
