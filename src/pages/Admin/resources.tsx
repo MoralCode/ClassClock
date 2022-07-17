@@ -33,7 +33,7 @@ const recordsToEvents = (data: RaRecord[]) => {
 			}
 		}
 		schedule['dates'].forEach((datestr: string) => {
-			events.push(Object.assign({}, scheduleTemplateEvent, {date: datestr}))
+			events.push(Object.assign({}, scheduleTemplateEvent, { date: datestr, id: schedule["id"] + datestr}))
 		});
 		
 	}
