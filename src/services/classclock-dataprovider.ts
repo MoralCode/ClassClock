@@ -137,7 +137,7 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 
 		return httpClient("PATCH", `${apiUrl}/${resource}/${params.id}`, token, {
 			body: JSON.stringify(params.data),
-		}).then(({ json }) => ({ data: json }))
+		}).then((resp) => resp.json())//.then(({ json }) => ({ data: json() }))
 	},
 
 	// json-server doesn't handle filters on UPDATE route, so we fallback to calling UPDATE n times instead
