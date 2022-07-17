@@ -42,7 +42,6 @@ const recordsToEvents = (data: RaRecord[]) => {
 	return events;
 };
 
-export const BellScheduleList = (props: any) => (
 const DraggableNameField = (props: { source: string | undefined; }) => {
 	const record = useRecordContext();
 	return <TextField
@@ -58,6 +57,7 @@ const DraggableNameField = (props: { source: string | undefined; }) => {
 }
 
 
+export const BellScheduleList = (props: any) => (
 	<>
 		<List {...props}>
 			<>
