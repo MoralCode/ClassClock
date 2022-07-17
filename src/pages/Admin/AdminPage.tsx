@@ -4,14 +4,10 @@ import ccDataProvider from "../../services/classclock-dataprovider"
 import authProvider from "../../pages/Admin/authProvider";
 import { useAuth0 } from "@auth0/auth0-react";
 import ClassClockService from "../../services/classclock";
-import { createBrowserHistory } from "history";
+import { BrowserRouter } from 'react-router-dom';
 import LoginRedirect from "./LoginRedirect";
-import { BellScheduleCreate, BellscheduleEdit, BellScheduleList, SchoolList } from "./resources";
+import { BellScheduleCreate, BellscheduleEdit, BellScheduleList, DateList, SchoolList } from "./resources";
 
-
-const adminHistory = createBrowserHistory({
-	basename: "/admin"
-});
 
 const AdminPage = () => {
 
@@ -25,10 +21,14 @@ const AdminPage = () => {
 
     const customAuthProvider = authProvider(isAuthenticated, isLoading, logout, user);
 
-    return (<RAdmin disableTelemetry dataProvider={ccDataProvider(ClassClockService.baseURL, getAccessTokenSilently)} history={adminHistory} authProvider={customAuthProvider} loginPage={LoginRedirect} title="ClassClock Admin">
-      <Resource name="school" />
-      <Resource name="bellschedule" options={{ label: 'Bell Schedules' }} list={BellScheduleList} edit={BellscheduleEdit} create={BellScheduleCreate} />
-    </RAdmin>)
+    return (
+      <BrowserRouter
+      basename="/admin">
+        <RAdmin disableTelemetry dataProvider={ccDataProvider(ClassClockService.baseURL, getAccessTokenSilently)} authProvider={customAuthProvider} loginPage={LoginRedirect} title="ClassClock Admin">
+          <Resource name="school" />
+          <Resource name="bellschedule" options={{ label: 'Bell Schedules' }} list={BellScheduleList} edit={BellscheduleEdit} create={BellScheduleCreate} />
+        </RAdmin>
+    </BrowserRouter>)
 }
 
 export default AdminPage;

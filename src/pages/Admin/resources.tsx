@@ -1,6 +1,8 @@
 import React from "react";
-import {ArrayField, ArrayInput, ChipField, Create, Datagrid, DateField, DateInput, Edit, List, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleFormIterator, SingleFieldList, TextField, TextInput } from "react-admin";
-
+import {ArrayField, ArrayInput, ChipField, Create, Datagrid, DateField, Edit, List, RaRecord, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleFormIterator, SingleFieldList, TextField, TextInput, useRecordContext } from "react-admin";
+import CalendarDates from "./CalendarDates";
+import { DateTime, Duration } from 'luxon';
+import { EventInput } from '@fullcalendar/react';
 
 export const SchoolList = (props: any) => (
 	<List {...props}>
@@ -16,8 +18,80 @@ export const SchoolList = (props: any) => (
 	</List>
 );
 
+const recordsToEvents = (data: RaRecord[]) => {
+	if (data == null) {
+		return []
+	}
+
+	let events: EventInput[]  = []
+
+	for (let schedule of data) {
+		let scheduleTemplateEvent = {
+			title: schedule["name"],
+			extendedProps: {
+				schedule_id: schedule["id"]
+			}
+		}
+		schedule['dates'].forEach((datestr: string) => {
+			events.push(Object.assign({}, scheduleTemplateEvent, { date: datestr, id: schedule["id"] + datestr}))
+		});
+		
+	}
+	return events;
+};
+
+const DraggableNameField = (props: { source: string | undefined; }) => {
+	const record = useRecordContext();
+	return <TextField
+		source={props.source}
+		data-record-id={record.id}
+		className={"draggableEvent"}
+		style={{
+			color: "white",
+			backgroundColor: "#3788d8",
+			padding: "4px",
+			borderRadius: "3px"
+		}} />;
+}
+
+
 export const BellScheduleList = (props: any) => (
-	<List {...props}>
+	<>
+		<List {...props}>
+			<>
+			<CalendarDates
+				recordTransformer={recordsToEvents}
+				fromDate={DateTime.now().minus(Duration.fromObject({month: 1 })).startOf('month')}
+				toDate={DateTime.now().plus(Duration.fromObject({month: 2 })).endOf('month')}
+				{...props} />
+
+			<Datagrid
+				rowClick="edit"
+				id={"draggable_calendar_items"}
+			>
+				{/* <TextField source="school" /> */}
+				<DraggableNameField source="name" />
+				<TextField source="display_name" />
+				<ReferenceField source="school" reference="school" link={false}>
+					<TextField source="full_name" />
+				</ReferenceField>
+				<ArrayField source="meeting_times" label="Class Periods"><SingleFieldList><ChipField source="name" /></SingleFieldList></ArrayField>
+
+
+				{/* <ArrayField source="dates"></ArrayField> */}
+				{/* <TextField source="dates" /> */}
+				{/* <TextField source="id" /> */}
+				<DateField source="creation_date" />
+				{/* <DateField source="last_modified" /> */}
+
+			</Datagrid>
+			</>
+		</List>
+	</>
+);
+
+export const DateList = (props: any) => (
+	<CalendarDates {...props}>
 		<Datagrid rowClick="edit">
 			{/* <TextField source="school" /> */}
 			<TextField source="name" />
@@ -26,8 +100,8 @@ export const BellScheduleList = (props: any) => (
 				<TextField source="full_name" />
 			</ReferenceField>
 			<ArrayField source="meeting_times" label="Class Periods"><SingleFieldList><ChipField source="name" /></SingleFieldList></ArrayField>
-			
-		
+
+
 			{/* <ArrayField source="dates"></ArrayField> */}
 			{/* <TextField source="dates" /> */}
 			{/* <TextField source="id" /> */}
@@ -35,10 +109,10 @@ export const BellScheduleList = (props: any) => (
 			{/* <DateField source="last_modified" /> */}
 
 		</Datagrid>
-	</List>
+	</CalendarDates>
 );
 
-export const BellscheduleEdit = props => (
+export const BellscheduleEdit = (props: any) => (
 	<Edit {...props}>
 		<SimpleForm>
 			<TextInput source="name" />
