@@ -5,7 +5,7 @@ import {
 	useResourceContext
 } from 'react-admin';
 import { DateTime } from 'luxon';
-import FullCalendar, { EventAddArg, EventChangeArg, EventClickArg, EventSourceInput } from '@fullcalendar/react';
+import FullCalendar, { EventApi, EventChangeArg, EventClickArg, EventSourceInput } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
 import { useEffect, useState } from 'react';
