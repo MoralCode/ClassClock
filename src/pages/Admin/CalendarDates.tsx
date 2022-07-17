@@ -59,6 +59,35 @@ const CalendarDates = (props:CalendarDatesProps) => {
 	}, [data, draggableInitialized])
 
 
+
+	const addDate = (date_str: string, schedule_id: string, fromDate?: DateTime, toDate?: DateTime) => {
+		let schedule = data.find((value) => value.id == schedule_id)
+		console.log(schedule)
+		console.log(schedule.dates)
+		if (fromDate != null && toDate != null){
+			console.log("filtered");
+			
+			console.log(schedule.dates.filter((value:string) => {
+				let date = DateTime.fromFormat(value, "yyyy-MM-dd")
+				return date <= toDate && date >= fromDate
+			} ))
+		}
+		console.log("has date");
+
+		console.log(schedule.dates.find((value:string) => value == date_str) != undefined)
+
+		// modify,
+		schedule.dates.push(date_str)
+		console.log(schedule.dates)
+
+		// send to dataprovider
+		dataProvider.update('bellschedule', {
+			id: schedule.id,
+			data: schedule,
+			previousData: undefined
+		})
+	}
+
 	let events: EventSourceInput = {};
 	if (!isLoading) {
 		events = recordTransformer(data)
@@ -81,6 +110,7 @@ const CalendarDates = (props:CalendarDatesProps) => {
 				console.log(info.event.title)
 				console.log(info.event.startStr)
 				console.log(info.event.endStr)
+				addDate(info.event.startStr, info.event.id)
 			}}
 			eventClick={(arg:EventClickArg) => {console.log(arg.event.title)}}
 			nowIndicator={true}
