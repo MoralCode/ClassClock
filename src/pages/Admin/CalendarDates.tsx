@@ -6,7 +6,8 @@ import {
 	Datagrid,
 	useListContext,
 	RaRecord,
-	useDataProvider
+	useDataProvider,
+	useResourceContext
 } from 'react-admin';
 // import { Card } from '@mui/material';
 import { DateTime } from 'luxon';
@@ -33,6 +34,7 @@ interface CalendarDatesProps {
 const CalendarDates = (props:CalendarDatesProps) => {
 	const { data, isLoading } = useListContext(props);
 	const dataProvider = useDataProvider();
+	const resource = useResourceContext();
 	const {title, recordTransformer, fromDate, toDate, children, ...rest } = props; 
 	const [draggableInitialized, setDraggableInitialized] = useState(false)
 
@@ -89,7 +91,7 @@ const CalendarDates = (props:CalendarDatesProps) => {
 			return
 		}
 		console.log(schedule.dates)
-		dataProvider.update('bellschedule', {
+		dataProvider.update(resource, {
 			id: schedule.id,
 			data: schedule,
 			previousData: undefined
