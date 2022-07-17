@@ -1,20 +1,13 @@
 import {
-	ListBase,
-	Title,
-	ListToolbar,
-	Pagination,
-	Datagrid,
 	useListContext,
 	RaRecord,
 	useDataProvider,
 	useResourceContext
 } from 'react-admin';
-// import { Card } from '@mui/material';
 import { DateTime } from 'luxon';
-
 import FullCalendar, { EventClickArg, EventSourceInput } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin, { Draggable } from '@fullcalendar/interaction'; // for selectable
+import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
 import { useEffect, useState } from 'react';
 
 interface CalendarDatesProps { 
