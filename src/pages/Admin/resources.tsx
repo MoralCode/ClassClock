@@ -40,6 +40,21 @@ const recordsToEvents = (data: RaRecord[]) => {
 };
 
 export const BellScheduleList = (props: any) => (
+const DraggableNameField = (props: { source: string | undefined; }) => {
+	const record = useRecordContext();
+	return <TextField
+		source={props.source}
+		data-record-id={record.id}
+		className={"draggableEvent"}
+		style={{
+			color: "white",
+			backgroundColor: "#3788d8",
+			padding: "2px",
+			borderRadius: "3px"
+}} />;
+}
+
+
 	<>
 		<List {...props}>
 			<>
@@ -49,9 +64,12 @@ export const BellScheduleList = (props: any) => (
 				toDate={DateTime.now().plus(Duration.fromObject({month: 2 })).endOf('month')}
 				{...props} />
 		
-			<Datagrid rowClick="edit">
+			<Datagrid
+				rowClick="edit"
+				id={"draggable_calendar_items"}
+			>
 				{/* <TextField source="school" /> */}
-				<TextField source="name" />
+				<DraggableNameField source="name" />
 				<TextField source="display_name" />
 				<ReferenceField source="school" reference="school" link={false}>
 					<TextField source="full_name" />
