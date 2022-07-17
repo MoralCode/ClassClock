@@ -68,7 +68,9 @@ const CalendarDates = (props:CalendarDatesProps) => {
 		if (source_date_str != null) {
 			let sourceDatePresent = schedule.dates.find((value: string) => value == source_date_str) != undefined
 			if (sourceDatePresent) {
-				schedule.dates.remove(destination_date_str)
+				// keep everything except the source date string
+				schedule.dates = 
+					schedule.dates.filter((input:string) => input != source_date_str)
 			}
 		}
 
