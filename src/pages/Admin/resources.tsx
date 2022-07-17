@@ -52,7 +52,7 @@ const DraggableNameField = (props: { source: string | undefined; }) => {
 		style={{
 			color: "white",
 			backgroundColor: "#3788d8",
-			padding: "2px",
+			padding: "4px",
 			borderRadius: "3px"
 }} />;
 }
