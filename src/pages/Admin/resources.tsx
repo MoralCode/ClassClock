@@ -5,7 +5,6 @@ import CalendarDates from "./CalendarDates";
 import { DateTime, Duration } from 'luxon';
 import { EventSourceInput, EventInput } from '@fullcalendar/react';
 
-
 export const SchoolList = (props: any) => (
 	<List {...props}>
 		<Datagrid rowClick="edit">
@@ -53,7 +52,7 @@ const DraggableNameField = (props: { source: string | undefined; }) => {
 			backgroundColor: "#3788d8",
 			padding: "4px",
 			borderRadius: "3px"
-}} />;
+		}} />;
 }
 
 
@@ -66,7 +65,7 @@ export const BellScheduleList = (props: any) => (
 				fromDate={DateTime.now().minus(Duration.fromObject({month: 1 })).startOf('month')}
 				toDate={DateTime.now().plus(Duration.fromObject({month: 2 })).endOf('month')}
 				{...props} />
-		
+
 			<Datagrid
 				rowClick="edit"
 				id={"draggable_calendar_items"}

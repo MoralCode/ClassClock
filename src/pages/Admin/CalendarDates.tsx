@@ -35,8 +35,6 @@ const CalendarDates = (props:CalendarDatesProps) => {
 		// const elements = document.getElementsByClassName('draggableEvents')
 		const draggableContainerEl = document.getElementById('draggable_calendar_items')
 		if (!draggableInitialized) {
-			console.log("container")
-			console.log(draggableContainerEl)
 			if (draggableContainerEl != null) {
 				setDraggableInitialized(true)
 				new Draggable(draggableContainerEl, {
@@ -63,7 +61,6 @@ const CalendarDates = (props:CalendarDatesProps) => {
 	/// if either is undefined, then it will simply be an add or remove depending on which one is undefined/null
 	const moveDate = (schedule_id: string, source_date_str?: string, destination_date_str?: string) => {
 		let schedule = data.find((value) => value.id == schedule_id)
-		console.log(schedule)
 		console.log(schedule.dates)
 		if (source_date_str != null) {
 			let sourceDatePresent = schedule.dates.find((value: string) => value == source_date_str) != undefined
@@ -100,7 +97,7 @@ const CalendarDates = (props:CalendarDatesProps) => {
 	} else {
 		return <>Loading...</>;
 	}
-	
+
 	return <FullCalendar
 			plugins={[interactionPlugin, dayGridPlugin]}
 			initialView="dayGridMonth"
