@@ -105,34 +105,18 @@ export function getTimeStateForDateAtSchool(date: DateTime, school: School) {
  *
  * @returns -1 if checkTime is before range, 0 if checkTime is within range, 1 if checkTime is after range
  */
-export function checkTimeRange(checkTime: DateTime, startTime: Time, endTime: Time): TimeComparisons {
+export function checkTimeRange(checkTime: Time, startTime: Time, endTime: Time): TimeComparisons {
 
-   
-    const day = DateTime.fromObject({
-        year: checkTime.get("year"),
-        month: checkTime.get("month"),
-        day: checkTime.get("day")
-    })
-    const startTimeDay = day.plus(startTime)
-    const endTimeDay = day.plus(endTime)
-
-    const interval = Interval.fromDateTimes(startTimeDay, endTimeDay)
-   
-    // if (startTime.getMillisecondsTo(endTime) <= 0) {
-    //     //theres a problem
-    // }
-    // const startCheck = checkTime.getMillisecondsTo(startTime);
-    // const endCheck = checkTime.getMillisecondsTo(endTime);
-
-    if (checkTime.hasSame(startTimeDay, 'second') || checkTime.hasSame(endTimeDay, 'second')){
-        return TimeComparisons.IS_DURING_OR_EXACTLY;
+    // swap the values if startTime is after end time
+    if (startTime.isAfter(endTime)) {
+        let t = startTime
+        startTime = endTime
+        endTime = t
     }
 
-    const startsAfter = interval.isAfter(checkTime)
-    const endsBefore = interval.isBefore(checkTime)
-    if (startsAfter) {
+    if (checkTime.isBefore(startTime)) {
         return TimeComparisons.IS_BEFORE;
-    } else if (endsBefore) {
+    } else if (checkTime.isAfter(endTime)) {
         return TimeComparisons.IS_AFTER;
     } else {
         return TimeComparisons.IS_DURING_OR_EXACTLY
