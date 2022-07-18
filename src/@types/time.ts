@@ -122,6 +122,18 @@ export default class Time {
         return otherTime.duration.minus(this.duration).toMillis()
     }
 
+    public isBefore(time:Time): boolean {
+        return this.duration < time.duration
+    }
+
+    public isAfter(time: Time): boolean {
+        return this.duration > time.duration
+    }
+
+    public isEqualTo(time: Time): boolean {
+        return this.duration == time.duration
+    }
+
     public getTimeDeltaTo(otherTime: Time): Time {
         return Time.fromMilliseconds(Math.abs(this.getMillisecondsTo(otherTime)??0));
     }
