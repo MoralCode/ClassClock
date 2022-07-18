@@ -1,4 +1,4 @@
-import { DateTime, Duration } from "luxon";
+import { DateTime, Duration, DurationObject } from "luxon";
 import { matchDates } from "../utils/helpers"
 
 /**
@@ -19,7 +19,25 @@ import { matchDates } from "../utils/helpers"
  * @export
  * @class Time
  */
-export default class Time extends Duration {
+export default class Time {
+
+    private duration: Duration;
+    
+    constructor(duration: Duration) {
+        this.duration = duration
+    }
+
+    public get hours() {
+        return this.duration.hours
+    }
+
+    public get minutes() {
+        return this.duration.minutes
+    }
+
+    public get seconds() {
+        return this.duration.seconds
+    }
 
     /**
      * Create a time instance from the number of milliseconds since the beginning of the day.
@@ -30,7 +48,7 @@ export default class Time extends Duration {
      * @memberof Time
      */
     public static fromMilliseconds(milliseconds: number): Time {
-        return Duration.fromMillis(milliseconds).shiftTo("hours", "minutes", "seconds") as Time;
+        return new Time(Duration.fromMillis(milliseconds).shiftTo("hours", "minutes", "seconds"));
     }
 
     //Deprecated
@@ -43,7 +61,7 @@ export default class Time extends Duration {
     // }
 
     public static fromISO(time: string) {
-        return super.fromISO(time) as Time
+        return new Time(Duration.fromISO(time))
     }
 
     /**
@@ -84,7 +102,7 @@ export default class Time extends Duration {
     }
 
     public static fromDateTime(time: DateTime) {
-        return time.diff(time.startOf('day')).shiftTo("hours", "minutes", "seconds") as Time
+        return new Time(time.diff(time.startOf('day')).shiftTo("hours", "minutes", "seconds"))
     }
 
     // const toDateTime = (time: any) => {
@@ -97,7 +115,7 @@ export default class Time extends Duration {
 
     // private time: Duration;
 
-    public static fromTime(hours: number, minutes: number, seconds?: number) {
+    public static fromTime(hours: number, minutes: number, seconds?: number): Time {
         // super()
         // why do we need timezone,
         //is storing the time as a DateTime internally just super overkill?
@@ -107,35 +125,31 @@ export default class Time extends Duration {
             minute: Math.abs(minutes % 60),
             second: Math.abs((seconds || 0) % 60)
         }
-        return Duration.fromObject(timeObj).shiftTo("hours", "minutes", "seconds") as Time
+        return new Time(Duration.fromObject(timeObj).shiftTo("hours", "minutes", "seconds"))
     }
-    public getMillisecondsTo(otherTime: Time): number | undefined {
-        return otherTime.minus(this).toObject()['milliseconds']
+
+    public getMillisecondsTo(otherTime: Time): number {        
+        return otherTime.duration.minus(this.duration).toMillis()
     }
+
     public getTimeDeltaTo(otherTime: Time): Time {
         return Time.fromMilliseconds(Math.abs(this.getMillisecondsTo(otherTime)??0));
     }
 
     public toString(excludeSeconds = false, use24HourTime = true) {
-        return this.toFormat(this.getTimeFormat(excludeSeconds, use24HourTime))
-    }
+        const seconds = excludeSeconds ? "" : ":ss"
+        const format = "hh:mm" + seconds
+        let meridiem = ""
+        let duration = this.duration
+        
+        if (!use24HourTime && duration.hours > 12) {
+            duration = duration.minus(Duration.fromObject({ hours: 12 }))
+            meridiem = "PM"
+        } else {
+            meridiem = "AM"
+        }
 
-    /**
-     * generate a format string for formatting the time value
-     * @param excludeSeconds whether to exclude the seconds values, default false.
-     * @param use24HourTime whether to use 24 hour time or 12 hour time. Default true.
-     * @returns a string representing the format for the requested time.
-     */
-    protected getTimeFormat(excludeSeconds = false, use24HourTime = true) {
-        //TODO: maybe make these parameters into an options object to preserve the names?
-
-        const hrsformat = use24HourTime ? "HH" : "hh"
-        const seconds = excludeSeconds? "": ":ss"
-        const meridiem = use24HourTime? "": " a"
-
-        const format = hrsformat + ":mm" + seconds + meridiem
-
-        return format
+        return duration.toFormat(format) + ((use24HourTime)? "" : " " + meridiem);
     }
 
     /**
@@ -155,8 +169,7 @@ export default class Time extends Duration {
      * 
      * this overrides the automatic serialization of Time Objects and makes them return a string and not a plain object (which is more annoying to parse back in and would require an extra factory method)
      */
-    public toJSON() {
-        return this.toFormat("HH:mm:ss");
+    public toJSON(): string {
+        return this.duration.toFormat("hh:mm:ss");
     }
-
 }
