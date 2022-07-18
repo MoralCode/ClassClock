@@ -90,8 +90,37 @@ test("check time range", () => {
     expect(checkTimeRange(afterClass, startTime, endTime2)).toBe(
         TimeComparisons.IS_DURING_OR_EXACTLY
     );
+});
 
-    
+test("check time range with start and end swapped", () => {
+
+    expect(checkTimeRange(duringClass, endTime, startTime)).toBe(
+        TimeComparisons.IS_DURING_OR_EXACTLY
+    );
+
+    expect(checkTimeRange(duringClass, startTime2, endTime)).toBe(
+        TimeComparisons.IS_BEFORE
+    );
+
+    expect(checkTimeRange(beforeClass, endTime2, startTime)).toBe(
+        TimeComparisons.IS_BEFORE
+    );
+
+    expect(checkTimeRange(startTime, endTime, startTime)).toBe(
+        TimeComparisons.IS_DURING_OR_EXACTLY
+    );
+
+    expect(checkTimeRange(endTime, endTime, startTime)).toBe(
+        TimeComparisons.IS_DURING_OR_EXACTLY
+    );
+
+    expect(checkTimeRange(afterClass, endTime, startTime)).toBe(
+        TimeComparisons.IS_AFTER
+    );
+
+    expect(checkTimeRange(afterClass, endTime2, startTime)).toBe(
+        TimeComparisons.IS_DURING_OR_EXACTLY
+    );
 });
 
 test("check time range ignoring day", () => {
