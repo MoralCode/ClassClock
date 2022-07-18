@@ -200,17 +200,3 @@ export function parseRateLimitTime(response: Response) {
     }
     return secondsToWait
 }
-
-/**
- * returns dt2 with its day, month, and year values updated to match dt1
- * @param dt1 the datetime to match the dates to
- * @param dt2 the datetime to set the date of
- * @returns An array of two datetimes [dt1, dt2] with dates matching each other and times matching the parameters they are based on
- */
-export const matchDates = (dt1: DateTime, dt2: DateTime): DateTime => {
-    return dt2.set({
-        year: dt1.get("year"),
-        month: dt1.get("month"),
-        day: dt1.get("day")
-    })
-}
