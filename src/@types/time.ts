@@ -105,16 +105,6 @@ export default class Time {
         return new Time(time.diff(time.startOf('day')).shiftTo("hours", "minutes", "seconds"))
     }
 
-    // const toDateTime = (time: any) => {
-    //     if (time instanceof DateTime) {
-    //         return time
-    //     }
-    //     
-    //     return time.toUTC()
-    // }
-
-    // private time: Duration;
-
     public static fromTime(hours: number, minutes: number, seconds?: number): Time {
         // super()
         // why do we need timezone,
