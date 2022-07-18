@@ -8,8 +8,8 @@ export default class ClassPeriod {
         const end = getValueIfKeyInList(["endTime", "end_time"], json);
         return new ClassPeriod(
             getValueIfKeyInList(["name", "classPeriodName", "class_period_name"], json),
-            toDateTime(start),
-            toDateTime(end),
+            Time.fromString(start),
+            Time.fromString(end),
             DateTime.fromISO(getValueIfKeyInList(["creationDate", "creation_date"], json), {zone: 'utc'})
         );
     }
@@ -64,16 +64,3 @@ export default class ClassPeriod {
 }
 
 
-const toDateTime = (time:any) => {
-    if (time instanceof DateTime) {
-        return time
-    }
-    const smalltime = DateTime.fromFormat(time, "H:mm")
-    const bigtime = DateTime.fromISO(time)
-    if (smalltime.isValid){
-        return smalltime.toUTC()
-    } else if (bigtime.isValid) {
-        return bigtime.toUTC()
-    }
-    return time.toUTC()
-}
