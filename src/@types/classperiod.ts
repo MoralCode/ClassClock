@@ -50,7 +50,7 @@ export default class ClassPeriod {
     }
 
     public getDuration() {
-        return this.endTime.minus(this.startTime);
+        return this.startTime.getTimeDeltaTo(this.endTime);
     }
 
     public getCreationDate() {
@@ -58,8 +58,8 @@ export default class ClassPeriod {
     }
 
     //remove me
-    public stateForTime(time: DateTime) {
-        return checkTimeRange(time, this.startTime.asDateTime(), this.endTime.asDateTime());
+    public stateForTime(time: Time) {
+        return checkTimeRange(time, this.startTime, this.endTime);
     }
 }
 
