@@ -79,19 +79,19 @@ describe("School", () => {
             bellSchedule
         );
 
-        expect(schoolNoSchedules.getScheduleForDate(currentDate)).toBeFalsy();        
+        expect(schoolNoSchedules.getScheduleForDate(currentDate)).toBe(null);        
     });
 
     it("can check if it has schedules", () => {
-        expect(school.hasSchedules()).toBeTruthy();
-        expect(schoolNoSchedules.hasSchedules()).toBeFalsy();
+        expect(school.hasSchedules()).toBe(true);
+        expect(schoolNoSchedules.hasSchedules()).toBe(false);
     });
 
     it("can check if school is in session", () => {
-        expect(school.isInSession(inClass)).toBeTruthy();
-        expect(school.isInSession(beforeSchoolHours)).toBeFalsy();
-        expect(school.isInSession(noSchool)).toBeFalsy();
-        expect(school.isInSession(afterSchoolHours)).toBeFalsy();
-        expect(school.isInSession(betweenClass)).toBeTruthy();
+        expect(school.isInSession(inClass)).toBe(true);
+        expect(school.isInSession(beforeSchoolHours)).toBe(false);
+        expect(school.isInSession(noSchool)).toBe(false);
+        expect(school.isInSession(afterSchoolHours)).toBe(false);
+        expect(school.isInSession(betweenClass)).toBe(true);
     });
 });
