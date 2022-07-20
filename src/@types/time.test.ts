@@ -60,6 +60,16 @@ describe("Time", () => {
         // expect(thisTime.getSeconds()).toBe(41);
     });
 
+    it("can detect if a time is before it", () => {
+        expect(thisTime.isAfter(preTime)).toBe(true);
+        expect(thisTime.isAfter(postTime)).toBe(false);
+    });
+
+    it("can detect if a time is after it", () => {
+        expect(thisTime.isBefore(preTime)).toBe(false);
+        expect(thisTime.isBefore(postTime)).toBe(true);
+    });
+
     it("should get the number of milliseconds to a future time", () => {
         expect(thisTime.getMillisecondsTo(postTime)).toBe(15178000);
     });
