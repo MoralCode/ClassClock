@@ -3,6 +3,7 @@ import { DateTime } from "luxon";
 import { TimeComparisons } from "../utils/enums";
 import { getValueIfKeyInList, sortClassesByStartTime } from "../utils/helpers";
 import UpdateTimestampedObject from "./updateTimestampedObject";
+import Time from "./time";
 
 export default class BellSchedule extends UpdateTimestampedObject {
     public static fromJson(json: any) {
@@ -112,7 +113,7 @@ export default class BellSchedule extends UpdateTimestampedObject {
 
     public getClassPeriodForTime(time: DateTime) {
         for (const classPeriod of sortClassesByStartTime(this.classes)) {
-            if (classPeriod.stateForTime(time) === TimeComparisons.IS_DURING_OR_EXACTLY) {
+            if (classPeriod.stateForTime(Time.fromDateTime(time)) === TimeComparisons.IS_DURING_OR_EXACTLY) {
                 return classPeriod;
             }
         }
@@ -121,7 +122,7 @@ export default class BellSchedule extends UpdateTimestampedObject {
 
     public getClassStartingAfter(time: DateTime) {
         for (const classPeriod of sortClassesByStartTime(this.classes)) {
-            if (classPeriod.stateForTime(time) === TimeComparisons.IS_BEFORE) {
+            if (classPeriod.stateForTime(Time.fromDateTime(time)) === TimeComparisons.IS_BEFORE) {
                 return classPeriod;
             }
         }

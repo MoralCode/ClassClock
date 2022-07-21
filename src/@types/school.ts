@@ -8,6 +8,7 @@ import { TimeComparisons } from "../utils/enums";
 import BellSchedule from "./bellschedule";
 import find from 'lodash.find'
 import UpdateTimestampedObject from "./updateTimestampedObject";
+import Time from "./time";
 
 export default class School extends UpdateTimestampedObject {
     public static fromJson(json: any) {
@@ -143,7 +144,7 @@ export default class School extends UpdateTimestampedObject {
         const lastClass = sortedClasses[currentSchedule.numberOfClasses()]
         return (
             checkTimeRange(
-                date,
+                Time.fromDateTime(date),
                 firstClass.getStartTime(),
                 lastClass.getEndTime()
             ) == TimeComparisons.IS_DURING_OR_EXACTLY
