@@ -1,6 +1,7 @@
 import School from "./school";
 import { school, bellSchedule, schoolJSON, schoolId, schoolEndpoint, schoolName, schoolAcronym, passingPeriodName, schoolTimezone, currentDate, inClass, afterSchoolHours, duringClass, schoolOwnerId, beforeSchoolHours, noSchool, betweenClass } from '../utils/testconstants';
 import { DateTime, Duration } from "luxon";
+import Time from "./time";
 
 const schoolNoSchedules = new School(
     schoolId,
@@ -15,6 +16,10 @@ const schoolNoSchedules = new School(
     currentDate
 );
 
+const thisTime: Time = Time.fromTime(9, 31, 41);
+const thisTimeUTC: Time = Time.fromISO("2022-06-16T09:31:41Z");
+const preTime: Time = Time.fromTime(5, 18, 43);
+const postTime: Time = Time.fromTime(13, 44, 39);
 
 describe("School", () => {
 
@@ -88,6 +93,7 @@ describe("School", () => {
     });
 
     it("can check if school is in session", () => {
+        expect(thisTime.isAfter(preTime)).toBe(true); 
         expect(school.isInSession(inClass)).toBe(true);
         expect(school.isInSession(beforeSchoolHours)).toBe(false);
         expect(school.isInSession(noSchool)).toBe(false);
