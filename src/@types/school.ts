@@ -133,7 +133,7 @@ export default class School extends UpdateTimestampedObject {
      * @param date the time to check
      * @returns true if school is in session, false otherwise
      */
-    public isInSession(date: DateTime) {
+    public isInSession(date: DateTime): boolean {
         const currentSchedule = this.getScheduleForDate(date);
         if (!currentSchedule) {
             return false;

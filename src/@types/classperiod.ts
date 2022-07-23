@@ -25,7 +25,7 @@ export default class ClassPeriod {
         this.creationDate = creationDate;
     }
 
-    public getName() {
+    public getName(): string {
         return this.name;
     }
 
@@ -33,7 +33,7 @@ export default class ClassPeriod {
         this.name = name;
     }
 
-    public getStartTime() {
+    public getStartTime(): Time  {
         return this.startTime;
     }
 
@@ -41,7 +41,7 @@ export default class ClassPeriod {
         this.startTime = time;
     }
 
-    public getEndTime() {
+    public getEndTime(): Time {
         return this.endTime;
     }
 
@@ -49,11 +49,11 @@ export default class ClassPeriod {
         this.endTime = time;
     }
 
-    public getDuration() {
+    public getDuration(): Time {
         return this.startTime.getTimeDeltaTo(this.endTime);
     }
 
-    public getCreationDate() {
+    public getCreationDate(): DateTime {
         return this.creationDate;
     }
 
