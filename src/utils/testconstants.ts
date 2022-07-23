@@ -4,7 +4,7 @@ import School from "../@types/school";
 import BellSchedule from "../@types/bellschedule";
 import ClassPeriod from "../@types/classperiod";
 import ClassClockService from "../services/classclock";
-
+import Time from "../@types/time";
 
 const timeStringToDateTime = (str: string, timeStringFormat: string, dateFrom?: DateTime) => {
     let timeDate = DateTime.fromFormat(str, timeStringFormat, { zone: schoolTimezone })
@@ -58,8 +58,8 @@ export const classDuration = Interval.fromDateTimes(startTime, endTime).toDurati
 
 export const classPeriod = new ClassPeriod(
     className,
-    startTime,
-    endTime,
+    Time.fromDateTime(startTime),
+    Time.fromDateTime(endTime),
     currentDate
 );
 
@@ -90,8 +90,8 @@ export const afterClass2 = DateTime.fromObject({ hour: 11, minute: 40})
 
 export const classPeriod2 = new ClassPeriod(
     class2Name,
-    startTime2,
-    endTime2,
+    Time.fromDateTime(startTime2),
+    Time.fromDateTime(endTime2),
     currentDate
 );
 
