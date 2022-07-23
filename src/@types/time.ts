@@ -100,6 +100,11 @@ export default class Time {
         );
     }
 
+    /**
+     * Create a Time from the time portion of the given DateTime 
+     * @param time the DateTime
+     * @returns a Time object
+     */
     public static fromDateTime(time: DateTime) {
         return new Time(time.diff(time.startOf('day')).shiftTo("hours", "minutes", "seconds"))
     }
