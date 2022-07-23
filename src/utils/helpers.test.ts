@@ -31,8 +31,8 @@ test("get value if key in list", () => {
 //ignoring getCurrentDate
 
 test("sort classes by start time", () => {
-    expect(sortClassesByStartTime(bellScheduleClasses.reverse())).toEqual(bellScheduleClasses);
-
+    expect(sortClassesByStartTime(bellScheduleClasses.reverse())[0]).toEqual(bellScheduleClasses[0]);
+    expect(sortClassesByStartTime(bellScheduleClasses.reverse())[1]).toEqual(bellScheduleClasses[1]);
     expect(sortClassesByStartTime(bellScheduleClasses.reverse())[0].getName()).toEqual("First Period");
 });
 
