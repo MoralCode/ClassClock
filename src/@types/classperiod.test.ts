@@ -53,16 +53,16 @@ describe("ClassPeriod", () => {
 
     it("can check if a time falls in its range", () => {
 
-        expect(classPeriod.stateForTime(Time.fromDateTime(beforeClass))).toBe(TimeComparisons.IS_BEFORE);
+        expect(classPeriod.stateForTime(beforeClass)).toBe(TimeComparisons.IS_BEFORE);
 
-        expect(classPeriod.stateForTime(Time.fromDateTime(startTime))).toBe(TimeComparisons.IS_DURING_OR_EXACTLY);
+        expect(classPeriod.stateForTime(startTime)).toBe(TimeComparisons.IS_DURING_OR_EXACTLY);
 
-        expect(classPeriod.stateForTime(Time.fromDateTime(duringClass))).toBe(
+        expect(classPeriod.stateForTime(duringClass)).toBe(
             TimeComparisons.IS_DURING_OR_EXACTLY
         );
 
-        expect(classPeriod.stateForTime(Time.fromDateTime(endTime))).toBe(TimeComparisons.IS_DURING_OR_EXACTLY);
+        expect(classPeriod.stateForTime(endTime)).toBe(TimeComparisons.IS_DURING_OR_EXACTLY);
 
-        expect(classPeriod.stateForTime(Time.fromDateTime(afterClass))).toBe(TimeComparisons.IS_AFTER);
+        expect(classPeriod.stateForTime(afterClass)).toBe(TimeComparisons.IS_AFTER);
     });
 });
