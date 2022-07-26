@@ -33,6 +33,10 @@ describe("Time", () => {
         expect(Time.fromString("08:04:09")).toEqual(Time.fromTime(8, 4, 9));
     });
 
+    it("should get from string without seconds", () => {
+        expect(Time.fromString("08:04")).toEqual(Time.fromTime(8, 4, 0));
+    });
+
     it("should correct for values that are too large", () => {
         expect(Time.fromTime(45, 130, 118)).toEqual(Time.fromTime(21, 10, 58));
     });
