@@ -1,5 +1,5 @@
 import BellSchedule from "./bellschedule";
-import { bellSchedule as schedule, bellScheduleJSON, classPeriod, bellScheduleEndpoint, bellScheduleName, bellScheduleDisplayName, bellScheduleId, startTime, beforeClass, duringClass, endTime, afterClass, bellScheduleClasses, schoolTimezone } from "../utils/testconstants";
+import { bellSchedule as schedule, bellScheduleJSON, classPeriod, bellScheduleEndpoint, bellScheduleName, bellScheduleDisplayName, bellScheduleId, startTimeDT, beforeClassDT, duringClassDT, endTimeDT, afterClassDT, bellScheduleClasses, schoolTimezone } from "../utils/testconstants";
 import { DateTime } from "luxon";
 
 describe("BellSchedule", () => {
@@ -53,18 +53,18 @@ describe("BellSchedule", () => {
 
     it("can get a class period for a given time", () => {
         //before
-        expect(schedule.getClassPeriodForTime(beforeClass)).toBeFalsy();
+        expect(schedule.getClassPeriodForTime(beforeClassDT)).toBeUndefined();
 
         //exactly start
-        expect(schedule.getClassPeriodForTime(startTime)).toEqual(classPeriod);
+        expect(schedule.getClassPeriodForTime(startTimeDT)).toEqual(classPeriod);
 
         //middle
-        expect(schedule.getClassPeriodForTime(duringClass)).toEqual(classPeriod);
+        expect(schedule.getClassPeriodForTime(duringClassDT)).toEqual(classPeriod);
 
         //exactly end
-        expect(schedule.getClassPeriodForTime(endTime)).toEqual(classPeriod);
+        expect(schedule.getClassPeriodForTime(endTimeDT)).toEqual(classPeriod);
         
         //after
-        expect(schedule.getClassPeriodForTime(afterClass)).toBeFalsy();
+        expect(schedule.getClassPeriodForTime(afterClassDT)).toBeUndefined();
     });
 });
