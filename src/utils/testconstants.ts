@@ -6,8 +6,8 @@ import ClassPeriod from "../@types/classperiod";
 import ClassClockService from "../services/classclock";
 import Time from "../@types/time";
 
-const timeStringToTime = (str: string, timeStringFormat: string, dateFrom?: DateTime):Time => {
-    let timeDate = DateTime.fromFormat(str, timeStringFormat, { zone: schoolTimezone })
+const timeStringToDateTime = (str: string, timeStringFormat: string, dateFrom?: DateTime):DateTime => {
+    return DateTime.fromFormat(str, timeStringFormat, { zone: schoolTimezone, locale: "en-US" })
     // if (dateFrom) {
     //     timeDate = timeDate.toUTC()
     //     return dateFrom.set({
@@ -16,7 +16,11 @@ const timeStringToTime = (str: string, timeStringFormat: string, dateFrom?: Date
     //         second: timeDate.get("second")
     //     })
     // }
-    return Time.fromDateTime(timeDate);
+
+}
+const timeStringToTime = (str: string, timeStringFormat: string, dateFrom?: DateTime): Time => {
+
+    return Time.fromDateTime(timeStringToDateTime(str,timeStringFormat,dateFrom));
 }
 
 
@@ -44,15 +48,20 @@ const timeStringFormat = "H:mm"
 
 export const beforeClassString = "8:00"
 export const beforeClass = timeStringToTime(beforeClassString, timeStringFormat, currentDate);
+export const beforeClassDT = timeStringToDateTime(beforeClassString, timeStringFormat, currentDate);
 export const startTimeString = "8:25";
 export const startTime = timeStringToTime(startTimeString, timeStringFormat, currentDate);
+export const startTimeDT = timeStringToDateTime(startTimeString, timeStringFormat, currentDate);
 export const duringClassString = "9:00";
 export const duringClass = timeStringToTime(duringClassString, timeStringFormat, currentDate);
+export const duringClassDT = timeStringToDateTime(duringClassString, timeStringFormat, currentDate);
 export const endTimeString = "9:55";
 export const endTime = timeStringToTime(endTimeString, timeStringFormat, currentDate);
+export const endTimeDT = timeStringToDateTime(endTimeString, timeStringFormat, currentDate);
 export const afterClassString = "10:00";
 export const afterClass = timeStringToTime(afterClassString, timeStringFormat, currentDate);
-export const classDuration = Interval.fromDateTimes(startTime, endTime).toDuration(['hours', 'minutes']);
+export const afterClassDT = timeStringToDateTime(afterClassString, timeStringFormat, currentDate);
+export const classDuration = startTime.getTimeDeltaTo(endTime)
 
 
 
