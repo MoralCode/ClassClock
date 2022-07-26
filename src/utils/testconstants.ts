@@ -64,16 +64,16 @@ export const classPeriod = new ClassPeriod(
 );
 
 export const classPeriodJSON = {
-           name: className,
-           startTime: startTimeString,
-           endTime: endTimeString,
-           creationDate: currentDate
-       };
+    name: className,
+    startTime: startTimeString,
+    endTime: endTimeString,
+    creationDate: currentDate
+};
 
 export const classPeriodJSONISO = {
     name: className,
-    startTime: startTime.toISO(),
-    endTime: endTime.toISO(),
+    startTime: startTime,
+    endTime: endTime,
     creationDate: currentDate
 };
 
