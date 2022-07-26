@@ -37,7 +37,7 @@ export const bellScheduleEndpoint =
 export const bellScheduleDisplayName = "Display Name";
 
 
-export const currentDate = DateTime.fromISO("2019-07-28T07:37:50.634", { zone: schoolTimezone }).toUTC();
+export const currentDate = DateTime.fromISO("2019-07-28T07:37:50.634", { zone: schoolTimezone, locale: "en-US" }).toUTC();
 
 export const className = "First Period";
 const timeStringFormat = "H:mm"
@@ -83,10 +83,10 @@ export const class2Name = "Second Period";
 export const startTime2String = "10:05";
 export const startTime2 = timeStringToTime(startTime2String, timeStringFormat, currentDate);
 export const class2Duration = classDuration
-export const duringClass2 = DateTime.fromObject({ hour: 11, minute: 0}) 
+export const duringClass2 = DateTime.fromObject({ hour: 11, minute: 0, locale: "en-US" }) 
 export const endTime2String = "11:35";
 export const endTime2 = timeStringToTime(endTime2String, timeStringFormat, currentDate);
-export const afterClass2 = DateTime.fromObject({ hour: 11, minute: 40}) 
+export const afterClass2 = DateTime.fromObject({ hour: 11, minute: 40, locale: "en-US" }) 
 
 export const classPeriod2 = new ClassPeriod(
     class2Name,
@@ -104,13 +104,13 @@ export const classPeriod2JSON = {
 
 
 // export const schoolInSession = DateTime.fromISO("2019-07-28T07:37:50.634").toUTC();
-export const noSchool = DateTime.fromISO("2019-07-27T07:37:50.634", { zone: schoolTimezone }).toUTC();
-export const beforeSchoolHours = DateTime.fromISO("2019-07-28T0" + beforeClassString + ":00.000", { zone: schoolTimezone }).toUTC();
+export const noSchool = DateTime.fromISO("2019-07-27T07:37:50.634", { zone: schoolTimezone, locale: "en-US" }).toUTC();
+export const beforeSchoolHours = DateTime.fromISO("2019-07-28T0" + beforeClassString + ":00.000", { zone: schoolTimezone, locale: "en-US" }).toUTC();
 //start of class?
-export const betweenClass = DateTime.fromISO("2019-07-28T" + afterClassString + ":50.634", { zone: schoolTimezone }).toUTC();
-export const inClass = DateTime.fromISO("2019-07-28T0" + duringClassString + ":50.634", { zone: schoolTimezone }).toUTC();
+export const betweenClass = DateTime.fromISO("2019-07-28T" + afterClassString + ":50.634", { zone: schoolTimezone, locale: "en-US" }).toUTC();
+export const inClass = DateTime.fromISO("2019-07-28T0" + duringClassString + ":50.634", { zone: schoolTimezone, locale: "en-US" }).toUTC();
 //end of class?
-export const afterSchoolHours = DateTime.fromISO("2019-07-28T12:00:50.634", { zone: schoolTimezone }).toUTC();
+export const afterSchoolHours = DateTime.fromISO("2019-07-28T12:00:50.634", { zone: schoolTimezone, locale: "en-US" }).toUTC();
 
 
 export const bellScheduleClasses = [classPeriod, classPeriod2];
@@ -122,9 +122,9 @@ export const bellSchedule = new BellSchedule(
     bellScheduleName,
     bellScheduleEndpoint,
     [
-        DateTime.fromISO("2019-07-28T07:37:50.634").toUTC(),
-        DateTime.fromISO("2019-07-29T07:38:10.979").toUTC(),
-        DateTime.fromISO("2019-07-23T07:38:28.263").toUTC()
+        DateTime.fromISO("2019-07-28T07:37:50.634", {locale: "en-US"}).toUTC(),
+        DateTime.fromISO("2019-07-29T07:38:10.979", {locale: "en-US"}).toUTC(),
+        DateTime.fromISO("2019-07-23T07:38:28.263", {locale: "en-US"}).toUTC()
     ],
     bellScheduleClasses,
     currentDate
@@ -135,9 +135,9 @@ export const bellScheduleJSON = {
            name: bellScheduleName,
            endpoint: bellScheduleEndpoint,
            dates: [
-               DateTime.fromISO("2019-07-28T07:37:50.634").toUTC().toString(),
-               DateTime.fromISO("2019-07-29T07:38:10.979").toUTC().toString(),
-               DateTime.fromISO("2019-07-23T07:38:28.263").toUTC().toString()
+               DateTime.fromISO("2019-07-28T07:37:50.634", {locale: "en-US"}).toUTC().toString(),
+               DateTime.fromISO("2019-07-29T07:38:10.979", {locale: "en-US"}).toUTC().toString(),
+               DateTime.fromISO("2019-07-23T07:38:28.263", {locale: "en-US"}).toUTC().toString()
            ],
            classes: bellScheduleClassesJSON,
            lastModified: currentDate

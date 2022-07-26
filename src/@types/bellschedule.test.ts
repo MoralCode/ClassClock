@@ -27,9 +27,9 @@ describe("BellSchedule", () => {
 
     it("can get its dates", () => {
         expect(schedule.getDates()).toEqual([
-            DateTime.fromISO("2019-07-28T07:37:50.634").toUTC(),
-            DateTime.fromISO("2019-07-29T07:38:10.979").toUTC(),
-            DateTime.fromISO("2019-07-23T07:38:28.263").toUTC()
+            DateTime.fromISO("2019-07-28T07:37:50.634", {locale: "en-US"}).toUTC(),
+            DateTime.fromISO("2019-07-29T07:38:10.979", {locale: "en-US"}).toUTC(),
+            DateTime.fromISO("2019-07-23T07:38:28.263", {locale: "en-US"}).toUTC()
         ]);
     });
 
