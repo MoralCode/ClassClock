@@ -6,18 +6,11 @@ import {
     checkTimeRange
 } from "./helpers";
 import ClassPeriod from "../@types/classperiod";
-import { classPeriod2, classPeriod, beforeSchoolHours, school, betweenClass, inClass, noSchool, afterSchoolHours, bellScheduleClasses, duringClass as duringClassDate, startTime as startTimeDate, endTime as endTimeDate, startTime2 as startTime2Date, beforeClass as beforeClassDate, endTime2 as endTime2Date, afterClass as afterClassDate } from "./testconstants";
+import { classPeriod2, classPeriod, beforeSchoolHours, school, betweenClass, inClass, noSchool, afterSchoolHours, bellScheduleClasses, duringClass, startTime, endTime, startTime2, beforeClass, endTime2, afterClass } from "./testconstants";
 import { TimeStates, TimeComparisons } from "./enums";
 import Time from "../@types/time";
 
-const startTime = Time.fromDateTime(startTimeDate)
-const endTime = Time.fromDateTime(endTimeDate)
-const startTime2 = Time.fromDateTime(startTime2Date)
-const endTime2 = Time.fromDateTime(endTime2Date)
 
-const duringClass = Time.fromDateTime(duringClassDate)
-const beforeClass = Time.fromDateTime(beforeClassDate)
-const afterClass = Time.fromDateTime(afterClassDate)
 test("get value if key in list", () => {
     const object1 = { value1: "foo" };
     const object2 = { value_1: "foo" };
