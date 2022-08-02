@@ -61,6 +61,9 @@ describe("BellSchedule", () => {
         //middle
         expect(schedule.getClassPeriodForTime(duringClassDT)).toEqual(classPeriod);
 
+        //between classes
+        expect(schedule.getClassPeriodForTime(betweenClass)).toEqual(undefined);
+
         //exactly end
         expect(schedule.getClassPeriodForTime(endTimeDT)).toEqual(classPeriod);
         
