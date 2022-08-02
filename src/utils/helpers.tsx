@@ -85,7 +85,7 @@ export function getTimeStateForDateAtSchool(date: DateTime, school: School) {
     }
 
     //the current time lies between the start of the first schedules class and the end of the last
-    else if (school.isInSession(date) && !currentClassPeriod) {
+    else if (school.isInSession(date) && currentClassPeriod === undefined) {
         return TimeStates.SCHOOL_IN_CLASS_OUT;
     }
 
