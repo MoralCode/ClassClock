@@ -34,7 +34,7 @@ export default class School extends UpdateTimestampedObject {
     private endpoint?: string;
     private fullName: string;
     private acronym: string;
-    private timeZone?: string;
+    private timeZone: string;
     private schedules?: BellSchedule[];
     private passingPeriodName?: string;
     private creationDate?: DateTime;
@@ -45,7 +45,7 @@ export default class School extends UpdateTimestampedObject {
         fullName: string,
         acronym: string,
         endpoint: string,
-        timeZone?: string,
+        timeZone: string,
         schedules?: BellSchedule[],
         passingPeriodName?: string,
         creationDate?: DateTime,
