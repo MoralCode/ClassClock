@@ -141,7 +141,7 @@ export default class School extends UpdateTimestampedObject {
 
         const sortedClasses = sortClassesByStartTime(currentSchedule.getAllClasses())
         const firstClass = sortedClasses[0]
-        const lastClass = sortedClasses[currentSchedule.numberOfClasses()-1]
+        const lastClass = sortedClasses[currentSchedule.numberOfClasses()]
         return (
             checkTimeRange(
                 Time.fromDateTime(date, this.timeZone),
