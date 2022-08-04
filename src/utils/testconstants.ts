@@ -20,7 +20,7 @@ const timeStringToDateTime = (str: string, timeStringFormat: string, dateFrom?: 
 }
 const timeStringToTime = (str: string, timeStringFormat: string, dateFrom?: DateTime): Time => {
 
-    return Time.fromDateTime(timeStringToDateTime(str,timeStringFormat,dateFrom));
+    return Time.fromDateTime(timeStringToDateTime(str,timeStringFormat,dateFrom), schoolTimezone);
 }
 
 
@@ -92,10 +92,10 @@ export const class2Name = "Second Period";
 export const startTime2String = "10:05";
 export const startTime2 = timeStringToTime(startTime2String, timeStringFormat, currentDate);
 export const class2Duration = classDuration
-export const duringClass2 = DateTime.fromObject({ hour: 11, minute: 0, locale: "en-US" }) 
+export const duringClass2 = DateTime.fromObject({ hour: 11, minute: 0, locale: "en-US", zone: schoolTimezone }) 
 export const endTime2String = "11:35";
 export const endTime2 = timeStringToTime(endTime2String, timeStringFormat, currentDate);
-export const afterClass2 = DateTime.fromObject({ hour: 11, minute: 40, locale: "en-US" }) 
+export const afterClass2 = DateTime.fromObject({ hour: 11, minute: 40, locale: "en-US",zone: schoolTimezone}) 
 
 export const classPeriod2 = new ClassPeriod(
     class2Name,
@@ -131,9 +131,9 @@ export const bellSchedule = new BellSchedule(
     bellScheduleName,
     bellScheduleEndpoint,
     [
-        DateTime.fromISO("2019-07-28T07:37:50.634", {locale: "en-US"}).toUTC(),
-        DateTime.fromISO("2019-07-29T07:38:10.979", {locale: "en-US"}).toUTC(),
-        DateTime.fromISO("2019-07-23T07:38:28.263", {locale: "en-US"}).toUTC()
+        DateTime.fromISO("2019-07-28T07:37:50.634", {zone: schoolTimezone, locale: "en-US"}).toUTC(),
+        DateTime.fromISO("2019-07-29T07:38:10.979", {zone: schoolTimezone, locale: "en-US"}).toUTC(),
+        DateTime.fromISO("2019-07-23T07:38:28.263", {zone: schoolTimezone, locale: "en-US"}).toUTC()
     ],
     bellScheduleClasses,
     currentDate
@@ -144,9 +144,9 @@ export const bellScheduleJSON = {
            name: bellScheduleName,
            endpoint: bellScheduleEndpoint,
            dates: [
-               DateTime.fromISO("2019-07-28T07:37:50.634", {locale: "en-US"}).toUTC().toString(),
-               DateTime.fromISO("2019-07-29T07:38:10.979", {locale: "en-US"}).toUTC().toString(),
-               DateTime.fromISO("2019-07-23T07:38:28.263", {locale: "en-US"}).toUTC().toString()
+               DateTime.fromISO("2019-07-28T07:37:50.634", {zone: schoolTimezone, locale: "en-US"}).toUTC().toString(),
+               DateTime.fromISO("2019-07-29T07:38:10.979", {zone: schoolTimezone, locale: "en-US"}).toUTC().toString(),
+               DateTime.fromISO("2019-07-23T07:38:28.263", {zone: schoolTimezone, locale: "en-US"}).toUTC().toString()
            ],
            classes: bellScheduleClassesJSON,
            lastModified: currentDate
