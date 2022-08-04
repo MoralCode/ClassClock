@@ -2,11 +2,8 @@ import { DateTime, Duration } from "luxon";
 
 /**
  * A representation of a Time without an associated date.
- * This is used in cases where the same times may apply to multiple days, 
- * such as for the start and end times of ClassPeriod's within a BellSchedule.
- * 
- * A time can be thought of, and are in fact implemented internally as a Duration.
- * This Duration is considered to start at the beginning of the current day.
+ * This is used to simplify the JSON data since the same time ranges for a class
+ * often apply to multiple days.
  * 
  * The "standard" way to represent it in serialized/JSON form is as a series of
  * Two or three, colon-separated, two-digit numbers representing a 24-hour time.
@@ -14,6 +11,8 @@ import { DateTime, Duration } from "luxon";
  * 
  * Times in this standard format should be considered to be in the timezone of
  * the school that they are part of.
+ * 
+ * A Time object should always represent this standard form of the
  *
  * @export
  * @class Time
