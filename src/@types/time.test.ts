@@ -1,5 +1,6 @@
 import { DateTime } from "luxon";
 import Time from "./time";
+import {school} from "../utils/testconstants";
 
 const thisTime: Time = Time.fromTime(9, 31, 41);
 const thisTimeUTC: Time = Time.fromISO("2022-06-16T09:31:41Z");
@@ -12,8 +13,8 @@ describe("Time", () => {
     });
 
     it("can instantiate from DateTime", () => {
-        let testTime1 = Time.fromDateTime(DateTime.fromISO("2022-06-16T09:31:41"))
-        let testTime2 = Time.fromDateTime(DateTime.fromISO("2022-07-16T09:31:41"))
+        let testTime1 = Time.fromDateTime(DateTime.fromISO("2022-06-16T09:31:41", { zone: school.getTimezone() }), school.getTimezone());
+        let testTime2 = Time.fromDateTime(DateTime.fromISO("2022-07-16T09:31:41", { zone: school.getTimezone()}), school.getTimezone())
         
         expect(testTime1.hours).toEqual(thisTime.hours);
         expect(testTime1.minutes).toEqual(thisTime.minutes);

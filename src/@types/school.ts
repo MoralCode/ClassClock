@@ -144,7 +144,7 @@ export default class School extends UpdateTimestampedObject {
         const lastClass = sortedClasses[currentSchedule.numberOfClasses()-1]
         return (
             checkTimeRange(
-                Time.fromDateTime(date),
+                Time.fromDateTime(date, this.timeZone),
                 firstClass.getStartTime(),
                 lastClass.getEndTime()
             ) == TimeComparisons.IS_DURING_OR_EXACTLY
