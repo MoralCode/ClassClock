@@ -105,7 +105,9 @@ export default class Time {
      * @param time the DateTime
      * @returns a Time object
      */
-    public static fromDateTime(time: DateTime) {
+    public static fromDateTime(time: DateTime, schoolTimezone: string) {
+        time = time.setZone(schoolTimezone)
+
         return new Time(time.diff(time.startOf('day')).shiftTo("hours", "minutes", "seconds"))
     }
 
