@@ -76,4 +76,6 @@ describe("BellSchedule", () => {
         //after
         expect(schedule.getClassPeriodForTime(afterClassDT, schoolTimezone)).toBeUndefined();
     });
+
+    //TODO: add tests for getClassStartingAfter
 });

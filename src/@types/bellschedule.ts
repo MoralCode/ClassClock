@@ -120,9 +120,9 @@ export default class BellSchedule extends UpdateTimestampedObject {
         return;
     }
 
-    public getClassStartingAfter(time: DateTime) {
+    public getClassStartingAfter(time: DateTime, schoolTimezone: string) {
         for (const classPeriod of sortClassesByStartTime(this.classes)) {
-            if (classPeriod.stateForTime(Time.fromDateTime(time)) === TimeComparisons.IS_BEFORE) {
+            if (classPeriod.stateForTime(Time.fromDateTime(time, schoolTimezone)) === TimeComparisons.IS_BEFORE) {
                 return classPeriod;
             }
         }

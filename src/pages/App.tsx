@@ -88,7 +88,7 @@ export const App = (props: IAppProps) => {
                 return <p>No School Today</p>;
             default:
 
-                let nextClass: ClassPeriod | undefined = currentSchedule.getClassStartingAfter(currentDate);
+                let nextClass: ClassPeriod | undefined = currentSchedule.getClassStartingAfter(currentDate, schoolTimezone);
                 let nextImportantTime: Time | undefined;
 
                 const currentClass = currentSchedule.getClassPeriodForTime(currentDate, schoolTimezone);
