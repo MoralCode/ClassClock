@@ -19,10 +19,17 @@ const schoolNoSchedules = new School(
 describe("School", () => {
 
     it("should get from JSON", () => {
+        let constructed = School.fromJson(schoolJSON)
         //TODO: the start and end times should be plain HH:MM, not full datetimes
-        expect(
-            School.fromJson(schoolJSON)
-        ).toEqual(school);
+        expect(constructed.getName()).toEqual(school.getName());
+        expect(constructed.getAcronym()).toEqual(school.getAcronym());
+        expect(constructed.getSchedules()).toEqual(school.getSchedules());
+        expect(constructed.getTimezone()).toEqual(school.getTimezone());
+        expect(constructed.getPassingTimeName()).toEqual(school.getPassingTimeName());
+        expect(constructed.getIdentifier()).toEqual(school.getIdentifier());
+        expect(constructed.getEndpoint()).toEqual(school.getEndpoint());
+        expect(constructed.getAcronym()).toEqual(school.getAcronym());
+
     });
 
     //assuming constructor works, although maybe it could be tested against the fromJSON method?

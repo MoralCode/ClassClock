@@ -7,9 +7,15 @@ describe("BellSchedule", () => {
     it("should get from JSON", () => {
         //TODO: the start and end times should be plain HH:MM, not full datetimes
 
-        expect(
-            BellSchedule.fromJson(bellScheduleJSON)
-        ).toEqual(schedule);
+        let constructed = BellSchedule.fromJson(bellScheduleJSON)
+        expect(constructed.getName()).toEqual(schedule.getName());
+        expect(constructed.getColor()).toEqual(schedule.getColor());
+        expect(constructed.getAllClasses()).toEqual(schedule.getAllClasses());
+        expect(constructed.getDates()).toEqual(schedule.getDates());
+        expect(constructed.getDisplayName()).toEqual(schedule.getDisplayName());
+        expect(constructed.getEndpoint()).toEqual(schedule.getEndpoint());
+        expect(constructed.getIdentifier()).toEqual(schedule.getIdentifier());
+
     });
 
     it("can get its identifier", () => {
