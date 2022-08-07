@@ -231,10 +231,5 @@ const Admin = (props: IAdminProps) => {
     );
 };
 
-const mapStateToProps = (state: ISchoolsState) => {
-    const { selectedSchool } = state;
-    selectedSchool.data = School.fromJson(selectedSchool.data);
-    return { selectedSchool };
-};
 
-export default connect(mapStateToProps)(Admin);
+export default connect()(Admin);
