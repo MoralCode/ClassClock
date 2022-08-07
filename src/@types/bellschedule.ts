@@ -111,9 +111,9 @@ export default class BellSchedule extends UpdateTimestampedObject {
         return this.classes;
     }
 
-    public getClassPeriodForTime(time: DateTime) {
+    public getClassPeriodForTime(time: DateTime, schoolTimezone:string) {
         for (const classPeriod of sortClassesByStartTime(this.classes)) {
-            if (classPeriod.stateForTime(Time.fromDateTime(time)) === TimeComparisons.IS_DURING_OR_EXACTLY) {
+            if (classPeriod.stateForTime(Time.fromDateTime(time, schoolTimezone)) === TimeComparisons.IS_DURING_OR_EXACTLY) {
                 return classPeriod;
             }
         }

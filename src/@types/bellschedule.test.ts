@@ -59,21 +59,21 @@ describe("BellSchedule", () => {
 
     it("can get a class period for a given time", () => {
         //before
-        expect(schedule.getClassPeriodForTime(beforeClassDT)).toBeUndefined();
+        expect(schedule.getClassPeriodForTime(beforeClassDT, schoolTimezone)).toBeUndefined();
 
         //exactly start
-        expect(schedule.getClassPeriodForTime(startTimeDT)).toEqual(classPeriod);
+        expect(schedule.getClassPeriodForTime(startTimeDT, schoolTimezone)).toEqual(classPeriod);
 
         //middle
-        expect(schedule.getClassPeriodForTime(duringClassDT)).toEqual(classPeriod);
+        expect(schedule.getClassPeriodForTime(duringClassDT, schoolTimezone)).toEqual(classPeriod);
 
         //between classes
-        expect(schedule.getClassPeriodForTime(betweenClass)).toEqual(undefined);
+        expect(schedule.getClassPeriodForTime(betweenClass, schoolTimezone)).toEqual(undefined);
 
         //exactly end
-        expect(schedule.getClassPeriodForTime(endTimeDT)).toEqual(classPeriod);
+        expect(schedule.getClassPeriodForTime(endTimeDT, schoolTimezone)).toEqual(classPeriod);
         
         //after
-        expect(schedule.getClassPeriodForTime(afterClassDT)).toBeUndefined();
+        expect(schedule.getClassPeriodForTime(afterClassDT, schoolTimezone)).toBeUndefined();
     });
 });
