@@ -12,10 +12,9 @@ import { URLs } from "../../utils/constants";
 import { setTimeFormatPreference } from "../../store/usersettings/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTwitter, faInstagram, faDiscord } from "@fortawesome/free-brands-svg-icons";
-import { faHome, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import { useAuth0 } from "../../react-auth0-wrapper";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 import distanceInWords from "date-fns/distance_in_words";
-import { selectSchool, invalidateSchool } from "../../store/schools/actions";
+import { selectSchool } from "../../store/schools/actions";
 import packageJson from '../../package.alias.json';
 
 export interface ISettingProps {
@@ -26,7 +25,6 @@ export interface ISettingProps {
 }
 
 const Settings = (props: ISettingProps) => {
-    const { logout, user, loginWithRedirect } = useAuth0();
 
     const navigate = (to: string) => {
         props.dispatch(push(to));
