@@ -11,7 +11,8 @@ export const pages = {
     selectSchool: "/select",
     loginCallback: "/callback",
     welcome: "/welcome",
-    admin: "/admin"
+    admin: "/admin",
+    adminBellSchedule: "/admin/bellschedule"
 };
 
 export const URLs = {

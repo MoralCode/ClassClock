@@ -2,22 +2,17 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
-import { configureStore } from "./store/store";
-import { createBrowserHistory, startListener, push, replace } from "redux-first-routing";
+import { startListener, push, replace } from "redux-first-routing";
 import UniversalRouter, {Context} from "universal-router";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { Auth0Provider } from "./react-auth0-wrapper";
 import { Auth0, pages } from "./utils/constants";
 import { routes } from "./utils/routes";
 import { PageNotFound } from "./pages/errors/PageNotFound";
 import { ServerError } from "./pages/errors/ServerError";
+import {history, configuredStore} from "./store/store";
+import Auth0ProviderWithHistory from "./services/auth0-provider-with-history";
 
-// Create the history object
-const history = createBrowserHistory();
-
-// Create the store, passing it the history object
-const configuredStore = configureStore(history); //createStore(combineReducers(reducers), applyMiddleware(thunk));
 
 // Start the history listener, which automatically dispatches actions to keep the store in sync with the history
 startListener(history, configuredStore.store);
@@ -36,40 +31,29 @@ const options = {
 // Create the router
 const router = new UniversalRouter(routes, options);
 
-// A function that routes the user to the right place
-// after login
-const onRedirectCallback = (appState: any) => {
-    // Temporary Firefox workaround: https://github.com/auth0/auth0-spa-js/blob/master/FAQ.md
-    window.location.hash = window.location.hash; // eslint-disable-line no-self-assign
-
-    configuredStore.store.dispatch(
-        replace(
-            appState && appState.targetUrl ? appState.targetUrl : window.location.pathname
-        )
-    );
-};
-
 // Create the reactive render function
 function render(pathname: string) {
     router.resolve(pathname).then((component: any) => {
-        // console.log(component);
+        const core = <Auth0ProviderWithHistory>
+            {component}
+        </Auth0ProviderWithHistory>
 
-        ReactDOM.render(
-            <Provider store={configuredStore.store}>
-                <PersistGate loading={null} persistor={configuredStore.persistor}>
-                    <Auth0Provider
-                        domain={Auth0.domain}
-                        client_id={Auth0.clientId}
-                        audience={Auth0.audience}
-                        redirect_uri={"http://localhost:3000" + pages.loginCallback}
-                        onRedirectCallback={onRedirectCallback}
-                    >
-                        {component}
-                    </Auth0Provider>
-                </PersistGate>
-            </Provider>,
-            document.getElementById("root")
-        );
+        //react-admin detects if its in a provider, so those pages cane be shown with the existing provider
+        if (!pathname.includes(pages.admin)) {
+
+            ReactDOM.render(
+                <Provider store={configuredStore.store}>
+                    <PersistGate loading={null} persistor={configuredStore.persistor}>
+                        {core}
+                    </PersistGate>
+                </Provider>,
+                document.getElementById("root")
+            );
+        } else {
+            ReactDOM.render(core,
+                document.getElementById("root")
+            );
+        }
     });
 }
 

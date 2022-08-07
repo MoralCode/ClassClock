@@ -196,6 +196,12 @@ a {
     text-decoration: underline;
 }
 
+/* exclude anything under full calendar (in the admin panel) from this styling */
+.fc a {
+   color:initial;
+   text-decoration: none;
+}
+
 h1.bigger {
     /* regular h1's are 2em */
     font-size: 3em;

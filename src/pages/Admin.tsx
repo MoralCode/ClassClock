@@ -8,7 +8,7 @@ import BellSchedule from "../@types/bellschedule";
 import { ISchoolsState } from "../store/schools/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
-import { useAuth0 } from "../react-auth0-wrapper";
+import { useAuth0 } from "@auth0/auth0-react";
 import Calendar from "../components/Calendar/Calendar";
 import { startOfDay } from "date-fns";
 import SelectHeader from "../components/SelectHeader";
@@ -29,7 +29,7 @@ export interface IAdminProps {
 }
 
 const Admin = (props: IAdminProps) => {
-    const { user, getTokenSilently } = useAuth0();
+    const { user, getAccessTokenSilently } = useAuth0();
 
     const navigate = (to: string) => {
         props.dispatch(push(to));
@@ -117,7 +117,7 @@ const Admin = (props: IAdminProps) => {
 
     const confirmUpdate = async () => {
         if (window.confirm("Are you sure you want to publish these schedule changes?")) {
-            const token: string = await getTokenSilently() || '';
+            const token: string = await getAccessTokenSilently() || '';
 
             if (schedules !== undefined) {
                 for (const schedule of schedules) {
