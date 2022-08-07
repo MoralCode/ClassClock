@@ -5,7 +5,10 @@ import { schoolJSON, school } from "../../utils/testconstants";
 describe("school reducer", () => {
 
     it("should return the initial state", () => {
-        expect(selectedSchoolReducer(undefined, {})).toEqual({
+        expect(selectedSchoolReducer(undefined, {
+            type: "FETCH_ERROR", // this activates the default case in the selectedSchoolReducer... maybe not the best way to test it...
+            message: ""
+        })).toEqual({
             isFetching: false,
             data: {}
         });

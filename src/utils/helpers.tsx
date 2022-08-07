@@ -77,7 +77,7 @@ export function getTimeStateForDateAtSchool(date: DateTime, school: School) {
         return TimeStates.DAY_OFF;
     }
 
-    const currentClassPeriod = currentBellSchedule.getClassPeriodForTime(date);
+    const currentClassPeriod = currentBellSchedule.getClassPeriodForTime(date, school.getTimezone());
 
     //it is a school day but it is not school hours
     if (!school.isInSession(date)) {
