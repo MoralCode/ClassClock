@@ -182,6 +182,13 @@ export const schoolJSON = {
 };
 
 
+export const mockSchoolState = {
+    isFetching: false,
+    didInvalidate: false,
+    data: school,
+    lastUpdated: 1564299400 //Sun Jul 28 2019 00:36:40 UTC-0700 (Pacific Daylight Time)
+};
+
 
 /*
  * Variales for testing Redux and API calls
