@@ -27,23 +27,23 @@ describe("Schedule", () => {
   });
 
   it("shows the day's schedule regardless of the time", () => {
-      MockDate.set(beforeSchoolHours);
+      MockDate.set(beforeSchoolHours.toJSDate());
       let tree = renderer.create(rawComponent).toJSON();
       expect(tree).toMatchSnapshot();
  
-      MockDate.set(noSchool);
+      MockDate.set(noSchool.toJSDate());
       tree = renderer.create(rawComponent).toJSON();
       expect(tree).toMatchSnapshot();
   
-      MockDate.set(inClass);
+      MockDate.set(inClass.toJSDate());
       tree = renderer.create(rawComponent).toJSON();
       expect(tree).toMatchSnapshot();
   
-      MockDate.set(betweenClass);
+      MockDate.set(betweenClass.toJSDate());
       tree = renderer.create(rawComponent).toJSON();
       expect(tree).toMatchSnapshot();
  
-      MockDate.set(afterSchoolHours);
+      MockDate.set(afterSchoolHours.toJSDate());
       tree = renderer.create(rawComponent).toJSON();
       expect(tree).toMatchSnapshot();
   });
