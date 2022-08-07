@@ -24,7 +24,7 @@ export interface ISettingProps {
     dispatch: any;
 }
 
-const Settings = (props: ISettingProps) => {
+export const Settings = (props: ISettingProps) => {
 
     const navigate = (to: string) => {
         props.dispatch(push(to));
