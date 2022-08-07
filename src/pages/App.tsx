@@ -18,6 +18,7 @@ import StatusIndicator from "../components/StatusIndicator";
 import ClassClockService from "../services/classclock";
 import { selectSchool } from "../store/schools/actions";
 import ClassPeriod from "../@types/classperiod";
+import Time from "../@types/time";
 
 export interface IAppProps {
     selectedSchool: SelectedSchoolState;
@@ -69,7 +70,7 @@ export const App = (props: IAppProps) => {
     window.addEventListener('offline', () => {setOnline(false)});
 
     const currentSchedule = props.selectedSchool.data.getScheduleForDate(currentDate);
-
+    const schoolTimezone = props.selectedSchool.data.getTimezone();
     const updateConnectionState = () => {
         ClassClockService.isReachable().then((reachable) => {
             setConnected(reachable)
@@ -87,10 +88,10 @@ export const App = (props: IAppProps) => {
                 return <p>No School Today</p>;
             default:
 
-                let nextClass: ClassPeriod | undefined = currentSchedule.getClassStartingAfter(currentDate);
-                let nextImportantTime: DateTime | undefined;
+                let nextClass: ClassPeriod | undefined = currentSchedule.getClassStartingAfter(currentDate, schoolTimezone);
+                let nextImportantTime: Time | undefined;
 
-                const currentClass = currentSchedule.getClassPeriodForTime(currentDate);
+                const currentClass = currentSchedule.getClassPeriodForTime(currentDate, schoolTimezone);
 
                 if (currentClass){
                     nextImportantTime = currentClass.getEndTime()
@@ -130,7 +131,7 @@ export const App = (props: IAppProps) => {
                         <p className="timeFont" style={{ fontSize: "60px" }}>
                             <b>
                                 {nextImportantTime
-                                        ? nextImportantTime.diff(currentDate).toFormat("hh:mm:ss")
+                                        ? nextImportantTime.onto(currentDate).toFormat("hh:mm:ss")
                                     : "No Class"}
                             </b>
                         </p>

@@ -1,5 +1,6 @@
 import React from 'react';
 import renderer from "react-test-renderer";
+import { mockSchoolState, school } from '../../utils/testconstants';
 import { Settings } from './Settings';
 
 
@@ -9,7 +10,7 @@ const mockDispatch = jest.fn();
 describe("Settings", () => {
 
   it("renders correctly", () => {
-      const tree = renderer.create(<Settings dispatch={mockDispatch} />).toJSON();
+    const tree = renderer.create(<Settings dispatch={mockDispatch} selectedSchool={mockSchoolState} userSettings={{use24HourTime: true}} error={''} />).toJSON();
       expect(tree).toMatchSnapshot();
   });
 });

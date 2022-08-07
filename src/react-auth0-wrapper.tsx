@@ -9,7 +9,7 @@ interface IAuth0Context {
     popupOpen: boolean;
     loginWithPopup(options: PopupLoginOptions): Promise<void>;
     handleRedirectCallback(): Promise<RedirectLoginResult>;
-    getIdTokenClaims(o?: getIdTokenClaimsOptions): Promise<IdToken>;
+    getIdTokenClaims(o?: getIdTokenClaimsOptions): Promise<IdToken|undefined>;
     loginWithRedirect(o: RedirectLoginOptions): Promise<void>;
     getTokenSilently(o?: GetTokenSilentlyOptions): Promise<string | undefined>;
     getTokenWithPopup(o?: GetTokenWithPopupOptions): Promise<string | undefined>;

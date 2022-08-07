@@ -1,5 +1,6 @@
 import { DateTime, Interval } from "luxon";
 import { checkTimeRange, getValueIfKeyInList } from "../utils/helpers";
+import Time from "./time";
 
 export default class ClassPeriod {
     public static fromJson(json: any) {
@@ -7,24 +8,24 @@ export default class ClassPeriod {
         const end = getValueIfKeyInList(["endTime", "end_time"], json);
         return new ClassPeriod(
             getValueIfKeyInList(["name", "classPeriodName", "class_period_name"], json),
-            toDateTime(start),
-            toDateTime(end),
+            Time.fromString(start),
+            Time.fromString(end),
             DateTime.fromISO(getValueIfKeyInList(["creationDate", "creation_date"], json), {zone: 'utc'})
         );
     }
     private name: string;
-    private startTime: DateTime;
-    private endTime: DateTime;
+    private startTime: Time;
+    private endTime: Time;
     private creationDate: DateTime;
 
-    constructor(name: string, startTime: DateTime, endTime: DateTime, creationDate: DateTime) {
+    constructor(name: string, startTime: Time, endTime: Time, creationDate: DateTime) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
         this.creationDate = creationDate;
     }
 
-    public getName() {
+    public getName(): string {
         return this.name;
     }
 
@@ -32,47 +33,34 @@ export default class ClassPeriod {
         this.name = name;
     }
 
-    public getStartTime() {
+    public getStartTime(): Time  {
         return this.startTime;
     }
 
-    public setStartTime(time: DateTime) {
+    public setStartTime(time: Time) {
         this.startTime = time;
     }
 
-    public getEndTime() {
+    public getEndTime(): Time {
         return this.endTime;
     }
 
-    public setEndTime(time: DateTime) {
+    public setEndTime(time: Time) {
         this.endTime = time;
     }
 
-    public getDuration() {
-        return Interval.fromDateTimes(this.startTime, this.endTime).toDuration(['hours', 'minutes']);
+    public getDuration(): Time {
+        return this.startTime.getTimeDeltaTo(this.endTime);
     }
 
-    public getCreationDate() {
+    public getCreationDate(): DateTime {
         return this.creationDate;
     }
 
     //remove me
-    public stateForTime(time: DateTime) {
+    public stateForTime(time: Time) {
         return checkTimeRange(time, this.startTime, this.endTime);
     }
 }
 
 
-const toDateTime = (time:any) => {
-    if (time instanceof DateTime) {
-        return time
-    }
-    const smalltime = DateTime.fromFormat(time, "H:mm")
-    const bigtime = DateTime.fromISO(time)
-    if (smalltime.isValid){
-        return smalltime.toUTC()
-    } else if (bigtime.isValid) {
-        return bigtime.toUTC()
-    }
-    return time.toUTC()
-}

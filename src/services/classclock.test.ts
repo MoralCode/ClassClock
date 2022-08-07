@@ -1,5 +1,5 @@
 import fetchMock from "fetch-mock";
-import { fakeSchoolResponse, fakeBellScheduleListResponse, schoolId, schoolEndpoint, bellScheduleEndpoint, schoolListEndpoint, fakeSchoolListResponse } from "../utils/testconstants";
+import { fakeSchoolResponse, fakeBellScheduleListResponse, schoolId, schoolEndpoint, bellScheduleEndpoint } from "../utils/testconstants";
 import ClassClockService from "./classclock";
 
 const headers = { "Content-Type": "application/json" }
@@ -9,16 +9,16 @@ describe("ClassClock API service", () => {
 		fetchMock.restore();
 	});
 
-	it("can request the schools list", () => {
-		fetchMock
-			.getOnce(schoolListEndpoint, {
-				body: fakeSchoolListResponse,
-				headers
-			});
+	// it("can request the schools list", () => {
+	// 	fetchMock
+	// 		.getOnce(ClassClockService.baseURL + "/schools/", {
+	// 			body: fakeSchoolListResponse,
+	// 			headers
+	// 		});
 		
-		ClassClockService.getSchoolsList("1234");
-		expect(fetchMock.done()).toBeTruthy();
-	});
+	// 	ClassClockService.getSchoolsList("1234");
+	// 	expect(fetchMock.done()).toBeTruthy();
+	// });
 
 	it("can request detailed info for a particular school", () => {
 		fetchMock

@@ -2,8 +2,10 @@ import ClassPeriod from "./classperiod";
 import { DateTime } from "luxon";
 import { TimeComparisons } from "../utils/enums";
 import { getValueIfKeyInList, sortClassesByStartTime } from "../utils/helpers";
+import UpdateTimestampedObject from "./updateTimestampedObject";
+import Time from "./time";
 
-export default class BellSchedule {
+export default class BellSchedule extends UpdateTimestampedObject {
     public static fromJson(json: any) {
         return new BellSchedule(
             getValueIfKeyInList(["id", "identifier"], json),
@@ -24,7 +26,6 @@ export default class BellSchedule {
     private displayName?: string;
     private dates: DateTime[];
     private classes: ClassPeriod[];
-    private lastUpdatedDate: DateTime;
     private color?: string;
 
     constructor(
@@ -36,13 +37,14 @@ export default class BellSchedule {
         lastUpdatedDate: DateTime,
         displayName?: string
     ) {
+        super(lastUpdatedDate)
         this.id = id;
         this.name = name;
         this.endpoint = endpoint;
         this.displayName = displayName;
         this.dates = dates;
         this.classes = classes;
-        this.lastUpdatedDate = lastUpdatedDate;
+    
     }
 
     public getIdentifier() {
@@ -109,18 +111,18 @@ export default class BellSchedule {
         return this.classes;
     }
 
-    public getClassPeriodForTime(time: DateTime) {
+    public getClassPeriodForTime(time: DateTime, schoolTimezone:string) {
         for (const classPeriod of sortClassesByStartTime(this.classes)) {
-            if (classPeriod.stateForTime(time) === TimeComparisons.IS_DURING_OR_EXACTLY) {
+            if (classPeriod.stateForTime(Time.fromDateTime(time, schoolTimezone)) === TimeComparisons.IS_DURING_OR_EXACTLY) {
                 return classPeriod;
             }
         }
         return;
     }
 
-    public getClassStartingAfter(time: DateTime) {
+    public getClassStartingAfter(time: DateTime, schoolTimezone: string) {
         for (const classPeriod of sortClassesByStartTime(this.classes)) {
-            if (classPeriod.stateForTime(time) === TimeComparisons.IS_BEFORE) {
+            if (classPeriod.stateForTime(Time.fromDateTime(time, schoolTimezone)) === TimeComparisons.IS_BEFORE) {
                 return classPeriod;
             }
         }
@@ -153,11 +155,4 @@ export default class BellSchedule {
         this.color = color;
     }
 
-    public lastUpdated() {
-        return this.lastUpdatedDate;
-    }
-
-    public hasChangedSince(date: DateTime) {
-        return date.toMillis() < this.lastUpdatedDate.toMillis();
-    }
 }

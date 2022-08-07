@@ -3,12 +3,13 @@ import {
     getValueIfKeyInList,
     sortClassesByStartTime,
     getTimeStateForDateAtSchool,
-    checkTimeRange,
-    matchDates
+    checkTimeRange
 } from "./helpers";
 import ClassPeriod from "../@types/classperiod";
 import { classPeriod2, classPeriod, beforeSchoolHours, school, betweenClass, inClass, noSchool, afterSchoolHours, bellScheduleClasses, duringClass, startTime, endTime, startTime2, beforeClass, endTime2, afterClass } from "./testconstants";
 import { TimeStates, TimeComparisons } from "./enums";
+import Time from "../@types/time";
+
 
 test("get value if key in list", () => {
     const object1 = { value1: "foo" };
@@ -23,8 +24,8 @@ test("get value if key in list", () => {
 //ignoring getCurrentDate
 
 test("sort classes by start time", () => {
-    expect(sortClassesByStartTime(bellScheduleClasses.reverse())).toEqual(bellScheduleClasses);
-
+    expect(sortClassesByStartTime(bellScheduleClasses.reverse())[0]).toEqual(bellScheduleClasses[0]);
+    expect(sortClassesByStartTime(bellScheduleClasses.reverse())[1]).toEqual(bellScheduleClasses[1]);
     expect(sortClassesByStartTime(bellScheduleClasses.reverse())[0].getName()).toEqual("First Period");
 });
 
@@ -81,43 +82,35 @@ test("check time range", () => {
     expect(checkTimeRange(afterClass, startTime, endTime2)).toBe(
         TimeComparisons.IS_DURING_OR_EXACTLY
     );
-
-    
 });
 
-test("check time range ignoring day", () => {
+test("check time range with start and end swapped", () => {
 
-    expect(checkTimeRange(duringClass.plus({ days: 1 }), startTime, endTime, true)).toBe(
+    expect(checkTimeRange(duringClass, endTime, startTime)).toBe(
         TimeComparisons.IS_DURING_OR_EXACTLY
     );
 
-    expect(checkTimeRange(duringClass.plus({ days: 1 }), endTime, startTime2, true)).toBe(
+    expect(checkTimeRange(duringClass, startTime2, endTime)).toBe(
         TimeComparisons.IS_BEFORE
     );
 
-    expect(checkTimeRange(beforeClass.plus({ days: 1 }), startTime, endTime2, true)).toBe(
+    expect(checkTimeRange(beforeClass, endTime2, startTime)).toBe(
         TimeComparisons.IS_BEFORE
     );
 
-    expect(checkTimeRange(startTime.plus({ days: 1 }), startTime, endTime, true)).toBe(
+    expect(checkTimeRange(startTime, endTime, startTime)).toBe(
         TimeComparisons.IS_DURING_OR_EXACTLY
     );
 
-    expect(checkTimeRange(endTime.plus({ days: 1 }), startTime, endTime, true)).toBe(
+    expect(checkTimeRange(endTime, endTime, startTime)).toBe(
         TimeComparisons.IS_DURING_OR_EXACTLY
     );
 
-    expect(checkTimeRange(afterClass.plus({ days: 1 }), startTime, endTime, true)).toBe(
+    expect(checkTimeRange(afterClass, endTime, startTime)).toBe(
         TimeComparisons.IS_AFTER
     );
 
-    expect(checkTimeRange(afterClass.plus({ days: 1 }), startTime, endTime2, true)).toBe(
+    expect(checkTimeRange(afterClass, endTime2, startTime)).toBe(
         TimeComparisons.IS_DURING_OR_EXACTLY
     );
-
-
-});
-
-test("matches dates between two datetimes", () => {
-    expect(matchDates(duringClass, afterClass.plus({ days: 1 }))).toEqual(afterClass);
 });

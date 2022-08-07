@@ -34,6 +34,7 @@
         "redux-first-routing": "^0.3.0",
         "redux-persist": "^5.10.0",
         "redux-thunk": "^2.3.0",
+        "ts-jest": "^28.0.7",
         "typescript": "^3.6.4",
         "universal-router": "^8.2.0"
     },
@@ -63,7 +64,7 @@
         "@babel/helper-builder-react-jsx": "^7.10.4",
         "@babel/helper-regex": "^7.10.5",
         "@types/fetch-mock": "^7.3.2",
-        "@types/jest": "^24.0.18",
+        "@types/jest": "^28.1.6",
         "@types/jsonapi-serializer": "^3.6.2",
         "@types/lodash.clonedeep": "^4.5.6",
         "@types/lodash.find": "^4.6.6",
