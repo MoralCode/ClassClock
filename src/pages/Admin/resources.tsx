@@ -148,7 +148,6 @@ export const BellScheduleCreate = (props: any) => (
 			<TextInput source="display_name" />
 			<ReferenceInput label="School" source="school_id" reference="school">
 				<SelectInput optionText="full_name" />
-				{/*  create={<CreateCategory />} */}
 			</ReferenceInput>
 			{/* <DateField source="last_modified" /> */}
 			{/* <TextInput source="dates" /> */}
