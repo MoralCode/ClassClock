@@ -4,7 +4,7 @@ import { fetchUtils, DataProvider } from 'ra-core';
 import ClassClockService from './classclock';
 
 import {DateTime, Interval} from 'luxon';
-import { CreateParams, DeleteManyParams, DeleteManyResult, DeleteParams, DeleteResult, GetListParams, GetManyReferenceParams, GetManyReferenceResult, RaRecord, UpdateManyParams, UpdateManyResult, UpdateParams } from 'react-admin';
+import { CreateParams, CreateResult, DeleteManyParams, DeleteManyResult, DeleteParams, DeleteResult, GetListParams, GetManyReferenceParams, GetManyReferenceResult, RaRecord, UpdateManyParams, UpdateManyResult, UpdateParams } from 'react-admin';
 
 import { stringify } from 'querystring';
 /**
@@ -148,7 +148,7 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 		).then(responses => ({ data: responses.map(response => response.json().id) }))
 	},
 
-	create: async (resource: string, params: CreateParams) =>{
+	create: async (resource: string, params: CreateParams): Promise<CreateResult> =>{
 		const token: string = await getTokenSilently();
 
 		return httpClient("POST", `${apiUrl}/${resource}`, token, {
