@@ -5,6 +5,8 @@ import ClassClockService from './classclock';
 
 import {DateTime, Interval} from 'luxon';
 import { CreateParams, DeleteManyParams, DeleteManyResult, DeleteParams, DeleteResult, GetListParams, GetManyReferenceParams, GetManyReferenceResult, RaRecord, UpdateManyParams, UpdateManyResult, UpdateParams } from 'react-admin';
+
+import { stringify } from 'querystring';
 /**
  * Maps react-admin queries to the ClassClock API
  *
