@@ -3,7 +3,7 @@ import * as types from './types';
 import configureMockStore from "redux-mock-store";
 import thunk, { ThunkDispatch } from "redux-thunk";
 import fetchMock from "fetch-mock";
-import { fakeSchoolResponse, fakeBellScheduleListResponse, bellScheduleId, fakeBellScheduleFullResponse, school, schoolId, schoolEndpoint, bellScheduleEndpoint } from "../../utils/testconstants";
+import { fakeSchoolResponse, fakeBellScheduleListResponse, bellScheduleId, fakeBellScheduleFullResponse, school, schoolId, schoolEndpoint } from "../../utils/testconstants";
 
 
 // import { ISchoolsState } from "./types";

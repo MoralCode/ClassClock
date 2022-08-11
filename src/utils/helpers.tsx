@@ -1,9 +1,8 @@
-import { DateTime, Interval } from "luxon";
+import { DateTime } from "luxon";
 import School from "../@types/school";
 //todo, replace timeComparisons with luxon Interval
 import { TimeComparisons, TimeStates } from "./enums";
 import ClassPeriod from "../@types/classperiod";
-import BellSchedule from "../@types/bellschedule";
 import { useState } from "react";
 import { RateLimitError } from "./errors";
 import Time from "../@types/time";

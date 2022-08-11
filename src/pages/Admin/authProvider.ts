@@ -1,7 +1,6 @@
 
 import { LogoutOptions } from '@auth0/auth0-react';
-import { AuthProvider, UserIdentity } from 'react-admin';
-import {Auth0, pages} from '../../utils/constants'
+import { UserIdentity } from 'react-admin';
 
 const authProvider = (
 	isAuthenticated: boolean,

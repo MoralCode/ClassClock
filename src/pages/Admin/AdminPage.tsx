@@ -6,7 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import ClassClockService from "../../services/classclock";
 import { BrowserRouter } from 'react-router-dom';
 import LoginRedirect from "./LoginRedirect";
-import { BellScheduleCreate, BellscheduleEdit, BellScheduleList, DateList, SchoolList } from "./resources";
+import { BellScheduleCreate, BellscheduleEdit, BellScheduleList } from "./resources";
 
 
 const AdminPage = () => {

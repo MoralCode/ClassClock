@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from "react-test-renderer";
-import { mockSchoolState, school } from '../../utils/testconstants';
+import { mockSchoolState } from '../../utils/testconstants';
 import { Settings } from './Settings';
 
 

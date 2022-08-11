@@ -1,4 +1,4 @@
-import React, { Component, ReactNode } from "react";
+import React from "react";
 
 interface IStopLightProps {
     color: string;

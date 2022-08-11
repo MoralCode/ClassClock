@@ -1,4 +1,4 @@
-import React, { Component, ReactNode } from "react";
+import React, { ReactNode } from "react";
 import StopLight from "./StopLight";
 
 interface IStatusIndicatorProps {

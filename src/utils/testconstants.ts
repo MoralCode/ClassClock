@@ -1,5 +1,5 @@
 // This is not actually a unit test, just a central place to hold frequently-used constants that are often reused across tests
-import { DateTime, Duration, Interval } from "luxon";
+import { DateTime } from "luxon";
 import School from "../@types/school";
 import BellSchedule from "../@types/bellschedule";
 import ClassPeriod from "../@types/classperiod";

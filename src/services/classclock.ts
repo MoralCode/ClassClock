@@ -1,5 +1,5 @@
 import BellSchedule from "../@types/bellschedule";
-import { delay, objectKeysToSnakeCase, parseRateLimitTime, promiseRetry } from "../utils/helpers";
+import { objectKeysToSnakeCase, parseRateLimitTime, promiseRetry } from "../utils/helpers";
 import { DateTime } from "luxon";
 import { RateLimitError } from "../utils/errors";
 

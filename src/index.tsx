@@ -1,12 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
-import { startListener, push, replace } from "redux-first-routing";
+import { startListener } from "redux-first-routing";
 import UniversalRouter, {Context} from "universal-router";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { Auth0, pages } from "./utils/constants";
+import { pages } from "./utils/constants";
 import { routes } from "./utils/routes";
 import { PageNotFound } from "./pages/errors/PageNotFound";
 import { ServerError } from "./pages/errors/ServerError";

@@ -10,7 +10,6 @@ import {
     REQUEST_SCHOOL_LIST
     // ISchoolsByIdState
 } from "./types";
-import School from "../../@types/school";
 
 export function selectedSchoolReducer(
     state = {

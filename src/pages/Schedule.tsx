@@ -1,18 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { push } from "redux-first-routing";
-import IPageInterface from "../utils/IPageInterface";
 
 import "../global.css";
 import School from "../@types/school";
 import { ISchoolsState } from "../store/schools/types";
 import Link from "../components/Link";
 import { pages } from "../utils/constants";
-import Icon from "../components/Icon";
 import { getCurrentDate, sortClassesByStartTime } from "../utils/helpers";
 import ClassPeriod from "../@types/classperiod";
-import ScheduleEntry from "../components/ScheduleEntry/ScheduleEntry";
-import List from "../components/List/List";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 
