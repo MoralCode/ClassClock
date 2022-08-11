@@ -81,7 +81,7 @@ export default class ClassClockService {
     }
 
     static makeAPICall = (method: string, url: string, authToken?: string, params?: object ) => {
-        return fetch(url, this.getHeaders(method, authToken, params))
+        return fetch(url, ClassClockService.getHeaders(method, authToken, params))
     }
 
     //sets up request headers for outgoing API calls
