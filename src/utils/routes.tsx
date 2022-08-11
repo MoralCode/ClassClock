@@ -5,7 +5,6 @@ import Settings from "../pages/Settings/Settings";
 import PrivateRoute from "../components/PrivateRoute";
 import SchoolSelect from "../pages/SchoolSelect";
 import { pages } from "./constants";
-import Admin from "../pages/Admin";
 import Welcome from "../pages/Welcome";
 import AdminPage from "../pages/Admin/AdminPage";
 
