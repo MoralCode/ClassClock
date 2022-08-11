@@ -22,6 +22,14 @@ export const routes = [
         action: () => <Settings />
     },
     {
+        path: pages.fullScheduleLegacy,
+        action: () => <Schedule />
+    },
+    {
+        path: pages.settingsLegacy,
+        action: () => <Settings />
+    },
+    {
         path: pages.selectSchool,
         action: () => <SchoolSelect />
     },
