@@ -2,7 +2,6 @@ import React from "react";
 import App from "../pages/App";
 import Schedule from "../pages/Schedule";
 import Settings from "../pages/Settings/Settings";
-import PrivateRoute from "../components/PrivateRoute";
 import SchoolSelect from "../pages/SchoolSelect";
 import { pages } from "./constants";
 import Welcome from "../pages/Welcome";

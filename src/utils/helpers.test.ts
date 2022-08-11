@@ -1,15 +1,11 @@
-
 import {
     getValueIfKeyInList,
     sortClassesByStartTime,
     getTimeStateForDateAtSchool,
     checkTimeRange
 } from "./helpers";
-import ClassPeriod from "../@types/classperiod";
-import { classPeriod2, classPeriod, beforeSchoolHours, school, betweenClass, inClass, noSchool, afterSchoolHours, bellScheduleClasses, duringClass, startTime, endTime, startTime2, beforeClass, endTime2, afterClass } from "./testconstants";
+import { beforeSchoolHours, school, betweenClass, inClass, noSchool, afterSchoolHours, bellScheduleClasses, duringClass, startTime, endTime, startTime2, beforeClass, endTime2, afterClass } from "./testconstants";
 import { TimeStates, TimeComparisons } from "./enums";
-import Time from "../@types/time";
-
 
 test("get value if key in list", () => {
     const object1 = { value1: "foo" };

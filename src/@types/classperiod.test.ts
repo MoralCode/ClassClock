@@ -1,8 +1,4 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import BellSchedule from "./bellschedule";
 import ClassPeriod from "./classperiod";
-import Time from "./time";
 import { TimeComparisons } from "../utils/enums";
 import { classPeriod, className, startTime, endTime, classDuration, beforeClass, afterClass, duringClass, classPeriodJSON, currentDate, classPeriodJSONISO } from "../utils/testconstants";
 

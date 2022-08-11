@@ -1,4 +1,3 @@
-import { property } from "lodash"
 import Link, { ILinkProps } from "./Link"
 
 

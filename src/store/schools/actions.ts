@@ -13,7 +13,6 @@ import {
 import { Dispatch } from "redux";
 import ClassClockService from "../../services/classclock";
 import School from "../../@types/school";
-import BellSchedule from "../../@types/bellschedule";
 import { DateTime } from "luxon";
 
 function requestSchool(): SchoolActionTypes {

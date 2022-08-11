@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { push } from "redux-first-routing";
 import "../global.css";

@@ -1,5 +1,5 @@
 import BellSchedule from "./bellschedule";
-import { bellSchedule as schedule, bellScheduleJSON, classPeriod, bellScheduleEndpoint, bellScheduleName, bellScheduleDisplayName, bellScheduleId, startTimeDT, beforeClassDT, duringClassDT, endTimeDT, afterClassDT, bellScheduleClasses, schoolTimezone, betweenClass } from "../utils/testconstants";
+import { bellSchedule as schedule, bellScheduleJSON, classPeriod, bellScheduleEndpoint, bellScheduleName, bellScheduleId, startTimeDT, beforeClassDT, duringClassDT, endTimeDT, afterClassDT, bellScheduleClasses, schoolTimezone, betweenClass } from "../utils/testconstants";
 import { DateTime } from "luxon";
 
 describe("BellSchedule", () => {

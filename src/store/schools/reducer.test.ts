@@ -1,6 +1,6 @@
 import { selectedSchoolReducer } from "./reducer";
 import * as types from "./types";
-import { schoolJSON, school } from "../../utils/testconstants";
+import { school } from "../../utils/testconstants";
 
 describe("school reducer", () => {
 

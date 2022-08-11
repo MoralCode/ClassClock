@@ -1,6 +1,6 @@
 // in src/LoginRedirect.js
 import React, { useState } from 'react';
-import { useLogin, useNotify, Notification, defaultTheme } from 'react-admin';
+import { useLogin, useNotify } from 'react-admin';
 import { useAuth0 } from '@auth0/auth0-react';
 import {pages} from "../../utils/constants";
 

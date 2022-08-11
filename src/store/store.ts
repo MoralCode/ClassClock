@@ -9,7 +9,6 @@ import logger from "redux-logger";
 import { selectedSchoolReducer, fetchErrorReducer, schoolListReducer } from "./schools/reducer";
 import SchoolTransform from "../utils/typetransform";
 import { userSettingsReducer } from "./usersettings/reducer";
-import ClassClockService from "../services/classclock";
 
 
 // Create the history object

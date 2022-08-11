@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from "react-test-renderer";
 import { App } from './App';
-import { school, beforeSchoolHours, noSchool, inClass, betweenClass, afterSchoolHours, mockSchoolState } from '../utils/testconstants';
+import { beforeSchoolHours, noSchool, inClass, betweenClass, afterSchoolHours, mockSchoolState } from '../utils/testconstants';
 import MockDate from 'mockdate';
 
 // make a fake dispatch function, it doesnt need to do anything, because we assume that has already been tested in the redux library
