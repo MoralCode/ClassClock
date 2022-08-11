@@ -145,7 +145,7 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 					body: JSON.stringify(params.data),
 				})
 			)
-		).then(responses => ({ data: responses.map(response => response.json().id) }))
+		).then(responses => ({ data: responses.map(response => response.json()) }))
 	},
 
 	create: async (resource: string, params: CreateParams): Promise<CreateResult> =>{
@@ -154,7 +154,7 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 		return httpClient("POST", `${apiUrl}/${resource}`, token, {
 			body: JSON.stringify(params.data),
 		}).then( response => ({
-			data: { ...params.data, id: response.json().id },
+			data: response.json(),
 		}))
 	},
 
@@ -172,6 +172,6 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 			params.ids.map(id =>
 				httpClient("DELETE", `${apiUrl}/${resource}/${id}`, token)
 			)
-		).then(responses => ({ data: responses.map(({ json }) => json.id) }))
+		).then(responses => ({ data: responses.map((response) => response.json()) }))
 	},
 });
