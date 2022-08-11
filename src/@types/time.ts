@@ -116,8 +116,8 @@ export default class Time {
         //is storing the time as a DateTime internally just super overkill?
         // probably to allow conversion later?
         let timeObj = {
-            hour: Math.abs(hours % 24),
-            minute: Math.abs(minutes % 60),
+            hour: Math.abs((hours || 0) % 24),
+            minute: Math.abs((minutes || 0) % 60),
             second: Math.abs((seconds || 0) % 60)
         }
         return new Time(Duration.fromObject(timeObj).shiftTo("hours", "minutes", "seconds"))
