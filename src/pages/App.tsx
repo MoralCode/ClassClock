@@ -174,7 +174,7 @@ export const App = (props: IAppProps) => {
                 // tslint:disable-next-line: jsx-no-lambda
                 destination={() => navigate(pages.settings)}
             >
-                <FontAwesomeIcon icon={faCog} />
+                <FontAwesomeIcon icon={"cog"} />
             </Link>
             <br />
             <Block>
