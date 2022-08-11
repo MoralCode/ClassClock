@@ -97,7 +97,7 @@ export const Settings = (props: ISettingProps) => {
                 // tslint:disable-next-line: jsx-no-lambda
                 destination={() => navigate(pages.main)}
             >
-                <FontAwesomeIcon icon={"home"} />
+                <FontAwesomeIcon icon={faHome} />
             </Link>
 
             <h1>Settings</h1>
@@ -132,22 +132,22 @@ export const Settings = (props: ISettingProps) => {
             <ul className="footer__social">
                 <li>
                     <Link destination={URLs.github}>
-                        <FontAwesomeIcon icon={"github"} />
+                        <FontAwesomeIcon icon={faGithub} />
                     </Link>
                 </li>
                 <li>
                     <Link destination={URLs.twitter}>
-                        <FontAwesomeIcon icon={"twitter"} />
+                        <FontAwesomeIcon icon={faTwitter} />
                     </Link>
                 </li>
                 <li>
                     <Link destination={URLs.instagram}>
-                        <FontAwesomeIcon icon={"instagram"} />
+                        <FontAwesomeIcon icon={faInstagram} />
                     </Link>
                 </li>
                 <li>
                     <Link destination={URLs.discord}>
-                        <FontAwesomeIcon icon={"discord"} />
+                        <FontAwesomeIcon icon={faDiscord} />
                     </Link>
                 </li>
             </ul>

@@ -82,7 +82,7 @@ export const Schedule = (props: IAppProps) => {
                 // tslint:disable-next-line: jsx-no-lambda
                 destination={() => props.dispatch(push(pages.main))}
             >
-                <FontAwesomeIcon icon={"home"} />
+                <FontAwesomeIcon icon={faHome} />
             </Link>
             <br />
             <p style={{ fontSize: "30px" }}>
