@@ -4,6 +4,7 @@ import { fetchUtils, DataProvider } from 'ra-core';
 import ClassClockService from './classclock';
 
 import {DateTime, Interval} from 'luxon';
+import { CreateParams, DeleteManyParams, DeleteManyResult, DeleteParams, DeleteResult, GetListParams, GetManyReferenceParams, GetManyReferenceResult, RaRecord, UpdateManyParams, UpdateManyResult, UpdateParams } from 'react-admin';
 /**
  * Maps react-admin queries to the ClassClock API
  *
@@ -36,7 +37,7 @@ import {DateTime, Interval} from 'luxon';
  * export default App;
  */
 export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) => Promise<string>, httpClient = ClassClockService.makeAPICall): DataProvider => ({
-	getList: async (resource, params) => {
+	getList: async (resource: string, params:GetListParams) => {
 		// const { page, perPage } = params.pagination;
 		// const { field, order } = params.sort;
 		// const query = {
@@ -68,7 +69,7 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 		);
 	},
 
-	getOne: async (resource, params) =>{
+	getOne: async (resource: string, params) =>{
 		const token: string = await getTokenSilently()
 		return httpClient("GET", `${apiUrl}/${resource}/${params.id}`, token)
 			.then(async response => response.json())
@@ -86,7 +87,7 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 			});
 	},
 	//make separate queries for each item because the classclock API doesnt support getting a specific set at once
-	getMany: async (resource, params) => {
+	getMany: async (resource: string, params) => {
 		const token: string = await getTokenSilently();
 		return Promise.all(
 			params.ids.map(id => {
@@ -98,7 +99,7 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 			({ data: responses.map((item) => item.data) }))
 	},
 
-	getManyReference: (resource, params) => {
+	getManyReference: async (resource: string, params: GetManyReferenceParams): Promise<GetManyReferenceResult> => {
 		const { page, perPage } = params.pagination;
 		const { field, order } = params.sort;
 		const query = {
@@ -111,23 +112,16 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 		};
 		const url = `${apiUrl}/${resource}s?${stringify(query)}`;
 
-		return httpClient(url).then(({ headers, json }) => {
-			if (!headers.has('x-total-count')) {
-				throw new Error(
-					'The X-Total-Count header is missing in the HTTP Response. The jsonServer Data Provider expects responses for lists of resources to contain this header with the total number of results to build the pagination. If you are using CORS, did you declare X-Total-Count in the Access-Control-Expose-Headers header?'
-				);
-			}
-			return {
-				data: json,
-				total: parseInt(
-					headers.get('x-total-count').split('/').pop(),
-					10
-				),
-			};
-		});
+		const response = await httpClient("GET", url);
+		if (!response.headers.has('x-total-count')) {
+			throw new Error(
+				'The X-Total-Count header is missing in the HTTP Response. The jsonServer Data Provider expects responses for lists of resources to contain this header with the total number of results to build the pagination. If you are using CORS, did you declare X-Total-Count in the Access-Control-Expose-Headers header?'
+			);
+		}
+		return await response.json();
 	},
 
-	update: async (resource, params) => {
+	update: async (resource: string, params: UpdateParams) => {
 		const token: string = await getTokenSilently();
 
 		if (resource === 'bellschedule') {
@@ -141,9 +135,9 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 	},
 
 	// json-server doesn't handle filters on UPDATE route, so we fallback to calling UPDATE n times instead
-	updateMany: async (resource, params) =>{
+	updateMany: async (resource: string, params: UpdateManyParams): Promise<UpdateManyResult> =>{
 		const token: string = await getTokenSilently();
-		Promise.all(
+		return Promise.all(
 			params.ids.map(id =>
 				httpClient("PATCH", `${apiUrl}/${resource}/${id}`, token, {
 					body: JSON.stringify(params.data),
@@ -152,7 +146,7 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 		).then(responses => ({ data: responses.map(response => response.json().id) }))
 	},
 
-	create: async (resource, params) =>{
+	create: async (resource: string, params: CreateParams) =>{
 		const token: string = await getTokenSilently();
 
 		return httpClient("POST", `${apiUrl}/${resource}`, token, {
@@ -162,17 +156,17 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 		}))
 	},
 
-	delete: async (resource, params) =>{
+	delete: async (resource: string, params: DeleteParams): Promise<DeleteResult> =>{
 		const token: string = await getTokenSilently();
 
 		return httpClient("DELETE", `${apiUrl}/${resource}/${params.id}`, token).then(({ json }) => ({ data: json }))
 	},
 
 	// json-server doesn't handle filters on DELETE route, so we fallback to calling DELETE n times instead
-	deleteMany: async (resource, params) =>{
+	deleteMany: async (resource: string, params: DeleteManyParams): Promise<DeleteManyResult> =>{
 		const token: string = await getTokenSilently();
 
-		Promise.all(
+		return Promise.all(
 			params.ids.map(id =>
 				httpClient("DELETE", `${apiUrl}/${resource}/${id}`, token)
 			)
