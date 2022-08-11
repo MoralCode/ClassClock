@@ -96,5 +96,9 @@
         "tslint": "^5.18.0",
         "tslint-config-prettier": "^1.18.0",
         "tslint-react": "^4.0.0"
+    },
+    "resolutions": {
+        "@types/react": "^16.9.2",
+        "@types/react-dom": "^16.9.2"
     }
 }
