@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
-import { startListener } from "redux-first-routing";
 import UniversalRouter, {Context} from "universal-router";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -12,6 +11,25 @@ import { PageNotFound } from "./pages/errors/PageNotFound";
 import { ServerError } from "./pages/errors/ServerError";
 import {history, configuredStore} from "./store/store";
 import Auth0ProviderWithHistory from "./services/auth0-provider-with-history";
+import { Store } from "redux";
+import { History, BrowserHistory, Update } from "history";
+import { locationChange } from "redux-first-routing";
+
+function startListener(history: History, store:Store) {
+    store.dispatch(locationChange({
+        pathname: history.location.pathname,
+        search: history.location.search,
+        hash: history.location.hash,
+    }));
+
+    history.listen((update: Update) => {
+        store.dispatch(locationChange({
+            pathname: update.location.pathname,
+            search: update.location.search,
+            hash: update.location.hash,
+        }));
+    });
+}
 
 
 // Start the history listener, which automatically dispatches actions to keep the store in sync with the history
