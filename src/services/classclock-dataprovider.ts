@@ -153,9 +153,7 @@ export default (apiUrl: string, getTokenSilently: (o?: GetTokenSilentlyOptions) 
 
 		return httpClient("POST", `${apiUrl}/${resource}`, token, {
 			body: JSON.stringify(params.data),
-		}).then( response => ({
-			data: response.json(),
-		}))
+		}).then( response => response.json())
 	},
 
 	delete: async (resource: string, params: DeleteParams): Promise<DeleteResult> =>{
