@@ -10,7 +10,7 @@ const authProvider = (
 ) => ({
 	login: () => {
 		console.log("login")
-		return (isAuthenticated && loading == false ? Promise.resolve() : Promise.reject())
+		return (isAuthenticated && loading === false ? Promise.resolve() : Promise.reject())
 	},
 	// TODO: maybe use login: () => Promise.resolve(),//unused because login is handled by auth0
 	logout: () => {
@@ -19,7 +19,7 @@ const authProvider = (
 			// TODO: is this needed?
 			//federated: true // have to be enabled to invalidate refresh token
 		)
-		return (isAuthenticated && loading == false ? Promise.reject() : Promise.resolve())
+		return (isAuthenticated && loading === false ? Promise.reject() : Promise.resolve())
 	},
 	checkError: ({ status }: {status:number}) => {
 		console.log("checkError")
