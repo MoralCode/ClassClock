@@ -73,7 +73,6 @@
         "@types/react-dom": "^16.9.0",
         "@types/react-redux": "^7.1.0",
         "@types/react-test-renderer": "^16.9.0",
-        "@types/redux-first-routing": "^0.3.0",
         "@types/redux-logger": "^3.0.7",
         "@types/redux-mock-store": "^1.0.3",
         "fetch-mock": "^8.1.0",

@@ -2117,11 +2117,6 @@
   dependencies:
     "@types/node" "*"
 
-"@types/history@^4.7.11":
-  version "4.7.11"
-  resolved "https://registry.yarnpkg.com/@types/history/-/history-4.7.11.tgz#56588b17ae8f50c53983a524fc3cc47437969d64"
-  integrity sha512-qjDJRrmvBMiTx+jyLxvLfJU7UznFuokDv4f3WRuriHKERccVpFU+8XMQUAbDzoiJCsmexxRExQeMwwCdamSKDA==
-
 "@types/hoist-non-react-statics@^3.3.0":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
@@ -2287,14 +2282,6 @@
     "@types/prop-types" "*"
     "@types/scheduler" "*"
     csstype "^3.0.2"
-
-"@types/redux-first-routing@^0.3.0":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@types/redux-first-routing/-/redux-first-routing-0.3.1.tgz#dacd4f09bebea8c69c02b1fd4f82768ccca762c8"
-  integrity sha512-hFvtR1JmcxVossahUT1xB4afU4q3Kfo45inDpF8RCtVp5CVrTYlTf4RMER1CZU2VVu81z36oTM4lEskikR2/3g==
-  dependencies:
-    "@types/history" "^4.7.11"
-    redux "^4.0.0"
 
 "@types/redux-logger@^3.0.7":
   version "3.0.9"
