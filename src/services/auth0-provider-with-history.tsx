@@ -43,7 +43,7 @@ const Auth0ProviderWithHistory = ({ children }: {children: React.ReactElement}) 
 			audience = { Auth0.audience }
 			redirectUri = {redirectCallbackUrl}
 			onRedirectCallback = { onRedirectCallback }
-
+			cacheLocation={"localstorage"}
 		>
 			{ children }
 		</Auth0Provider>
