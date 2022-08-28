@@ -34,6 +34,12 @@ export const App = (props: IAppProps) => {
         props.dispatch(push(to));
     };
 
+    const updateConnectionState = () => {
+        ClassClockService.isReachable().then((reachable) => {
+            setConnected(reachable)
+        })
+    }
+
     useEffect(() => {
         const timingInterval: NodeJS.Timeout = setInterval(() => {
             setDate(getCurrentDate());
@@ -69,11 +75,6 @@ export const App = (props: IAppProps) => {
 
     const currentSchedule = props.selectedSchool.data.getScheduleForDate(currentDate);
     const schoolTimezone = props.selectedSchool.data.getTimezone();
-    const updateConnectionState = () => {
-        ClassClockService.isReachable().then((reachable) => {
-            setConnected(reachable)
-        })
-    }
 
     const getContent = () => {
         switch (currentSchedule) {
