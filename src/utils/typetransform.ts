@@ -20,7 +20,7 @@ const SchoolTransform = createTransform(
         };
     },
     // define which reducers this transform gets called for.
-    { whitelist: ["selectedSchoolReducer"] }
+    { whitelist: ["selectedSchool"] }
 );
 
 export default SchoolTransform;
