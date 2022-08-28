@@ -92,7 +92,6 @@ export const Schedule = (props: IAppProps) => {
 
 const mapStateToProps = (state: ISchoolsState) => {
     const { selectedSchool } = state;
-    selectedSchool.data = School.fromJson(selectedSchool.data);
     return { selectedSchool };
 };
 

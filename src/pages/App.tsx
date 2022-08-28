@@ -202,7 +202,6 @@ export const App = (props: IAppProps) => {
 
 const mapStateToProps = (state: ISchoolsState & ISettingsState & {error: string}) => {
     const { selectedSchool, userSettings, error } = state;
-    selectedSchool.data = School.fromJson(selectedSchool.data);
     return { selectedSchool, userSettings, error };
 };
 

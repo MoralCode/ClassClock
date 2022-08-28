@@ -144,7 +144,7 @@ const mapStateToProps = (state: ISchoolsState & ISettingsState & {error: string}
     const { selectedSchool, userSettings, error } = state;
     return {
         selectedSchool: Object.assign({}, selectedSchool, {
-            data: School.fromJson(selectedSchool.data)
+            data: selectedSchool.data
         }),
         userSettings,
         error
