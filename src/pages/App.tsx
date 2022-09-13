@@ -73,6 +73,11 @@ export const App = (props: IAppProps) => {
     });
     window.addEventListener('offline', () => {setOnline(false)});
 
+    //If this is not present here, then there will be an error when the next lines run in the event data is being fetched and there is no stored school.
+    // this guards against trying to call a function on an empty data object which may be present if the school is being fetched for the first time.
+    if (props.selectedSchool.isFetching) {
+        return <p>Fetching...</p>
+    }
     const currentSchedule = props.selectedSchool.data.getScheduleForDate(currentDate);
     const schoolTimezone = props.selectedSchool.data.getTimezone();
 
