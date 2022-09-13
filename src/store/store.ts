@@ -26,16 +26,8 @@ const persistConfig = {
 export const configureStore = (hist: any, initialState = {}) => {
     // Add the reducer, which adds location state to the store
     const rootReducer = combineReducers({
-        selectedSchool: persistReducer({
-            key: "selectedSchool",
-            storage,
-            blacklist: ["isFetching"]
-        }, selectedSchoolReducer),
-        schoolList: persistReducer({
-            key: "schoolList",
-            storage,
-            blacklist: ["isFetching"]
-        },schoolListReducer),
+        selectedSchool: selectedSchoolReducer,
+        schoolList: schoolListReducer,
         userSettings: userSettingsReducer,
         error: fetchErrorReducer,
         router: routerReducer // Convention is to use the "router" property
