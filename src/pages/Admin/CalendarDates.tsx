@@ -113,8 +113,23 @@ const CalendarDates = (props:CalendarDatesProps) => {
 				moveDate(info.event.extendedProps.schedule_id, undefined, info.event.startStr)
 			}}
 			eventClick={(arg:EventClickArg) => {
-				moveDate(arg.event.extendedProps.schedule_id, arg.event.startStr, undefined)
-				arg.event.remove()
+				//color the event red for a set amount of time
+				// if clicked during this time, delete the event
+				// otherwise change the color back
+				let origBG = arg.el.style.backgroundColor;
+				let origOnclick = arg.el.onclick;
+				arg.el.style.backgroundColor = 'red';
+
+				arg.el.onclick = () => {
+					moveDate(arg.event.extendedProps.schedule_id, arg.event.startStr, undefined)
+					arg.event.remove()
+				}
+				setTimeout(() => {
+					arg.el.style.backgroundColor = origBG;
+					arg.el.onclick = origOnclick;
+				}, 2500);
+
+				
 			}}
 			eventChange={(arg: EventChangeArg) => {
 				moveDate(arg.event.extendedProps.schedule_id, arg.oldEvent.startStr, arg.event.startStr)
