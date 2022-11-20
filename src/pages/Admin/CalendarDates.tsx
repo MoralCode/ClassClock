@@ -55,6 +55,8 @@ const CalendarDates = (props:CalendarDatesProps) => {
 
 
 
+	/// This moves the date in ClassClock's representation of the dates 
+	///
 	/// This is effectively a remove followed by an add.
 	/// it's combined into one for efficiency when things get moved.
 	/// if both source_date_str and destination_date_str are provided, this function will remove the source and add the destination.
