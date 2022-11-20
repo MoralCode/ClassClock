@@ -5,10 +5,11 @@ import {
 	useResourceContext
 } from 'react-admin';
 import { DateTime } from 'luxon';
-import FullCalendar, { EventApi, EventChangeArg, EventClickArg, EventSourceInput } from '@fullcalendar/react';
+import FullCalendar, { EventApi, EventChangeArg, EventClickArg, EventDropArg, EventSourceInput } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import React from 'react';
 
 interface CalendarDatesProps { 
 	[key: string]: any; //https://bobbyhadz.com/blog/react-typescript-pass-object-as-props, this probably allows other props to be passed down
@@ -30,6 +31,8 @@ const CalendarDates = (props:CalendarDatesProps) => {
 	const resource = useResourceContext();
 	const {title, recordTransformer, fromDate, toDate, children, ...rest } = props; 
 	const [draggableInitialized, setDraggableInitialized] = useState(false)
+
+	const calendarRef: React.MutableRefObject<FullCalendar|null> = useRef(null);
 
 	useEffect(() => {
 		// const elements = document.getElementsByClassName('draggableEvents')
@@ -103,6 +106,7 @@ const CalendarDates = (props:CalendarDatesProps) => {
 	return <FullCalendar
 			plugins={[interactionPlugin, dayGridPlugin]}
 			initialView="dayGridMonth"
+			ref={calendarRef}
 			events={events}
 			editable={true}
 			droppable={true}
@@ -133,6 +137,19 @@ const CalendarDates = (props:CalendarDatesProps) => {
 			}}
 			eventChange={(arg: EventChangeArg) => {
 				moveDate(arg.event.extendedProps.schedule_id, arg.oldEvent.startStr, arg.event.startStr)
+			}}
+			eventDrop={(arg: EventDropArg) => {
+				const calref = calendarRef.current;
+				var eClone = {
+					title: arg.oldEvent.title,
+					start: arg.oldEvent.startStr,
+				}
+				if (calref) {
+					const api = calref.getApi()
+					api.addEvent(eClone)
+					moveDate(arg.event.extendedProps.schedule_id, arg.event.startStr, undefined)
+				}
+				
 			}}
 			//see https://stackoverflow.com/a/73015507, this may not be the best solution
 			eventsSet={(arg: EventApi[]) => {
