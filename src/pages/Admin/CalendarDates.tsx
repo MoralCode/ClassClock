@@ -147,7 +147,7 @@ const CalendarDates = (props:CalendarDatesProps) => {
 				if (calref) {
 					const api = calref.getApi()
 					api.addEvent(eClone)
-					moveDate(arg.event.extendedProps.schedule_id, arg.event.startStr, undefined)
+					moveDate(arg.event.extendedProps.schedule_id, undefined, arg.oldEvent.startStr)
 				}
 				
 			}}
