@@ -1,4 +1,4 @@
-![ClassClock Icon](./icons/classclockicon-512.png)
+![ClassClock Icon](./public/icons/classclockicon-512.png)
 
 # ClassClock
 
