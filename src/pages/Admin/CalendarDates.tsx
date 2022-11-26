@@ -136,7 +136,8 @@ const CalendarDates = (props:CalendarDatesProps) => {
 				
 			}}
 			eventChange={(arg: EventChangeArg) => {
-				moveDate(arg.event.extendedProps.schedule_id, arg.oldEvent.startStr, arg.event.startStr)
+				//this is called when an existing event changes on the calendar
+				moveDate(arg.event.extendedProps.schedule_id, undefined, arg.event.startStr)
 			}}
 			eventDrop={(arg: EventDropArg) => {
 				const calref = calendarRef.current;
@@ -147,7 +148,6 @@ const CalendarDates = (props:CalendarDatesProps) => {
 				if (calref) {
 					const api = calref.getApi()
 					api.addEvent(eClone)
-					moveDate(arg.event.extendedProps.schedule_id, undefined, arg.oldEvent.startStr)
 				}
 				
 			}}
