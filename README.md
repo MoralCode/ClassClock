@@ -58,4 +58,4 @@ ClassClock is a web-based app that can be saved to your phone's home screen or b
 
 ### Environment Variables
 
-SENTRY_DSN - if you want to use sentry for monititoring errors, provide your DSN value from the sentry app so ClassClock knows where to send error information
+REACT_APP_SENTRY_DSN - if you want to use sentry for monititoring errors, provide your DSN value from the sentry app so ClassClock knows where to send error information
