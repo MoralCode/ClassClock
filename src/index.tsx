@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import * as Sentry from "@sentry/react";
+import { BrowserTracing } from "@sentry/tracing";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import UniversalRouter, {Context} from "universal-router";
@@ -14,6 +16,18 @@ import Auth0ProviderWithHistory from "./services/auth0-provider-with-history";
 import { Store } from "redux";
 import { History, BrowserHistory, Update } from "history";
 import { locationChange } from "redux-first-routing";
+
+if (process.env.SENTRY_DSN && process.env.SENTRY_DNS != "") {
+    Sentry.init({
+        dsn: process.env.SENTRY_DSN,
+        integrations: [new BrowserTracing()],
+
+        // Set tracesSampleRate to 1.0 to capture 100%
+        // of transactions for performance monitoring.
+        // We recommend adjusting this value in production
+        tracesSampleRate: 1.0,
+    });
+}
 
 function startListener(history: History, store:Store) {
     store.dispatch(locationChange({
