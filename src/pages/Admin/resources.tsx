@@ -1,5 +1,5 @@
 import React from "react";
-import {ArrayField, ArrayInput, ChipField, Create, Datagrid, DateField, Edit, List, RaRecord, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleFormIterator, SingleFieldList, TextField, TextInput, useRecordContext } from "react-admin";
+import {ArrayField, ArrayInput, ChipField, Create, Datagrid, DateField, Edit, List, RaRecord, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleFormIterator, SingleFieldList, TextField, TextInput, useRecordContext, maxLength } from "react-admin";
 import CalendarDates from "./CalendarDates";
 import { DateTime, Duration } from 'luxon';
 import { EventInput } from '@fullcalendar/react';
@@ -112,12 +112,15 @@ export const DateList = (props: any) => (
 	</CalendarDates>
 );
 
+const validateBellScheduleName = [maxLength(75)];
+const validateBellScheduleDisplayName = [maxLength(20)];
+
 export const BellscheduleEdit = (props: any) => (
 	<Edit {...props}>
 		<SimpleForm>
-			<TextInput source="name" />
+			<TextInput source="name" validate={validateBellScheduleName} />
 			{/* <TextField source="id" /> */}
-			<TextInput source="display_name" />
+			<TextInput source="display_name" validate={validateBellScheduleDisplayName} />
 			{/* <DateField source="last_modified" /> */}
 			{/* <TextInput source="dates" /> */}
 			<ArrayInput source="meeting_times">
@@ -143,9 +146,9 @@ export const BellscheduleEdit = (props: any) => (
 export const BellScheduleCreate = (props: any) => (
 	<Create {...props}>
 		<SimpleForm>
-			<TextInput source="name" />
+			<TextInput source="name" validate={validateBellScheduleName} />
 			{/* <TextField source="id" /> */}
-			<TextInput source="display_name" />
+			<TextInput source="display_name" validate={validateBellScheduleDisplayName} />
 			<ReferenceInput label="School" source="school_id" reference="school">
 				<SelectInput optionText="full_name" />
 			</ReferenceInput>
