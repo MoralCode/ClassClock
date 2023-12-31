@@ -1,5 +1,5 @@
 import React from "react";
-import {ArrayField, ArrayInput, ChipField, Create, Datagrid, DateField, Edit, List, RaRecord, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleFormIterator, SingleFieldList, TextField, TextInput, useRecordContext, maxLength } from "react-admin";
+import { ArrayField, ArrayInput, ChipField, Create, Datagrid, DateField, Edit, List, RaRecord, ReferenceField, ReferenceInput, SelectInput, SimpleForm, SimpleFormIterator, SingleFieldList, TextField, TextInput, useRecordContext, maxLength, required } from "react-admin";
 import CalendarDates from "./CalendarDates";
 import { DateTime, Duration } from 'luxon';
 import { EventInput } from '@fullcalendar/react';
@@ -159,9 +159,9 @@ export const BellScheduleCreate = (props: any) => (
 					{/* <ReferenceInput source="bell_schedule_id" reference="bellschedule">
 						<SelectInput optionText="id" />
 					</ReferenceInput> */}
-					<TextInput source="name" label="Name" />
-					<TextInput source="start_time" label="Start Time" />
-					<TextInput source="end_time" label="End Time" />
+					<TextInput source="name" label="Name" validate={[required()]} />
+					<TextInput source="start_time" label="Start Time" validate={[required()]} />
+					<TextInput source="end_time" label="End Time" validate={[required()]} />
 				</SimpleFormIterator>
 			</ArrayInput>
 			
