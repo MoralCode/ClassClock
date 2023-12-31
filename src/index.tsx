@@ -19,7 +19,7 @@ import { locationChange } from "redux-first-routing";
 
 if (process.env.REACT_APP_SENTRY_DSN && process.env.REACT_APP_SENTRY_DSN != "") {
     Sentry.init({
-        dsn: process.env.REACT_APP_SENTRY_DSN,//"https://3fee246f78dd4398a45679c0f54da03a@o425534.ingest.sentry.io/5362584",//
+        dsn: process.env.REACT_APP_SENTRY_DSN,
         integrations: [new BrowserTracing()],
 
         // Set tracesSampleRate to 1.0 to capture 100%
