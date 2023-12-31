@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { push } from "redux-first-routing";
 import "../global.css";
@@ -8,6 +8,7 @@ import { pages } from "../utils/constants";
 import { ISchoolListState, SchoolListState } from "../store/schools/types";
 import SelectionList from "../components/SelectionList/SelectionList";
 import { DateTime } from "luxon";
+import Link from "../components/Link";
 
 export interface ISelectProps {
     schoolList: SchoolListState;
@@ -69,24 +70,18 @@ const SchoolSelect = (props: ISelectProps) => {
         })
     }
 
-    schoolList?.push(
-        <li key={"nominate"}
-        style={{marginTop: "2em", textAlign: "center"}}
-        onClick={() => {
-            window.open("https://form.jotform.com/200374910475049")
-        }}
-        >
-            <span className="schoolAcronym"><i className="fas fa-vote-yea"></i></span>
-            <br />
-            <span className="schoolName">Nominate your school</span>
-
-        </li>
-    )
-
+    
     return (
-        <SelectionList title="Please select a school" loading={isFetching()} error={props.error} className="centeredWidth" >
-            {schoolList}    
-        </SelectionList>
+        <>
+            <h2>Please select a school</h2>
+            <p>Can't find your school? <Link key={"nominate"}
+                // style={{ marginTop: "2em", textAlign: "center", verticalAlign: "middle" }}
+                destination="https://form.jotform.com/200374910475049"
+            >Nominate it!</Link></p>
+            <SelectionList loading={isFetching()} error={props.error} className="centeredWidth" >
+                {schoolList}    
+            </SelectionList>
+        </>
     );
 };
 

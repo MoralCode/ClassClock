@@ -1,11 +1,11 @@
-import { DateTime, Interval } from "luxon";
+import { DateTime } from "luxon";
 import School from "../@types/school";
 //todo, replace timeComparisons with luxon Interval
 import { TimeComparisons, TimeStates } from "./enums";
 import ClassPeriod from "../@types/classperiod";
-import BellSchedule from "../@types/bellschedule";
 import { useState } from "react";
 import { RateLimitError } from "./errors";
+import Time from "../@types/time";
 
 //https://stackoverflow.com/a/55862077
 export const useForceUpdate = () => {
@@ -62,7 +62,7 @@ export function getCurrentDate() {
 }
 
 export function sortClassesByStartTime(classes: ClassPeriod[]) {
-    return classes.sort((a, b) => a.getStartTime().diff(b.getStartTime()).get("milliseconds"));
+    return classes.sort((a, b) => b.getStartTime().getMillisecondsTo(a.getStartTime()));
 }
 
 /**
@@ -76,7 +76,7 @@ export function getTimeStateForDateAtSchool(date: DateTime, school: School) {
         return TimeStates.DAY_OFF;
     }
 
-    const currentClassPeriod = currentBellSchedule.getClassPeriodForTime(date);
+    const currentClassPeriod = currentBellSchedule.getClassPeriodForTime(date, school.getTimezone());
 
     //it is a school day but it is not school hours
     if (!school.isInSession(date)) {
@@ -84,7 +84,7 @@ export function getTimeStateForDateAtSchool(date: DateTime, school: School) {
     }
 
     //the current time lies between the start of the first schedules class and the end of the last
-    else if (school.isInSession(date) && !currentClassPeriod) {
+    else if (school.isInSession(date) && currentClassPeriod === undefined) {
         return TimeStates.SCHOOL_IN_CLASS_OUT;
     }
 
@@ -100,40 +100,25 @@ export function getTimeStateForDateAtSchool(date: DateTime, school: School) {
  *
  * @param {*} checkTime the time that the check results are returned for
  * @param {*} startTime the start time of the range to check
- * @param {*} endTimethe the end time of the range to check
+ * @param {*} endTime the end time of the range to check
  *
  * @returns -1 if checkTime is before range, 0 if checkTime is within range, 1 if checkTime is after range
  */
-export function checkTimeRange(checkTime: DateTime, startTime: DateTime, endTime: DateTime, ignoreDate = false) {
+export function checkTimeRange(checkTime: Time, startTime: Time, endTime: Time): TimeComparisons {
 
-    if (ignoreDate){
-        const day = {
-            year: checkTime.get("year"),
-            month: checkTime.get("month"),
-            day: checkTime.get("day")
-        }
-        startTime = startTime.set(day)
-        endTime = endTime.set(day)
+    // swap the values if startTime is after end time
+    if (startTime.isAfter(endTime)) {
+        let t = startTime
+        startTime = endTime
+        endTime = t
     }
 
-    const interval = Interval.fromDateTimes(startTime,endTime)
-   
-    // if (startTime.getMillisecondsTo(endTime) <= 0) {
-    //     //theres a problem
-    // }
-    // const startCheck = checkTime.getMillisecondsTo(startTime);
-    // const endCheck = checkTime.getMillisecondsTo(endTime);
-
-    if (checkTime.hasSame(startTime, 'second') || checkTime.hasSame(endTime, 'second')){
-        return TimeComparisons.IS_DURING_OR_EXACTLY;
-    }
-
-    if (interval.isAfter(checkTime)) {
+    if (checkTime.isBefore(startTime)) {
         return TimeComparisons.IS_BEFORE;
-    } else if (interval.isBefore(checkTime)) {
+    } else if (checkTime.isAfter(endTime)) {
         return TimeComparisons.IS_AFTER;
     } else {
-        return TimeComparisons.IS_DURING_OR_EXACTLY;
+        return TimeComparisons.IS_DURING_OR_EXACTLY
     }
 }
 
@@ -213,18 +198,4 @@ export function parseRateLimitTime(response: Response) {
         secondsToWait = (date.getTime() - now.getTime())/1000
     }
     return secondsToWait
-}
-
-/**
- * returns dt2 with its day, month, and year values updated to match dt1
- * @param dt1 the datetime to match the dates to
- * @param dt2 the datetime to set the date of
- * @returns An array of two datetimes [dt1, dt2] with dates matching each other and times matching the parameters they are based on
- */
-export const matchDates = (dt1: DateTime, dt2: DateTime): DateTime => {
-    return dt2.set({
-        year: dt1.get("year"),
-        month: dt1.get("month"),
-        day: dt1.get("day")
-    })
 }

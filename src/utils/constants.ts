@@ -6,11 +6,15 @@ export class Auth0 {
 
 export const pages = {
     main: "/",
-    fullSchedule: "/schedule.html",
-    settings: "/settings.html",
+    fullSchedule: "/schedule",
+    settings: "/settings",
+    fullScheduleLegacy: "/schedule.html",
+    settingsLegacy: "/settings.html",
     selectSchool: "/select",
     loginCallback: "/callback",
-    admin: "/admin"
+    welcome: "/welcome",
+    admin: "/admin",
+    adminBellSchedule: "/admin/bellschedule"
 };
 
 export const URLs = {

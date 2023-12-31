@@ -8,15 +8,13 @@ import { ISettingsState, IUserSettings } from "../../store/usersettings/types";
 import School from "../../@types/school";
 import Link from "../../components/Link";
 import { pages } from "../../utils/constants";
-import { URLs } from "../../utils/constants";
 import { setTimeFormatPreference } from "../../store/usersettings/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGithub, faTwitter, faInstagram, faDiscord } from "@fortawesome/free-brands-svg-icons";
-import { faHome, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import { useAuth0 } from "../../react-auth0-wrapper";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 import distanceInWords from "date-fns/distance_in_words";
-import { selectSchool, invalidateSchool } from "../../store/schools/actions";
+import { selectSchool } from "../../store/schools/actions";
 import packageJson from '../../package.alias.json';
+import SocialIcons from "../../components/SocialIcons";
 
 export interface ISettingProps {
     selectedSchool: SelectedSchoolState;
@@ -25,8 +23,7 @@ export interface ISettingProps {
     dispatch: any;
 }
 
-const Settings = (props: ISettingProps) => {
-    const { logout, user, loginWithRedirect } = useAuth0();
+export const Settings = (props: ISettingProps) => {
 
     const navigate = (to: string) => {
         props.dispatch(push(to));
@@ -131,28 +128,7 @@ const Settings = (props: ISettingProps) => {
             </p>
 
             <p style={{ marginTop: "20vh" }}>Follow ClassClock:</p>
-            <ul className="footer__social">
-                <li>
-                    <Link destination={URLs.github}>
-                        <FontAwesomeIcon icon={faGithub} />
-                    </Link>
-                </li>
-                <li>
-                    <Link destination={URLs.twitter}>
-                        <FontAwesomeIcon icon={faTwitter} />
-                    </Link>
-                </li>
-                <li>
-                    <Link destination={URLs.instagram}>
-                        <FontAwesomeIcon icon={faInstagram} />
-                    </Link>
-                </li>
-                <li>
-                    <Link destination={URLs.discord}>
-                        <FontAwesomeIcon icon={faDiscord} />
-                    </Link>
-                </li>
-            </ul>
+            <SocialIcons/>
             <p id="credits">
                 Created by: <a href={process.env.REACT_APP_AUTHORURL}>Adrian Edwards</a>{" "}
                 and <a href="https://nickthegroot.com/">Nick DeGroot</a>
@@ -168,7 +144,7 @@ const mapStateToProps = (state: ISchoolsState & ISettingsState & {error: string}
     const { selectedSchool, userSettings, error } = state;
     return {
         selectedSchool: Object.assign({}, selectedSchool, {
-            data: School.fromJson(selectedSchool.data)
+            data: selectedSchool.data
         }),
         userSettings,
         error

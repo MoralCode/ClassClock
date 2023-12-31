@@ -11,21 +11,6 @@
             g.type = 'text/javascript'; g.async = true; g.defer = true; g.src = 'https://analytics.adriancedwards.com/js/container_b9i4lGUG.js'; s.parentNode.insertBefore(g, s);
         </script>
         <!-- End Matomo Tag Manager -->
-        <!-- Raygun Error Monitoring -->
-        <script type="text/javascript">
-            !function (a, b, c, d, e, f, g, h) {
-                a.RaygunObject = e, a[e] = a[e] || function () {
-                    (a[e].o = a[e].o || []).push(arguments)
-                }, f = b.createElement(c), g = b.getElementsByTagName(c)[0],
-                f.async = 1, f.src = d, g.parentNode.insertBefore(f, g), h = a.onerror, a.onerror = function (b, c, d, f, g) {
-                    h && h(b, c, d, f, g), g || (g = new Error(b)), a[e].q = a[e].q || [], a[e].q.push({
-                        e: g
-                    })
-                }
-            }(window, document, "script", "//cdn.raygun.io/raygun4js/raygun.min.js", "rg4js");
-        </script>
-        <!-- End Raygun Error Monitoring -->
-
 
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         
@@ -68,11 +53,6 @@
             }(window.location))
         </script>
         <!-- End Single Page Apps for GitHub Pages -->
-        <!-- Initialize raygun monitoring -->
-        <script type="text/javascript">
-            rg4js('apiKey', 'jH0jJtcJFbPWjbjev4YCRQ');
-            rg4js('enableCrashReporting', true);
-        </script>
     </head>
     <body>
         <noscript>You need to enable JavaScript to run this app.</noscript>

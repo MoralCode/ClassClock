@@ -1,6 +1,5 @@
 import BellSchedule from "../@types/bellschedule";
-import { format } from 'date-fns'
-import { delay, objectKeysToSnakeCase, parseRateLimitTime, promiseRetry } from "../utils/helpers";
+import { objectKeysToSnakeCase, parseRateLimitTime, promiseRetry } from "../utils/helpers";
 import { DateTime } from "luxon";
 import { RateLimitError } from "../utils/errors";
 
@@ -80,6 +79,10 @@ export default class ClassClockService {
 
     }
 
+    static makeAPICall = (method: string, url: string, authToken?: string, params?: object ) => {
+        return fetch(url, ClassClockService.getHeaders(method, authToken, params))
+    }
+
     //sets up request headers for outgoing API calls
     private static getHeaders = (
         method: string,
@@ -110,15 +113,11 @@ export default class ClassClockService {
     private static jsonifyReplacer(key: string, value: any) {
         console.log(key, value)
         if (key == 'date') {
-            return format(value, 'YYYY-MM-DD');
-            // Date-fns v2
-            // return format(value, 'yyyy-MM-dd');
+            return value.toFormat('YYYY-MM-DD');
         } else if (key == 'dates') {
 
             return value.map((currentValue: DateTime) => {
                 return currentValue.toFormat('YYYY-MM-DD');
-                // Date-fns v2
-                // return format(value, 'yyyy-MM-dd');
             })
         } else if (Object.prototype.toString.call(value) === '[object Array]') {
 

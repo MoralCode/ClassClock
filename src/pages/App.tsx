@@ -3,12 +3,10 @@ import { connect } from "react-redux";
 import { push } from "redux-first-routing";
 import "../global.css";
 import Link from "../components/Link";
-import Icon from "../components/Icon";
 import Block from "../components/Block/Block";
 import { DateTime } from "luxon";
 import School from "../@types/school";
 import { pages } from "../utils/constants";
-import BellSchedule from "../@types/bellschedule";
 import { ISchoolsState, SelectedSchoolState } from "../store/schools/types";
 import { getCurrentDate } from "../utils/helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,6 +16,7 @@ import StatusIndicator from "../components/StatusIndicator";
 import ClassClockService from "../services/classclock";
 import { selectSchool } from "../store/schools/actions";
 import ClassPeriod from "../@types/classperiod";
+import Time from "../@types/time";
 
 export interface IAppProps {
     selectedSchool: SelectedSchoolState;
@@ -34,6 +33,12 @@ export const App = (props: IAppProps) => {
     const navigate = (to: string) => {
         props.dispatch(push(to));
     };
+
+    const updateConnectionState = () => {
+        ClassClockService.isReachable().then((reachable) => {
+            setConnected(reachable)
+        })
+    }
 
     useEffect(() => {
         const timingInterval: NodeJS.Timeout = setInterval(() => {
@@ -68,29 +73,29 @@ export const App = (props: IAppProps) => {
     });
     window.addEventListener('offline', () => {setOnline(false)});
 
-    const currentSchedule = props.selectedSchool.data.getScheduleForDate(currentDate);
-
-    const updateConnectionState = () => {
-        ClassClockService.isReachable().then((reachable) => {
-            setConnected(reachable)
-        })
+    //If this is not present here, then there will be an error when the next lines run in the event data is being fetched and there is no stored school.
+    // this guards against trying to call a function on an empty data object which may be present if the school is being fetched for the first time.
+    if (props.selectedSchool.isFetching) {
+        return <p>Fetching...</p>
     }
+    const currentSchedule = props.selectedSchool.data.getScheduleForDate(currentDate);
+    const schoolTimezone = props.selectedSchool.data.getTimezone();
 
     const getContent = () => {
         switch (currentSchedule) {
             case undefined:
                 if (!props.selectedSchool.isFetching) {
-                    props.dispatch(push(pages.selectSchool));
+                    props.dispatch(push(pages.welcome));
                 }
                 return
             case null:
                 return <p>No School Today</p>;
             default:
 
-                let nextClass: ClassPeriod | undefined = currentSchedule.getClassStartingAfter(currentDate);
-                let nextImportantTime: DateTime | undefined;
+                let nextClass: ClassPeriod | undefined = currentSchedule.getClassStartingAfter(currentDate, schoolTimezone);
+                let nextImportantTime: Time | undefined;
 
-                const currentClass = currentSchedule.getClassPeriodForTime(currentDate);
+                const currentClass = currentSchedule.getClassPeriodForTime(currentDate, schoolTimezone);
 
                 if (currentClass){
                     nextImportantTime = currentClass.getEndTime()
@@ -130,7 +135,7 @@ export const App = (props: IAppProps) => {
                         <p className="timeFont" style={{ fontSize: "60px" }}>
                             <b>
                                 {nextImportantTime
-                                        ? nextImportantTime.diff(currentDate).toFormat("hh:mm:ss")
+                                        ? nextImportantTime.onto(currentDate).toFormat("hh:mm:ss")
                                     : "No Class"}
                             </b>
                         </p>
@@ -203,7 +208,6 @@ export const App = (props: IAppProps) => {
 
 const mapStateToProps = (state: ISchoolsState & ISettingsState & {error: string}) => {
     const { selectedSchool, userSettings, error } = state;
-    selectedSchool.data = School.fromJson(selectedSchool.data);
     return { selectedSchool, userSettings, error };
 };
 

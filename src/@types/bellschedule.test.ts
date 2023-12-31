@@ -1,13 +1,21 @@
 import BellSchedule from "./bellschedule";
-import { bellSchedule as schedule, bellScheduleJSON, classPeriod, bellScheduleEndpoint, bellScheduleName, bellScheduleDisplayName, bellScheduleId, startTime, beforeClass, duringClass, endTime, afterClass, bellScheduleClasses } from "../utils/testconstants";
+import { bellSchedule as schedule, bellScheduleJSON, classPeriod, bellScheduleEndpoint, bellScheduleName, bellScheduleId, startTimeDT, beforeClassDT, duringClassDT, endTimeDT, afterClassDT, bellScheduleClasses, schoolTimezone, betweenClass } from "../utils/testconstants";
 import { DateTime } from "luxon";
 
 describe("BellSchedule", () => {
 
     it("should get from JSON", () => {
-        expect(
-            BellSchedule.fromJson(bellScheduleJSON)
-        ).toEqual(schedule);
+        //TODO: the start and end times should be plain HH:MM, not full datetimes
+
+        let constructed = BellSchedule.fromJson(bellScheduleJSON)
+        expect(constructed.getName()).toEqual(schedule.getName());
+        expect(constructed.getColor()).toEqual(schedule.getColor());
+        expect(constructed.getAllClasses()).toEqual(schedule.getAllClasses());
+        expect(constructed.getDates()).toEqual(schedule.getDates());
+        expect(constructed.getDisplayName()).toEqual(schedule.getDisplayName());
+        expect(constructed.getEndpoint()).toEqual(schedule.getEndpoint());
+        expect(constructed.getIdentifier()).toEqual(schedule.getIdentifier());
+
     });
 
     it("can get its identifier", () => {
@@ -25,9 +33,9 @@ describe("BellSchedule", () => {
 
     it("can get its dates", () => {
         expect(schedule.getDates()).toEqual([
-            DateTime.fromISO("2019-07-28T07:37:50.634").toUTC(),
-            DateTime.fromISO("2019-07-29T07:38:10.979").toUTC(),
-            DateTime.fromISO("2019-07-23T07:38:28.263").toUTC()
+            DateTime.fromISO("2019-07-28T07:37:50.634", {locale: "en-US"}).toUTC(),
+            DateTime.fromISO("2019-07-29T07:38:10.979", {locale: "en-US"}).toUTC(),
+            DateTime.fromISO("2019-07-23T07:38:28.263", {locale: "en-US"}).toUTC()
         ]);
     });
 
@@ -39,29 +47,35 @@ describe("BellSchedule", () => {
         expect(schedule.numberOfClasses()).toEqual([classPeriod].length);
     });
 
-    it("can return date last updated", () => {
-        expect(schedule.lastUpdated()).toEqual(DateTime.fromISO("2019-07-28T07:37:50.634").toUTC());
-    });
+    //these cases already covered by tests for a class they extend
+    // it("can return date last updated", () => {
+    //     expect(schedule.lastUpdated()).toEqual(DateTime.fromISO("2019-07-28T07:37:50.634", {zone: schoolTimezone}).toUTC());
+    // });
 
-    it("can test if it has changed since a given date", () => {
-        expect(schedule.hasChangedSince(DateTime.fromISO("2019-07-28T07:07:50.634").toUTC())).toBeTruthy();
-        expect(schedule.hasChangedSince(DateTime.fromISO("2019-07-28T08:07:50.634").toUTC())).toBeFalsy();
-    });
+    // it("can test if it has changed since a given date", () => {
+    //     expect(schedule.hasChangedSince(DateTime.fromISO("2019-07-28T07:07:50.634", {zone: schoolTimezone}).toUTC())).toBe(true);
+    //     expect(schedule.hasChangedSince(DateTime.fromISO("2019-07-28T08:07:50.634", {zone: schoolTimezone}).toUTC())).toBe(false);
+    // });
 
     it("can get a class period for a given time", () => {
         //before
-        expect(schedule.getClassPeriodForTime(beforeClass)).toBeFalsy();
+        expect(schedule.getClassPeriodForTime(beforeClassDT, schoolTimezone)).toBeUndefined();
 
         //exactly start
-        expect(schedule.getClassPeriodForTime(startTime)).toEqual(classPeriod);
+        expect(schedule.getClassPeriodForTime(startTimeDT, schoolTimezone)).toEqual(classPeriod);
 
         //middle
-        expect(schedule.getClassPeriodForTime(duringClass)).toEqual(classPeriod);
+        expect(schedule.getClassPeriodForTime(duringClassDT, schoolTimezone)).toEqual(classPeriod);
+
+        //between classes
+        expect(schedule.getClassPeriodForTime(betweenClass, schoolTimezone)).toEqual(undefined);
 
         //exactly end
-        expect(schedule.getClassPeriodForTime(endTime)).toEqual(classPeriod);
+        expect(schedule.getClassPeriodForTime(endTimeDT, schoolTimezone)).toEqual(classPeriod);
         
         //after
-        expect(schedule.getClassPeriodForTime(afterClass)).toBeFalsy();
+        expect(schedule.getClassPeriodForTime(afterClassDT, schoolTimezone)).toBeUndefined();
     });
+
+    //TODO: add tests for getClassStartingAfter
 });

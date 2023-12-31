@@ -51,3 +51,11 @@ ClassClock is a web-based app that can be saved to your phone's home screen or b
 2. Click the "Overflow" button on the top right of your screen (it looks like three vertical dots) 
 3. Click "Add to Home Screen" button in the menu (it's about 2/3 of the way down)
 4. Click "Add" in the dialog box that pops up to add it to your home screen.
+
+
+
+## Developer setup
+
+### Environment Variables
+
+REACT_APP_SENTRY_DSN - if you want to use sentry for monititoring errors, provide your DSN value from the sentry app so ClassClock knows where to send error information

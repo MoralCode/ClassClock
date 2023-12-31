@@ -3,11 +3,12 @@ import * as types from './types';
 import configureMockStore from "redux-mock-store";
 import thunk, { ThunkDispatch } from "redux-thunk";
 import fetchMock from "fetch-mock";
-import { fakeSchoolResponse, fakeBellScheduleListResponse, bellScheduleId, fakeBellScheduleFullResponse, school, schoolId, schoolEndpoint, scheduleListEndpoint, bellScheduleEndpoint } from "../../utils/testconstants";
+import { fakeSchoolResponse, fakeBellScheduleListResponse, bellScheduleId, fakeBellScheduleFullResponse, school, schoolId, schoolEndpoint } from "../../utils/testconstants";
 
 
 // import { ISchoolsState } from "./types";
 import { AnyAction } from "redux";
+import ClassClockService from "../../services/classclock";
 
 type DispatchExts = ThunkDispatch<void, void, AnyAction>;
 
@@ -28,16 +29,19 @@ describe("school async actions", () => {
         fetchMock
             .getOnce(schoolEndpoint, {
                 body: fakeSchoolResponse,
-                headers: { "Content-Type": "application/vnd.api+json" }
+                headers: { "Content-Type": "application/json" }
             })
-            .getOnce(scheduleListEndpoint, {
+            .getOnce(ClassClockService.baseURL + "/bellschedules/" + schoolId + "/", {
                 body: fakeBellScheduleListResponse,
-                headers: { "Content-Type": "application/vnd.api+json" }
+                headers: { "Content-Type": "application/json" }
             })
-            .getOnce(bellScheduleEndpoint,
+            .getOnce(ClassClockService.baseURL +
+                "/bellschedule/" +
+                bellScheduleId +
+                "/",
                 {
                     body: fakeBellScheduleFullResponse,
-                    headers: { "Content-Type": "application/vnd.api+json" }
+                    headers: { "Content-Type": "application/json" }
                 }
             );
 
@@ -54,9 +58,9 @@ describe("school async actions", () => {
             }
         }*/
 
-        return store.dispatch(actions.selectSchool("whatever", schoolId)).then(() => {
+        return store.dispatch(actions.selectSchool(schoolId)).then(() => {
             // return of async actions
-            expect(fetchMock.done()).toBeTruthy();
+            expect(fetchMock.done()).toBe(true);
             expect(store.getActions()).toEqual(expectedActions);
         });
     });
