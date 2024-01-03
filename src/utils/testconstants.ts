@@ -91,10 +91,12 @@ export const class2Name = "Second Period";
 
 export const startTime2String = "10:05";
 export const startTime2 = timeStringToTime(startTime2String, timeStringFormat, currentDate);
+export const startTime2DT = timeStringToDateTime(startTime2String, timeStringFormat, currentDate);
 export const class2Duration = classDuration
 export const duringClass2 = DateTime.fromObject({ hour: 11, minute: 0, locale: "en-US", zone: schoolTimezone }) 
 export const endTime2String = "11:35";
 export const endTime2 = timeStringToTime(endTime2String, timeStringFormat, currentDate);
+export const endTime2DT = timeStringToDateTime(endTime2String, timeStringFormat, currentDate);
 export const afterClass2 = DateTime.fromObject({ hour: 11, minute: 40, locale: "en-US",zone: schoolTimezone}) 
 
 export const classPeriod2 = new ClassPeriod(

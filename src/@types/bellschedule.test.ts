@@ -1,5 +1,5 @@
 import BellSchedule from "./bellschedule";
-import { bellSchedule as schedule, bellScheduleJSON, classPeriod, bellScheduleEndpoint, bellScheduleName, bellScheduleId, startTimeDT, beforeClassDT, duringClassDT, endTimeDT, afterClassDT, bellScheduleClasses, schoolTimezone, betweenClass } from "../utils/testconstants";
+import { bellSchedule as schedule, bellScheduleJSON, classPeriod, bellScheduleEndpoint, bellScheduleName, bellScheduleId, startTimeDT, beforeClassDT, duringClassDT, endTimeDT, afterClassDT, bellScheduleClasses, schoolTimezone, betweenClass, classPeriod2, startTime2DT, endTime2DT, duringClass2, afterClass2 } from "../utils/testconstants";
 import { DateTime } from "luxon";
 
 describe("BellSchedule", () => {
@@ -77,5 +77,36 @@ describe("BellSchedule", () => {
         expect(schedule.getClassPeriodForTime(afterClassDT, schoolTimezone)).toBeUndefined();
     });
 
-    //TODO: add tests for getClassStartingAfter
+     it("can get a class period starting after a given time", () => {
+        //before 1st class
+        expect(schedule.getClassStartingAfter(beforeClassDT, schoolTimezone)).toEqual(classPeriod);
+
+        //exactly start 1st class
+        expect(schedule.getClassStartingAfter(startTimeDT, schoolTimezone)).toEqual(classPeriod2);
+
+        //middle 1st class
+        expect(schedule.getClassStartingAfter(duringClassDT, schoolTimezone)).toEqual(classPeriod2);
+
+        //between classes
+        expect(schedule.getClassStartingAfter(betweenClass, schoolTimezone)).toEqual(classPeriod2);
+
+        //exactly end of 1st class
+        expect(schedule.getClassStartingAfter(endTimeDT, schoolTimezone)).toEqual(classPeriod2);
+        
+        //after 1st class/before 2nd class
+        expect(schedule.getClassStartingAfter(afterClassDT, schoolTimezone)).toEqual(classPeriod2);
+
+        //exactly start 2nd class
+        expect(schedule.getClassStartingAfter(startTime2DT, schoolTimezone)).toBeUndefined();
+
+        //middle 2nd class
+        expect(schedule.getClassStartingAfter(duringClass2, schoolTimezone)).toBeUndefined();
+
+        //exactly end of 2nd class
+        expect(schedule.getClassStartingAfter(endTime2DT, schoolTimezone)).toBeUndefined();
+        
+        //after 2nd class
+        expect(schedule.getClassStartingAfter(afterClass2, schoolTimezone)).toBeUndefined();
+
+    });
 });
