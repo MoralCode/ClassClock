@@ -135,8 +135,8 @@ export const App = (props: IAppProps) => {
                         <p className="timeFont" style={{ fontSize: "60px" }}>
                             <b>
                                 {nextImportantTime
-                                        ? nextImportantTime.onto(currentDate).toFormat("hh:mm:ss")
-                                    : "No Class"}
+                                        ? nextImportantTime.getTimeDeltaTo(Time.fromDateTime(currentDate, props.selectedSchool.data.getTimezone())).getFormattedString(false, true)
+                                        : "No Class"}
                             </b>
                         </p>
                         <p>Your next class period is: </p>
