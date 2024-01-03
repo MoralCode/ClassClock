@@ -179,13 +179,4 @@ export default class Time {
     public toJSON(): string {
         return this.duration.toFormat("hh:mm:ss");
     }
-
-    /**
-     * take this time interval and add it onto a concrete date time
-     * @param date the DateTime to add this time interval too
-     * @returns a new DateTime representing the input time plus the duration represented by this time.
-     */
-    public onto(date: DateTime): DateTime {
-        return date.plus(this.duration)
-    }
 }
