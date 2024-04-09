@@ -8,9 +8,11 @@ import { pages } from '../utils/constants';
 import { replace } from 'redux-first-routing';
 
 const Auth0ProviderWithHistory = ({ children }: {children: React.ReactElement}) => {
-	const domain = process.env.REACT_APP_AUTH0_DOMAIN;
-	const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
-	const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
+	// Attempt to grab the values from environment variables.
+	// default values are provided largely to satisfy the type checking and really should not be relied on.
+	const domain = process.env.REACT_APP_AUTH0_DOMAIN ||  "classclock.auth0.com";
+	const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID ||  "someclientidthatshouldneverexist";
+	const audience = process.env.REACT_APP_AUTH0_AUDIENCE || "https://api.classclock.app";
 	const env = process.env.REACT_APP_VERCEL_ENV; //https://vercel.com/docs/concepts/projects/environment-variables#system-environment-variables
 
 	// A function that routes the user to the right place
