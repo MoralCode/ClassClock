@@ -6,7 +6,7 @@ export const pages = {
     fullScheduleLegacy: "/schedule.html",
     settingsLegacy: "/settings.html",
     selectSchool: "/select",
-    loginCallback: "/callback",
+    loginCallback: "/admin/callback",
     welcome: "/welcome",
     admin: "/admin",
     adminBellSchedule: "/admin/bellschedule"
