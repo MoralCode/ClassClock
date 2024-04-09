@@ -58,4 +58,10 @@ ClassClock is a web-based app that can be saved to your phone's home screen or b
 
 ### Environment Variables
 
+REACT_APP_AUTH0_DOMAIN - the domain for the auth0 tenant to use (provided in application details)
+
+REACT_APP_AUTH0_CLIENT_ID - the client ID for the auth0 application to connect to
+
+REACT_APP_AUTH0_AUDIENCE - the auth0 audience (probably your API URL) to use
+
 REACT_APP_SENTRY_DSN - if you want to use sentry for monititoring errors, provide your DSN value from the sentry app so ClassClock knows where to send error information
