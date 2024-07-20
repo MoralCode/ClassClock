@@ -53,15 +53,13 @@ export const Schedule = (props: IAppProps) => {
                         <tbody>
                             {sortClassesByStartTime(currentSchedule.getAllClasses()).map(
                                 (value: ClassPeriod) => (
-                                    <>
-                                        <tr>
-                                            <td>{value.getName()}</td>
-                                            <td>
-                                                {value.getStartTime().toString()} -{" "}
-                                                {value.getEndTime().toString()}
-                                            </td>
-                                        </tr>
-                                    </>
+                                    <tr key={value.getName() + value.getStartTime().toString()}>
+                                        <td>{value.getName()}</td>
+                                        <td>
+                                            {value.getStartTime().toString()} -{" "}
+                                            {value.getEndTime().toString()}
+                                        </td>
+                                    </tr>
                                 )
                             )}
                         </tbody>
