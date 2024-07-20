@@ -5045,7 +5045,7 @@ __metadata:
     "@types/luxon": "npm:^1.25.0"
     "@types/node": "npm:^12.7.3"
     "@types/react": "npm:^16.9.2"
-    "@types/react-dom": "npm:^16.9.0"
+    "@types/react-dom": "npm:^16.9.2"
     "@types/react-redux": "npm:^7.1.0"
     "@types/react-test-renderer": "npm:^16.9.0"
     "@types/redux-logger": "npm:^3.0.7"
