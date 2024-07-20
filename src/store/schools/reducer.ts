@@ -14,7 +14,7 @@ import {
 export function selectedSchoolReducer(
     state = {
         isFetching: false,
-        data: {}
+        data: undefined
     },
     action: SchoolActionTypes
 ) {
