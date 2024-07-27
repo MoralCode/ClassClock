@@ -16,11 +16,18 @@ import Auth0ProviderWithHistory from "./services/auth0-provider-with-history";
 import { Store } from "redux";
 import { History, BrowserHistory, Update } from "history";
 import { locationChange } from "redux-first-routing";
+import packageJson from './package.alias.json';
+
+
 
 if (process.env.REACT_APP_SENTRY_DSN && process.env.REACT_APP_SENTRY_DSN != "") {
+
+    const version_information = "classclockweb@"+ packageJson.version + "_" + process.env.REACT_APP_VERCEL_GIT_COMMIT_SHA.substring(0, 6)
+
     Sentry.init({
         dsn: process.env.REACT_APP_SENTRY_DSN,
         integrations: [new BrowserTracing()],
+        release: version_information,
 
         // Set tracesSampleRate to 1.0 to capture 100%
         // of transactions for performance monitoring.
