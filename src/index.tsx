@@ -20,9 +20,12 @@ import packageJson from './package.alias.json';
 
 
 
-if (process.env.REACT_APP_SENTRY_DSN && process.env.REACT_APP_SENTRY_DSN != "") {
+if (process.env.REACT_APP_SENTRY_DSN && process.env.REACT_APP_SENTRY_DSN !== "") {
 
-    const version_information = "classclockweb@"+ packageJson.version + "_" + process.env.REACT_APP_VERCEL_GIT_COMMIT_SHA.substring(0, 6)
+    let version_information = "classclockweb@"+ packageJson.version;
+    if (process.env.REACT_APP_VERCEL_GIT_COMMIT_SHA) {
+        version_information += "_" + process.env.REACT_APP_VERCEL_GIT_COMMIT_SHA.substring(0, 6)
+    }
 
     Sentry.init({
         dsn: process.env.REACT_APP_SENTRY_DSN,
