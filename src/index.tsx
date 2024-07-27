@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import * as Sentry from "@sentry/react";
-import { BrowserTracing } from "@sentry/tracing";
+import { browserTracingIntegration } from "@sentry/react";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import UniversalRouter, {Context} from "universal-router";
@@ -29,7 +29,7 @@ if (process.env.REACT_APP_SENTRY_DSN && process.env.REACT_APP_SENTRY_DSN !== "")
 
     Sentry.init({
         dsn: process.env.REACT_APP_SENTRY_DSN,
-        integrations: [new BrowserTracing()],
+        integrations: [browserTracingIntegration()],
         release: version_information,
 
         // Set tracesSampleRate to 1.0 to capture 100%
