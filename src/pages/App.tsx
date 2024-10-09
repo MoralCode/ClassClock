@@ -11,6 +11,7 @@ import { ISchoolsState, SelectedSchoolState } from "../store/schools/types";
 import { getCurrentDate } from "../utils/helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
+import {faRectangleList} from "@fortawesome/free-regular-svg-icons";
 import { ISettingsState, IUserSettings } from "../store/usersettings/types";
 import StatusIndicator from "../components/StatusIndicator";
 import ClassClockService from "../services/classclock";
@@ -179,6 +180,13 @@ export const App = (props: IAppProps) => {
                 destination={() => navigate(pages.settings)}
             >
                 <FontAwesomeIcon icon={faCog} />
+            </Link>
+            <Link
+                className="cornerNavButton cornerNavTop cornerNavRight smallIcon"
+                // tslint:disable-next-line: jsx-no-lambda
+                destination={() => navigate(pages.fullSchedule)}
+            >
+                <FontAwesomeIcon icon={faRectangleList} />
             </Link>
             <br />
             <Block>
