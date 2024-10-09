@@ -3,6 +3,8 @@
 # https://adriel.dev/posts/2024-02-09-speeding-up-builds-for-berry-yarn-projects-on-vercel#conclusion
 
 echo "Starting the script..."
+
+yarn set version berry
  
 # Check if node_modules/install-state.gz exists and copy it to .yarn/install-state.gz
 if [ -f "node_modules/install-state.gz" ]; then
