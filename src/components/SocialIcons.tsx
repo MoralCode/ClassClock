@@ -1,5 +1,5 @@
 import React from "react";
-import { faGithub, faTwitter, faInstagram, faDiscord } from "@fortawesome/free-brands-svg-icons";
+import { faGithub, faBluesky , faInstagram, faDiscord } from "@fortawesome/free-brands-svg-icons";
 import { URLs } from "../utils/constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "../components/Link";
@@ -14,8 +14,8 @@ const SocialIcons = () => {
 				</Link>
 			</li>
 			<li>
-				<Link destination={URLs.twitter}>
-					<FontAwesomeIcon icon={faTwitter} />
+				<Link destination={URLs.bluesky}>
+					<FontAwesomeIcon icon={faBluesky} />
 				</Link>
 			</li>
 			<li>
