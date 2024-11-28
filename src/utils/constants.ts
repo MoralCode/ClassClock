@@ -18,6 +18,6 @@ export const URLs = {
         "https://join.slack.com/t/classclock/shared_invite/enQtNTE0MDkyNzAwNzU3LWNhMGUwODU2ZjhkYTYxMTgzNDE1OWEyMGY2OGNiNTBhOWM5NDVhZGUzNDVlNzRiZTE3NTNmODFjYWNkNDhmMDU",
     twitter: "https://twitter.com/classclockapp",
     instagram: "https://www.instagram.com/classclockapp/",
-    bluesky: "https://bsky.app/profile/classclockapp.bsky.social",
+    bluesky: "https://bsky.app/profile/classclock.app",
     discord: "https://discord.classclock.app"
 };
