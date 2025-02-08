@@ -23,7 +23,7 @@ export interface IAppProps {
 
 export const Schedule = (props: IAppProps) => {
     let content: JSX.Element = <></>;
-    const currentSchedule = props.selectedSchool.data.getScheduleForDate(
+    const currentSchedule = props.selectedSchool?.data?.getScheduleForDate(
         getCurrentDate()
     );
 
