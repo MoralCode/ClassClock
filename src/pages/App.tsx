@@ -96,24 +96,28 @@ export const App = (props: IAppProps) => {
                 case 0:
                     return <p>No School Today</p>;
                 case 1:
-                    const currentSchedule = currentSchedules[0];
+                    { // Scope separation is needed here as several cases define the same variables
+                        let currentSchedule = currentSchedules[0];
 
 
-                    const {currentClass, nextClass, nextImportantTime} = getStatusInfoForSchedule(currentSchedule, currentDate, schoolTimezone);
-                    
-                    if (!currentClass && !nextClass) {
-                        return <p>School's Out!</p>;
+                        let {currentClass, nextClass, nextImportantTime} = getStatusInfoForSchedule(currentSchedule, currentDate, schoolTimezone);
+                        
+                        if (!currentClass && !nextClass) {
+                            return <p>School's Out!</p>;
+                        }
+
+                        return <SingleScheduleView 
+                            currentSchool={props.selectedSchool.data}
+                            currentSchedule={currentSchedule}
+                            currentClass={currentClass}
+                            nextImportantTime={nextImportantTime}
+                            nextClass={nextClass}
+                            currentDate={currentDate}
+                            navigate={navigate} />;
                     }
-
-                    return <SingleScheduleView 
-                        currentSchool={props.selectedSchool.data}
-                        currentSchedule={currentSchedule}
-                        currentClass={currentClass}
-                        nextImportantTime={nextImportantTime}
-                        nextClass={nextClass}
-                        currentDate={currentDate}
-                        navigate={navigate} />;
                 default:
+                    { // Scope separation is needed here as several cases define the same variables
+                    }
             }
         }
     }
