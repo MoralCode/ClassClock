@@ -75,6 +75,10 @@ export default class BellSchedule extends UpdateTimestampedObject {
         }
     }
 
+    public getAudience() {
+        return this.audience;
+    }
+
     public getEndpoint() {
         return this.endpoint;
     }
