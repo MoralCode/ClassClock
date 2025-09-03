@@ -6,6 +6,7 @@ import ClassPeriod from "../@types/classperiod";
 import { useState } from "react";
 import { RateLimitError } from "./errors";
 import Time from "../@types/time";
+import BellSchedule from "../@types/bellschedule";
 
 //https://stackoverflow.com/a/55862077
 export const useForceUpdate = () => {
@@ -22,6 +23,24 @@ export function getValueIfKeyInList(list: string[], object: any) {
             return object[key];
         }
     }
+}
+
+export function getStatusInfoForSchedule(schedule: BellSchedule, currentDate: DateTime, schoolTimezone: string){
+
+    let nextClass: ClassPeriod | undefined = schedule.getClassStartingAfter(
+        currentDate,
+        schoolTimezone
+    );
+    let nextImportantTime: Time | undefined;
+
+    const currentClass = schedule.getClassPeriodForTime(currentDate, schoolTimezone);
+
+    if (currentClass) {
+        nextImportantTime = currentClass.getEndTime();
+    } else if (nextClass) {
+        nextImportantTime = nextClass.getStartTime();
+    }
+    return {currentClass, nextClass, nextImportantTime};
 }
 
 export function objectKeysToSnakeCase(object: object) {

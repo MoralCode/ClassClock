@@ -8,7 +8,7 @@ import { DateTime } from "luxon";
 import School from "../@types/school";
 import { pages } from "../utils/constants";
 import { ISchoolsState, SelectedSchoolState } from "../store/schools/types";
-import { getCurrentDate } from "../utils/helpers";
+import { getCurrentDate, getStatusInfoForSchedule } from "../utils/helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import {faRectangleList} from "@fortawesome/free-regular-svg-icons";
