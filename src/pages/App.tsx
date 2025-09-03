@@ -19,6 +19,7 @@ import { selectSchool } from "../store/schools/actions";
 import ClassPeriod from "../@types/classperiod";
 import Time from "../@types/time";
 import SingleScheduleView from "../components/SingleScheduleView";
+import ScheduleCard from "../components/ScheduleCard";
 
 export interface IAppProps {
     selectedSchool: SelectedSchoolState;
@@ -117,6 +118,16 @@ export const App = (props: IAppProps) => {
                     }
                 default:
                     { // Scope separation is needed here as several cases define the same variables
+                        return currentSchedules.map((schedule) => {
+                            let {currentClass, nextClass, nextImportantTime} = getStatusInfoForSchedule(schedule, currentDate, schoolTimezone);
+                            return <ScheduleCard
+                            currentSchool={props.selectedSchool.data}
+                            currentClass={currentClass}
+                            nextClass={nextClass}
+                            currentSchedule={schedule}
+                            nextImportantTime={nextImportantTime}
+                            currentDate={currentDate} />
+                        })
                     }
             }
         }
