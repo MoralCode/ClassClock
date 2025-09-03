@@ -18,6 +18,7 @@ import ClassClockService from "../services/classclock";
 import { selectSchool } from "../store/schools/actions";
 import ClassPeriod from "../@types/classperiod";
 import Time from "../@types/time";
+import SingleScheduleView from "../components/SingleScheduleView";
 
 export interface IAppProps {
     selectedSchool: SelectedSchoolState;
@@ -106,47 +107,14 @@ export const App = (props: IAppProps) => {
                     return <p>School's Out!</p>;
                 }
 
-                return (
-                    <>
-                    <Block>
-                        <p>
-                            Today is a{" "}
-                            <Link
-                                // tslint:disable-next-line: jsx-no-lambda
-                                destination={() => navigate(pages.fullSchedule)}
-                                id="viewScheduleLink"
-                            >
-                                {currentSchedule.getName()}
-                            </Link>
-                        </p>
-                    </Block>
-                    <Block>
-                        <p>You are currently in: </p>
-                        <p className="timeFont" style={{ fontSize: "30px" }}>
-                            <b>
-                                {currentClass !== undefined
-                                    ? currentClass.getName()
-                                    : props.selectedSchool.data.getPassingTimeName()}
-                            </b>
-                        </p>
-                    </Block>
-                    <Block>
-                        <p>...which ends in:</p>
-                        {/* <h1 className="centered bottomSpace time bigger" id="timeToEndOfClass" /> */}
-                        <p className="timeFont" style={{ fontSize: "60px" }}>
-                            <b>
-                                {nextImportantTime
-                                        ? nextImportantTime.getTimeDeltaTo(Time.fromDateTime(currentDate, props.selectedSchool.data.getTimezone())).getFormattedString(false, true)
-                                        : "No Class"}
-                            </b>
-                        </p>
-                        <p>Your next class period is: </p>
-                        <p className="timeFont" style={{ fontSize: "30px" }}>
-                            <b>{nextClass ? nextClass.getName() : "No Class"}</b>
-                        </p>
-                    </Block>
-                    </>
-                );
+                return <SingleScheduleView 
+                    currentSchool={props.selectedSchool.data}
+                    currentSchedule={currentSchedule}
+                    currentClass={currentClass}
+                    nextImportantTime={nextImportantTime}
+                    nextClass={nextClass}
+                    currentDate={currentDate}
+                    navigate={navigate} />;
         }
     }
 
