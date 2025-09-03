@@ -80,41 +80,41 @@ export const App = (props: IAppProps) => {
     if (props.selectedSchool.isFetching) {
         return <p>Fetching...</p>
     }
-    const currentSchedule = props.selectedSchool?.data?.getScheduleForDate(currentDate);
+    const currentSchedules = props.selectedSchool?.data?.getSchedulesForDate(currentDate);
     const schoolTimezone = props.selectedSchool?.data?.getTimezone();
 
     const getContent = () => {
-        switch (currentSchedule) {
-            case undefined:
-                if (!props.selectedSchool.isFetching) {
-                    props.dispatch(push(pages.welcome));
-                }
-                return
-            case null:
-                return <p>No School Today</p>;
-            default:
+        if (currentSchedules === undefined) {
+            if (!props.selectedSchool.isFetching){
+                props.dispatch(push(pages.welcome));
+            } else {
+                console.error("current schedules (therefore selected school) was undefined, yet there was no attempt to fetch")
+                return <p>An Error occurred: current schedules (therefore selected school) was undefined, yet there was no attempt to fetch</p>
+            }
+        } else {
+            switch (currentSchedules.length){
+                case 0:
+                    return <p>No School Today</p>;
+                case 1:
+                    const currentSchedule = currentSchedules[0];
 
-                let nextClass: ClassPeriod | undefined = currentSchedule.getClassStartingAfter(currentDate, schoolTimezone);
-                let nextImportantTime: Time | undefined;
 
-                const currentClass = currentSchedule.getClassPeriodForTime(currentDate, schoolTimezone);
+                    const {currentClass, nextClass, nextImportantTime} = getStatusInfoForSchedule(currentSchedule, currentDate, schoolTimezone);
+                    
+                    if (!currentClass && !nextClass) {
+                        return <p>School's Out!</p>;
+                    }
 
-                if (currentClass){
-                    nextImportantTime = currentClass.getEndTime()
-                } else if (nextClass) {
-                    nextImportantTime = nextClass.getStartTime()
-                } else {
-                    return <p>School's Out!</p>;
-                }
-
-                return <SingleScheduleView 
-                    currentSchool={props.selectedSchool.data}
-                    currentSchedule={currentSchedule}
-                    currentClass={currentClass}
-                    nextImportantTime={nextImportantTime}
-                    nextClass={nextClass}
-                    currentDate={currentDate}
-                    navigate={navigate} />;
+                    return <SingleScheduleView 
+                        currentSchool={props.selectedSchool.data}
+                        currentSchedule={currentSchedule}
+                        currentClass={currentClass}
+                        nextImportantTime={nextImportantTime}
+                        nextClass={nextClass}
+                        currentDate={currentDate}
+                        navigate={navigate} />;
+                default:
+            }
         }
     }
 
