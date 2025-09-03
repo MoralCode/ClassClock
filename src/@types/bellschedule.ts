@@ -15,8 +15,8 @@ export default class BellSchedule extends UpdateTimestampedObject {
             getValueIfKeyInList(["classes", "meeting_times"], json).map(
                 (meetingTime: any) => ClassPeriod.fromJson(meetingTime)
             ),
-            DateTime.fromISO(getValueIfKeyInList(["last_modified", "lastModified"], json), { zone: 'utc' })
-            //display name
+            DateTime.fromISO(getValueIfKeyInList(["last_modified", "lastModified"], json), { zone: 'utc' }),
+            getValueIfKeyInList(["display_name"], json),
         );
     }
 
