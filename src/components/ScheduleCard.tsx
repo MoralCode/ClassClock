@@ -54,20 +54,20 @@ const ScheduleCard = (props: IScheduleCardProps) => {
             </p>
             <p>
                 which ends in...
-                <p className="timeFont" style={{ fontSize: "40px" }}>
-                    <b>
-                        {props.nextImportantTime
-                            ? props.nextImportantTime
-                                    .getTimeDeltaTo(
-                                        Time.fromDateTime(
-                                            props.currentDate,
-                                            props.currentSchool.getTimezone()
-                                        )
+            </p>
+            <p className="timeFont" style={{ fontSize: "40px" }}>
+                <b>
+                    {props.nextImportantTime
+                        ? props.nextImportantTime
+                                .getTimeDeltaTo(
+                                    Time.fromDateTime(
+                                        props.currentDate,
+                                        props.currentSchool.getTimezone()
                                     )
-                                    .getFormattedString(false, true)
-                            : "No Class"}
-                    </b>
-                </p>
+                                )
+                                .getFormattedString(false, true)
+                        : "No Class"}
+                </b>
             </p>
         </Block>
     );
