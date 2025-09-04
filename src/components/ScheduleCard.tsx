@@ -15,6 +15,7 @@ export interface IScheduleCardProps {
     nextImportantTime?: Time;
 	nextClass?: ClassPeriod;
 	currentDate: DateTime;
+    key: string;
 }
 
 /// Schedule card is for displaying many schedules at once in an abbreveated form

@@ -126,7 +126,8 @@ export const App = (props: IAppProps) => {
                             nextClass={nextClass}
                             currentSchedule={schedule}
                             nextImportantTime={nextImportantTime}
-                            currentDate={currentDate} />
+                            currentDate={currentDate}
+                            key={schedule.getIdentifier()} />
                         })
                     }
             }
