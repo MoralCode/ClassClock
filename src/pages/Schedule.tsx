@@ -29,8 +29,8 @@ function getTableForSchedule(currentSchedule: BellSchedule, showAudience:boolean
         <div>
             <p>{currentSchedule.getName()}{audience}</p>
             {/* <List items={scheduleItems} /> */}
-            <table>
-                <thead>
+            <table style={{'margin': '0 auto', 'textAlign': 'left'}}>
+                <thead style={{'textAlign': 'center'}}>
                     <tr>
                         <td>
                             <b>Class</b>
