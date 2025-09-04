@@ -11,6 +11,7 @@ import { getCurrentDate, sortClassesByStartTime } from "../utils/helpers";
 import ClassPeriod from "../@types/classperiod";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
+import BellSchedule from "../@types/bellschedule";
 
 export interface IAppProps {
     selectedSchool: {
@@ -19,6 +20,42 @@ export interface IAppProps {
         data: School;
     };
     dispatch: any;
+}
+
+
+function getTableForSchedule(currentSchedule: BellSchedule, showAudience:boolean){
+    const audience = showAudience? " (" + currentSchedule.getAudience() + ")": "";
+    return (
+        <div>
+            <p>{currentSchedule.getName()}{audience}</p>
+            {/* <List items={scheduleItems} /> */}
+            <table>
+                <thead>
+                    <tr>
+                        <td>
+                            <b>Class</b>
+                        </td>
+                        <td>
+                            <b>Time</b>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {sortClassesByStartTime(currentSchedule.getAllClasses()).map(
+                        (value: ClassPeriod) => (
+                            <tr key={value.getName() + value.getStartTime().toString()}>
+                                <td>{value.getName()}</td>
+                                <td>
+                                    {value.getStartTime().toString()} -{" "}
+                                    {value.getEndTime().toString()}
+                                </td>
+                            </tr>
+                        )
+                    )}
+                </tbody>
+            </table>
+        </div>
+    );
 }
 
 export const Schedule = (props: IAppProps) => {
