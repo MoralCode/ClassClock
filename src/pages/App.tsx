@@ -8,7 +8,7 @@ import { DateTime } from "luxon";
 import School from "../@types/school";
 import { pages } from "../utils/constants";
 import { ISchoolsState, SelectedSchoolState } from "../store/schools/types";
-import { getCurrentDate } from "../utils/helpers";
+import { getCurrentDate, getStatusInfoForSchedule } from "../utils/helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import {faRectangleList} from "@fortawesome/free-regular-svg-icons";
@@ -18,6 +18,8 @@ import ClassClockService from "../services/classclock";
 import { selectSchool } from "../store/schools/actions";
 import ClassPeriod from "../@types/classperiod";
 import Time from "../@types/time";
+import SingleScheduleView from "../components/SingleScheduleView";
+import ScheduleCard from "../components/ScheduleCard";
 
 export interface IAppProps {
     selectedSchool: SelectedSchoolState;
@@ -79,74 +81,56 @@ export const App = (props: IAppProps) => {
     if (props.selectedSchool.isFetching) {
         return <p>Fetching...</p>
     }
-    const currentSchedule = props.selectedSchool?.data?.getScheduleForDate(currentDate);
+    const currentSchedules = props.selectedSchool?.data?.getSchedulesForDate(currentDate);
     const schoolTimezone = props.selectedSchool?.data?.getTimezone();
 
     const getContent = () => {
-        switch (currentSchedule) {
-            case undefined:
-                if (!props.selectedSchool.isFetching) {
-                    props.dispatch(push(pages.welcome));
-                }
-                return
-            case null:
-                return <p>No School Today</p>;
-            default:
+        if (currentSchedules === undefined) {
+            if (!props.selectedSchool.isFetching){
+                props.dispatch(push(pages.welcome));
+            } else {
+                console.error("current schedules (therefore selected school) was undefined, yet there was no attempt to fetch")
+                return <p>An Error occurred: current schedules (therefore selected school) was undefined, yet there was no attempt to fetch</p>
+            }
+        } else {
+            switch (currentSchedules.length){
+                case 0:
+                    return <p>No School Today</p>;
+                case 1:
+                    { // Scope separation is needed here as several cases define the same variables
+                        let currentSchedule = currentSchedules[0];
 
-                let nextClass: ClassPeriod | undefined = currentSchedule.getClassStartingAfter(currentDate, schoolTimezone);
-                let nextImportantTime: Time | undefined;
 
-                const currentClass = currentSchedule.getClassPeriodForTime(currentDate, schoolTimezone);
+                        let {currentClass, nextClass, nextImportantTime} = getStatusInfoForSchedule(currentSchedule, currentDate, schoolTimezone);
+                        
+                        if (!currentClass && !nextClass) {
+                            return <p>School's Out!</p>;
+                        }
 
-                if (currentClass){
-                    nextImportantTime = currentClass.getEndTime()
-                } else if (nextClass) {
-                    nextImportantTime = nextClass.getStartTime()
-                } else {
-                    return <p>School's Out!</p>;
-                }
-
-                return (
-                    <>
-                    <Block>
-                        <p>
-                            Today is a{" "}
-                            <Link
-                                // tslint:disable-next-line: jsx-no-lambda
-                                destination={() => navigate(pages.fullSchedule)}
-                                id="viewScheduleLink"
-                            >
-                                {currentSchedule.getName()}
-                            </Link>
-                        </p>
-                    </Block>
-                    <Block>
-                        <p>You are currently in: </p>
-                        <p className="timeFont" style={{ fontSize: "30px" }}>
-                            <b>
-                                {currentClass !== undefined
-                                    ? currentClass.getName()
-                                    : props.selectedSchool.data.getPassingTimeName()}
-                            </b>
-                        </p>
-                    </Block>
-                    <Block>
-                        <p>...which ends in:</p>
-                        {/* <h1 className="centered bottomSpace time bigger" id="timeToEndOfClass" /> */}
-                        <p className="timeFont" style={{ fontSize: "60px" }}>
-                            <b>
-                                {nextImportantTime
-                                        ? nextImportantTime.getTimeDeltaTo(Time.fromDateTime(currentDate, props.selectedSchool.data.getTimezone())).getFormattedString(false, true)
-                                        : "No Class"}
-                            </b>
-                        </p>
-                        <p>Your next class period is: </p>
-                        <p className="timeFont" style={{ fontSize: "30px" }}>
-                            <b>{nextClass ? nextClass.getName() : "No Class"}</b>
-                        </p>
-                    </Block>
-                    </>
-                );
+                        return <SingleScheduleView 
+                            currentSchool={props.selectedSchool.data}
+                            currentSchedule={currentSchedule}
+                            currentClass={currentClass}
+                            nextImportantTime={nextImportantTime}
+                            nextClass={nextClass}
+                            currentDate={currentDate}
+                            navigate={navigate} />;
+                    }
+                default:
+                    { // Scope separation is needed here as several cases define the same variables
+                        return currentSchedules.map((schedule) => {
+                            let {currentClass, nextClass, nextImportantTime} = getStatusInfoForSchedule(schedule, currentDate, schoolTimezone);
+                            return <ScheduleCard
+                            currentSchool={props.selectedSchool.data}
+                            currentClass={currentClass}
+                            nextClass={nextClass}
+                            currentSchedule={schedule}
+                            nextImportantTime={nextImportantTime}
+                            currentDate={currentDate}
+                            key={schedule.getIdentifier()} />
+                        })
+                    }
+            }
         }
     }
 

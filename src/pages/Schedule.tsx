@@ -11,6 +11,7 @@ import { getCurrentDate, sortClassesByStartTime } from "../utils/helpers";
 import ClassPeriod from "../@types/classperiod";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
+import BellSchedule from "../@types/bellschedule";
 
 export interface IAppProps {
     selectedSchool: {
@@ -21,52 +22,66 @@ export interface IAppProps {
     dispatch: any;
 }
 
+
+function getTableForSchedule(currentSchedule: BellSchedule, showAudience:boolean){
+    const audience = showAudience? " (" + currentSchedule.getAudience() + ")": "";
+    return (
+        <div>
+            <p>{currentSchedule.getName()}{audience}</p>
+            {/* <List items={scheduleItems} /> */}
+            <table style={{'margin': '0 auto', 'textAlign': 'left'}}>
+                <thead style={{'textAlign': 'center'}}>
+                    <tr>
+                        <td>
+                            <b>Class</b>
+                        </td>
+                        <td>
+                            <b>Time</b>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {sortClassesByStartTime(currentSchedule.getAllClasses()).map(
+                        (value: ClassPeriod) => (
+                            <tr key={value.getName() + value.getStartTime().toString()}>
+                                <td>{value.getName()}</td>
+                                <td>
+                                    {value.getStartTime().toString()} -{" "}
+                                    {value.getEndTime().toString()}
+                                </td>
+                            </tr>
+                        )
+                    )}
+                </tbody>
+            </table>
+        </div>
+    );
+}
+
 export const Schedule = (props: IAppProps) => {
     let content: JSX.Element = <></>;
-    const currentSchedule = props.selectedSchool?.data?.getScheduleForDate(
+    const currentSchedules = props.selectedSchool?.data?.getSchedulesForDate(
         getCurrentDate()
     );
 
-    switch (currentSchedule) {
-        case undefined:
+     if (currentSchedules === undefined) {
+        if (!props.selectedSchool.isFetching){
             props.dispatch(push(pages.selectSchool));
-            break;
-        case null:
-            content = <p>No School Today</p>;
-            break;
-        default:
-            content = (
-                <>
-                    <p>{currentSchedule.getName()}</p>
-                    {/* <List items={scheduleItems} /> */}
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>
-                                    <b>Class</b>
-                                </td>
-                                <td>
-                                    <b>Time</b>
-                                </td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {sortClassesByStartTime(currentSchedule.getAllClasses()).map(
-                                (value: ClassPeriod) => (
-                                    <tr key={value.getName() + value.getStartTime().toString()}>
-                                        <td>{value.getName()}</td>
-                                        <td>
-                                            {value.getStartTime().toString()} -{" "}
-                                            {value.getEndTime().toString()}
-                                        </td>
-                                    </tr>
-                                )
-                            )}
-                        </tbody>
-                    </table>
-                </>
-            );
-            break;
+        } else {
+            console.error("current schedules (therefore selected school) was undefined, yet there was no attempt to fetch")
+            return <p>An Error occurred: current schedules (therefore selected school) was undefined, yet there was no attempt to fetch</p>
+        }
+    } else {
+        switch (currentSchedules.length){
+            case 0:
+                return <p>No School Today</p>;
+            case 1:
+                const currentSchedule = currentSchedules[0];
+                content = getTableForSchedule(currentSchedule, false);
+                break;
+            default:
+                content = <>{currentSchedules.map((schedule) => getTableForSchedule(schedule, true))}</>
+        }
     }
 
     return (

@@ -109,6 +109,9 @@ export default class School extends UpdateTimestampedObject {
     }
 
     //can also be used as isNoSchoolDay() by checking for undefined
+    /**
+     * @deprecated use getSchedulesForDate instead
+     */
     public getScheduleForDate(date: DateTime) {
         if (this.schedules) {
             for (const schedule of this.schedules) {
@@ -117,6 +120,17 @@ export default class School extends UpdateTimestampedObject {
                 }
             }
             return null; //no schedule today
+        }
+        return; // no schedules defined
+    }
+
+    public getSchedulesForDate(date: DateTime) {
+        if (this.schedules) {
+            const availableSchedules = this.schedules.filter((schedule) => schedule.getDate(date))
+            if (availableSchedules.length === 0) {
+                return []; //no schedule today
+            }
+            return availableSchedules;
         }
         return; // no schedules defined
     }

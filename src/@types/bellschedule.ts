@@ -15,8 +15,9 @@ export default class BellSchedule extends UpdateTimestampedObject {
             getValueIfKeyInList(["classes", "meeting_times"], json).map(
                 (meetingTime: any) => ClassPeriod.fromJson(meetingTime)
             ),
-            DateTime.fromISO(getValueIfKeyInList(["last_modified", "lastModified"], json), { zone: 'utc' })
-            //display name
+            DateTime.fromISO(getValueIfKeyInList(["last_modified", "lastModified"], json), { zone: 'utc' }),
+            getValueIfKeyInList(["display_name"], json),
+            getValueIfKeyInList(["audience"], json)
         );
     }
 
@@ -25,6 +26,7 @@ export default class BellSchedule extends UpdateTimestampedObject {
     private endpoint: string;
     private displayName?: string;
     private dates: DateTime[];
+    private audience: String;
     private classes: ClassPeriod[];
     private color?: string;
 
@@ -35,7 +37,8 @@ export default class BellSchedule extends UpdateTimestampedObject {
         dates: DateTime[],
         classes: ClassPeriod[],
         lastUpdatedDate: DateTime,
-        displayName?: string
+        displayName?: string,
+        audience?: String
     ) {
         super(lastUpdatedDate)
         this.id = id;
@@ -44,6 +47,7 @@ export default class BellSchedule extends UpdateTimestampedObject {
         this.displayName = displayName;
         this.dates = dates;
         this.classes = classes;
+        this.audience = audience ?? "everyone";
     
     }
 
@@ -69,6 +73,10 @@ export default class BellSchedule extends UpdateTimestampedObject {
         } else {
             return this.name;
         }
+    }
+
+    public getAudience() {
+        return this.audience;
     }
 
     public getEndpoint() {
