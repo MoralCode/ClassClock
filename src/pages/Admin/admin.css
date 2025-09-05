@@ -1,0 +1,8 @@
+
+section.RaSimpleFormIterator-form {
+	flex-direction: row !important;
+}
+
+section.RaSimpleFormIterator-form > * {
+	margin: 0.2em 1em !important;
+}

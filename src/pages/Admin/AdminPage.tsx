@@ -12,6 +12,8 @@ import { Route } from "react-router-dom";
 import { Card, CardContent } from '@mui/material';
 import { Title } from 'react-admin';
 
+import "./admin.css";
+
 
 const AdminPage = () => {
 

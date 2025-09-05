@@ -71,10 +71,12 @@ export const BellScheduleList = (props: any) => (
 			>
 				{/* <TextField source="school" /> */}
 				<DraggableNameField source="name" />
-				<TextField source="display_name" />
-				<ReferenceField source="school" reference="school" link={false}>
+				{/* <TextField source="display_name" /> */}
+				{/* <ReferenceField source="school" reference="school" link={false}>
 					<TextField source="full_name" />
-				</ReferenceField>
+				</ReferenceField> */}
+				<TextField source="audience" />
+				<TextField source="internal_description" />
 				<ArrayField source="meeting_times" label="Class Periods"><SingleFieldList><ChipField source="name" /></SingleFieldList></ArrayField>
 
 
@@ -121,6 +123,8 @@ export const BellscheduleEdit = (props: any) => (
 			<TextInput source="name" validate={validateBellScheduleName} />
 			{/* <TextField source="id" /> */}
 			<TextInput source="display_name" validate={validateBellScheduleDisplayName} />
+			<TextInput source="internal_description" multiline fullWidth />
+			<TextInput source="audience" />
 			{/* <DateField source="last_modified" /> */}
 			{/* <TextInput source="dates" /> */}
 			<ArrayInput source="meeting_times">
