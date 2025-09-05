@@ -71,10 +71,10 @@ export const BellScheduleList = (props: any) => (
 			>
 				{/* <TextField source="school" /> */}
 				<DraggableNameField source="name" />
-				<TextField source="display_name" />
-				<ReferenceField source="school" reference="school" link={false}>
+				{/* <TextField source="display_name" /> */}
+				{/* <ReferenceField source="school" reference="school" link={false}>
 					<TextField source="full_name" />
-				</ReferenceField>
+				</ReferenceField> */}
 				<ArrayField source="meeting_times" label="Class Periods"><SingleFieldList><ChipField source="name" /></SingleFieldList></ArrayField>
 
 
