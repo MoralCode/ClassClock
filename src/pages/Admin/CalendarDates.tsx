@@ -110,7 +110,7 @@ const CalendarDates = (props:CalendarDatesProps) => {
 			events={events}
 			editable={true}
 			droppable={true}
-			eventOverlap={false}
+			eventOverlap={true}
 			contentHeight={600}
 			eventReceive={(info) => {
 				// this is called when an external (i.e. new) event is dropped onto the calendar
