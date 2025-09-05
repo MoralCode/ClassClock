@@ -118,7 +118,7 @@ export const App = (props: IAppProps) => {
                     }
                 default:
                     { // Scope separation is needed here as several cases define the same variables
-                        return currentSchedules.map((schedule) => {
+                        return currentSchedules.sort((a,b) => a.getAudience().localeCompare(b.getAudience())).map((schedule) => {
                             let {currentClass, nextClass, nextImportantTime} = getStatusInfoForSchedule(schedule, currentDate, schoolTimezone);
                             return <ScheduleCard
                             currentSchool={props.selectedSchool.data}
