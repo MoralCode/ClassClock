@@ -75,6 +75,8 @@ export const BellScheduleList = (props: any) => (
 				{/* <ReferenceField source="school" reference="school" link={false}>
 					<TextField source="full_name" />
 				</ReferenceField> */}
+				<TextField source="audience" />
+				<TextField source="internal_description" />
 				<ArrayField source="meeting_times" label="Class Periods"><SingleFieldList><ChipField source="name" /></SingleFieldList></ArrayField>
 
 
