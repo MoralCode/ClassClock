@@ -26,7 +26,7 @@ export default class BellSchedule extends UpdateTimestampedObject {
     private endpoint: string;
     private displayName?: string;
     private dates: DateTime[];
-    private audience: String;
+    private audience: string;
     private classes: ClassPeriod[];
     private color?: string;
 
@@ -38,7 +38,7 @@ export default class BellSchedule extends UpdateTimestampedObject {
         classes: ClassPeriod[],
         lastUpdatedDate: DateTime,
         displayName?: string,
-        audience?: String
+        audience?: string
     ) {
         super(lastUpdatedDate)
         this.id = id;
