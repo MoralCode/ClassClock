@@ -121,6 +121,8 @@ export const BellscheduleEdit = (props: any) => (
 			<TextInput source="name" validate={validateBellScheduleName} />
 			{/* <TextField source="id" /> */}
 			<TextInput source="display_name" validate={validateBellScheduleDisplayName} />
+			<TextInput source="internal_description" multiline fullWidth />
+			<TextInput source="audience" />
 			{/* <DateField source="last_modified" /> */}
 			{/* <TextInput source="dates" /> */}
 			<ArrayInput source="meeting_times">
