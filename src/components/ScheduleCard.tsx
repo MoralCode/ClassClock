@@ -59,13 +59,13 @@ const ScheduleCard = (props: IScheduleCardProps) => {
                 <b>
                     {props.nextImportantTime
                         ? props.nextImportantTime
-                                .getTimeDeltaTo(
-                                    Time.fromDateTime(
-                                        props.currentDate,
-                                        props.currentSchool.getTimezone()
-                                    )
-                                )
-                                .getFormattedString(false, true)
+                              .getTimeDeltaTo(
+                                  Time.fromDateTime(
+                                      props.currentDate,
+                                      props.currentSchool.getTimezone()
+                                  )
+                              )
+                              .getFormattedString(false, true)
                         : "No Class"}
                 </b>
             </p>
