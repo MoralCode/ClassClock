@@ -43,7 +43,11 @@ const ScheduleCard = (props: IScheduleCardProps) => {
     return (
         <Block>
             <p>
-                {props.currentSchedule.getAudience()} is currently in{" "}
+                {props.currentSchedule.getAudience()} is following the{" "}
+                {props.currentSchedule.getName()} schedule
+            </p>
+            <p>
+                where it is currently{" "}
                 <span className="timeFont" style={{ fontSize: "25px" }}>
                     <b>
                         {props.currentClass !== undefined
@@ -52,9 +56,7 @@ const ScheduleCard = (props: IScheduleCardProps) => {
                     </b>
                 </span>
             </p>
-            <p>
-                which ends in...
-            </p>
+            <p>which ends in...</p>
             <p className="timeFont" style={{ fontSize: "40px" }}>
                 <b>
                     {props.nextImportantTime
